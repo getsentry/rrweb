@@ -25,6 +25,7 @@ import type {
   KeepIframeSrcFn,
   listenerHandler,
   maskTextClass,
+  unmaskTextClass,
   mediaInteractionCallback,
   mouseInteractionCallBack,
   mousemoveCallBack,
@@ -46,8 +47,11 @@ export type recordOptions<T> = {
   blockClass?: blockClass;
   blockSelector?: string;
   ignoreClass?: string;
+  maskAllText?: boolean;
   maskTextClass?: maskTextClass;
+  unmaskTextClass?: unmaskTextClass;
   maskTextSelector?: string;
+  unmaskTextSelector?: string;
   maskAllInputs?: boolean;
   maskInputOptions?: MaskInputOptions;
   maskInputFn?: MaskInputFn;
@@ -84,8 +88,11 @@ export type observerParam = {
   blockClass: blockClass;
   blockSelector: string | null;
   ignoreClass: string;
+  maskAllText: boolean;
   maskTextClass: maskTextClass;
+  unmaskTextClass: unmaskTextClass;
   maskTextSelector: string | null;
+  unmaskTextSelector: string | null;
   maskInputOptions: MaskInputOptions;
   maskInputFn?: MaskInputFn;
   maskTextFn?: MaskTextFn;
@@ -126,8 +133,11 @@ export type MutationBufferParam = Pick<
   | 'mutationCb'
   | 'blockClass'
   | 'blockSelector'
+  | 'maskAllText'
   | 'maskTextClass'
+  | 'unmaskTextClass'
   | 'maskTextSelector'
+  | 'unmaskTextSelector'
   | 'inlineStylesheet'
   | 'maskInputOptions'
   | 'maskTextFn'
