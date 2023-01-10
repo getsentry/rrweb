@@ -19,7 +19,7 @@ jobs:
         run: yarn
 
       - name: Build Project
-        run: yarn build:all
+        run: yarn lerna run prepublish
 
       - name: Check types
         run: yarn lerna run check-types

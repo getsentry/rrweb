@@ -33,7 +33,7 @@
     "postinstall": "node node_modules/puppeteer/install.js"
   },
   "volta": {
-    "node": "14.21.2",
+    "node": "12.22.12",
     "yarn": "1.22.19"
   }
 }
