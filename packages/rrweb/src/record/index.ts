@@ -466,7 +466,12 @@ function record<T = eventWithTime>(
     };
 
     iframeManager.addLoadListener((iframeEl) => {
-      handlers.push(observe(iframeEl.contentDocument!));
+      try {
+        handlers.push(observe(iframeEl.contentDocument!));
+      } catch (error) {
+        // TODO: handle internal error
+        console.warn(error);
+      }
     });
 
     const init = () => {
