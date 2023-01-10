@@ -30,5 +30,9 @@
     "test:watch": "yarn lerna run test:watch --parallel",
     "dev": "yarn lerna run dev --parallel",
     "repl": "cd packages/rrweb && npm run repl"
+  },
+  "volta": {
+    "node": "14.21.2",
+    "yarn": "1.22.19"
   }
 }
