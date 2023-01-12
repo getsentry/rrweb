@@ -548,6 +548,15 @@ export default class MutationBuffer {
         if (attributeName === 'value') {
           const type = getInputType(target);
 
+          const forceMask = needMaskingText(
+            m.target,
+            this.maskTextClass,
+            this.maskTextSelector,
+            this.unmaskTextClass,
+            this.unmaskTextSelector,
+            this.maskAllText,
+          );
+
           value = maskInputValue({
             element: target,
             maskInputOptions: this.maskInputOptions,
@@ -555,6 +564,7 @@ export default class MutationBuffer {
             type,
             value,
             maskInputFn: this.maskInputFn,
+            forceMask,
           });
         }
         if (

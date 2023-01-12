@@ -581,6 +581,11 @@ function serializeNode(
         keepIframeSrcFn,
         newlyAddedElement,
         rootId,
+        maskAllText,
+        maskTextClass,
+        unmaskTextClass,
+        maskTextSelector,
+        unmaskTextSelector,
       });
     case n.TEXT_NODE:
       return serializeTextNode(n as Text, {
@@ -590,6 +595,8 @@ function serializeNode(
         maskTextSelector,
         unmaskTextSelector,
         maskTextFn,
+        maskInputOptions,
+        maskInputFn,
         rootId,
       });
     case n.CDATA_SECTION_NODE:
@@ -624,6 +631,8 @@ function serializeTextNode(
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
     maskTextFn: MaskTextFn | undefined;
+    maskInputOptions: MaskInputOptions;
+    maskInputFn: MaskInputFn | undefined;
     rootId: number | undefined;
   },
 ): serializedNode {
@@ -634,6 +643,8 @@ function serializeTextNode(
     maskTextSelector,
     unmaskTextSelector,
     maskTextFn,
+    maskInputOptions,
+    maskInputFn,
     rootId,
   } = options;
   // The parent node may not be a html element which has a tagName attribute.
@@ -642,6 +653,7 @@ function serializeTextNode(
   let textContent = n.textContent;
   const isStyle = parentTagName === 'STYLE' ? true : undefined;
   const isScript = parentTagName === 'SCRIPT' ? true : undefined;
+  const isTextarea = parentTagName === 'TEXTAREA' ? true : undefined;
   if (isStyle && textContent) {
     try {
       // try to read style sheet
@@ -683,6 +695,11 @@ function serializeTextNode(
       ? maskTextFn(textContent)
       : textContent.replace(/[\S]/g, '*');
   }
+  if (isTextarea && textContent && maskInputOptions.textarea) {
+    textContent = maskInputFn
+      ? maskInputFn(textContent, n.parentNode as HTMLElement)
+      : textContent.replace(/[\S]/g, '*');
+  }
 
   return {
     type: NodeType.Text,
@@ -710,6 +727,11 @@ function serializeElementNode(
      */
     newlyAddedElement?: boolean;
     rootId: number | undefined;
+    maskAllText: boolean;
+    maskTextClass: string | RegExp;
+    unmaskTextClass: string | RegExp;
+    maskTextSelector: string | null;
+    unmaskTextSelector: string | null;
   },
 ): serializedNode | false {
   const {
@@ -725,6 +747,11 @@ function serializeElementNode(
     keepIframeSrcFn,
     newlyAddedElement = false,
     rootId,
+    maskAllText,
+    maskTextClass,
+    unmaskTextClass,
+    maskTextSelector,
+    unmaskTextSelector,
   } = options;
   const needBlock = _isBlockedElement(n, blockClass, blockSelector);
   const tagName = getValidTagName(n);
@@ -782,6 +809,15 @@ function serializeElementNode(
       value
     ) {
       const type = getInputType(n);
+      const forceMask = needMaskingText(
+        n,
+        maskTextClass,
+        maskTextSelector,
+        unmaskTextClass,
+        unmaskTextSelector,
+        maskAllText,
+      );
+
       attributes.value = maskInputValue({
         element: n,
         type,
@@ -789,6 +825,7 @@ function serializeElementNode(
         value,
         maskInputOptions,
         maskInputFn,
+        forceMask,
       });
     } else if (checked) {
       attributes.checked = checked;
@@ -1329,7 +1366,7 @@ function snapshot(
     inlineStylesheet?: boolean;
     maskAllInputs?: boolean | MaskInputOptions;
     maskTextFn?: MaskTextFn;
-    maskInputFn?: MaskTextFn;
+    maskInputFn?: MaskInputFn;
     slimDOM?: 'all' | boolean | SlimDOMOptions;
     dataURLOptions?: DataURLOptions;
     inlineImages?: boolean;
