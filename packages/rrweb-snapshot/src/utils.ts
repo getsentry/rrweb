@@ -159,19 +159,22 @@ export function maskInputValue({
   type,
   value,
   maskInputFn,
+  forceMask,
 }: {
   maskInputOptions: MaskInputOptions;
   tagName: string;
   type: string | null;
   value: string | null;
   maskInputFn?: MaskInputFn;
+  forceMask?: boolean;
 }): string {
   let text = value || '';
   const actualType = type && type.toLowerCase();
 
   if (
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-    (actualType && maskInputOptions[actualType as keyof MaskInputOptions])
+    (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
+    forceMask
   ) {
     if (maskInputFn) {
       text = maskInputFn(text);
