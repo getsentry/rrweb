@@ -30,7 +30,8 @@
     "test:watch": "yarn lerna run test:watch --parallel",
     "dev": "yarn lerna run dev --parallel",
     "repl": "cd packages/rrweb && npm run repl",
-    "postinstall": "node node_modules/puppeteer/install.js"
+    "postinstall": "node node_modules/puppeteer/install.js",
+    "build:tarball": "yarn lerna run build:tarball"
   },
   "volta": {
     "node": "12.22.12",
