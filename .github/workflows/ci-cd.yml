@@ -1,6 +1,11 @@
-name: Tests
+name: Build & Tests
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - master
+      - release/**
+  pull_request:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
