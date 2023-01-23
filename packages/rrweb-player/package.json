@@ -33,7 +33,8 @@
     "prepublishOnly": "yarn build",
     "start": "sirv public",
     "validate": "svelte-check",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "build:tarball": "npm pack"
   },
   "description": "rrweb's replayer UI",
   "main": "lib/index.js",
