@@ -30,11 +30,11 @@ jobs:
         run: xvfb-run --server-args="-screen 0 1920x1080x24" yarn test
 
       - name: Build Tarballs
-        if: startsWith(github.ref, 'refs/heads/release/')
+        if: startsWith(github.ref, 'refs/heads/release/') == true
         run: yarn build:tarball
 
       - name: Upload Artifacts
-        if: startsWith(github.ref, 'refs/heads/release/')
+        if: startsWith(github.ref, 'refs/heads/release/') == true
         uses: actions/upload-artifact@v3
         with:
           name: ${{ github.sha }}
