@@ -6,7 +6,9 @@
 
 # Sentry rrweb Fork
 
-This repo is a fork of [rrweb](https://github.com/rrweb-io/rrweb). The purpose is to apply patches and bugfixes to rrweb and release Sentry-internal packages with our patches included. All credits and attribution for rrweb go to the original creators of the library and all its contributors.
+This repo is a fork of [rrweb](https://github.com/rrweb-io/rrweb). The purpose is to apply patches and bugfixes to rrweb and release Sentry-internal packages with our patches included. We do not provide support for these packages and make no guarantees in terms of semver and breaking changes.
+
+All credits and attribution for rrweb go to the original creators of the library and all its contributors.
 
 From this monorepo, Sentry maintains and publishes the following NPM packages:
 
