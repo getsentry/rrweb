@@ -18,8 +18,8 @@ import {
   EventType,
   RecordPlugin,
   IncrementalSource,
-} from '@rrweb/types';
-import { visitSnapshot, NodeType } from 'rrweb-snapshot';
+} from '@sentry-internal/rrweb-types';
+import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
 
 /**
  * Used to filter scroll events out of snapshots as they are flakey

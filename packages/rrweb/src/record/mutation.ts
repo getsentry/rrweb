@@ -11,7 +11,7 @@ import {
   getInputType,
   toLowerCase,
   getInputValue,
-} from 'rrweb-snapshot';
+} from '@sentry-internal/rrweb-snapshot';
 import type { observerParam, MutationBufferParam } from '../types';
 import type {
   mutationRecord,
@@ -20,7 +20,7 @@ import type {
   removedNodeMutation,
   addedNodeMutation,
   Optional,
-} from '@rrweb/types';
+} from '@sentry-internal/rrweb-types';
 import {
   isBlocked,
   isAncestorRemoved,
