@@ -1,4 +1,8 @@
-import { snapshot, MaskInputOptions, SlimDOMOptions } from 'rrweb-snapshot';
+import {
+  snapshot,
+  MaskInputOptions,
+  SlimDOMOptions,
+} from '@sentry-internal/rrweb-snapshot';
 import { initObservers, mutationBuffers } from './observer';
 import {
   on,
@@ -47,7 +51,7 @@ function record<T = eventWithTime>(
     blockSelector = null,
     unblockSelector = null,
     ignoreClass = 'rr-ignore',
-    ignoreSelector =null,
+    ignoreSelector = null,
     maskTextClass = 'rr-mask',
     maskTextSelector = null,
     maskInputSelector = null,

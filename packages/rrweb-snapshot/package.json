@@ -1,5 +1,5 @@
 {
-  "name": "rrweb-snapshot",
+  "name": "@sentry-internal/rrweb-snapshot",
   "version": "1.1.14",
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
@@ -11,7 +11,8 @@
     "bundle:es-only": "cross-env ES_ONLY=true rollup --config",
     "dev": "yarn bundle:es-only --watch",
     "typings": "tsc -d --declarationDir typings",
-    "prepublish": "npm run typings && npm run bundle"
+    "prepublish": "npm run typings && npm run bundle",
+    "build:tarball": "npm pack"
   },
   "repository": {
     "type": "git",

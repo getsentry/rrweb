@@ -6,7 +6,7 @@ import {
   isShadowRoot,
   needMaskingText,
   maskInputValue,
-} from 'rrweb-snapshot';
+} from '@sentry-internal/rrweb-snapshot';
 import {
   mutationRecord,
   textCursor,
@@ -459,7 +459,7 @@ export default class MutationBuffer {
                 m.target,
                 this.maskTextClass,
                 this.maskTextSelector,
-                this.unmaskTextSelector
+                this.unmaskTextSelector,
               ) && value
                 ? this.maskTextFn
                   ? this.maskTextFn(value)

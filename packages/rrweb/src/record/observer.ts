@@ -1,4 +1,8 @@
-import { INode, MaskInputOptions, maskInputValue } from 'rrweb-snapshot';
+import {
+  INode,
+  MaskInputOptions,
+  maskInputValue,
+} from '@sentry-internal/rrweb-snapshot';
 import { FontFaceSet } from 'css-font-loading-module';
 import {
   throttle,
@@ -352,7 +356,10 @@ function initInputObserver({
       return;
     }
     const type: string | undefined = (target as HTMLInputElement).type;
-    if ((target as HTMLElement).classList.contains(ignoreClass) || (ignoreSelector && (target as HTMLElement).matches(ignoreSelector))) {
+    if (
+      (target as HTMLElement).classList.contains(ignoreClass) ||
+      (ignoreSelector && (target as HTMLElement).matches(ignoreSelector))
+    ) {
       return;
     }
     let text = (target as HTMLInputElement).value;
@@ -366,7 +373,7 @@ function initInputObserver({
       maskInputOptions[type as keyof MaskInputOptions]
     ) {
       text = maskInputValue({
-        input: (target as HTMLElement),
+        input: target as HTMLElement,
         maskInputOptions,
         maskInputSelector,
         unmaskInputSelector,
