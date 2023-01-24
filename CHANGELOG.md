@@ -2,7 +2,7 @@
 
 ## 1.100.0
 
-This release marks the first `@sentry-internal/rr*` release of our forked pacakges.
+This release marks the first `@sentry-internal/rr*` release of our forked packages.
 Note: These packages are supposed to be used internally by other Sentry projects.
 We do not provide support or make any guarantees in terms of breaking changes.
 
