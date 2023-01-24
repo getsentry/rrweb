@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.100.0
+
+This release marks the first `@sentry-internal/rr*` release of our forked pacakges.
+Note: These packages are supposed to be used internally by other Sentry projects.
+We do not provide support or make any guarantees in terms of breaking changes.
+
+We're starting releasing our forked packages with version `1.100.0`, as this gives us enough headroom over
+possible future rrweb v1.x patches while still staying in sync with the rrweb major version.
+
+- feat(rrweb): Guard against missing `window.CSSStyleSheet` (#12)
+- feat(rrweb/rrweb-snapshot): Add `maskInputSelector`, `unmaskInputSelector`, and `unmaskTextSelector` (#10)
+- feat(rrweb/rrweb-snapshot): Add `unblockSelector` and `ignoreSelector` (#14)
+- fix(rrweb): Ignore errors in style observers (#16)
+- ref(rrweb/rrweb-snapshot): Update types (#13)
+
 ## v1.0.0
 
 ### Featrues & Improvements
