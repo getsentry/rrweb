@@ -22,10 +22,10 @@
   "exclude": ["dist", "node_modules"],
   "references": [
     {
-      "path": "../rrweb"
+      "path": "../rrweb-player"
     },
     {
-      "path": "../rrweb-player"
+      "path": "../rrweb"
     },
     {
       "path": "../types"

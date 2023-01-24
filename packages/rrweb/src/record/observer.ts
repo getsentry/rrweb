@@ -7,7 +7,7 @@ import {
   toLowerCase,
   needMaskingText,
   toUpperCase,
-} from 'rrweb-snapshot';
+} from '@sentry-internal/rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
 import {
   throttle,
@@ -50,7 +50,7 @@ import {
   SelectionRange,
   selectionCallback,
   customElementCallback,
-} from '@rrweb/types';
+} from '@sentry-internal/rrweb-types';
 import MutationBuffer from './mutation';
 import { callbackWrapper } from './error-handler';
 

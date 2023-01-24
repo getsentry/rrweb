@@ -16,7 +16,7 @@
     "prepublish": "npm run pack:chrome && npm run pack:firefox"
   },
   "devDependencies": {
-    "@rrweb/types": "^2.0.0-alpha.10",
+    "@sentry-internal/rrweb-types": "^2.0.0-alpha.10",
     "@types/react-dom": "^18.0.6",
     "@types/webextension-polyfill": "^0.9.1",
     "@vitejs/plugin-react": "^2.1.0",
@@ -31,6 +31,8 @@
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@sentry-internal/rrweb-player": "^2.0.0-alpha.10",
+    "@sentry-internal/rrweb": "^2.0.0-alpha.10",
     "@tanstack/react-table": "^8.5.22",
     "framer-motion": "^7.3.6",
     "idb": "^7.1.1",
@@ -39,8 +41,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
-    "react-router-dom": "^6.4.1",
-    "rrweb": "^2.0.0-alpha.10",
-    "rrweb-player": "^2.0.0-alpha.10"
+    "react-router-dom": "^6.4.1"
   }
 }
