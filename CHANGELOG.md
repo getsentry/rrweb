@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.100.1
+
+This patch adds a public publish config to the rrweb packages to enable publishing to NPM.
+
+- chore(rrweb): Add `publishConfig` field to package.jsons (#30)
+
 ## 1.100.0
 
 This release marks the first `@sentry-internal/rr*` release of our forked packages.
