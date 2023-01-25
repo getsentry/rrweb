@@ -9,6 +9,9 @@
     "prepublish": "npm run bundle",
     "build:tarball": "npm pack"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "rrweb",
     "rrdom"
