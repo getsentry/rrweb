@@ -1,6 +1,6 @@
 {
   "name": "@sentry-internal/rrweb-snapshot",
-  "version": "1.1.14",
+  "version": "1.100.0",
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
     "prepare": "npm run prepack",
