@@ -1,6 +1,6 @@
 {
   "name": "@sentry-internal/rrweb-player",
-  "version": "0.7.14",
+  "version": "1.100.1",
   "publishConfig": {
     "access": "public"
   },
@@ -27,8 +27,8 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@tsconfig/svelte": "^1.0.0",
-    "@sentry-internal/rrweb": "^1.1.3"
+    "@sentry-internal/rrweb": "1.100.1",
+    "@tsconfig/svelte": "^1.0.0"
   },
   "scripts": {
     "build": "rollup -c",
