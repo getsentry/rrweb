@@ -80,7 +80,7 @@ export interface Supports extends Node {
     supports?: string;
     rules?: Array<Rule | Comment | AtRule>;
 }
-export type AtRule = Charset | CustomMedia | Document | FontFace | Host | Import | KeyFrames | Media | Namespace | Page | Supports;
+export declare type AtRule = Charset | CustomMedia | Document | FontFace | Host | Import | KeyFrames | Media | Namespace | Page | Supports;
 export interface StyleRules {
     source?: string;
     rules: Array<Rule | Comment | AtRule>;

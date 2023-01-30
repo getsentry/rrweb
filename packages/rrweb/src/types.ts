@@ -221,6 +221,7 @@ export type recordOptions<T> = {
   ignoreSelector?: string;
   maskTextClass?: maskTextClass;
   maskTextSelector?: string;
+  maskAllText?: boolean;
   maskAllInputs?: boolean;
   maskInputSelector?: string;
   maskInputOptions?: MaskInputOptions;
@@ -261,6 +262,7 @@ export type observerParam = {
   unmaskTextSelector: string | null;
   maskInputSelector: string | null;
   unmaskInputSelector: string | null;
+  maskAllText: boolean;
   maskInputOptions: MaskInputOptions;
   maskInputFn?: MaskInputFn;
   maskTextFn?: MaskTextFn;
@@ -299,6 +301,7 @@ export type MutationBufferParam = Pick<
   | 'inlineStylesheet'
   | 'maskInputSelector'
   | 'unmaskInputSelector'
+  | 'maskAllText'
   | 'maskInputOptions'
   | 'maskTextFn'
   | 'maskInputFn'

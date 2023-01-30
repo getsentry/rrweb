@@ -154,6 +154,7 @@ describe('style elements', () => {
       unmaskTextSelector: null,
       maskInputSelector: null,
       unmaskInputSelector: null,
+      maskAllText: false,
       maskTextClass: 'maskmask',
       maskTextSelector: null,
       skipChild: false,

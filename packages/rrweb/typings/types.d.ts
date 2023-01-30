@@ -142,6 +142,7 @@ export type recordOptions<T> = {
     ignoreSelector?: string;
     maskTextClass?: maskTextClass;
     maskTextSelector?: string;
+    maskAllText?: boolean;
     maskAllInputs?: boolean;
     maskInputSelector?: string;
     maskInputOptions?: MaskInputOptions;
@@ -180,6 +181,7 @@ export type observerParam = {
     unmaskTextSelector: string | null;
     maskInputSelector: string | null;
     unmaskInputSelector: string | null;
+    maskAllText: boolean;
     maskInputOptions: MaskInputOptions;
     maskInputFn?: MaskInputFn;
     maskTextFn?: MaskTextFn;
@@ -205,7 +207,7 @@ export type observerParam = {
         options: unknown;
     }>;
 };
-export type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
+export type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
 export type hooksParam = {
     mutation?: mutationCallBack;
     mousemove?: mousemoveCallBack;
