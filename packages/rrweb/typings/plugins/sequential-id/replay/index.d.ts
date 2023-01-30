@@ -1,6 +1,6 @@
 import type { SequentialIdOptions } from '../record';
 import { ReplayPlugin } from '../../../types';
-type Options = SequentialIdOptions & {
+declare type Options = SequentialIdOptions & {
     warnOnMissingId: boolean;
 };
 export declare const getReplaySequentialIdPlugin: (options?: Partial<Options>) => ReplayPlugin;

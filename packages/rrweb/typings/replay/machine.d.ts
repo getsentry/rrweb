@@ -1,14 +1,14 @@
 import { StateMachine } from '@xstate/fsm';
 import { playerConfig, eventWithTime, Emitter } from '../types';
 import { Timer } from './timer';
-export type PlayerContext = {
+export declare type PlayerContext = {
     events: eventWithTime[];
     timer: Timer;
     timeOffset: number;
     baselineTime: number;
     lastPlayedEvent: eventWithTime | null;
 };
-export type PlayerEvent = {
+export declare type PlayerEvent = {
     type: 'PLAY';
     payload: {
         timeOffset: number;
@@ -33,7 +33,7 @@ export type PlayerEvent = {
 } | {
     type: 'END';
 };
-export type PlayerState = {
+export declare type PlayerState = {
     value: 'playing';
     context: PlayerContext;
 } | {
@@ -44,17 +44,17 @@ export type PlayerState = {
     context: PlayerContext;
 };
 export declare function discardPriorSnapshots(events: eventWithTime[], baselineTime: number): eventWithTime[];
-type PlayerAssets = {
+declare type PlayerAssets = {
     emitter: Emitter;
     applyEventsSynchronously(events: Array<eventWithTime>): void;
     getCastFn(event: eventWithTime, isSync: boolean): () => void;
 };
 export declare function createPlayerService(context: PlayerContext, { getCastFn, applyEventsSynchronously, emitter }: PlayerAssets): StateMachine.Service<PlayerContext, PlayerEvent, PlayerState>;
-export type SpeedContext = {
+export declare type SpeedContext = {
     normalSpeed: playerConfig['speed'];
     timer: Timer;
 };
-export type SpeedEvent = {
+export declare type SpeedEvent = {
     type: 'FAST_FORWARD';
     payload: {
         speed: playerConfig['speed'];
@@ -67,7 +67,7 @@ export type SpeedEvent = {
         speed: playerConfig['speed'];
     };
 };
-export type SpeedState = {
+export declare type SpeedState = {
     value: 'normal';
     context: SpeedContext;
 } | {
@@ -75,6 +75,6 @@ export type SpeedState = {
     context: SpeedContext;
 };
 export declare function createSpeedService(context: SpeedContext): StateMachine.Service<SpeedContext, SpeedEvent, SpeedState>;
-export type PlayerMachineState = StateMachine.State<PlayerContext, PlayerEvent, PlayerState>;
-export type SpeedMachineState = StateMachine.State<SpeedContext, SpeedEvent, SpeedState>;
+export declare type PlayerMachineState = StateMachine.State<PlayerContext, PlayerEvent, PlayerState>;
+export declare type SpeedMachineState = StateMachine.State<SpeedContext, SpeedEvent, SpeedState>;
 export {};
