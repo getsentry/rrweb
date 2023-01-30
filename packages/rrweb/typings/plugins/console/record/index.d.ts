@@ -1,22 +1,22 @@
 import { RecordPlugin } from '../../../types';
-export type StringifyOptions = {
+export declare type StringifyOptions = {
     stringLengthLimit?: number;
     numOfKeysLimit: number;
     depthOfLimit: number;
 };
-type LogRecordOptions = {
+declare type LogRecordOptions = {
     level?: LogLevel[];
     lengthThreshold?: number;
     stringifyOptions?: StringifyOptions;
     logger?: Logger | 'console';
 };
-export type LogData = {
+export declare type LogData = {
     level: LogLevel;
     trace: string[];
     payload: string[];
 };
-export type LogLevel = 'assert' | 'clear' | 'count' | 'countReset' | 'debug' | 'dir' | 'dirxml' | 'error' | 'group' | 'groupCollapsed' | 'groupEnd' | 'info' | 'log' | 'table' | 'time' | 'timeEnd' | 'timeLog' | 'trace' | 'warn';
-export type Logger = {
+export declare type LogLevel = 'assert' | 'clear' | 'count' | 'countReset' | 'debug' | 'dir' | 'dirxml' | 'error' | 'group' | 'groupCollapsed' | 'groupEnd' | 'info' | 'log' | 'table' | 'time' | 'timeEnd' | 'timeLog' | 'trace' | 'warn';
+export declare type Logger = {
     assert?: typeof console.assert;
     clear?: typeof console.clear;
     count?: typeof console.count;
