@@ -1,6 +1,13 @@
 /**
  * @jest-environment jsdom
  */
+
+import { TextEncoder, TextDecoder } from 'util';
+// @ts-ignore for jsdom
+global.TextEncoder = TextEncoder;
+// @ts-ignore for jsdom
+global.TextDecoder = TextDecoder;
+
 import { JSDOM } from 'jsdom';
 import {
   absoluteToStylesheet,
@@ -8,6 +15,7 @@ import {
   _isBlockedElement,
 } from '../src/snapshot';
 import { serializedNodeWithId } from '../src/types';
+
 
 describe('absolute url to stylesheet', () => {
   const href = 'http://localhost/css/style.css';
@@ -111,7 +119,7 @@ describe('absolute url to stylesheet', () => {
 
 describe('isBlockedElement()', () => {
   const subject = (html: string, opt: any = {}) =>
-    _isBlockedElement(render(html), 'rr-block', opt.blockSelector);
+    _isBlockedElement(render(html), 'rr-block', opt.blockSelector, opt.unblockSelector);
 
   const render = (html: string): HTMLElement =>
     JSDOM.fragment(html).querySelector('div')!;
@@ -142,6 +150,11 @@ describe('style elements', () => {
       map: {},
       blockClass: 'blockblock',
       blockSelector: null,
+      unblockSelector: null,
+      unmaskTextSelector: null,
+      maskInputSelector: null,
+      unmaskInputSelector: null,
+      maskAllText: false,
       maskTextClass: 'maskmask',
       maskTextSelector: null,
       skipChild: false,

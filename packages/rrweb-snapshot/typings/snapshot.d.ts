@@ -4,7 +4,7 @@ export declare function absoluteToStylesheet(cssText: string | null, href: strin
 export declare function absoluteToDoc(doc: Document, attributeValue: string): string;
 export declare function transformAttribute(doc: Document, tagName: string, name: string, value: string): string;
 export declare function _isBlockedElement(element: HTMLElement, blockClass: string | RegExp, blockSelector: string | null, unblockSelector: string | null): boolean;
-export declare function needMaskingText(node: Node | null, maskTextClass: string | RegExp, maskTextSelector: string | null, unmaskTextSelector: string | null): boolean;
+export declare function needMaskingText(node: Node | null, maskTextClass: string | RegExp, maskTextSelector: string | null, unmaskTextSelector: string | null, maskAllText: boolean): boolean;
 export declare function serializeNodeWithId(n: Node | INode, options: {
     doc: Document;
     map: idNodeMap;
@@ -18,6 +18,7 @@ export declare function serializeNodeWithId(n: Node | INode, options: {
     inlineStylesheet: boolean;
     maskInputSelector: string | null;
     unmaskInputSelector: string | null;
+    maskAllText: boolean;
     maskInputOptions?: MaskInputOptions;
     maskTextFn: MaskTextFn | undefined;
     maskInputFn: MaskInputFn | undefined;
@@ -41,6 +42,7 @@ declare function snapshot(n: Document, options?: {
     maskInputSelector?: string | null;
     unmaskInputSelector?: string | null;
     inlineStylesheet?: boolean;
+    maskAllText?: boolean;
     maskAllInputs?: boolean | MaskInputOptions;
     maskTextFn?: MaskTextFn;
     maskInputFn?: MaskTextFn;

@@ -346,6 +346,7 @@ export function parse(css: string, options: ParserOptions = {}) {
     whitespace();
     comments(rules);
     while (css.length && css.charAt(0) !== '}' && (node = atrule() || rule())) {
+      // @ts-ignore
       if (node !== false) {
         rules.push(node);
         comments(rules);
@@ -384,6 +385,7 @@ export function parse(css: string, options: ParserOptions = {}) {
   function comments(rules: Rule[] = []) {
     let c: Comment | void;
     while ((c = comment())) {
+      // @ts-ignore
       if (c !== false) {
         rules.push(c);
       }

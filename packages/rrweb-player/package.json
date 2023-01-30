@@ -23,8 +23,8 @@
     "svelte": "^3.2.0",
     "svelte-check": "^1.4.0",
     "svelte-preprocess": "^4.0.0",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.7"
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@sentry-internal/rrweb": "1.100.2",

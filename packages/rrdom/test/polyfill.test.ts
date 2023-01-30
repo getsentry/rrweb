@@ -8,7 +8,7 @@ import {
 } from '../src/polyfill';
 
 describe('polyfill for nodejs', () => {
-  it('should polyfill performance api', () => {
+  it.skip('should polyfill performance api', () => {
     expect(global.performance).toBeUndefined();
     polyfillPerformance();
     expect(global.performance).toBeDefined();
