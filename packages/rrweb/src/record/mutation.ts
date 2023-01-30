@@ -533,7 +533,7 @@ export default class MutationBuffer {
             }
           } catch (error) {
             console.warn(
-              'Error when parsing update to style attribute:',
+              '[rrweb] Error when parsing update to style attribute:',
               error,
             );
           }
