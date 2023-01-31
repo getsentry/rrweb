@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.100.2
+
+- fix: Catch style mutation handling (#33)
+- fix: Handle case where `event` is null/undefined (#32)
+
 ## 1.100.1
 
 This patch adds a public publish config to the rrweb packages to enable publishing to NPM.
