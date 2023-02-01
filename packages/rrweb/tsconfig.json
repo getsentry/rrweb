@@ -2,7 +2,6 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Node",
-    "target": "ES5",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "removeComments": true,
