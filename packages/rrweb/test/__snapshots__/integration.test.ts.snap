@@ -3546,284 +3546,6 @@ exports[`record integration tests can use maskInputOptions to configure which ty
 ]"
 `;
 
-exports[`record integration tests should mask all text using maskAllText 1`] = `
-"[
-  {
-    "type": 0,
-    "data": {}
-  },
-  {
-    "type": 1,
-    "data": {}
-  },
-  {
-    "type": 4,
-    "data": {
-      "href": "about:blank",
-      "width": 1920,
-      "height": 1080
-    }
-  },
-  {
-    "type": 2,
-    "data": {
-      "node": {
-        "type": 0,
-        "childNodes": [
-          {
-            "type": 1,
-            "name": "html",
-            "publicId": "",
-            "systemId": "",
-            "id": 2
-          },
-          {
-            "type": 2,
-            "tagName": "html",
-            "attributes": {
-              "lang": "en"
-            },
-            "childNodes": [
-              {
-                "type": 2,
-                "tagName": "head",
-                "attributes": {},
-                "childNodes": [
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 5
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "charset": "UTF-8"
-                    },
-                    "childNodes": [],
-                    "id": 6
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 7
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "name": "viewport",
-                      "content": "width=device-width, initial-scale=1.0"
-                    },
-                    "childNodes": [],
-                    "id": 8
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 9
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "http-equiv": "X-UA-Compatible",
-                      "content": "ie=edge"
-                    },
-                    "childNodes": [],
-                    "id": 10
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 11
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "title",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "Mask text",
-                        "id": 13
-                      }
-                    ],
-                    "id": 12
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n  ",
-                    "id": 14
-                  }
-                ],
-                "id": 4
-              },
-              {
-                "type": 3,
-                "textContent": "\\n  ",
-                "id": 15
-              },
-              {
-                "type": 2,
-                "tagName": "body",
-                "attributes": {},
-                "childNodes": [
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 17
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "p",
-                    "attributes": {
-                      "class": "rr-mask"
-                    },
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "*****",
-                        "id": 19
-                      }
-                    ],
-                    "id": 18
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 20
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "div",
-                    "attributes": {
-                      "class": "rr-mask"
-                    },
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 22
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "span",
-                        "attributes": {},
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "*****",
-                            "id": 24
-                          }
-                        ],
-                        "id": 23
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n    ",
-                        "id": 25
-                      }
-                    ],
-                    "id": 21
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 26
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "div",
-                    "attributes": {
-                      "data-masking": "true"
-                    },
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 28
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "div",
-                        "attributes": {},
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
-                            "id": 30
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "div",
-                            "attributes": {},
-                            "childNodes": [
-                              {
-                                "type": 3,
-                                "textContent": "mask3",
-                                "id": 32
-                              }
-                            ],
-                            "id": 31
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 33
-                          }
-                        ],
-                        "id": 29
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n    ",
-                        "id": 34
-                      }
-                    ],
-                    "id": 27
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n  \\n    ",
-                    "id": 35
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 37
-                      }
-                    ],
-                    "id": 36
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
-                    "id": 38
-                  }
-                ],
-                "id": 16
-              }
-            ],
-            "id": 3
-          }
-        ],
-        "id": 1
-      },
-      "initialOffset": {
-        "left": 0,
-        "top": 0
-      }
-    }
-  }
-]"
-`;
-
 exports[`record integration tests should mask texts 1`] = `
 "[
   {
@@ -7896,7 +7618,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "assert",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:2:37"
+          "pptr://__puppeteer_evaluation_script__:2:21"
         ],
         "payload": [
           "true",
@@ -7912,7 +7634,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "count",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:3:37"
+          "pptr://__puppeteer_evaluation_script__:3:21"
         ],
         "payload": [
           "\\"count\\""
@@ -7927,7 +7649,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "countReset",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:4:37"
+          "pptr://__puppeteer_evaluation_script__:4:21"
         ],
         "payload": [
           "\\"count\\""
@@ -7942,7 +7664,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "debug",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:5:37"
+          "pptr://__puppeteer_evaluation_script__:5:21"
         ],
         "payload": [
           "\\"debug\\""
@@ -7957,7 +7679,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "dir",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:6:37"
+          "pptr://__puppeteer_evaluation_script__:6:21"
         ],
         "payload": [
           "\\"dir\\""
@@ -7972,7 +7694,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "dirxml",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:7:37"
+          "pptr://__puppeteer_evaluation_script__:7:21"
         ],
         "payload": [
           "\\"dirxml\\""
@@ -7987,7 +7709,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "group",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:8:37"
+          "pptr://__puppeteer_evaluation_script__:8:21"
         ],
         "payload": []
       }
@@ -8000,7 +7722,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "groupCollapsed",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:9:37"
+          "pptr://__puppeteer_evaluation_script__:9:21"
         ],
         "payload": []
       }
@@ -8013,7 +7735,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "info",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:10:37"
+          "pptr://__puppeteer_evaluation_script__:10:21"
         ],
         "payload": [
           "\\"info\\""
@@ -8028,7 +7750,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "log",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:11:37"
+          "pptr://__puppeteer_evaluation_script__:11:21"
         ],
         "payload": [
           "\\"log\\""
@@ -8043,7 +7765,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "table",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:12:37"
+          "pptr://__puppeteer_evaluation_script__:12:21"
         ],
         "payload": [
           "\\"table\\""
@@ -8058,7 +7780,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "time",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:13:37"
+          "pptr://__puppeteer_evaluation_script__:13:21"
         ],
         "payload": []
       }
@@ -8071,7 +7793,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "timeEnd",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:14:37"
+          "pptr://__puppeteer_evaluation_script__:14:21"
         ],
         "payload": []
       }
@@ -8084,7 +7806,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "timeLog",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:15:37"
+          "pptr://__puppeteer_evaluation_script__:15:21"
         ],
         "payload": []
       }
@@ -8097,7 +7819,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "trace",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:16:37"
+          "pptr://__puppeteer_evaluation_script__:16:21"
         ],
         "payload": [
           "\\"trace\\""
@@ -8112,7 +7834,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "warn",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:17:37"
+          "pptr://__puppeteer_evaluation_script__:17:21"
         ],
         "payload": [
           "\\"warn\\""
@@ -8127,7 +7849,7 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "clear",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:18:37"
+          "pptr://__puppeteer_evaluation_script__:18:21"
         ],
         "payload": []
       }
@@ -8140,10 +7862,10 @@ exports[`record integration tests should record console messages 1`] = `
       "payload": {
         "level": "log",
         "trace": [
-          "pptr://__puppeteer_evaluation_script__:19:37"
+          "pptr://__puppeteer_evaluation_script__:19:21"
         ],
         "payload": [
-          "\\"TypeError: a message\\\\n    at pptr://__puppeteer_evaluation_script__:19:41\\\\nEnd of stack for Error object\\""
+          "\\"TypeError: a message\\\\n    at pptr://__puppeteer_evaluation_script__:19:25\\\\nEnd of stack for Error object\\""
         ]
       }
     }
