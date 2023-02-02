@@ -377,7 +377,7 @@ describe('record integration tests', function (this: ISuite) {
       }),
     );
     await waitForRAF(page);
-    const snapshots = await page.evaluate('window.snapshots');
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
     for (const event of snapshots) {
       if (event.type === EventType.FullSnapshot) {
         visitSnapshot(event.data.node, (n) => {

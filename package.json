@@ -34,7 +34,7 @@
     "build:tarball": "yarn lerna run build:tarball"
   },
   "volta": {
-    "node": "12.22.12",
+    "node": "16.16.0",
     "yarn": "1.22.19"
   }
 }
