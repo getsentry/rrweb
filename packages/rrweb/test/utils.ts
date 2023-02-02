@@ -194,9 +194,9 @@ function stringifyDomSnapshot(mhtml: string): string {
   return newResult.map((asset) => Object.values(asset).join('\n')).join('\n\n');
 }
 
-export function assertSnapshot(snapshots: eventWithTime[]) {
+export function assertSnapshot(snapshots: unknown) {
   expect(snapshots).toBeDefined();
-  expect(stringifySnapshots(snapshots)).toMatchSnapshot();
+  expect(stringifySnapshots(snapshots as eventWithTime[])).toMatchSnapshot();
 }
 
 export function replaceLast(str: string, find: string, replace: string) {

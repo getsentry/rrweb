@@ -44,7 +44,7 @@ declare function snapshot(n: Document, options?: {
     maskAllInputs?: boolean | MaskInputOptions;
     maskTextFn?: MaskTextFn;
     maskInputFn?: MaskTextFn;
-    slimDOM?: boolean | SlimDOMOptions;
+    slimDOM?: boolean | SlimDOMOptions | 'all';
     dataURLOptions?: DataURLOptions;
     inlineImages?: boolean;
     recordCanvas?: boolean;

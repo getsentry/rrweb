@@ -128,7 +128,7 @@ describe('integration tests', function (this: ISuite) {
           waitUntil: 'load',
         });
       }
-      const rebuildHtml = (
+      const rebuildHtml = ((
         await page.evaluate(`${code}
         const x = new XMLSerializer();
         const [snap] = rrweb.snapshot(document);
@@ -139,7 +139,7 @@ describe('integration tests', function (this: ISuite) {
         }
         out;  // return
       `)
-      ).replace(/\n\n/g, '');
+      ) as string).replace(/\n\n/g, '');
       expect(rebuildHtml).toMatchSnapshot();
     });
   }
@@ -161,7 +161,7 @@ describe('integration tests', function (this: ISuite) {
     );
     const renderedHeight = await page.evaluate(
       'document.querySelector("center").clientHeight',
-    );
+    ) as number;
     // can remove following assertion if dimensions of page change
     assert(
       renderedHeight < 400,
@@ -204,10 +204,10 @@ iframe.contentDocument.querySelector('center').clientHeight
         inlineImages: true,
         inlineStylesheet: false
     })`);
-    await page.waitFor(100);
+    await page.waitForTimeout(100);
     const snapshot = await page.evaluate(
       'JSON.stringify(snapshot[0], null, 2);',
-    );
+    ) as string;
     assert(snapshot.includes('"rr_dataURL"'));
     assert(snapshot.includes('data:image/webp;base64,'));
   });

@@ -1,5 +1,5 @@
 import { mutationCallBack, Mirror, scrollCallback, MutationBufferParam, SamplingStrategy } from '../types';
-declare type BypassOptions = Omit<MutationBufferParam, 'doc' | 'mutationCb' | 'mirror' | 'shadowDomManager'> & {
+type BypassOptions = Omit<MutationBufferParam, 'doc' | 'mutationCb' | 'mirror' | 'shadowDomManager'> & {
     sampling: SamplingStrategy;
 };
 export declare class ShadowDomManager {
