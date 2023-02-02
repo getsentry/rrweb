@@ -27,6 +27,7 @@ import {
 import { IframeManager } from './iframe-manager';
 import { ShadowDomManager } from './shadow-dom-manager';
 import { CanvasManager } from './observers/canvas/canvas-manager';
+import { callbackWrapper } from '../sentry/callbackWrapper';
 
 function wrapEvent(e: event): eventWithTime {
   return {
@@ -343,7 +344,7 @@ function record<T = eventWithTime>(
     );
 
     const observe = (doc: Document) => {
-      return initObservers(
+      return callbackWrapper(initObservers)(
         {
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>

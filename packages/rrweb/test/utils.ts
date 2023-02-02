@@ -17,7 +17,7 @@ import * as fs from 'fs';
 
 export async function launchPuppeteer() {
   return await puppeteer.launch({
-    headless: process.env.PUPPETEER_HEADLESS ? true : false,
+    headless: process.env.PUPPETEER_DEBUG ? false : true,
     defaultViewport: {
       width: 1920,
       height: 1080,
