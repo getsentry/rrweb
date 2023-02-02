@@ -235,6 +235,8 @@ export function transformAttribute(
   tagName: string,
   name: string,
   value: string,
+  maskAllText: boolean,
+  maskTextFn: MaskTextFn | undefined,
 ): string {
   // relative path in attribute
   if (name === 'src' || (name === 'href' && value)) {
@@ -254,6 +256,8 @@ export function transformAttribute(
     return absoluteToStylesheet(value, getHref());
   } else if (tagName === 'object' && name === 'data' && value) {
     return absoluteToDoc(doc, value);
+  } else if (maskAllText) {
+
   } else {
     return value;
   }
@@ -492,7 +496,7 @@ function serializeNode(
       const tagName = getValidTagName(n as HTMLElement);
       let attributes: attributes = {};
       for (const { name, value } of Array.from((n as HTMLElement).attributes)) {
-        attributes[name] = transformAttribute(doc, tagName, name, value);
+        attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
       }
       // remote css
       if (tagName === 'link' && inlineStylesheet) {
