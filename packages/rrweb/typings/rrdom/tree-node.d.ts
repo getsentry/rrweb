@@ -1,4 +1,4 @@
-export declare type AnyObject = {
+export type AnyObject = {
     [key: string]: any;
     __rrdom__?: RRdomTreeNode;
 };

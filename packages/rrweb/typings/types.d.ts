@@ -13,15 +13,15 @@ export declare enum EventType {
     Custom = 5,
     Plugin = 6
 }
-export declare type domContentLoadedEvent = {
+export type domContentLoadedEvent = {
     type: EventType.DomContentLoaded;
     data: {};
 };
-export declare type loadedEvent = {
+export type loadedEvent = {
     type: EventType.Load;
     data: {};
 };
-export declare type fullSnapshotEvent = {
+export type fullSnapshotEvent = {
     type: EventType.FullSnapshot;
     data: {
         node: serializedNodeWithId;
@@ -31,11 +31,11 @@ export declare type fullSnapshotEvent = {
         };
     };
 };
-export declare type incrementalSnapshotEvent = {
+export type incrementalSnapshotEvent = {
     type: EventType.IncrementalSnapshot;
     data: incrementalData;
 };
-export declare type metaEvent = {
+export type metaEvent = {
     type: EventType.Meta;
     data: {
         href: string;
@@ -43,21 +43,21 @@ export declare type metaEvent = {
         height: number;
     };
 };
-export declare type customEvent<T = unknown> = {
+export type customEvent<T = unknown> = {
     type: EventType.Custom;
     data: {
         tag: string;
         payload: T;
     };
 };
-export declare type pluginEvent<T = unknown> = {
+export type pluginEvent<T = unknown> = {
     type: EventType.Plugin;
     data: {
         plugin: string;
         payload: T;
     };
 };
-export declare type styleSheetEvent = {};
+export type styleSheetEvent = {};
 export declare enum IncrementalSource {
     Mutation = 0,
     MouseMove = 1,
@@ -74,50 +74,50 @@ export declare enum IncrementalSource {
     Drag = 12,
     StyleDeclaration = 13
 }
-export declare type mutationData = {
+export type mutationData = {
     source: IncrementalSource.Mutation;
 } & mutationCallbackParam;
-export declare type mousemoveData = {
+export type mousemoveData = {
     source: IncrementalSource.MouseMove | IncrementalSource.TouchMove | IncrementalSource.Drag;
     positions: mousePosition[];
 };
-export declare type mouseInteractionData = {
+export type mouseInteractionData = {
     source: IncrementalSource.MouseInteraction;
 } & mouseInteractionParam;
-export declare type scrollData = {
+export type scrollData = {
     source: IncrementalSource.Scroll;
 } & scrollPosition;
-export declare type viewportResizeData = {
+export type viewportResizeData = {
     source: IncrementalSource.ViewportResize;
 } & viewportResizeDimension;
-export declare type inputData = {
+export type inputData = {
     source: IncrementalSource.Input;
     id: number;
 } & inputValue;
-export declare type mediaInteractionData = {
+export type mediaInteractionData = {
     source: IncrementalSource.MediaInteraction;
 } & mediaInteractionParam;
-export declare type styleSheetRuleData = {
+export type styleSheetRuleData = {
     source: IncrementalSource.StyleSheetRule;
 } & styleSheetRuleParam;
-export declare type styleDeclarationData = {
+export type styleDeclarationData = {
     source: IncrementalSource.StyleDeclaration;
 } & styleDeclarationParam;
-export declare type canvasMutationData = {
+export type canvasMutationData = {
     source: IncrementalSource.CanvasMutation;
 } & canvasMutationParam;
-export declare type fontData = {
+export type fontData = {
     source: IncrementalSource.Font;
 } & fontParam;
-export declare type incrementalData = mutationData | mousemoveData | mouseInteractionData | scrollData | viewportResizeData | inputData | mediaInteractionData | styleSheetRuleData | canvasMutationData | fontData | styleDeclarationData;
-export declare type event = domContentLoadedEvent | loadedEvent | fullSnapshotEvent | incrementalSnapshotEvent | metaEvent | customEvent | pluginEvent;
-export declare type eventWithTime = event & {
+export type incrementalData = mutationData | mousemoveData | mouseInteractionData | scrollData | viewportResizeData | inputData | mediaInteractionData | styleSheetRuleData | canvasMutationData | fontData | styleDeclarationData;
+export type event = domContentLoadedEvent | loadedEvent | fullSnapshotEvent | incrementalSnapshotEvent | metaEvent | customEvent | pluginEvent;
+export type eventWithTime = event & {
     timestamp: number;
     delay?: number;
 };
-export declare type blockClass = string | RegExp;
-export declare type maskTextClass = string | RegExp;
-export declare type SamplingStrategy = Partial<{
+export type blockClass = string | RegExp;
+export type maskTextClass = string | RegExp;
+export type SamplingStrategy = Partial<{
     mousemove: boolean | number;
     mousemoveCallback: number;
     mouseInteraction: boolean | Record<string, boolean | undefined>;
@@ -125,13 +125,13 @@ export declare type SamplingStrategy = Partial<{
     media: number;
     input: 'all' | 'last';
 }>;
-export declare type RecordPlugin<TOptions = unknown> = {
+export type RecordPlugin<TOptions = unknown> = {
     name: string;
     observer?: (cb: Function, win: IWindow, options: TOptions) => listenerHandler;
     eventProcessor?: <TExtend>(event: eventWithTime) => eventWithTime & TExtend;
     options: TOptions;
 };
-export declare type recordOptions<T> = {
+export type recordOptions<T> = {
     emit?: (e: T, isCheckout?: boolean) => void;
     checkoutEveryNth?: number;
     checkoutEveryNms?: number;
@@ -163,7 +163,7 @@ export declare type recordOptions<T> = {
     mousemoveWait?: number;
     keepIframeSrcFn?: KeepIframeSrcFn;
 };
-export declare type observerParam = {
+export type observerParam = {
     mutationCb: mutationCallBack;
     mousemoveCb: mousemoveCallBack;
     mouseInteractionCb: mouseInteractionCallBack;
@@ -207,8 +207,8 @@ export declare type observerParam = {
         options: unknown;
     }>;
 };
-export declare type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
-export declare type hooksParam = {
+export type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
+export type hooksParam = {
     mutation?: mutationCallBack;
     mousemove?: mousemoveCallBack;
     mouseInteraction?: mouseInteractionCallBack;
@@ -221,7 +221,7 @@ export declare type hooksParam = {
     canvasMutation?: canvasMutationCallback;
     font?: fontCallback;
 };
-export declare type mutationRecord = {
+export type mutationRecord = {
     type: string;
     target: Node;
     oldValue: string | null;
@@ -229,57 +229,57 @@ export declare type mutationRecord = {
     removedNodes: NodeList;
     attributeName: string | null;
 };
-export declare type textCursor = {
+export type textCursor = {
     node: Node;
     value: string | null;
 };
-export declare type textMutation = {
+export type textMutation = {
     id: number;
     value: string | null;
 };
-export declare type styleAttributeValue = {
+export type styleAttributeValue = {
     [key: string]: styleValueWithPriority | string | false;
 };
-export declare type styleValueWithPriority = [string, string];
-export declare type attributeCursor = {
+export type styleValueWithPriority = [string, string];
+export type attributeCursor = {
     node: Node;
     attributes: {
         [key: string]: string | styleAttributeValue | null;
     };
 };
-export declare type attributeMutation = {
+export type attributeMutation = {
     id: number;
     attributes: {
         [key: string]: string | styleAttributeValue | null;
     };
 };
-export declare type removedNodeMutation = {
+export type removedNodeMutation = {
     parentId: number;
     id: number;
     isShadow?: boolean;
 };
-export declare type addedNodeMutation = {
+export type addedNodeMutation = {
     parentId: number;
     previousId?: number | null;
     nextId: number | null;
     node: serializedNodeWithId;
 };
-export declare type mutationCallbackParam = {
+export type mutationCallbackParam = {
     texts: textMutation[];
     attributes: attributeMutation[];
     removes: removedNodeMutation[];
     adds: addedNodeMutation[];
     isAttachIframe?: true;
 };
-export declare type mutationCallBack = (m: mutationCallbackParam) => void;
-export declare type mousemoveCallBack = (p: mousePosition[], source: IncrementalSource.MouseMove | IncrementalSource.TouchMove | IncrementalSource.Drag) => void;
-export declare type mousePosition = {
+export type mutationCallBack = (m: mutationCallbackParam) => void;
+export type mousemoveCallBack = (p: mousePosition[], source: IncrementalSource.MouseMove | IncrementalSource.TouchMove | IncrementalSource.Drag) => void;
+export type mousePosition = {
     x: number;
     y: number;
     id: number;
     timeOffset: number;
 };
-export declare type mouseMovePos = {
+export type mouseMovePos = {
     x: number;
     y: number;
     id: number;
@@ -303,7 +303,7 @@ export declare enum CanvasContext {
     WebGL = 1,
     WebGL2 = 2
 }
-export declare type SerializedWebGlArg = {
+export type SerializedWebGlArg = {
     rr_type: 'ArrayBuffer';
     base64: string;
 } | {
@@ -316,33 +316,33 @@ export declare type SerializedWebGlArg = {
     rr_type: string;
     index: number;
 } | string | number | boolean | null | SerializedWebGlArg[];
-declare type mouseInteractionParam = {
+type mouseInteractionParam = {
     type: MouseInteractions;
     id: number;
     x: number;
     y: number;
 };
-export declare type mouseInteractionCallBack = (d: mouseInteractionParam) => void;
-export declare type scrollPosition = {
+export type mouseInteractionCallBack = (d: mouseInteractionParam) => void;
+export type scrollPosition = {
     id: number;
     x: number;
     y: number;
 };
-export declare type scrollCallback = (p: scrollPosition) => void;
-export declare type styleSheetAddRule = {
+export type scrollCallback = (p: scrollPosition) => void;
+export type styleSheetAddRule = {
     rule: string;
     index?: number | number[];
 };
-export declare type styleSheetDeleteRule = {
+export type styleSheetDeleteRule = {
     index: number | number[];
 };
-export declare type styleSheetRuleParam = {
+export type styleSheetRuleParam = {
     id: number;
     removes?: styleSheetDeleteRule[];
     adds?: styleSheetAddRule[];
 };
-export declare type styleSheetRuleCallback = (s: styleSheetRuleParam) => void;
-export declare type styleDeclarationParam = {
+export type styleSheetRuleCallback = (s: styleSheetRuleParam) => void;
+export type styleDeclarationParam = {
     id: number;
     index: number[];
     set?: {
@@ -354,13 +354,13 @@ export declare type styleDeclarationParam = {
         property: string;
     };
 };
-export declare type styleDeclarationCallback = (s: styleDeclarationParam) => void;
-export declare type canvasMutationCommand = {
+export type styleDeclarationCallback = (s: styleDeclarationParam) => void;
+export type canvasMutationCommand = {
     property: string;
     args: Array<unknown>;
     setter?: true;
 };
-export declare type canvasMutationParam = {
+export type canvasMutationParam = {
     id: number;
     type: CanvasContext;
     commands: canvasMutationCommand[];
@@ -368,29 +368,29 @@ export declare type canvasMutationParam = {
     id: number;
     type: CanvasContext;
 } & canvasMutationCommand);
-export declare type canvasMutationWithType = {
+export type canvasMutationWithType = {
     type: CanvasContext;
 } & canvasMutationCommand;
-export declare type canvasMutationCallback = (p: canvasMutationParam) => void;
-export declare type canvasManagerMutationCallback = (target: HTMLCanvasElement, p: canvasMutationWithType) => void;
-export declare type fontParam = {
+export type canvasMutationCallback = (p: canvasMutationParam) => void;
+export type canvasManagerMutationCallback = (target: HTMLCanvasElement, p: canvasMutationWithType) => void;
+export type fontParam = {
     family: string;
     fontSource: string;
     buffer: boolean;
     descriptors?: FontFaceDescriptors;
 };
-export declare type fontCallback = (p: fontParam) => void;
-export declare type viewportResizeDimension = {
+export type fontCallback = (p: fontParam) => void;
+export type viewportResizeDimension = {
     width: number;
     height: number;
 };
-export declare type viewportResizeCallback = (d: viewportResizeDimension) => void;
-export declare type inputValue = {
+export type viewportResizeCallback = (d: viewportResizeDimension) => void;
+export type inputValue = {
     text: string;
     isChecked: boolean;
     userTriggered?: boolean;
 };
-export declare type inputCallback = (v: inputValue & {
+export type inputCallback = (v: inputValue & {
     id: number;
 }) => void;
 export declare const enum MediaInteractions {
@@ -399,21 +399,21 @@ export declare const enum MediaInteractions {
     Seeked = 2,
     VolumeChange = 3
 }
-export declare type mediaInteractionParam = {
+export type mediaInteractionParam = {
     type: MediaInteractions;
     id: number;
     currentTime?: number;
     volume?: number;
     muted?: boolean;
 };
-export declare type mediaInteractionCallback = (p: mediaInteractionParam) => void;
-export declare type DocumentDimension = {
+export type mediaInteractionCallback = (p: mediaInteractionParam) => void;
+export type DocumentDimension = {
     x: number;
     y: number;
     relativeScale: number;
     absoluteScale: number;
 };
-export declare type Mirror = {
+export type Mirror = {
     map: idNodeMap;
     getId: (n: INode) => number;
     getNode: (id: number) => INode | null;
@@ -421,18 +421,18 @@ export declare type Mirror = {
     has: (id: number) => boolean;
     reset: () => void;
 };
-export declare type throttleOptions = {
+export type throttleOptions = {
     leading?: boolean;
     trailing?: boolean;
 };
-export declare type listenerHandler = () => void;
-export declare type hookResetter = () => void;
-export declare type ReplayPlugin = {
+export type listenerHandler = () => void;
+export type hookResetter = () => void;
+export type ReplayPlugin = {
     handler: (event: eventWithTime, isSync: boolean, context: {
         replayer: Replayer;
     }) => void;
 };
-export declare type playerConfig = {
+export type playerConfig = {
     speed: number;
     maxSpeed: number;
     root: Element;
@@ -455,29 +455,29 @@ export declare type playerConfig = {
     unpackFn?: UnpackFn;
     plugins?: ReplayPlugin[];
 };
-export declare type playerMetaData = {
+export type playerMetaData = {
     startTime: number;
     endTime: number;
     totalTime: number;
 };
-export declare type missingNode = {
+export type missingNode = {
     node: Node;
     mutation: addedNodeMutation;
 };
-export declare type missingNodeMap = {
+export type missingNodeMap = {
     [id: number]: missingNode;
 };
-export declare type actionWithDelay = {
+export type actionWithDelay = {
     doAction: () => void;
     delay: number;
 };
-export declare type Handler = (event?: unknown) => void;
-export declare type Emitter = {
+export type Handler = (event?: unknown) => void;
+export type Emitter = {
     on(type: string, handler: Handler): void;
     emit(type: string, event?: unknown): void;
     off(type: string, handler: Handler): void;
 };
-export declare type Arguments<T> = T extends (...payload: infer U) => unknown ? U : unknown;
+export type Arguments<T> = T extends (...payload: infer U) => unknown ? U : unknown;
 export declare enum ReplayerEvents {
     Start = "start",
     Pause = "pause",
@@ -496,15 +496,15 @@ export declare enum ReplayerEvents {
     StateChange = "state-change",
     PlayBack = "play-back"
 }
-export declare type ElementState = {
+export type ElementState = {
     scroll?: [number, number];
 };
-export declare type KeepIframeSrcFn = (src: string) => boolean;
+export type KeepIframeSrcFn = (src: string) => boolean;
 declare global {
     interface Window {
         FontFace: typeof FontFace;
     }
 }
-export declare type IWindow = Window & typeof globalThis;
-export declare type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+export type IWindow = Window & typeof globalThis;
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 export {};
