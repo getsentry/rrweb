@@ -548,6 +548,8 @@ export default class MutationBuffer {
             (m.target as HTMLElement).tagName,
             m.attributeName!,
             value!,
+            this.maskAllText,
+            this.maskTextFn
           );
         }
         break;

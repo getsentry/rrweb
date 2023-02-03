@@ -6,21 +6,21 @@ export declare enum NodeType {
     CDATA = 4,
     Comment = 5
 }
-export declare type documentNode = {
+export type documentNode = {
     type: NodeType.Document;
     childNodes: serializedNodeWithId[];
     compatMode?: string;
 };
-export declare type documentTypeNode = {
+export type documentTypeNode = {
     type: NodeType.DocumentType;
     name: string;
     publicId: string;
     systemId: string;
 };
-export declare type attributes = {
+export type attributes = {
     [key: string]: string | number | boolean;
 };
-export declare type elementNode = {
+export type elementNode = {
     type: NodeType.Element;
     tagName: string;
     attributes: attributes;
@@ -28,28 +28,28 @@ export declare type elementNode = {
     isSVG?: true;
     needBlock?: boolean;
 };
-export declare type textNode = {
+export type textNode = {
     type: NodeType.Text;
     textContent: string;
     isStyle?: true;
 };
-export declare type cdataNode = {
+export type cdataNode = {
     type: NodeType.CDATA;
     textContent: '';
 };
-export declare type commentNode = {
+export type commentNode = {
     type: NodeType.Comment;
     textContent: string;
 };
-export declare type serializedNode = (documentNode | documentTypeNode | elementNode | textNode | cdataNode | commentNode) & {
+export type serializedNode = (documentNode | documentTypeNode | elementNode | textNode | cdataNode | commentNode) & {
     rootId?: number;
     isShadowHost?: boolean;
     isShadow?: boolean;
 };
-export declare type serializedNodeWithId = serializedNode & {
+export type serializedNodeWithId = serializedNode & {
     id: number;
 };
-export declare type tagMap = {
+export type tagMap = {
     [key: string]: string;
 };
 export interface INode extends Node {
@@ -58,10 +58,10 @@ export interface INode extends Node {
 export interface ICanvas extends HTMLCanvasElement {
     __context: string;
 }
-export declare type idNodeMap = {
+export type idNodeMap = {
     [key: number]: INode;
 };
-export declare type MaskInputOptions = Partial<{
+export type MaskInputOptions = Partial<{
     color: boolean;
     date: boolean;
     'datetime-local': boolean;
@@ -79,7 +79,7 @@ export declare type MaskInputOptions = Partial<{
     select: boolean;
     password: boolean;
 }>;
-export declare type SlimDOMOptions = Partial<{
+export type SlimDOMOptions = Partial<{
     script: boolean;
     comment: boolean;
     headFavicon: boolean;
@@ -91,13 +91,13 @@ export declare type SlimDOMOptions = Partial<{
     headMetaAuthorship: boolean;
     headMetaVerification: boolean;
 }>;
-export declare type DataURLOptions = Partial<{
+export type DataURLOptions = Partial<{
     type: string;
     quality: number;
 }>;
-export declare type MaskTextFn = (text: string) => string;
-export declare type MaskInputFn = (text: string) => string;
-export declare type KeepIframeSrcFn = (src: string) => boolean;
-export declare type BuildCache = {
+export type MaskTextFn = (text: string) => string;
+export type MaskInputFn = (text: string) => string;
+export type KeepIframeSrcFn = (src: string) => boolean;
+export type BuildCache = {
     stylesWithHoverClass: Map<string, string>;
 };
