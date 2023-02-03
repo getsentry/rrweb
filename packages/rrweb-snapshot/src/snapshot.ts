@@ -25,6 +25,10 @@ const tagNameRegex = new RegExp('[^a-z0-9-_:]');
 
 export const IGNORED_NODE = -2;
 
+function defaultMaskFn(str: string) {
+  return str.replace(/[\S]/g, '*');
+}
+
 function genId(): number {
   return _id++;
 }
@@ -256,9 +260,10 @@ export function transformAttribute(
     return absoluteToStylesheet(value, getHref());
   } else if (tagName === 'object' && name === 'data' && value) {
     return absoluteToDoc(doc, value);
-  } else if (maskAllText) {
-
+  } else if (maskAllText && ['placeholder', 'title', 'aria-label'].indexOf(name) > -1) {
+    return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   } else {
+    console.log({maskAllText})
     return value;
   }
 }
@@ -721,7 +726,7 @@ function serializeNode(
       ) {
         textContent = maskTextFn
           ? maskTextFn(textContent)
-          : textContent.replace(/[\S]/g, '*');
+          : defaultMaskFn(textContent);
       }
       return {
         type: NodeType.Text,

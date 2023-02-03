@@ -3823,25 +3823,74 @@ exports[`record integration tests should mask all text (except unmaskTextSelecto
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "*****"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "*****"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "*****"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "*****",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 51
+                      }
+                    ],
                     "id": 44
                   }
                 ],
@@ -4139,25 +4188,74 @@ exports[`record integration tests should mask texts 1`] = `
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "mask6"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "mask7"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "mask8"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask9",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 51
+                      }
+                    ],
                     "id": 44
                   }
                 ],
@@ -4455,25 +4553,74 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "mask6"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "mask7"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "mask8"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask9",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 51
+                      }
+                    ],
                     "id": 44
                   }
                 ],
