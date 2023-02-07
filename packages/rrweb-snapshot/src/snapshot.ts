@@ -331,7 +331,6 @@ export function needMaskingText(
   }
 
   // Can skip class/selector evaluations if `maskAllText` is true
-  // unless 
   if (maskAllText) {
     return true;
   }
