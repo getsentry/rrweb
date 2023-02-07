@@ -263,7 +263,6 @@ export function transformAttribute(
   } else if (maskAllText && ['placeholder', 'title', 'aria-label'].indexOf(name) > -1) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   } else {
-    console.log({maskAllText})
     return value;
   }
 }
