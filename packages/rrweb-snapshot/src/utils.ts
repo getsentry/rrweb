@@ -28,6 +28,7 @@ export function maskInputValue({
   value: string | null;
   maskInputFn?: MaskInputFn;
 }): string {
+  console.log('maskInputValue', tagName)
   let text = value || '';
 
   if (unmaskInputSelector && input.matches(unmaskInputSelector)) {
