@@ -270,7 +270,7 @@ export class Replayer {
         this.rebuildFullSnapshot(
           firstFullsnapshot as fullSnapshotEvent & { timestamp: number },
         );
-        this.iframe.contentWindow!.scrollTo(
+        this.iframe.contentWindow && this.iframe.contentWindow.scrollTo(
           (firstFullsnapshot as fullSnapshotEvent).data.initialOffset,
         );
       }, 1);
@@ -367,7 +367,7 @@ export class Replayer {
     }
     this.iframe.contentDocument
       ?.getElementsByTagName('html')[0]
-      .classList.remove('rrweb-paused');
+      ?.classList.remove('rrweb-paused');
     this.emitter.emit(ReplayerEvents.Start);
   }
 
@@ -381,7 +381,7 @@ export class Replayer {
     }
     this.iframe.contentDocument
       ?.getElementsByTagName('html')[0]
-      .classList.add('rrweb-paused');
+      ?.classList.add('rrweb-paused');
     this.emitter.emit(ReplayerEvents.Pause);
   }
 
@@ -553,7 +553,7 @@ export class Replayer {
             this.firstFullSnapshot = true;
           }
           this.rebuildFullSnapshot(event, isSync);
-          this.iframe.contentWindow!.scrollTo(event.data.initialOffset);
+          this.iframe.contentWindow && this.iframe.contentWindow.scrollTo(event.data.initialOffset);
         };
         break;
       case EventType.IncrementalSnapshot:
@@ -690,8 +690,12 @@ export class Replayer {
     documentElement: HTMLElement,
     head: HTMLHeadElement,
   ) {
+    if (!documentElement) {
+      return;
+    }
+
     const styleEl = document.createElement('style');
-    documentElement!.insertBefore(styleEl, head);
+    documentElement.insertBefore(styleEl, head);
     const injectStylesRules = getInjectStyleRules(
       this.config.blockClass,
     ).concat(this.config.insertStyleRules);
@@ -1655,14 +1659,16 @@ export class Replayer {
       return this.debugNodeNotFound(d, d.id);
     }
     if ((target as Node) === this.iframe.contentDocument) {
-      this.iframe.contentWindow!.scrollTo({
+      this.iframe.contentWindow && this.iframe.contentWindow.scrollTo({
         top: d.y,
         left: d.x,
         behavior: isSync ? 'auto' : 'smooth',
       });
     } else if (target.__sn.type === NodeType.Document) {
+      const defaultView = ((target as unknown) as Document).defaultView;
+
       // nest iframe content document
-      ((target as unknown) as Document).defaultView!.scrollTo({
+     defaultView && defaultView.scrollTo({
         top: d.y,
         left: d.x,
         behavior: isSync ? 'auto' : 'smooth',
