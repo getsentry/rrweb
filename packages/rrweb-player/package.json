@@ -1,6 +1,6 @@
 {
   "name": "@sentry-internal/rrweb-player",
-  "version": "1.101.0",
+  "version": "1.101.1",
   "publishConfig": {
     "access": "public"
   },
@@ -27,7 +27,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@sentry-internal/rrweb": "1.101.0",
+    "@sentry-internal/rrweb": "1.101.1",
     "@tsconfig/svelte": "^3.0.0"
   },
   "scripts": {
