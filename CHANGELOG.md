@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.101.2
+
+- fix: Ensure we do not check `window` in module scope (#47)
+
 ## v1.101.1
 
 - fix: Fix accidential `dependencies` of `rrweb-snapshot` (#45)
