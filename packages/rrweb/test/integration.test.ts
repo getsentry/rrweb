@@ -590,7 +590,7 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it.only('should mask only inputs', async () => {
+  it('should mask only inputs', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
