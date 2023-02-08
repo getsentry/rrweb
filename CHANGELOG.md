@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.101.1
+
+- fix: Fix accidential `dependencies` of `rrweb-snapshot` (#45)
+
 ## v1.101.0
 
 - feat: Wrap rrweb callbacks in wrapper to better handle errors (#41)
