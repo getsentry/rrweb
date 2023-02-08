@@ -41,6 +41,7 @@ import {
   MutationBufferParam,
 } from '../types';
 import MutationBuffer from './mutation';
+import { callbackWrapper } from '../sentry/callbackWrapper';
 
 type WindowWithStoredMutationObserver = IWindow & {
   __rrMutationObserver?: MutationObserver;
@@ -135,9 +136,11 @@ export function initMutationObserver(
       typeof MutationObserver
     >)[angularZoneSymbol];
   }
+
   const observer = new mutationObserverCtor(
-    mutationBuffer.processMutations.bind(mutationBuffer),
+    callbackWrapper(mutationBuffer.processMutations.bind(mutationBuffer)),
   );
+
   observer.observe(rootEl, {
     attributes: true,
     attributeOldValue: true,
@@ -176,7 +179,7 @@ function initMoveObserver({
         | IncrementalSource.Drag,
     ) => {
       const totalOffset = Date.now() - timeBaseline!;
-      mousemoveCb(
+      callbackWrapper(mousemoveCb)(
         positions.map((p) => {
           p.timeOffset -= totalOffset;
           return p;
@@ -219,13 +222,13 @@ function initMoveObserver({
     },
   );
   const handlers = [
-    on('mousemove', updatePosition, doc),
-    on('touchmove', updatePosition, doc),
-    on('drag', updatePosition, doc),
+    on('mousemove', callbackWrapper(updatePosition), doc),
+    on('touchmove', callbackWrapper(updatePosition), doc),
+    on('drag', callbackWrapper(updatePosition), doc),
   ];
-  return () => {
+  return callbackWrapper(() => {
     handlers.forEach((h) => h());
-  };
+  });
 }
 
 function initMouseInteractionObserver({
@@ -257,7 +260,7 @@ function initMouseInteractionObserver({
       }
       const id = mirror.getId(target as INode);
       const { clientX, clientY } = e;
-      mouseInteractionCb({
+      callbackWrapper(mouseInteractionCb)({
         type: MouseInteractions[eventKey],
         id,
         x: clientX,
@@ -274,12 +277,12 @@ function initMouseInteractionObserver({
     )
     .forEach((eventKey: keyof typeof MouseInteractions) => {
       const eventName = eventKey.toLowerCase();
-      const handler = getHandler(eventKey);
+      const handler = callbackWrapper(getHandler(eventKey));
       handlers.push(on(eventName, handler, doc));
     });
-  return () => {
+  return callbackWrapper(() => {
     handlers.forEach((h) => h());
-  };
+  });
 }
 
 export function initScrollObserver({
@@ -300,20 +303,20 @@ export function initScrollObserver({
     const id = mirror.getId(target as INode);
     if (target === doc) {
       const scrollEl = (doc.scrollingElement || doc.documentElement)!;
-      scrollCb({
+      callbackWrapper(scrollCb)({
         id,
         x: scrollEl.scrollLeft,
         y: scrollEl.scrollTop,
       });
     } else {
-      scrollCb({
+      callbackWrapper(scrollCb)({
         id,
         x: (target as HTMLElement).scrollLeft,
         y: (target as HTMLElement).scrollTop,
       });
     }
   }, sampling.scroll || 100);
-  return on('scroll', updatePosition, doc);
+  return on('scroll', callbackWrapper(updatePosition), doc);
 }
 
 function initViewportResizeObserver({
@@ -325,7 +328,7 @@ function initViewportResizeObserver({
     const height = getWindowHeight();
     const width = getWindowWidth();
     if (lastH !== height || lastW !== width) {
-      viewportResizeCb({
+      callbackWrapper(viewportResizeCb)({
         width: Number(width),
         height: Number(height),
       });
@@ -333,7 +336,7 @@ function initViewportResizeObserver({
       lastW = width;
     }
   }, 200);
-  return on('resize', updateDimension, window);
+  return on('resize', callbackWrapper(updateDimension), window);
 }
 
 function wrapEventWithUserTriggeredFlag(
@@ -408,7 +411,7 @@ function initInputObserver({
     }
     cbWithDedup(
       target,
-      wrapEventWithUserTriggeredFlag(
+      callbackWrapper(wrapEventWithUserTriggeredFlag)(
         { text, isChecked, userTriggered },
         userTriggeredOnInput,
       ),
@@ -423,7 +426,7 @@ function initInputObserver({
           if (el !== target) {
             cbWithDedup(
               el,
-              wrapEventWithUserTriggeredFlag(
+              callbackWrapper(wrapEventWithUserTriggeredFlag)(
                 {
                   text: (el as HTMLInputElement).value,
                   isChecked: !isChecked,
@@ -454,7 +457,9 @@ function initInputObserver({
   const events = sampling.input === 'last' ? ['change'] : ['input', 'change'];
   const handlers: Array<
     listenerHandler | hookResetter
-  > = events.map((eventName) => on(eventName, eventHandler, doc));
+  > = events.map((eventName) =>
+    on(eventName, callbackWrapper(eventHandler), doc),
+  );
   const propertyDescriptor = Object.getOwnPropertyDescriptor(
     HTMLInputElement.prototype,
     'value',
@@ -474,15 +479,15 @@ function initInputObserver({
         hookSetter<HTMLElement>(p[0], p[1], {
           set() {
             // mock to a normal event
-            eventHandler({ target: this } as Event);
+            callbackWrapper(eventHandler)({ target: this } as Event);
           },
         }),
       ),
     );
   }
-  return () => {
+  return callbackWrapper(() => {
     handlers.forEach((h) => h());
-  };
+  });
 }
 
 type GroupingCSSRule =
@@ -534,31 +539,44 @@ function initStyleSheetObserver(
   }
 
   const insertRule = win.CSSStyleSheet.prototype.insertRule;
-  win.CSSStyleSheet.prototype.insertRule = function (
-    rule: string,
-    index?: number,
-  ) {
-    const id = mirror.getId(this.ownerNode as INode);
-    if (id !== -1) {
-      styleSheetRuleCb({
-        id,
-        adds: [{ rule, index }],
-      });
-    }
-    return insertRule.apply(this, arguments);
-  };
+  win.CSSStyleSheet.prototype.insertRule = new Proxy(insertRule, {
+    apply: callbackWrapper(
+      (
+        target: typeof insertRule,
+        thisArg: any,
+        argumentsList: [string, number | undefined],
+      ) => {
+        const [rule, index] = argumentsList;
+        const id = mirror.getId(thisArg.ownerNode as INode);
+
+        if (id !== -1) {
+          styleSheetRuleCb({
+            id,
+            adds: [{ rule, index }],
+          });
+        }
+
+        return target.apply(thisArg, argumentsList);
+      },
+    ),
+  });
 
   const deleteRule = win.CSSStyleSheet.prototype.deleteRule;
-  win.CSSStyleSheet.prototype.deleteRule = function (index: number) {
-    const id = mirror.getId(this.ownerNode as INode);
-    if (id !== -1) {
-      styleSheetRuleCb({
-        id,
-        removes: [{ index }],
-      });
-    }
-    return deleteRule.apply(this, arguments);
-  };
+  win.CSSStyleSheet.prototype.deleteRule = new Proxy(deleteRule, {
+    apply: callbackWrapper(
+      (target: typeof deleteRule, thisArg: any, argumentsList: [number]) => {
+        const [index] = argumentsList;
+        const id = mirror.getId(thisArg.ownerNode as INode);
+        if (id !== -1) {
+          styleSheetRuleCb({
+            id,
+            removes: [{ index }],
+          });
+        }
+        return target.apply(thisArg, argumentsList);
+      },
+    ),
+  });
 
   const supportedNestedCSSRuleTypes: {
     [key: string]: GroupingCSSRuleTypes;
@@ -594,45 +612,76 @@ function initStyleSheetObserver(
       deleteRule: (type as GroupingCSSRuleTypes).prototype.deleteRule,
     };
 
-    type.prototype.insertRule = function (rule: string, index?: number) {
-      const id = mirror.getId(this.parentStyleSheet.ownerNode as INode);
-      if (id !== -1) {
-        styleSheetRuleCb({
-          id,
-          adds: [
-            {
-              rule,
-              index: [
-                ...getNestedCSSRulePositions(this),
-                index || 0, // defaults to 0
-              ],
-            },
-          ],
-        });
-      }
-      return unmodifiedFunctions[typeKey].insertRule.apply(this, arguments);
-    };
+    type.prototype.insertRule = new Proxy(
+      unmodifiedFunctions[typeKey].insertRule,
+      {
+        apply: callbackWrapper(
+          (
+            target: typeof insertRule,
+            thisArg: any,
+            argumentsList: [string, number | undefined],
+          ) => {
+            const [rule, index] = argumentsList;
+            const id = mirror.getId(
+              thisArg.parentStyleSheet.ownerNode as INode,
+            );
+            if (id !== -1) {
+              styleSheetRuleCb({
+                id,
+                adds: [
+                  {
+                    rule,
+                    index: [
+                      ...getNestedCSSRulePositions(thisArg),
+                      index || 0, // defaults to 0
+                    ],
+                  },
+                ],
+              });
+            }
+            return target.apply(thisArg, argumentsList);
+          },
+        ),
+      },
+    );
 
-    type.prototype.deleteRule = function (index: number) {
-      const id = mirror.getId(this.parentStyleSheet.ownerNode as INode);
-      if (id !== -1) {
-        styleSheetRuleCb({
-          id,
-          removes: [{ index: [...getNestedCSSRulePositions(this), index] }],
-        });
-      }
-      return unmodifiedFunctions[typeKey].deleteRule.apply(this, arguments);
-    };
+    type.prototype.deleteRule = new Proxy(
+      unmodifiedFunctions[typeKey].deleteRule,
+      {
+        apply: callbackWrapper(
+          (
+            target: typeof deleteRule,
+            thisArg: any,
+            argumentsList: [number],
+          ) => {
+            const [index] = argumentsList;
+
+            const id = mirror.getId(
+              thisArg.parentStyleSheet.ownerNode as INode,
+            );
+            if (id !== -1) {
+              styleSheetRuleCb({
+                id,
+                removes: [
+                  { index: [...getNestedCSSRulePositions(thisArg), index] },
+                ],
+              });
+            }
+            return target.apply(thisArg, argumentsList);
+          },
+        ),
+      },
+    );
   });
 
-  return () => {
+  return callbackWrapper(() => {
     win.CSSStyleSheet.prototype.insertRule = insertRule;
     win.CSSStyleSheet.prototype.deleteRule = deleteRule;
     Object.entries(supportedNestedCSSRuleTypes).forEach(([typeKey, type]) => {
       type.prototype.insertRule = unmodifiedFunctions[typeKey].insertRule;
       type.prototype.deleteRule = unmodifiedFunctions[typeKey].deleteRule;
     });
-  };
+  });
 }
 
 function initStyleDeclarationObserver(
@@ -640,53 +689,65 @@ function initStyleDeclarationObserver(
   { win }: { win: IWindow },
 ): listenerHandler {
   const setProperty = win.CSSStyleDeclaration.prototype.setProperty;
-  win.CSSStyleDeclaration.prototype.setProperty = function (
-    this: CSSStyleDeclaration,
-    property: string,
-    value: string,
-    priority: string,
-  ) {
-    const id = mirror.getId(
-      (this.parentRule?.parentStyleSheet?.ownerNode as unknown) as INode,
-    );
-    if (id !== -1) {
-      styleDeclarationCb({
-        id,
-        set: {
-          property,
-          value,
-          priority,
-        },
-        index: getNestedCSSRulePositions(this.parentRule!),
-      });
-    }
-    return setProperty.apply(this, arguments);
-  };
+
+  win.CSSStyleDeclaration.prototype.setProperty = new Proxy(setProperty, {
+    apply: callbackWrapper(
+      (
+        target: typeof setProperty,
+        thisArg: any,
+        argumentsList: [string, string, string],
+      ) => {
+        const [property, value, priority] = argumentsList;
+        const id = mirror.getId(
+          (thisArg.parentRule?.parentStyleSheet?.ownerNode as unknown) as INode,
+        );
+        if (id !== -1) {
+          styleDeclarationCb({
+            id,
+            set: {
+              property,
+              value,
+              priority,
+            },
+            index: getNestedCSSRulePositions(thisArg.parentRule!),
+          });
+        }
+        return target.apply(thisArg, argumentsList);
+      },
+    ),
+  });
 
   const removeProperty = win.CSSStyleDeclaration.prototype.removeProperty;
-  win.CSSStyleDeclaration.prototype.removeProperty = function (
-    this: CSSStyleDeclaration,
-    property: string,
-  ) {
-    const id = mirror.getId(
-      (this.parentRule?.parentStyleSheet?.ownerNode as unknown) as INode,
-    );
-    if (id !== -1) {
-      styleDeclarationCb({
-        id,
-        remove: {
-          property,
-        },
-        index: getNestedCSSRulePositions(this.parentRule!),
-      });
-    }
-    return removeProperty.apply(this, arguments);
-  };
+  win.CSSStyleDeclaration.prototype.removeProperty = new Proxy(removeProperty, {
+    apply: callbackWrapper(
+      (
+        target: typeof removeProperty,
+        thisArg: any,
+        argumentsList: [string],
+      ) => {
+        const [property] = argumentsList;
 
-  return () => {
+        const id = mirror.getId(
+          (thisArg.parentRule?.parentStyleSheet?.ownerNode as unknown) as INode,
+        );
+        if (id !== -1) {
+          styleDeclarationCb({
+            id,
+            remove: {
+              property,
+            },
+            index: getNestedCSSRulePositions(thisArg.parentRule!),
+          });
+        }
+        return target.apply(thisArg, argumentsList);
+      },
+    ),
+  });
+
+  return callbackWrapper(() => {
     win.CSSStyleDeclaration.prototype.setProperty = setProperty;
     win.CSSStyleDeclaration.prototype.removeProperty = removeProperty;
-  };
+  });
 }
 
 function initMediaInteractionObserver({
@@ -696,29 +757,32 @@ function initMediaInteractionObserver({
   sampling,
 }: observerParam): listenerHandler {
   const handler = (type: MediaInteractions) =>
-    throttle((event: Event) => {
-      const target = getEventTarget(event);
-      if (!target || isBlocked(target as Node, blockClass)) {
-        return;
-      }
-      const { currentTime, volume, muted } = target as HTMLMediaElement;
-      mediaInteractionCb({
-        type,
-        id: mirror.getId(target as INode),
-        currentTime,
-        volume,
-        muted,
-      });
-    }, sampling.media || 500);
+    throttle(
+      callbackWrapper((event: Event) => {
+        const target = getEventTarget(event);
+        if (!target || isBlocked(target as Node, blockClass)) {
+          return;
+        }
+        const { currentTime, volume, muted } = target as HTMLMediaElement;
+        mediaInteractionCb({
+          type,
+          id: mirror.getId(target as INode),
+          currentTime,
+          volume,
+          muted,
+        });
+      }),
+      sampling.media || 500,
+    );
   const handlers = [
     on('play', handler(MediaInteractions.Play)),
     on('pause', handler(MediaInteractions.Pause)),
     on('seeked', handler(MediaInteractions.Seeked)),
     on('volumechange', handler(MediaInteractions.VolumeChange)),
   ];
-  return () => {
+  return callbackWrapper(() => {
     handlers.forEach((h) => h());
-  };
+  });
 }
 
 function initFontObserver({ fontCb, doc }: observerParam): listenerHandler {
@@ -769,9 +833,9 @@ function initFontObserver({ fontCb, doc }: observerParam): listenerHandler {
   });
   handlers.push(restoreHandler);
 
-  return () => {
+  return callbackWrapper(() => {
     handlers.forEach((h) => h());
-  };
+  });
 }
 
 function mergeHooks(o: observerParam, hooks: hooksParam) {
@@ -887,7 +951,7 @@ export function initObservers(
     );
   }
 
-  return () => {
+  return callbackWrapper(() => {
     mutationBuffers.forEach((b) => b.reset());
     mutationObserver.disconnect();
     mousemoveHandler();
@@ -904,5 +968,5 @@ export function initObservers(
     }
     fontObserver();
     pluginHandlers.forEach((h) => h());
-  };
+  });
 }
