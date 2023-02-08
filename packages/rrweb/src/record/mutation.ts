@@ -166,6 +166,7 @@ export default class MutationBuffer {
   private maskInputSelector: observerParam['maskInputSelector'];
   private unmaskInputSelector: observerParam['unmaskInputSelector'];
   private inlineStylesheet: observerParam['inlineStylesheet'];
+  private maskAllText: observerParam['maskAllText'];
   private maskInputOptions: observerParam['maskInputOptions'];
   private maskTextFn: observerParam['maskTextFn'];
   private maskInputFn: observerParam['maskInputFn'];
@@ -190,6 +191,7 @@ export default class MutationBuffer {
       'maskInputSelector',
       'unmaskInputSelector',
       'inlineStylesheet',
+      'maskAllText',
       'maskInputOptions',
       'maskTextFn',
       'maskInputFn',
@@ -304,6 +306,7 @@ export default class MutationBuffer {
         unmaskInputSelector: this.unmaskInputSelector,
         skipChild: true,
         inlineStylesheet: this.inlineStylesheet,
+        maskAllText: this.maskAllText,
         maskInputOptions: this.maskInputOptions,
         maskTextFn: this.maskTextFn,
         maskInputFn: this.maskInputFn,
@@ -460,6 +463,7 @@ export default class MutationBuffer {
                 this.maskTextClass,
                 this.maskTextSelector,
                 this.unmaskTextSelector,
+                this.maskAllText,
               ) && value
                 ? this.maskTextFn
                   ? this.maskTextFn(value)

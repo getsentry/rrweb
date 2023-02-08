@@ -49,7 +49,9 @@ describe('record integration tests', function (this: ISuite) {
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
+        maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
+        unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
         recordCanvas: ${options.recordCanvas},
         plugins: ${options.plugins}        
       });
@@ -583,6 +585,21 @@ describe('record integration tests', function (this: ISuite) {
         });
     });
     await page.waitForTimeout(50);
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should mask all text (except unmaskTextSelector), using maskAllText ', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'mask-text.html', {
+        maskTextClass: 'none',
+        maskAllText: true,
+        unmaskTextSelector: '.rr-unmask',
+      }),
+    );
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);

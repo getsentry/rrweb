@@ -294,64 +294,69 @@ export function needMaskingText(
   maskTextClass: string | RegExp,
   maskTextSelector: string | null,
   unmaskTextSelector: string | null,
+  maskAllText: boolean,
 ): boolean {
   if (!node) {
     return false;
   }
-  if (node.nodeType === node.ELEMENT_NODE) {
-    if (unmaskTextSelector) {
-      if (
-        (node as HTMLElement).matches(unmaskTextSelector) ||
-        (node as HTMLElement).closest(unmaskTextSelector)
-      ) {
-        return false;
-      }
-    }
 
-    if (typeof maskTextClass === 'string') {
-      if ((node as HTMLElement).classList.contains(maskTextClass)) {
-        return true;
-      }
-    } else {
-      // tslint:disable-next-line: prefer-for-of
-      for (
-        let eIndex = 0;
-        eIndex < (node as HTMLElement).classList.length;
-        eIndex++
-      ) {
-        const className = (node as HTMLElement).classList[eIndex];
-        if (maskTextClass.test(className)) {
-          return true;
-        }
-      }
-    }
-    if (maskTextSelector) {
-      if ((node as HTMLElement).matches(maskTextSelector)) {
-        return true;
-      }
-    }
+  if (node.nodeType !== node.ELEMENT_NODE) {
+    // e.g. if node is TEXT_NODE, we need to check parent since it will not
+    // have class name.
     return needMaskingText(
       node.parentNode,
       maskTextClass,
       maskTextSelector,
       unmaskTextSelector,
+      maskAllText,
     );
   }
 
-  if (node.nodeType === node.TEXT_NODE) {
-    // check parent node since text node do not have class name
-    return needMaskingText(
-      node.parentNode,
-      maskTextClass,
-      maskTextSelector,
-      unmaskTextSelector,
-    );
+  // node is an ELEMENT_NODE...
+  if (unmaskTextSelector) {
+    if (
+      (node as HTMLElement).matches(unmaskTextSelector) ||
+      (node as HTMLElement).closest(unmaskTextSelector)
+    ) {
+      return false;
+    }
   }
+
+  // Can skip class/selector evaluations if `maskAllText` is true
+  if (maskAllText) {
+    return true;
+  }
+
+  if (typeof maskTextClass === 'string') {
+    if ((node as HTMLElement).classList.contains(maskTextClass)) {
+      return true;
+    }
+  } else {
+    // tslint:disable-next-line: prefer-for-of
+    for (
+      let eIndex = 0;
+      eIndex < (node as HTMLElement).classList.length;
+      eIndex++
+    ) {
+      const className = (node as HTMLElement).classList[eIndex];
+      if (maskTextClass.test(className)) {
+        return true;
+      }
+    }
+  }
+
+  if (maskTextSelector) {
+    if ((node as HTMLElement).matches(maskTextSelector)) {
+      return true;
+    }
+  }
+
   return needMaskingText(
     node.parentNode,
     maskTextClass,
     maskTextSelector,
     unmaskTextSelector,
+    maskAllText,
   );
 }
 
@@ -417,6 +422,7 @@ function serializeNode(
     maskInputSelector: string | null;
     unmaskInputSelector: string | null;
     inlineStylesheet: boolean;
+    maskAllText: boolean;
     maskInputOptions: MaskInputOptions;
     maskTextFn: MaskTextFn | undefined;
     maskInputFn: MaskInputFn | undefined;
@@ -437,6 +443,7 @@ function serializeNode(
     inlineStylesheet,
     maskInputSelector,
     unmaskInputSelector,
+    maskAllText,
     maskInputOptions = {},
     maskTextFn,
     maskInputFn,
@@ -704,6 +711,7 @@ function serializeNode(
           maskTextClass,
           maskTextSelector,
           unmaskTextSelector,
+          maskAllText,
         ) &&
         textContent
       ) {
@@ -848,6 +856,7 @@ export function serializeNodeWithId(
     inlineStylesheet: boolean;
     maskInputSelector: string | null;
     unmaskInputSelector: string | null;
+    maskAllText: boolean;
     maskInputOptions?: MaskInputOptions;
     maskTextFn: MaskTextFn | undefined;
     maskInputFn: MaskInputFn | undefined;
@@ -875,6 +884,7 @@ export function serializeNodeWithId(
     inlineStylesheet = true,
     maskInputSelector,
     unmaskInputSelector,
+    maskAllText,
     maskInputOptions = {},
     maskTextFn,
     maskInputFn,
@@ -899,6 +909,7 @@ export function serializeNodeWithId(
     inlineStylesheet,
     maskInputSelector,
     unmaskInputSelector,
+    maskAllText,
     maskInputOptions,
     maskTextFn,
     maskInputFn,
@@ -970,6 +981,7 @@ export function serializeNodeWithId(
       inlineStylesheet,
       maskInputSelector,
       unmaskInputSelector,
+      maskAllText,
       maskInputOptions,
       maskTextFn,
       maskInputFn,
@@ -1027,6 +1039,7 @@ export function serializeNodeWithId(
             inlineStylesheet,
             maskInputSelector,
             unmaskInputSelector,
+            maskAllText,
             maskInputOptions,
             maskTextFn,
             maskInputFn,
@@ -1065,6 +1078,7 @@ function snapshot(
     maskInputSelector?: string | null;
     unmaskInputSelector?: string | null;
     inlineStylesheet?: boolean;
+    maskAllText?: boolean;
     maskAllInputs?: boolean | MaskInputOptions;
     maskTextFn?: MaskTextFn;
     maskInputFn?: MaskTextFn;
@@ -1091,6 +1105,7 @@ function snapshot(
     recordCanvas = false,
     maskInputSelector = null,
     unmaskInputSelector = null,
+    maskAllText = false,
     maskAllInputs = false,
     maskTextFn,
     maskInputFn,
@@ -1160,6 +1175,7 @@ function snapshot(
       inlineStylesheet,
       maskInputSelector,
       unmaskInputSelector,
+      maskAllText,
       maskInputOptions,
       maskTextFn,
       maskInputFn,
