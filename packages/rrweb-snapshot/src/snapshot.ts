@@ -25,6 +25,10 @@ const tagNameRegex = new RegExp('[^a-z0-9-_:]');
 
 export const IGNORED_NODE = -2;
 
+function defaultMaskFn(str: string) {
+  return str.replace(/[\S]/g, '*');
+}
+
 function genId(): number {
   return _id++;
 }
@@ -235,6 +239,8 @@ export function transformAttribute(
   tagName: string,
   name: string,
   value: string,
+  maskAllText: boolean,
+  maskTextFn: MaskTextFn | undefined,
 ): string {
   // relative path in attribute
   if (name === 'src' || (name === 'href' && value)) {
@@ -254,6 +260,8 @@ export function transformAttribute(
     return absoluteToStylesheet(value, getHref());
   } else if (tagName === 'object' && name === 'data' && value) {
     return absoluteToDoc(doc, value);
+  } else if (maskAllText && ['placeholder', 'title', 'aria-label'].indexOf(name) > -1) {
+    return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   } else {
     return value;
   }
@@ -492,7 +500,7 @@ function serializeNode(
       const tagName = getValidTagName(n as HTMLElement);
       let attributes: attributes = {};
       for (const { name, value } of Array.from((n as HTMLElement).attributes)) {
-        attributes[name] = transformAttribute(doc, tagName, name, value);
+        attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
       }
       // remote css
       if (tagName === 'link' && inlineStylesheet) {
@@ -679,6 +687,7 @@ function serializeNode(
       let textContent = (n as Text).textContent;
       const isStyle = parentTagName === 'STYLE' ? true : undefined;
       const isScript = parentTagName === 'SCRIPT' ? true : undefined;
+
       if (isStyle && textContent) {
         try {
           // try to read style sheet
@@ -700,10 +709,26 @@ function serializeNode(
         }
         textContent = absoluteToStylesheet(textContent, getHref());
       }
+
       if (isScript) {
         textContent = 'SCRIPT_PLACEHOLDER';
       }
-      if (
+
+      if (parentTagName === 'TEXTAREA' && textContent) {
+        // Ensure that textContent === attribute.value
+        // (masking options can make them different)
+        // replay will remove duplicate textContent.
+        textContent = maskInputValue({
+          input: n.parentNode as HTMLElement,
+          maskInputSelector,
+          unmaskInputSelector,
+          maskInputOptions,
+          tagName: parentTagName,
+          type: null,
+          value: textContent,
+          maskInputFn,
+        });
+      } else if (
         !isStyle &&
         !isScript &&
         needMaskingText(
@@ -717,8 +742,9 @@ function serializeNode(
       ) {
         textContent = maskTextFn
           ? maskTextFn(textContent)
-          : textContent.replace(/[\S]/g, '*');
+          : defaultMaskFn(textContent);
       }
+
       return {
         type: NodeType.Text,
         textContent: textContent || '',

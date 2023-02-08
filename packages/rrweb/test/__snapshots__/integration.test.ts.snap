@@ -3823,25 +3823,479 @@ exports[`record integration tests should mask all text (except unmaskTextSelecto
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "*****"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "*****"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "*****"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "*****",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "mask10"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask10",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 53
+                          }
+                        ],
+                        "id": 52
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 54
+                      }
+                    ],
+                    "id": 44
+                  }
+                ],
+                "id": 16
+              }
+            ],
+            "id": 3
+          }
+        ],
+        "id": 1
+      },
+      "initialOffset": {
+        "left": 0,
+        "top": 0
+      }
+    }
+  }
+]"
+`;
+
+exports[`record integration tests should mask only inputs 1`] = `
+"[
+  {
+    "type": 0,
+    "data": {}
+  },
+  {
+    "type": 1,
+    "data": {}
+  },
+  {
+    "type": 4,
+    "data": {
+      "href": "about:blank",
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  {
+    "type": 2,
+    "data": {
+      "node": {
+        "type": 0,
+        "childNodes": [
+          {
+            "type": 1,
+            "name": "html",
+            "publicId": "",
+            "systemId": "",
+            "id": 2
+          },
+          {
+            "type": 2,
+            "tagName": "html",
+            "attributes": {
+              "lang": "en"
+            },
+            "childNodes": [
+              {
+                "type": 2,
+                "tagName": "head",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 5
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "charset": "UTF-8"
+                    },
+                    "childNodes": [],
+                    "id": 6
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 7
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "name": "viewport",
+                      "content": "width=device-width, initial-scale=1.0"
+                    },
+                    "childNodes": [],
+                    "id": 8
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 9
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "http-equiv": "X-UA-Compatible",
+                      "content": "ie=edge"
+                    },
+                    "childNodes": [],
+                    "id": 10
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 11
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "title",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "Mask text",
+                        "id": 13
+                      }
+                    ],
+                    "id": 12
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n  ",
+                    "id": 14
+                  }
+                ],
+                "id": 4
+              },
+              {
+                "type": 3,
+                "textContent": "\\n  ",
+                "id": 15
+              },
+              {
+                "type": 2,
+                "tagName": "body",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 17
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "p",
+                    "attributes": {
+                      "class": "rr-mask"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "*****",
+                        "id": 19
+                      }
+                    ],
+                    "id": 18
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 20
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "class": "rr-mask"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 22
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "span",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "*****",
+                            "id": 24
+                          }
+                        ],
+                        "id": 23
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 25
+                      }
+                    ],
+                    "id": 21
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 26
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "data-masking": "true"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 28
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "div",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 30
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "div",
+                            "attributes": {},
+                            "childNodes": [
+                              {
+                                "type": 3,
+                                "textContent": "mask3",
+                                "id": 32
+                              }
+                            ],
+                            "id": 31
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 33
+                          }
+                        ],
+                        "id": 29
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 34
+                      }
+                    ],
+                    "id": 27
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 35
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n      mask4\\n    ",
+                        "id": 37
+                      }
+                    ],
+                    "id": 36
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 38
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "class": "rr-unmask"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n      mask5\\n    ",
+                        "id": 40
+                      }
+                    ],
+                    "id": 39
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 41
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "mask6"
+                    },
+                    "childNodes": [],
+                    "id": 42
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "mask7"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "mask8"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask9",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "******"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "******",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 53
+                          }
+                        ],
+                        "id": 52
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 54
+                      }
+                    ],
                     "id": 44
                   }
                 ],
@@ -4139,25 +4593,94 @@ exports[`record integration tests should mask texts 1`] = `
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "mask6"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "mask7"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "mask8"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask9",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "mask10"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask10",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 53
+                          }
+                        ],
+                        "id": 52
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 54
+                      }
+                    ],
                     "id": 44
                   }
                 ],
@@ -4455,25 +4978,94 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n  \\n    ",
+                    "textContent": "\\n    ",
                     "id": 41
                   },
                   {
                     "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 43
-                      }
-                    ],
+                    "tagName": "input",
+                    "attributes": {
+                      "placeholder": "mask6"
+                    },
+                    "childNodes": [],
                     "id": 42
                   },
                   {
                     "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
+                    "textContent": "\\n    ",
+                    "id": 43
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "div",
+                    "attributes": {
+                      "title": "mask7"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 45
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "button",
+                        "attributes": {
+                          "aria-label": "mask8"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask9",
+                            "id": 47
+                          }
+                        ],
+                        "id": 46
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "mask10"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask10",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "script",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "SCRIPT_PLACEHOLDER",
+                            "id": 53
+                          }
+                        ],
+                        "id": 52
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    \\n    \\n\\n",
+                        "id": 54
+                      }
+                    ],
                     "id": 44
                   }
                 ],
