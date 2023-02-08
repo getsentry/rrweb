@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.101.0
+
+- feat: Wrap rrweb callbacks in wrapper to better handle errors (#41)
+- fix(replayer): Fix null objects on playback (#38)
+- fix: Ensure CSS support is checked more robustly (#42)
+
 ## v1.100.2
 
 - fix: Catch style mutation handling (#33)
