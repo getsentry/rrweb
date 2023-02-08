@@ -687,6 +687,7 @@ function serializeNode(
       let textContent = (n as Text).textContent;
       const isStyle = parentTagName === 'STYLE' ? true : undefined;
       const isScript = parentTagName === 'SCRIPT' ? true : undefined;
+
       if (isStyle && textContent) {
         try {
           // try to read style sheet
@@ -708,10 +709,26 @@ function serializeNode(
         }
         textContent = absoluteToStylesheet(textContent, getHref());
       }
+
       if (isScript) {
         textContent = 'SCRIPT_PLACEHOLDER';
       }
-      if (
+
+      if (parentTagName === 'TEXTAREA' && textContent) {
+        // Ensure that textContent === attribute.value
+        // (masking options can make them different)
+        // replay will remove duplicate textContent.
+        textContent = maskInputValue({
+          input: n.parentNode as HTMLElement,
+          maskInputSelector,
+          unmaskInputSelector,
+          maskInputOptions,
+          tagName: parentTagName,
+          type: null,
+          value: textContent,
+          maskInputFn,
+        });
+      } else if (
         !isStyle &&
         !isScript &&
         needMaskingText(
@@ -727,6 +744,7 @@ function serializeNode(
           ? maskTextFn(textContent)
           : defaultMaskFn(textContent);
       }
+
       return {
         type: NodeType.Text,
         textContent: textContent || '',
