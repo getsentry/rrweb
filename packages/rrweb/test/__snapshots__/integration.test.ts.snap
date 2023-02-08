@@ -4639,8 +4639,28 @@ exports[`record integration tests should mask texts 1`] = `
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n  \\n    ",
+                        "textContent": "\\n    ",
                         "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "mask10"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask10",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
                       },
                       {
                         "type": 2,
@@ -4650,15 +4670,15 @@ exports[`record integration tests should mask texts 1`] = `
                           {
                             "type": 3,
                             "textContent": "SCRIPT_PLACEHOLDER",
-                            "id": 50
+                            "id": 53
                           }
                         ],
-                        "id": 49
+                        "id": 52
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    \\n    \\n\\n",
-                        "id": 51
+                        "id": 54
                       }
                     ],
                     "id": 44
@@ -5004,8 +5024,28 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n  \\n    ",
+                        "textContent": "\\n    ",
                         "id": 48
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "textarea",
+                        "attributes": {
+                          "value": "mask10"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "mask10",
+                            "id": 50
+                          }
+                        ],
+                        "id": 49
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n  \\n    ",
+                        "id": 51
                       },
                       {
                         "type": 2,
@@ -5015,15 +5055,15 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                           {
                             "type": 3,
                             "textContent": "SCRIPT_PLACEHOLDER",
-                            "id": 50
+                            "id": 53
                           }
                         ],
-                        "id": 49
+                        "id": 52
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    \\n    \\n\\n",
-                        "id": 51
+                        "id": 54
                       }
                     ],
                     "id": 44
