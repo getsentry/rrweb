@@ -394,12 +394,18 @@ export function needMaskingText(
         : node.parentElement;
     if (el === null) return false;
 
-    const maskDistance = distanceToMatch(el, maskTextClass, maskTextSelector);
     const unmaskDistance = distanceToMatch(
       el,
       unmaskTextClass,
       unmaskTextSelector,
     );
+    
+    let maskDistance = -1;
+    if (maskAllText && unmaskDistance < 0) {
+      return true;
+    }
+
+    maskDistance = distanceToMatch(el, maskTextClass, maskTextSelector);
 
     return maskDistance >= 0
       ? unmaskDistance >= 0
