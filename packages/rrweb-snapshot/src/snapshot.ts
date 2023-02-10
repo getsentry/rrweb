@@ -352,16 +352,18 @@ function distanceToSelectorMatch(el: HTMLElement, selector: string): number {
 
 function distanceToMatch(
   el: HTMLElement,
-  className: string | RegExp,
+  className: string | RegExp | null,
   selector: string | null,
 ): number {
   let classDistance = -1;
   let selectorDistance = -1;
 
-  if (typeof className === 'string') {
-    classDistance = distanceToSelectorMatch(el, `.${className}`);
-  } else {
-    classDistance = distanceToClassRegexMatch(el, className, true);
+  if (className) {
+    if (typeof className === 'string') {
+      classDistance = distanceToSelectorMatch(el, `.${className}`);
+    } else {
+      classDistance = distanceToClassRegexMatch(el, className, true);
+    }
   }
 
   if (selector) {
@@ -381,7 +383,7 @@ export function needMaskingText(
   node: Node,
   maskTextClass: string | RegExp,
   maskTextSelector: string | null,
-  unmaskTextClass: string | RegExp,
+  unmaskTextClass: string | RegExp | null,
   unmaskTextSelector: string | null,
   maskAllText: boolean,
 ): boolean {
@@ -506,7 +508,7 @@ function serializeNode(
     blockSelector: string | null;
     maskAllText: boolean;
     maskTextClass: string | RegExp;
-    unmaskTextClass: string | RegExp;
+    unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
     inlineStylesheet: boolean;
@@ -627,7 +629,7 @@ function serializeTextNode(
   options: {
     maskAllText: boolean;
     maskTextClass: string | RegExp;
-    unmaskTextClass: string | RegExp;
+    unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
     maskTextFn: MaskTextFn | undefined;
@@ -729,7 +731,7 @@ function serializeElementNode(
     rootId: number | undefined;
     maskAllText: boolean;
     maskTextClass: string | RegExp;
-    unmaskTextClass: string | RegExp;
+    unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
   },
@@ -1064,7 +1066,7 @@ export function serializeNodeWithId(
     blockClass: string | RegExp;
     blockSelector: string | null;
     maskTextClass: string | RegExp;
-    unmaskTextClass: string | RegExp;
+    unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
     skipChild: boolean;
@@ -1360,7 +1362,7 @@ function snapshot(
     blockSelector?: string | null;
     maskAllText?: boolean;
     maskTextClass?: string | RegExp;
-    unmaskTextClass?: string | RegExp;
+    unmaskTextClass?: string | RegExp | null;
     maskTextSelector?: string | null;
     unmaskTextSelector?: string | null;
     inlineStylesheet?: boolean;
@@ -1392,7 +1394,7 @@ function snapshot(
     blockSelector = null,
     maskAllText = false,
     maskTextClass = 'rr-mask',
-    unmaskTextClass = 'rr-unmask',
+    unmaskTextClass = null,
     maskTextSelector = null,
     unmaskTextSelector = null,
     inlineStylesheet = true,
