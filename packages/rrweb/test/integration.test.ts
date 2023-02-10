@@ -46,6 +46,7 @@ describe('record integration tests', function (this: ISuite) {
           window.snapshots.push(event);
         },
         maskTextSelector: ${JSON.stringify(options.maskTextSelector)},
+        blockSelector: ${JSON.stringify(options.blockSelector)},
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
@@ -319,6 +320,32 @@ describe('record integration tests', function (this: ISuite) {
       el.style.width = '100px';
       el.style.height = '100px';
       el.innerText = 'Should not be recorded';
+
+      const nextElement = document.querySelector('.rr-block')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it.only('should not record blocked elements from blockSelector, dynamically added', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(getHtml.call(this, 'block.html', {
+      blockSelector: 'video'
+    }));
+
+    await page.evaluate(() => {
+      const el = document.createElement('video');
+      el.style.width = '100px';
+      el.style.height = '100px';
+      const source = document.createElement('source');
+      source.src = 'file:///foo.mp4';
+      // These aren't valid, but doing this for testing
+      source.style.width = '100px';
+      source.style.height = '100px';
+      el.appendChild(source);
 
       const nextElement = document.querySelector('.rr-block')!;
       nextElement.parentNode!.insertBefore(el, nextElement);
