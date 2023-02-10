@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.102.0
+- feat: Add `maskAllText` option
+- feat: With maskAllText, mask the attributes: placeholder, title, `aria-label`
+- feat: fix masking on `textarea`
+
 ## v1.101.2
 
 - fix: Ensure we do not check `window` in module scope (#47)
