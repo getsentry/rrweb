@@ -146,7 +146,7 @@ The parameter of `rrweb.record` accepts the following options.
 | ignoreCSSAttributes      | null               | array of CSS attributes that should be ignored                                                                                                                                                |
 | maskAllText              | false              | mask all text content as \*                                                                                                                                                                   |
 | maskTextClass            | 'rr-mask'          | Use a string or RegExp to configure which elements should be masked, refer to the [privacy](#privacy) chapter                                                                                 |
-| unmaskTextClass          | 'rr-unmask'        | Use a string or RegExp to configure which elements should be unmasked, refer to the [privacy](#privacy) chapter                                                                               |
+| unmaskTextClass          | null               | Use a string or RegExp to configure which elements should be unmasked, refer to the [privacy](#privacy) chapter                                                                               |
 | maskTextSelector         | null               | Use a string to configure which selector should be masked, refer to the [privacy](#privacy) chapter                                                                                           |
 | unmaskTextSelector       | null               | Use a string to configure which selector should be unmasked, refer to the [privacy](#privacy) chapter                                                                                         |
 | maskAllInputs            | false              | mask all input content as \*                                                                                                                                                                  |
@@ -175,7 +175,7 @@ You may find some contents on the webpage which are not willing to be recorded, 
 - An element with the class name `.rr-block` will not be recorded. Instead, it will replay as a placeholder with the same dimension.
 - An element with the class name `.rr-ignore` will not record its input events.
 - All text of elements with the class name `.rr-mask` and their children will be masked.
-- All text of elements with the class name `.rr-unmask` and their children will be unmasked, unless any child is marked with `.rr-mask`.
+- All text of elements with the optional unmasking class name `unmaskTextClass` and their children will be unmasked, unless any child is marked with `.rr-mask`.
 - `input[type="password"]` will be masked by default.
 - Mask options to mask the content in input elements.
 
