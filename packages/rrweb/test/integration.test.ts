@@ -53,6 +53,8 @@ describe('record integration tests', function (this: ISuite) {
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
+        blockSelector: ${JSON.stringify(options.blockSelector)},
+        unblockSelector: ${JSON.stringify(options.unblockSelector)},
         recordCanvas: ${options.recordCanvas},
         plugins: ${options.plugins}        
       });
@@ -329,7 +331,7 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it.only('should not record blocked elements from blockSelector, dynamically added', async () => {
+  it('should not record blocked elements from blockSelector, when dynamically added', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(getHtml.call(this, 'block.html', {
@@ -337,6 +339,17 @@ describe('record integration tests', function (this: ISuite) {
     }));
 
     await page.evaluate(() => {
+      const el2 = document.createElement('video');
+      el2.className = 'rr-block';
+      el2.style.width = '100px';
+      el2.style.height = '100px';
+      const source2 = document.createElement('source');
+      source2.src = 'file:///foo.mp4';
+      // These aren't valid, but doing this for testing
+      source2.style.width = '100px';
+      source2.style.height = '100px';
+      el2.appendChild(source2);
+
       const el = document.createElement('video');
       el.style.width = '100px';
       el.style.height = '100px';
@@ -349,7 +362,20 @@ describe('record integration tests', function (this: ISuite) {
 
       const nextElement = document.querySelector('.rr-block')!;
       nextElement.parentNode!.insertBefore(el, nextElement);
+      nextElement.parentNode!.insertBefore(el2, nextElement);
     });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should only record unblocked elements', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(getHtml.call(this, 'block.html', {
+      blockSelector: 'img,svg',
+      unblockSelector: '.rr-unblock',
+    }));
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);

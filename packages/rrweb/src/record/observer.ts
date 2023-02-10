@@ -207,6 +207,8 @@ function initMouseInteractionObserver({
   doc,
   mirror,
   blockClass,
+  blockSelector,
+  unblockSelector,
   sampling,
 }: observerParam): listenerHandler {
   if (sampling.mouseInteraction === false) {
@@ -222,7 +224,7 @@ function initMouseInteractionObserver({
   const getHandler = (eventKey: keyof typeof MouseInteractions) => {
     return (event: MouseEvent | TouchEvent) => {
       const target = getEventTarget(event) as Node;
-      if (isBlocked(target as Node, blockClass)) {
+      if (isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
         return;
       }
       const e = isTouchEvent(event) ? event.changedTouches[0] : event;
@@ -261,14 +263,16 @@ export function initScrollObserver({
   doc,
   mirror,
   blockClass,
+  blockSelector,
+  unblockSelector,
   sampling,
 }: Pick<
   observerParam,
-  'scrollCb' | 'doc' | 'mirror' | 'blockClass' | 'sampling'
+  'scrollCb' | 'doc' | 'mirror' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'sampling'
 >): listenerHandler {
   const updatePosition = throttle<UIEvent>((evt) => {
     const target = getEventTarget(evt);
-    if (!target || isBlocked(target as Node, blockClass)) {
+    if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
       return;
     }
     const id = mirror.getId(target as INode);
@@ -326,6 +330,8 @@ function initInputObserver({
   doc,
   mirror,
   blockClass,
+  blockSelector,
+  unblockSelector,
   ignoreClass,
   ignoreSelector,
   maskInputSelector,
@@ -348,7 +354,7 @@ function initInputObserver({
       !target ||
       !(target as Element).tagName ||
       INPUT_TAGS.indexOf((target as Element).tagName) < 0 ||
-      isBlocked(target as Node, blockClass)
+      isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
     ) {
       return;
     }
@@ -724,6 +730,8 @@ function initStyleDeclarationObserver(
 function initMediaInteractionObserver({
   mediaInteractionCb,
   blockClass,
+  blockSelector,
+  unblockSelector,
   mirror,
   sampling,
 }: observerParam): listenerHandler {
@@ -731,7 +739,7 @@ function initMediaInteractionObserver({
     throttle(
       callbackWrapper((event: Event) => {
         const target = getEventTarget(event);
-        if (!target || isBlocked(target as Node, blockClass)) {
+        if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
           return;
         }
         const { currentTime, volume, muted } = target as HTMLMediaElement;

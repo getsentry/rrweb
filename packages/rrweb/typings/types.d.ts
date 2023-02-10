@@ -116,6 +116,7 @@ export type eventWithTime = event & {
     delay?: number;
 };
 export type blockClass = string | RegExp;
+export type blockSelector = string | null;
 export type maskTextClass = string | RegExp;
 export type SamplingStrategy = Partial<{
     mousemove: boolean | number;

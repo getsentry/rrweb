@@ -1,4 +1,4 @@
-import { blockClass, canvasMutationCallback, IWindow, Mirror } from '../../../types';
+import { blockClass, canvasMutationCallback, IWindow, Mirror, blockSelector } from '../../../types';
 export type RafStamps = {
     latestId: number;
     invokeId: number | null;
@@ -21,6 +21,8 @@ export declare class CanvasManager {
         mutationCb: canvasMutationCallback;
         win: IWindow;
         blockClass: blockClass;
+        blockSelector: blockSelector;
+        unblockSelector: blockSelector;
         mirror: Mirror;
     });
     private processMutation;

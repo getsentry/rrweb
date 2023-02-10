@@ -1,4 +1,4 @@
-import { Mirror, throttleOptions, listenerHandler, hookResetter, blockClass, addedNodeMutation, removedNodeMutation, textMutation, attributeMutation, mutationData, scrollData, inputData, DocumentDimension, IWindow } from './types';
+import { Mirror, throttleOptions, listenerHandler, hookResetter, blockClass, addedNodeMutation, removedNodeMutation, textMutation, attributeMutation, mutationData, scrollData, inputData, DocumentDimension, IWindow, blockSelector } from './types';
 import { INode, serializedNodeWithId } from '@sentry-internal/rrweb-snapshot';
 export declare function on(type: string, fn: EventListenerOrEventListenerObject, target?: Document | IWindow): listenerHandler;
 export declare function createMirror(): Mirror;
@@ -10,7 +10,7 @@ export declare function patch(source: {
 }, name: string, replacement: (...args: any[]) => any): () => void;
 export declare function getWindowHeight(): number;
 export declare function getWindowWidth(): number;
-export declare function isBlocked(node: Node | null, blockClass: blockClass): boolean;
+export declare function isBlocked(node: Node | null, blockClass: blockClass, blockSelector: blockSelector, unblockSelector: blockSelector): boolean;
 export declare function isIgnored(n: Node | INode): boolean;
 export declare function isAncestorRemoved(target: INode, mirror: Mirror): boolean;
 export declare function isTouchEvent(event: MouseEvent | TouchEvent): event is TouchEvent;
