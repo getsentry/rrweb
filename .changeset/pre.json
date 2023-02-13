@@ -9,5 +9,13 @@
     "rrweb-snapshot": "2.0.0-alpha.4",
     "@rrweb/types": "2.0.0-alpha.4"
   },
-  "changesets": []
+  "changesets": [
+    "beige-numbers-enjoy",
+    "loud-seals-raise",
+    "nervous-poets-grin",
+    "olive-worms-pump",
+    "real-trains-switch",
+    "tidy-yaks-joke",
+    "twenty-lies-switch"
+  ]
 }
