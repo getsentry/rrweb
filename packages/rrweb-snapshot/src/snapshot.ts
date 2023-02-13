@@ -285,87 +285,67 @@ export function _isBlockedElement(
   return false;
 }
 
+function elementClassMatchesRegex(el: HTMLElement, regex: RegExp): boolean {
+  for (let eIndex = el.classList.length; eIndex--; ) {
+    const className = el.classList[eIndex];
+    if (regex.test(className)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function classMatchesRegex(
   node: Node | null,
   regex: RegExp,
   checkAncestors: boolean,
 ): boolean {
-  return distanceToClassRegexMatch(node, regex, checkAncestors) >= 0;
-}
-
-function distanceToClassRegexMatch(
-  node: Node | null,
-  regex: RegExp,
-  checkAncestors: boolean,
-  distance = 0,
-): number {
-  if (!node) return -1;
-  if (node.nodeType !== node.ELEMENT_NODE) {
-    if (!checkAncestors) return -1;
-    return distanceToClassRegexMatch(node.parentNode, regex, checkAncestors);
+  if (!node) return false;
+  if (checkAncestors) {
+    return (
+      distanceToMatch(node, (node) =>
+        elementClassMatchesRegex(node as HTMLElement, regex),
+      ) >= 0
+    );
+  } else if (node.nodeType === node.ELEMENT_NODE) {
+    return elementClassMatchesRegex(node as HTMLElement, regex);
   }
-
-  for (let eIndex = (node as HTMLElement).classList.length; eIndex--; ) {
-    const className = (node as HTMLElement).classList[eIndex];
-    if (regex.test(className)) {
-      return distance;
-    }
-  }
-  if (!checkAncestors) return -1;
-  return distanceToClassRegexMatch(
-    node.parentNode,
-    regex,
-    checkAncestors,
-    distance + 1,
-  );
-}
-
-function distanceToSelectorMatch(el: HTMLElement, selector: string): number {
-  if (!el) return -1;
-  if (el.matches(selector)) return 0;
-  const closestParent = el.closest(selector);
-  if (closestParent) {
-    let current = el;
-    let distance = 0;
-    while (current && current !== closestParent) {
-      current = current.parentNode as HTMLElement;
-      if (!current) {
-        return -1;
-      }
-      distance++;
-    }
-    return distance;
-  }
-  return -1;
+  return false;
 }
 
 function distanceToMatch(
-  el: HTMLElement,
+  node: Node | null,
+  matchPredicate: (node: Node) => boolean,
+  limit = Infinity,
+  distance = 0,
+): number {
+  if (!node) return -1;
+  if (node.nodeType !== node.ELEMENT_NODE) return -1;
+  if (distance > limit) return -1;
+  if (matchPredicate(node)) return distance;
+  return distanceToMatch(node.parentNode, matchPredicate, limit, distance + 1);
+}
+
+function createMatchPredicate(
   className: string | RegExp | null,
   selector: string | null,
-): number {
-  let classDistance = -1;
-  let selectorDistance = -1;
+): (node: Node) => boolean {
+  return (node: Node) => {
+    const el = node as HTMLElement;
+    if (el === null) return false;
 
-  if (className) {
-    if (typeof className === 'string') {
-      classDistance = distanceToSelectorMatch(el, `.${className}`);
-    } else {
-      classDistance = distanceToClassRegexMatch(el, className, true);
+    if (className) {
+      if (typeof className === 'string') {
+        if (el.matches(`.${className}`)) return true;
+      } else if (elementClassMatchesRegex(el, className)) {
+        return true;
+      }
     }
-  }
 
-  if (selector) {
-    selectorDistance = distanceToSelectorMatch(el, selector);
-  }
+    if (selector && el.matches(selector)) return true;
 
-  return selectorDistance >= 0
-    ? classDistance >= 0
-      ? Math.min(classDistance, selectorDistance)
-      : selectorDistance
-    : classDistance >= 0
-    ? classDistance
-    : -1;
+    return false;
+  };
 }
 
 export function needMaskingText(
@@ -385,16 +365,19 @@ export function needMaskingText(
 
     const unmaskDistance = distanceToMatch(
       el,
-      unmaskTextClass,
-      unmaskTextSelector,
+      createMatchPredicate(unmaskTextClass, unmaskTextSelector),
     );
-    
+
     let maskDistance = -1;
     if (maskAllText && unmaskDistance < 0) {
       return true;
     }
 
-    maskDistance = distanceToMatch(el, maskTextClass, maskTextSelector);
+    maskDistance = distanceToMatch(
+      el,
+      createMatchPredicate(maskTextClass, maskTextSelector),
+      unmaskDistance >= 0 ? unmaskDistance : Infinity,
+    );
 
     return maskDistance >= 0
       ? unmaskDistance >= 0
