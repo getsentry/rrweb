@@ -1,6 +1,11 @@
 # Changelog
 
+## v1.103.0
+
+- feat: Check `blockSelector` for blocking elements as well (#49)
+
 ## v1.102.0
+
 - feat: Add `maskAllText` option
 - feat: With maskAllText, mask the attributes: placeholder, title, `aria-label`
 - feat: fix masking on `textarea`
