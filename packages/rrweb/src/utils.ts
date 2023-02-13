@@ -14,6 +14,7 @@ import {
   inputData,
   DocumentDimension,
   IWindow,
+  blockSelector,
 } from './types';
 import {
   INode,
@@ -223,32 +224,59 @@ export function getWindowWidth(): number {
   );
 }
 
-export function isBlocked(node: Node | null, blockClass: blockClass): boolean {
+export function isBlocked(
+  node: Node | null,
+  blockClass: blockClass,
+  blockSelector: blockSelector,
+  unblockSelector: blockSelector,
+): boolean {
   if (!node) {
     return false;
   }
   if (node.nodeType === node.ELEMENT_NODE) {
     let needBlock = false;
+    const needUnblock =
+      unblockSelector && (node as HTMLElement).matches(unblockSelector);
     if (typeof blockClass === 'string') {
       if ((node as HTMLElement).closest !== undefined) {
-        return (node as HTMLElement).closest('.' + blockClass) !== null;
+        needBlock =
+          !needUnblock &&
+          (node as HTMLElement).closest('.' + blockClass) !== null;
       } else {
-        needBlock = (node as HTMLElement).classList.contains(blockClass);
+        needBlock =
+          !needUnblock && (node as HTMLElement).classList.contains(blockClass);
       }
     } else {
-      (node as HTMLElement).classList.forEach((className) => {
-        if (blockClass.test(className)) {
-          needBlock = true;
-        }
-      });
+      !needUnblock &&
+        (node as HTMLElement).classList.forEach((className) => {
+          if (blockClass.test(className)) {
+            needBlock = true;
+          }
+        });
     }
-    return needBlock || isBlocked(node.parentNode, blockClass);
+
+    // If blockClass did not match, but blockSelector is defined, check blocks using `blockSelector`
+    if (!needBlock && blockSelector) {
+      needBlock = (node as HTMLElement).matches(blockSelector);
+    }
+
+    return (
+      (!needUnblock && needBlock) ||
+      isBlocked(node.parentNode, blockClass, blockSelector, unblockSelector)
+    );
   }
+
   if (node.nodeType === node.TEXT_NODE) {
     // check parent node since text node do not have class name
-    return isBlocked(node.parentNode, blockClass);
+    return isBlocked(
+      node.parentNode,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+    );
   }
-  return isBlocked(node.parentNode, blockClass);
+
+  return isBlocked(node.parentNode, blockClass, blockSelector, unblockSelector);
 }
 
 export function isIgnored(n: Node | INode): boolean {

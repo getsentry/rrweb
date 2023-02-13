@@ -171,6 +171,8 @@ export type eventWithTime = event & {
 
 export type blockClass = string | RegExp;
 
+export type blockSelector = string | null;
+
 export type maskTextClass = string | RegExp;
 
 export type SamplingStrategy = Partial<{

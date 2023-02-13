@@ -6,6 +6,7 @@ import {
   IWindow,
   listenerHandler,
   Mirror,
+  blockSelector,
 } from '../../../types';
 import { hookSetter, isBlocked, patch } from '../../../utils';
 
@@ -13,6 +14,8 @@ export default function initCanvas2DMutationObserver(
   cb: canvasManagerMutationCallback,
   win: IWindow,
   blockClass: blockClass,
+  unblockSelector: blockSelector,
+  blockSelector: blockSelector,
   mirror: Mirror,
 ): listenerHandler {
   const handlers: listenerHandler[] = [];
@@ -36,7 +39,14 @@ export default function initCanvas2DMutationObserver(
             this: CanvasRenderingContext2D,
             ...args: Array<unknown>
           ) {
-            if (!isBlocked((this.canvas as unknown) as INode, blockClass)) {
+            if (
+              !isBlocked(
+                (this.canvas as unknown) as INode,
+                blockClass,
+                blockSelector,
+                unblockSelector,
+              )
+            ) {
               // Using setTimeout as getImageData + JSON.stringify can be heavy
               // and we'd rather not block the main thread
               setTimeout(() => {

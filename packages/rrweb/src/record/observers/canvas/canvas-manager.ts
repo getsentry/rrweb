@@ -8,6 +8,7 @@ import {
   IWindow,
   listenerHandler,
   Mirror,
+  blockSelector,
 } from '../../../types';
 import initCanvas2DMutationObserver from './2d';
 import initCanvasContextObserver from './canvas';
@@ -56,13 +57,20 @@ export class CanvasManager {
     mutationCb: canvasMutationCallback;
     win: IWindow;
     blockClass: blockClass;
+    blockSelector: blockSelector;
+    unblockSelector: blockSelector;
     mirror: Mirror;
   }) {
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
 
     if (options.recordCanvas === true)
-      this.initCanvasMutationObserver(options.win, options.blockClass);
+      this.initCanvasMutationObserver(
+        options.win,
+        options.blockClass,
+        options.blockSelector,
+        options.unblockSelector,
+      );
   }
 
   private processMutation: canvasManagerMutationCallback = function (
@@ -85,15 +93,24 @@ export class CanvasManager {
   private initCanvasMutationObserver(
     win: IWindow,
     blockClass: blockClass,
+    unblockSelector: blockSelector,
+    blockSelector: blockSelector,
   ): void {
     this.startRAFTimestamping();
     this.startPendingCanvasMutationFlusher();
 
-    const canvasContextReset = initCanvasContextObserver(win, blockClass);
+    const canvasContextReset = initCanvasContextObserver(
+      win,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+    );
     const canvas2DReset = initCanvas2DMutationObserver(
       this.processMutation.bind(this),
       win,
       blockClass,
+      blockSelector,
+      unblockSelector,
       this.mirror,
     );
 
@@ -101,6 +118,8 @@ export class CanvasManager {
       this.processMutation.bind(this),
       win,
       blockClass,
+      blockSelector,
+      unblockSelector,
       this.mirror,
     );
 

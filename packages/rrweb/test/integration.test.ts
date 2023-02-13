@@ -46,12 +46,15 @@ describe('record integration tests', function (this: ISuite) {
           window.snapshots.push(event);
         },
         maskTextSelector: ${JSON.stringify(options.maskTextSelector)},
+        blockSelector: ${JSON.stringify(options.blockSelector)},
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
+        blockSelector: ${JSON.stringify(options.blockSelector)},
+        unblockSelector: ${JSON.stringify(options.unblockSelector)},
         recordCanvas: ${options.recordCanvas},
         plugins: ${options.plugins}        
       });
@@ -323,6 +326,56 @@ describe('record integration tests', function (this: ISuite) {
       const nextElement = document.querySelector('.rr-block')!;
       nextElement.parentNode!.insertBefore(el, nextElement);
     });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should not record blocked elements from blockSelector, when dynamically added', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(getHtml.call(this, 'block.html', {
+      blockSelector: 'video'
+    }));
+
+    await page.evaluate(() => {
+      const el2 = document.createElement('video');
+      el2.className = 'rr-block';
+      el2.style.width = '100px';
+      el2.style.height = '100px';
+      const source2 = document.createElement('source');
+      source2.src = 'file:///foo.mp4';
+      // These aren't valid, but doing this for testing
+      source2.style.width = '100px';
+      source2.style.height = '100px';
+      el2.appendChild(source2);
+
+      const el = document.createElement('video');
+      el.style.width = '100px';
+      el.style.height = '100px';
+      const source = document.createElement('source');
+      source.src = 'file:///foo.mp4';
+      // These aren't valid, but doing this for testing
+      source.style.width = '100px';
+      source.style.height = '100px';
+      el.appendChild(source);
+
+      const nextElement = document.querySelector('.rr-block')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+      nextElement.parentNode!.insertBefore(el2, nextElement);
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should only record unblocked elements', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(getHtml.call(this, 'block.html', {
+      blockSelector: 'img,svg',
+      unblockSelector: '.rr-unblock',
+    }));
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);

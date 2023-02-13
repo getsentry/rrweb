@@ -670,6 +670,7 @@ function serializeNode(
         }
         delete attributes.src; // prevent auto loading
       }
+
       return {
         type: NodeType.Element,
         tagName,

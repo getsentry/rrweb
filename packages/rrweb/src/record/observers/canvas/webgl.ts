@@ -7,6 +7,7 @@ import {
   IWindow,
   listenerHandler,
   Mirror,
+  blockSelector,
 } from '../../../types';
 import { hookSetter, isBlocked, patch } from '../../../utils';
 import { saveWebGLVar, serializeArgs } from './serialize-args';
@@ -16,6 +17,8 @@ function patchGLPrototype(
   type: CanvasContext,
   cb: canvasManagerMutationCallback,
   blockClass: blockClass,
+  unblockSelector: blockSelector,
+  blockSelector: blockSelector,
   mirror: Mirror,
   win: IWindow,
 ): listenerHandler[] {
@@ -32,7 +35,14 @@ function patchGLPrototype(
         return function (this: typeof prototype, ...args: Array<unknown>) {
           const result = original.apply(this, args);
           saveWebGLVar(result, win, prototype);
-          if (!isBlocked((this.canvas as unknown) as INode, blockClass)) {
+          if (
+            !isBlocked(
+              (this.canvas as unknown) as INode,
+              blockClass,
+              blockSelector,
+              unblockSelector,
+            )
+          ) {
             const id = mirror.getId((this.canvas as unknown) as INode);
 
             const recordArgs = serializeArgs([...args], win, prototype);
@@ -72,6 +82,8 @@ export default function initCanvasWebGLMutationObserver(
   cb: canvasManagerMutationCallback,
   win: IWindow,
   blockClass: blockClass,
+  blockSelector: blockSelector,
+  unblockSelector: blockSelector,
   mirror: Mirror,
 ): listenerHandler {
   const handlers: listenerHandler[] = [];
@@ -82,6 +94,8 @@ export default function initCanvasWebGLMutationObserver(
       CanvasContext.WebGL,
       cb,
       blockClass,
+      blockSelector,
+      unblockSelector,
       mirror,
       win,
     ),
@@ -94,6 +108,8 @@ export default function initCanvasWebGLMutationObserver(
         CanvasContext.WebGL2,
         cb,
         blockClass,
+        blockSelector,
+        unblockSelector,
         mirror,
         win,
       ),
