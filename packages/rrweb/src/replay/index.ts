@@ -273,6 +273,7 @@ export class Replayer {
         this.iframe.contentWindow && this.iframe.contentWindow.scrollTo(
           (firstFullsnapshot as fullSnapshotEvent).data.initialOffset,
         );
+        this.disableInteract();
       }, 1);
     }
     if (this.service.state.context.events.find(indicatesTouchDevice)) {
@@ -412,11 +413,16 @@ export class Replayer {
   public enableInteract() {
     this.iframe.setAttribute('scrolling', 'auto');
     this.iframe.style.pointerEvents = 'auto';
+    this.iframe.contentDocument?.removeEventListener('click', this.handleClick);
   }
 
   public disableInteract() {
     this.iframe.setAttribute('scrolling', 'no');
     this.iframe.style.pointerEvents = 'none';
+    // Disable clicks in the iframe
+    // NOTE: The previous method for this was pointer-events but that hinders
+    // users from being able to use browser's "Inspect" functionality
+    this.iframe.contentDocument?.addEventListener('click', this.handleClick);
   }
 
   /**
@@ -451,7 +457,6 @@ export class Replayer {
     // hide iframe before first meta event
     this.iframe.style.display = 'none';
     this.iframe.setAttribute('sandbox', attributes.join(' '));
-    this.disableInteract();
     this.wrapper.appendChild(this.iframe);
     if (this.iframe.contentWindow && this.iframe.contentDocument) {
       smoothscrollPolyfill(
@@ -461,6 +466,11 @@ export class Replayer {
 
       polyfill(this.iframe.contentWindow as IWindow);
     }
+  }
+
+  private handleClick(e: MouseEvent) {
+    e.preventDefault();
+    return false;
   }
 
   private handleResize(dimension: viewportResizeDimension) {
