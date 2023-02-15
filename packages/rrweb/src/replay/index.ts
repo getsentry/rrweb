@@ -411,13 +411,11 @@ export class Replayer {
 
   public enableInteract() {
     this.iframe.setAttribute('scrolling', 'auto');
-    this.iframe.style.pointerEvents = 'auto';
     this.iframe.contentDocument?.removeEventListener('click', this.handleClick);
   }
 
   public disableInteract() {
     this.iframe.setAttribute('scrolling', 'no');
-    this.iframe.style.pointerEvents = 'none';
     // Disable clicks in the iframe
     // NOTE: The previous method for this was pointer-events but that hinders
     // users from being able to use browser's "Inspect" functionality

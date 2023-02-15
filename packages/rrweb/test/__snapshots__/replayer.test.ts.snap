@@ -20,7 +20,7 @@ exports[`replayer can fast forward past StyleSheetRule changes on virtual elemen
         width="1000"
         height="800"
         scrolling="no"
-        style="display: inherit; pointer-events: none"
+        style="display: inherit"
       ></iframe>
     </div>
   </body>
@@ -111,7 +111,7 @@ exports[`replayer can handle removing style elements 1`] = `
         width="1000"
         height="800"
         scrolling="no"
-        style="display: inherit; pointer-events: none"
+        style="display: inherit"
       ></iframe>
     </div>
   </body>
@@ -159,7 +159,7 @@ exports[`replayer replays same timestamp events in correct order (with addAction
         width="1000"
         height="800"
         scrolling="no"
-        style="display: inherit; pointer-events: none"
+        style="display: inherit"
       ></iframe>
     </div>
   </body>
@@ -210,7 +210,7 @@ exports[`replayer replays same timestamp events in correct order 1`] = `
         width="1000"
         height="800"
         scrolling="no"
-        style="display: inherit; pointer-events: none"
+        style="display: inherit"
       ></iframe>
     </div>
   </body>
