@@ -17,9 +17,9 @@ exports[`replayer can fast forward past StyleSheetRule changes on virtual elemen
       ></canvas
       ><iframe
         sandbox="allow-same-origin"
-        scrolling="no"
         width="1000"
         height="800"
+        scrolling="no"
         style="display: inherit; pointer-events: none"
       ></iframe>
     </div>
@@ -108,9 +108,9 @@ exports[`replayer can handle removing style elements 1`] = `
       ></canvas
       ><iframe
         sandbox="allow-same-origin"
-        scrolling="no"
         width="1000"
         height="800"
+        scrolling="no"
         style="display: inherit; pointer-events: none"
       ></iframe>
     </div>
@@ -156,9 +156,9 @@ exports[`replayer replays same timestamp events in correct order (with addAction
       ></canvas
       ><iframe
         sandbox="allow-same-origin"
-        scrolling="no"
         width="1000"
         height="800"
+        scrolling="no"
         style="display: inherit; pointer-events: none"
       ></iframe>
     </div>
@@ -207,9 +207,9 @@ exports[`replayer replays same timestamp events in correct order 1`] = `
       ></canvas
       ><iframe
         sandbox="allow-same-origin"
-        scrolling="no"
         width="1000"
         height="800"
+        scrolling="no"
         style="display: inherit; pointer-events: none"
       ></iframe>
     </div>

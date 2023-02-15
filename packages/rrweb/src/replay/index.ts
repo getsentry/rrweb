@@ -273,7 +273,6 @@ export class Replayer {
         this.iframe.contentWindow && this.iframe.contentWindow.scrollTo(
           (firstFullsnapshot as fullSnapshotEvent).data.initialOffset,
         );
-        this.disableInteract();
       }, 1);
     }
     if (this.service.state.context.events.find(indicatesTouchDevice)) {
@@ -694,6 +693,7 @@ export class Replayer {
     if (this.config.UNSAFE_replayCanvas) {
       this.preloadAllImages();
     }
+    this.disableInteract();
   }
 
   private insertStyleRules(
