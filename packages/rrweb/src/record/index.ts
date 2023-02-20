@@ -233,6 +233,7 @@ function record<T = eventWithTime>(
     mutationCb: wrappedMutationEmit,
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
+      takeFullSnapshot,
       blockClass,
       blockSelector,
       unblockSelector,
@@ -351,6 +352,7 @@ function record<T = eventWithTime>(
     const observe = (doc: Document) => {
       return callbackWrapper(initObservers)(
         {
+          takeFullSnapshot,
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>
             wrappedEmit(

@@ -109,7 +109,17 @@ export function initMutationObserver(
   }
 
   const observer = new mutationObserverCtor(
-    callbackWrapper(mutationBuffer.processMutations.bind(mutationBuffer)),
+    callbackWrapper((mutations) => {
+      if (mutations.length > 500) {
+        // too many mutations, just do a full snapshot
+        // There are scenarios where this triggers with e.g. thousands of mutations
+        // This can lead to the browser freezing up
+        // In such a case, it is more efficient for the browser to just do a full snapshot instead
+         options.takeFullSnapshot(false);
+         return;
+      }
+      mutationBuffer.processMutations(mutations);
+    }),
   );
 
   observer.observe(rootEl, {

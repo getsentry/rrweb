@@ -247,6 +247,7 @@ export type recordOptions<T> = {
 };
 
 export type observerParam = {
+  takeFullSnapshot: (isCheckout?: boolean | undefined) => void;
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;
@@ -293,6 +294,7 @@ export type observerParam = {
 
 export type MutationBufferParam = Pick<
   observerParam,
+  | 'takeFullSnapshot'
   | 'mutationCb'
   | 'blockClass'
   | 'blockSelector'

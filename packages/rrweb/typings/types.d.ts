@@ -165,6 +165,7 @@ export type recordOptions<T> = {
     keepIframeSrcFn?: KeepIframeSrcFn;
 };
 export type observerParam = {
+    takeFullSnapshot: (isCheckout?: boolean | undefined) => void;
     mutationCb: mutationCallBack;
     mousemoveCb: mousemoveCallBack;
     mouseInteractionCb: mouseInteractionCallBack;
@@ -208,7 +209,7 @@ export type observerParam = {
         options: unknown;
     }>;
 };
-export type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
+export type MutationBufferParam = Pick<observerParam, 'takeFullSnapshot' | 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
 export type hooksParam = {
     mutation?: mutationCallBack;
     mousemove?: mousemoveCallBack;
