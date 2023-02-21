@@ -158,8 +158,8 @@ exports[`replayer replays same timestamp events in correct order (with addAction
         sandbox="allow-same-origin"
         width="1000"
         height="800"
-        style="display: inherit"
         scrolling="no"
+        style="display: inherit"
       ></iframe>
     </div>
   </body>
