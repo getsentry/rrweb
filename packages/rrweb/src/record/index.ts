@@ -492,7 +492,7 @@ function record<T = eventWithTime>(
     });
 
     const init = () => {
-      takeFullSnapshot();
+      takeFullSnapshot(true);
       handlers.push(observe(document));
     };
     if (
