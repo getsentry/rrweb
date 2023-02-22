@@ -235,6 +235,7 @@ function record<T = eventWithTime>(
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
       takeFullSnapshot,
+      triggerFullSnapshotOnMutation,
       blockClass,
       blockSelector,
       unblockSelector,
