@@ -365,16 +365,12 @@ function initInputObserver({
     ) {
       return;
     }
+
     let text = (target as HTMLInputElement).value;
     let isChecked = false;
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
-    } else if (
-      maskInputOptions[
-        (target as Element).tagName.toLowerCase() as keyof MaskInputOptions
-      ] ||
-      maskInputOptions[type as keyof MaskInputOptions]
-    ) {
+    } else {
       text = maskInputValue({
         input: target as HTMLElement,
         maskInputOptions,
