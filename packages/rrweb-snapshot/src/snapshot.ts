@@ -500,7 +500,9 @@ function serializeNode(
       const tagName = getValidTagName(n as HTMLElement);
       let attributes: attributes = {};
       for (const { name, value } of Array.from((n as HTMLElement).attributes)) {
-        attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
+        if (!skipAttribute(tagName, name, value)) {
+          attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
+        }
       }
       // remote css
       if (tagName === 'link' && inlineStylesheet) {
@@ -1243,3 +1245,8 @@ export function cleanupSnapshot() {
 }
 
 export default snapshot;
+
+/** We want to skip `autoplay` attribute, as this has weird results when replaying.  */
+function skipAttribute(tagName: string, attributeName: string, value?: unknown) {
+  return (tagName === 'video' || tagName === 'audio') && attributeName === 'autoplay';
+}
