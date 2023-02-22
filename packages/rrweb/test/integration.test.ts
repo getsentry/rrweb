@@ -50,6 +50,7 @@ describe('record integration tests', function (this: ISuite) {
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
+        triggerFullSnapshotOnMutation: ${options.triggerFullSnapshotOnMutation || undefined},
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
@@ -176,10 +177,15 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('can handle massive mutations', async () => {
+  it('can configure triggerFullSnapshotOnMutation', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'mutation-observer.html'));
+
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', { 
+        triggerFullSnapshotOnMutation: `(mutations) => { window.lastMutationsLength = mutations.length; return mutations.length > 500 }`
+       }),
+    );
 
     await page.evaluate(() => {
       const ul = document.querySelector('ul') as HTMLUListElement;
@@ -194,6 +200,9 @@ describe('record integration tests', function (this: ISuite) {
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
+
+    const lastMutationsLength = await page.evaluate('window.lastMutationsLength');
+    expect(lastMutationsLength).toBe(4000);
   });
 
 

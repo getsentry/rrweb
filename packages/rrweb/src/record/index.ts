@@ -75,6 +75,7 @@ function record<T = eventWithTime>(
     inlineImages = false,
     plugins,
     keepIframeSrcFn = () => false,
+    triggerFullSnapshotOnMutation,
   } = options;
   // runtime checks for user options
   if (!emit) {
@@ -353,6 +354,7 @@ function record<T = eventWithTime>(
       return callbackWrapper(initObservers)(
         {
           takeFullSnapshot,
+          triggerFullSnapshotOnMutation,
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>
             wrappedEmit(

@@ -163,9 +163,11 @@ export type recordOptions<T> = {
     plugins?: RecordPlugin[];
     mousemoveWait?: number;
     keepIframeSrcFn?: KeepIframeSrcFn;
+    triggerFullSnapshotOnMutation?: (mutations: MutationRecord[]) => boolean;
 };
 export type observerParam = {
     takeFullSnapshot: (isCheckout?: boolean | undefined) => void;
+    triggerFullSnapshotOnMutation?: (mutations: MutationRecord[]) => boolean;
     mutationCb: mutationCallBack;
     mousemoveCb: mousemoveCallBack;
     mouseInteractionCb: mouseInteractionCallBack;
@@ -209,7 +211,7 @@ export type observerParam = {
         options: unknown;
     }>;
 };
-export type MutationBufferParam = Pick<observerParam, 'takeFullSnapshot' | 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
+export type MutationBufferParam = Pick<observerParam, 'takeFullSnapshot' | 'triggerFullSnapshotOnMutation' | 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
 export type hooksParam = {
     mutation?: mutationCallBack;
     mousemove?: mousemoveCallBack;

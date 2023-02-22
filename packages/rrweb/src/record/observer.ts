@@ -110,8 +110,9 @@ export function initMutationObserver(
 
   const observer = new mutationObserverCtor(
     callbackWrapper((mutations) => {
-      if (mutations.length > 500) {
-        // too many mutations, just do a full snapshot
+      if (options.triggerFullSnapshotOnMutation && options.triggerFullSnapshotOnMutation(mutations)) {
+        // We can opt-in to determine if we want to get a full snapshot for a given set of mutations
+        // instead of incremental snapshots.
         // There are scenarios where this triggers with e.g. thousands of mutations
         // This can lead to the browser freezing up
         // In such a case, it is more efficient for the browser to just do a full snapshot instead

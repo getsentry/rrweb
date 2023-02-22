@@ -244,10 +244,12 @@ export type recordOptions<T> = {
   // departed, please use sampling options
   mousemoveWait?: number;
   keepIframeSrcFn?: KeepIframeSrcFn;
+  triggerFullSnapshotOnMutation?: (mutations: MutationRecord[]) => boolean,
 };
 
 export type observerParam = {
   takeFullSnapshot: (isCheckout?: boolean | undefined) => void;
+  triggerFullSnapshotOnMutation?: (mutations: MutationRecord[]) => boolean,
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;
@@ -295,6 +297,7 @@ export type observerParam = {
 export type MutationBufferParam = Pick<
   observerParam,
   | 'takeFullSnapshot'
+  | 'triggerFullSnapshotOnMutation'
   | 'mutationCb'
   | 'blockClass'
   | 'blockSelector'
