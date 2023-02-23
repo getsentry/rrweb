@@ -260,10 +260,7 @@ export function transformAttribute(
     return absoluteToStylesheet(value, getHref());
   } else if (tagName === 'object' && name === 'data' && value) {
     return absoluteToDoc(doc, value);
-  } else if (
-    maskAllText &&
-    ['placeholder', 'title', 'aria-label'].indexOf(name) > -1
-  ) {
+  } else if (maskAllText && ['placeholder', 'title', 'aria-label'].indexOf(name) > -1) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   } else {
     return value;
@@ -504,14 +501,7 @@ function serializeNode(
       let attributes: attributes = {};
       for (const { name, value } of Array.from((n as HTMLElement).attributes)) {
         if (!skipAttribute(tagName, name, value)) {
-          attributes[name] = transformAttribute(
-            doc,
-            tagName,
-            name,
-            value,
-            maskAllText,
-            maskTextFn,
-          );
+          attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
         }
       }
       // remote css
@@ -803,8 +793,7 @@ function slimDOMExcluded(
       (sn.tagName === 'script' ||
         // (module)preload link
         (sn.tagName === 'link' &&
-          (sn.attributes.rel === 'preload' ||
-            sn.attributes.rel === 'modulepreload') &&
+          (sn.attributes.rel === 'preload' || sn.attributes.rel === 'modulepreload') &&
           sn.attributes.as === 'script') ||
         // prefetch link
         (sn.tagName === 'link' &&
@@ -1258,12 +1247,6 @@ export function cleanupSnapshot() {
 export default snapshot;
 
 /** We want to skip `autoplay` attribute, as this has weird results when replaying.  */
-function skipAttribute(
-  tagName: string,
-  attributeName: string,
-  value?: unknown,
-) {
-  return (
-    (tagName === 'video' || tagName === 'audio') && attributeName === 'autoplay'
-  );
+function skipAttribute(tagName: string, attributeName: string, value?: unknown) {
+  return (tagName === 'video' || tagName === 'audio') && attributeName === 'autoplay';
 }
