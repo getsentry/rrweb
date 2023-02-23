@@ -1,6 +1,6 @@
 import {
   INode,
-  MaskInputOptions,
+  hasInputMaskOptions,
   maskInputValue,
 } from '@sentry-internal/rrweb-snapshot';
 import { FontFaceSet } from 'css-font-loading-module';
@@ -370,7 +370,14 @@ function initInputObserver({
     let isChecked = false;
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
-    } else {
+    } else if (
+      hasInputMaskOptions({
+        maskInputOptions,
+        maskInputSelector,
+        tagName: (target as HTMLElement).tagName,
+        type,
+      })
+    ) {
       text = maskInputValue({
         input: target as HTMLElement,
         maskInputOptions,

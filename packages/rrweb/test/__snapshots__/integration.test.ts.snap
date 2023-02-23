@@ -1340,8 +1340,77 @@ exports[`record integration tests can record form interactions 1`] = `
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 66
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 68
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 69
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 70
+                          }
+                        ],
+                        "id": 67
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 71
                       }
                     ],
                     "id": 18
@@ -1349,7 +1418,7 @@ exports[`record integration tests can record form interactions 1`] = `
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 62
+                    "id": 72
                   },
                   {
                     "type": 2,
@@ -1359,15 +1428,15 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 64
+                        "id": 74
                       }
                     ],
-                    "id": 63
+                    "id": 73
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 65
+                    "id": 75
                   }
                 ],
                 "id": 16
@@ -3118,8 +3187,77 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 66
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 68
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 69
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 70
+                          }
+                        ],
+                        "id": 67
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 71
                       }
                     ],
                     "id": 18
@@ -3127,7 +3265,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 62
+                    "id": 72
                   },
                   {
                     "type": 2,
@@ -3137,15 +3275,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 64
+                        "id": 74
                       }
                     ],
-                    "id": 63
+                    "id": 73
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 65
+                    "id": 75
                   }
                 ],
                 "id": 16
@@ -7807,8 +7945,77 @@ exports[`record integration tests should not record input values if maskAllInput
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 66
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 68
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 69
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 70
+                          }
+                        ],
+                        "id": 67
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 71
                       }
                     ],
                     "id": 18
@@ -7816,7 +8023,7 @@ exports[`record integration tests should not record input values if maskAllInput
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 62
+                    "id": 72
                   },
                   {
                     "type": 2,
@@ -7826,15 +8033,15 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 64
+                        "id": 74
                       }
                     ],
-                    "id": 63
+                    "id": 73
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 65
+                    "id": 75
                   }
                 ],
                 "id": 16
@@ -8230,6 +8437,58 @@ exports[`record integration tests should not record input values if maskAllInput
       "text": "*",
       "isChecked": false,
       "id": 47
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 42
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "**",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "***",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "****",
+      "isChecked": false,
+      "id": 64
     }
   }
 ]"
@@ -8668,8 +8927,43 @@ exports[`record integration tests should not record input values on selectively 
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty",
+                              "class": "rr-mask"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 66
                       }
                     ],
                     "id": 18
@@ -8677,7 +8971,7 @@ exports[`record integration tests should not record input values on selectively 
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 62
+                    "id": 67
                   },
                   {
                     "type": 2,
@@ -8687,15 +8981,15 @@ exports[`record integration tests should not record input values on selectively 
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 64
+                        "id": 69
                       }
                     ],
-                    "id": 63
+                    "id": 68
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 65
+                    "id": 70
                   }
                 ],
                 "id": 16
@@ -9091,6 +9385,58 @@ exports[`record integration tests should not record input values on selectively 
       "text": "*",
       "isChecked": false,
       "id": 47
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 42
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "**",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "***",
+      "isChecked": false,
+      "id": 64
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "****",
+      "isChecked": false,
+      "id": 64
     }
   }
 ]"
@@ -11474,8 +11820,77 @@ exports[`record integration tests should record input userTriggered values if us
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 66
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 68
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 69
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 70
+                          }
+                        ],
+                        "id": 67
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 71
                       }
                     ],
                     "id": 18
@@ -11483,7 +11898,7 @@ exports[`record integration tests should record input userTriggered values if us
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 62
+                    "id": 72
                   },
                   {
                     "type": 2,
@@ -11493,15 +11908,15 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 64
+                        "id": 74
                       }
                     ],
-                    "id": 63
+                    "id": 73
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 65
+                    "id": 75
                   }
                 ],
                 "id": 16
