@@ -540,13 +540,13 @@ function serializeNode(
           attributes._cssText = absoluteToStylesheet(cssText, getHref());
         }
       }
-      // form fields, does not include textarea because it should not use the `value` attribute,
-      // it should have `textContent` instead.
+      // form fields
       if (
         tagName === 'input' ||
+        tagName === 'textarea' ||
         tagName === 'select'
       ) {
-        const value = (n as HTMLInputElement).value;
+        const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
         if (
           attributes.type !== 'radio' &&
           attributes.type !== 'checkbox' &&
@@ -718,17 +718,8 @@ function serializeNode(
       }
 
       if (parentTagName === 'TEXTAREA' && textContent) {
-        // Treat textarea textContent as input
-        textContent = maskInputValue({
-          input: n.parentNode as HTMLElement,
-          maskInputSelector,
-          unmaskInputSelector,
-          maskInputOptions,
-          tagName: parentTagName,
-          type: null,
-          value: textContent,
-          maskInputFn,
-        });
+        // textarea textContent should be masked via `value` attributes
+        textContent = '';
       } else if (
         !isStyle &&
         !isScript &&

@@ -3875,11 +3875,13 @@ exports[`record integration tests should mask all text (except unmaskTextSelecto
                       {
                         "type": 2,
                         "tagName": "textarea",
-                        "attributes": {},
+                        "attributes": {
+                          "value": "mask10"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
-                            "textContent": "mask10",
+                            "textContent": "",
                             "id": 50
                           }
                         ],
@@ -4258,11 +4260,13 @@ exports[`record integration tests should mask only inputs 1`] = `
                       {
                         "type": 2,
                         "tagName": "textarea",
-                        "attributes": {},
+                        "attributes": {
+                          "value": "******"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
-                            "textContent": "******",
+                            "textContent": "",
                             "id": 50
                           }
                         ],
@@ -4641,11 +4645,13 @@ exports[`record integration tests should mask texts 1`] = `
                       {
                         "type": 2,
                         "tagName": "textarea",
-                        "attributes": {},
+                        "attributes": {
+                          "value": "mask10"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
-                            "textContent": "mask10",
+                            "textContent": "",
                             "id": 50
                           }
                         ],
@@ -5024,11 +5030,13 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                       {
                         "type": 2,
                         "tagName": "textarea",
-                        "attributes": {},
+                        "attributes": {
+                          "value": "mask10"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
-                            "textContent": "mask10",
+                            "textContent": "",
                             "id": 50
                           }
                         ],
@@ -8634,7 +8642,8 @@ exports[`record integration tests should not record textarea values if dynamical
             "type": 2,
             "tagName": "textarea",
             "attributes": {
-              "id": "textarea"
+              "id": "textarea",
+              "value": "*************************"
             },
             "childNodes": [],
             "id": 21
@@ -8656,7 +8665,7 @@ exports[`record integration tests should not record textarea values if dynamical
           "nextId": 22,
           "node": {
             "type": 3,
-            "textContent": "*************************",
+            "textContent": "",
             "id": 23
           }
         }
@@ -13194,7 +13203,8 @@ exports[`record integration tests should record textarea values if dynamically a
             "type": 2,
             "tagName": "textarea",
             "attributes": {
-              "id": "textarea"
+              "id": "textarea",
+              "value": "textarea should not be masked"
             },
             "childNodes": [],
             "id": 21
@@ -13216,7 +13226,7 @@ exports[`record integration tests should record textarea values if dynamically a
           "nextId": 22,
           "node": {
             "type": 3,
-            "textContent": "textarea should not be masked",
+            "textContent": "",
             "id": 23
           }
         }
