@@ -37,6 +37,7 @@ export function maskInputValue({
   if (
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
     maskInputOptions[type as keyof MaskInputOptions] ||
+    (tagName === 'input' && !type && maskInputOptions['text']) || // For inputs without a "type" attribute defined
     (maskInputSelector && input.matches(maskInputSelector))
   ) {
     if (maskInputFn) {

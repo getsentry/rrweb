@@ -543,10 +543,9 @@ function serializeNode(
       // form fields
       if (
         tagName === 'input' ||
-        tagName === 'textarea' ||
         tagName === 'select'
       ) {
-        const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
+        const value = (n as HTMLInputElement).value;
         if (
           attributes.type !== 'radio' &&
           attributes.type !== 'checkbox' &&
