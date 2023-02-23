@@ -540,7 +540,8 @@ function serializeNode(
           attributes._cssText = absoluteToStylesheet(cssText, getHref());
         }
       }
-      // form fields
+      // form fields, does not include textarea because it should not use the `value` attribute,
+      // it should have `textContent` instead.
       if (
         tagName === 'input' ||
         tagName === 'select'
@@ -717,9 +718,7 @@ function serializeNode(
       }
 
       if (parentTagName === 'TEXTAREA' && textContent) {
-        // Ensure that textContent === attribute.value
-        // (masking options can make them different)
-        // replay will remove duplicate textContent.
+        // Treat textarea textContent as input
         textContent = maskInputValue({
           input: n.parentNode as HTMLElement,
           maskInputSelector,

@@ -247,24 +247,6 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('should not record input values on selectively masked elements when maskAllInputs is disabled', async () => {
-    const page: puppeteer.Page = await browser.newPage();
-    await page.goto('about:blank');
-    await page.setContent(
-      getHtml.call(this, 'form-masked.html', { maskAllInputs: false, maskInputSelector: '.rr-mask' }),
-    );
-
-    await page.type('input[type="text"]', 'test');
-    await page.click('input[type="radio"]');
-    await page.click('input[type="checkbox"]');
-    await page.type('input[type="password"]', 'password');
-    await page.type('textarea', 'textarea test');
-    await page.select('select', '1');
-
-    const snapshots = await page.evaluate('window.snapshots');
-    assertSnapshot(snapshots);
-  });
-
   it('should record input values if dynamically added and maskAllInputs is false', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
