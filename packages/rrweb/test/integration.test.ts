@@ -10,7 +10,7 @@ import {
   waitForRAF,
   replaceLast,
 } from './utils';
-import { recordOptions, eventWithTime, EventType } from '../src/types';
+import { recordOptions, eventWithTime, EventType, IncrementalSource } from '../src/types';
 import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
 
 interface ISuite {
@@ -22,6 +22,13 @@ interface ISuite {
 
 interface IMimeType {
   [key: string]: string;
+}
+
+/**
+ * Used to filter scroll events out of snapshots as they are flakey
+ */
+function isNotScroll(snapshot: eventWithTime) {
+  return !(snapshot.type === EventType.IncrementalSnapshot && snapshot.data.source === IncrementalSource.Scroll)
 }
 
 describe('record integration tests', function (this: ISuite) {
@@ -54,6 +61,7 @@ describe('record integration tests', function (this: ISuite) {
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
+        unmaskInputSelector: ${JSON.stringify(options.unmaskInputSelector)},
         blockSelector: ${JSON.stringify(options.blockSelector)},
         unblockSelector: ${JSON.stringify(options.unblockSelector)},
         recordCanvas: ${options.recordCanvas},
@@ -264,6 +272,142 @@ describe('record integration tests', function (this: ISuite) {
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
+  });
+
+  it('should record input values if dynamically added and maskAllInputs is false', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: false }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input';
+      el.value = 'input should not be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record textarea values if dynamically added and maskAllInputs is false', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: false }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('textarea');
+      el.id = 'textarea';
+      el.innerText = `textarea should not be masked
+`;
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#textarea', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record input values if dynamically added, maskAllInputs is false, and mask selector is used', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: false, maskInputSelector: '.rr-mask' }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input-masked';
+      el.className = 'rr-mask';
+      el.value = 'input should be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input-masked', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should not record input values if dynamically added and maskAllInputs is true', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input';
+      el.value = 'input should be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should not record textarea values if dynamically added and maskAllInputs is true', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('textarea');
+      el.id = 'textarea';
+      el.innerText = `textarea should be masked
+`;
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#textarea', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record input values if dynamically added, maskAllInputs is true, and unmask selector is used', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true, unmaskInputSelector: '.rr-unmask'}),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input-unmasked';
+      el.className = 'rr-unmask';
+      el.value = 'input should be unmasked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input-unmasked', 'moo');
+
+    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
   });
 
   it('can use maskInputOptions to configure which type of inputs should be masked', async () => {

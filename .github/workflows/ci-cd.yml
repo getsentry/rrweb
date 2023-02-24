@@ -48,6 +48,9 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
+      - name: Build Project
+        run: yarn lerna run prepublish
+
       - name: Build Tarballs
         run: yarn build:tarball
 
