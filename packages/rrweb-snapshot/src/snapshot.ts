@@ -718,19 +718,8 @@ function serializeNode(
       }
 
       if (parentTagName === 'TEXTAREA' && textContent) {
-        // Ensure that textContent === attribute.value
-        // (masking options can make them different)
-        // replay will remove duplicate textContent.
-        textContent = maskInputValue({
-          input: n.parentNode as HTMLElement,
-          maskInputSelector,
-          unmaskInputSelector,
-          maskInputOptions,
-          tagName: parentTagName,
-          type: null,
-          value: textContent,
-          maskInputFn,
-        });
+        // textarea textContent should be masked via `value` attributes
+        textContent = '';
       } else if (
         !isStyle &&
         !isScript &&
