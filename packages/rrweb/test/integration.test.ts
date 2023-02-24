@@ -56,6 +56,7 @@ describe('record integration tests', function (this: ISuite) {
         blockSelector: ${JSON.stringify(options.blockSelector)},
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
+        maskInputSelector: ${JSON.stringify(options.maskInputSelector)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
@@ -233,7 +234,10 @@ describe('record integration tests', function (this: ISuite) {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
-      getHtml.call(this, 'form.html', { maskAllInputs: true }),
+      getHtml.call(this, 'form.html', {
+        maskAllInputs: true,
+        unmaskTextSelector: '.rr-unmask',
+      }),
     );
 
     await page.type('input[type="text"]', 'test');
@@ -242,6 +246,29 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[type="password"]', 'password');
     await page.type('textarea', 'textarea test');
     await page.select('select', '1');
+    await page.type('#empty', 'test');
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should not record input values on selectively masked elements when maskAllInputs is disabled', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'form-masked.html', {
+        maskAllInputs: false,
+        maskInputSelector: '.rr-mask',
+      }),
+    );
+
+    await page.type('input[type="text"]', 'test');
+    await page.click('input[type="radio"]');
+    await page.click('input[type="checkbox"]');
+    await page.type('input[type="password"]', 'password');
+    await page.type('textarea', 'textarea test');
+    await page.select('select', '1');
+    await page.type('#empty', 'test');
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
@@ -478,9 +505,11 @@ describe('record integration tests', function (this: ISuite) {
   it('should not record blocked elements from blockSelector, when dynamically added', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'block.html', {
-      blockSelector: 'video'
-    }));
+    await page.setContent(
+      getHtml.call(this, 'block.html', {
+        blockSelector: 'video',
+      }),
+    );
 
     await page.evaluate(() => {
       const el2 = document.createElement('video');
@@ -516,10 +545,12 @@ describe('record integration tests', function (this: ISuite) {
   it('should only record unblocked elements', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'block.html', {
-      blockSelector: 'img,svg',
-      unblockSelector: '.rr-unblock',
-    }));
+    await page.setContent(
+      getHtml.call(this, 'block.html', {
+        blockSelector: 'img,svg',
+        unblockSelector: '.rr-unblock',
+      }),
+    );
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
@@ -576,7 +607,9 @@ describe('record integration tests', function (this: ISuite) {
       }),
     );
     await waitForRAF(page);
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     for (const event of snapshots) {
       if (event.type === EventType.FullSnapshot) {
         visitSnapshot(event.data.node, (n) => {
