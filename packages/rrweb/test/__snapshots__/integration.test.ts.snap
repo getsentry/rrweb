@@ -13230,7 +13230,7 @@ exports[`record integration tests should record input values if dynamically adde
             "attributes": {
               "id": "input-masked",
               "class": "rr-mask",
-              "value": "input should be masked"
+              "value": "**********************"
             },
             "childNodes": [],
             "id": 21
@@ -13243,7 +13243,7 @@ exports[`record integration tests should record input values if dynamically adde
     "type": 3,
     "data": {
       "source": 5,
-      "text": "input should be masked",
+      "text": "**********************",
       "isChecked": false,
       "id": 21
     }
@@ -13260,7 +13260,7 @@ exports[`record integration tests should record input values if dynamically adde
     "type": 3,
     "data": {
       "source": 5,
-      "text": "input should be maskedm",
+      "text": "***********************",
       "isChecked": false,
       "id": 21
     }
@@ -13269,7 +13269,7 @@ exports[`record integration tests should record input values if dynamically adde
     "type": 3,
     "data": {
       "source": 5,
-      "text": "input should be maskedmo",
+      "text": "************************",
       "isChecked": false,
       "id": 21
     }
@@ -13278,7 +13278,7 @@ exports[`record integration tests should record input values if dynamically adde
     "type": 3,
     "data": {
       "source": 5,
-      "text": "input should be maskedmoo",
+      "text": "*************************",
       "isChecked": false,
       "id": 21
     }
