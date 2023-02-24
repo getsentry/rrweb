@@ -6,33 +6,33 @@ export declare enum StyleRuleType {
     SetProperty = 3,
     RemoveProperty = 4
 }
-type InsertRule = {
+declare type InsertRule = {
     cssText: string;
     type: StyleRuleType.Insert;
     index?: number | number[];
 };
-type RemoveRule = {
+declare type RemoveRule = {
     type: StyleRuleType.Remove;
     index: number | number[];
 };
-type SnapshotRule = {
+declare type SnapshotRule = {
     type: StyleRuleType.Snapshot;
     cssTexts: string[];
 };
-type SetPropertyRule = {
+declare type SetPropertyRule = {
     type: StyleRuleType.SetProperty;
     index: number[];
     property: string;
     value: string | null;
     priority: string | undefined;
 };
-type RemovePropertyRule = {
+declare type RemovePropertyRule = {
     type: StyleRuleType.RemoveProperty;
     index: number[];
     property: string;
 };
-export type VirtualStyleRules = Array<InsertRule | RemoveRule | SnapshotRule | SetPropertyRule | RemovePropertyRule>;
-export type VirtualStyleRulesMap = Map<INode, VirtualStyleRules>;
+export declare type VirtualStyleRules = Array<InsertRule | RemoveRule | SnapshotRule | SetPropertyRule | RemovePropertyRule>;
+export declare type VirtualStyleRulesMap = Map<INode, VirtualStyleRules>;
 export declare function getNestedRule(rules: CSSRuleList, position: number[]): CSSGroupingRule;
 export declare function getPositionsAndIndex(nestedIndex: number[]): {
     positions: number[];

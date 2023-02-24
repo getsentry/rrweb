@@ -15,7 +15,7 @@ export declare function isIgnored(n: Node | INode): boolean;
 export declare function isAncestorRemoved(target: INode, mirror: Mirror): boolean;
 export declare function isTouchEvent(event: MouseEvent | TouchEvent): event is TouchEvent;
 export declare function polyfill(win?: Window & typeof globalThis): void;
-export type TreeNode = {
+export declare type TreeNode = {
     id: number;
     mutation: addedNodeMutation;
     parent?: TreeNode;
@@ -47,17 +47,17 @@ export declare class TreeIndex {
     private reset;
     idRemoved(id: number): boolean;
 }
-type ResolveTree = {
+declare type ResolveTree = {
     value: addedNodeMutation;
     children: ResolveTree[];
     parent: ResolveTree | null;
 };
 export declare function queueToResolveTrees(queue: addedNodeMutation[]): ResolveTree[];
 export declare function iterateResolveTree(tree: ResolveTree, cb: (mutation: addedNodeMutation) => unknown): void;
-type HTMLIFrameINode = HTMLIFrameElement & {
+declare type HTMLIFrameINode = HTMLIFrameElement & {
     __sn: serializedNodeWithId;
 };
-export type AppendedIframe = {
+export declare type AppendedIframe = {
     mutationInQueue: addedNodeMutation;
     builtNode: HTMLIFrameINode;
 };

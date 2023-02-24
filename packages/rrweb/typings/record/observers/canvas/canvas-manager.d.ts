@@ -1,5 +1,5 @@
 import { blockClass, canvasMutationCallback, IWindow, Mirror, blockSelector } from '../../../types';
-export type RafStamps = {
+export declare type RafStamps = {
     latestId: number;
     invokeId: number | null;
 };

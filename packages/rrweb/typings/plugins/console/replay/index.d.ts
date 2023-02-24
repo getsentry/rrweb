@@ -1,7 +1,7 @@
 import { LogLevel, LogData } from '../record';
 import { ReplayPlugin } from '../../../types';
-type ReplayLogger = Partial<Record<LogLevel, (data: LogData) => void>>;
-type LogReplayConfig = {
+declare type ReplayLogger = Partial<Record<LogLevel, (data: LogData) => void>>;
+declare type LogReplayConfig = {
     level?: LogLevel[];
     replayLogger?: ReplayLogger;
 };
