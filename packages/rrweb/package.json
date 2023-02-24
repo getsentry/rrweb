@@ -1,6 +1,6 @@
 {
   "name": "@sentry-internal/rrweb",
-  "version": "1.103.0",
+  "version": "1.104.0",
   "description": "record and replay the web",
   "publishConfig": {
     "access": "public"
@@ -78,7 +78,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@sentry-internal/rrweb-snapshot": "1.103.0",
+    "@sentry-internal/rrweb-snapshot": "1.104.0",
     "@types/css-font-loading-module": "0.0.7",
     "@xstate/fsm": "^1.4.0",
     "base64-arraybuffer": "^1.0.1",
