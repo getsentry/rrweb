@@ -242,7 +242,7 @@ export function transformAttribute(
   maskAllText: boolean,
   maskTextFn: MaskTextFn | undefined,
 ): string {
-  if(!value) {
+  if (!value) {
     return value;
   }
 
@@ -268,10 +268,9 @@ export function transformAttribute(
     ['placeholder', 'title', 'aria-label'].indexOf(name) > -1
   ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
-  } 
+  }
 
-    return value;
-  
+  return value;
 }
 
 export function _isBlockedElement(
