@@ -1,6 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
+
+## 1.104.1
+
+- fix(snapshot): Handle removed attributes (#65)
+
 ## 1.104.0
+
 - fix: masking inputs on change when `maskAllInputs:false` (#61)
 - fix: Run prepublish scripts before building tarballs (#64)
 - fix: textarea value is being duplicated (#62)
