@@ -154,7 +154,7 @@ function buildNode(
           continue;
         }
         value =
-          typeof value === 'boolean' || typeof value === 'number' ? '' : value;
+          typeof value === 'boolean' || typeof value === 'number' || value === null ? '' : value;
         // attribute names start with rr_ are internal attributes added by rrweb
         if (!name.startsWith('rr_')) {
           const isTextarea = tagName === 'textarea' && name === 'value';
