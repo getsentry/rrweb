@@ -238,10 +238,10 @@ export function transformAttribute(
   doc: Document,
   tagName: string,
   name: string,
-  value: string,
+  value: string | null,
   maskAllText: boolean,
   maskTextFn: MaskTextFn | undefined,
-): string {
+): string | null {
   if (!value) {
     return value;
   }
@@ -773,8 +773,8 @@ function serializeNode(
   }
 }
 
-function lowerIfExists(maybeAttr: string | number | boolean): string {
-  if (maybeAttr === undefined) {
+function lowerIfExists(maybeAttr: string | number | boolean | null | undefined): string {
+  if (maybeAttr === undefined || maybeAttr === null) {
     return '';
   } else {
     return (maybeAttr as string).toLowerCase();
