@@ -267,7 +267,12 @@ export function transformAttribute(
   } else if (
     maskAllText &&
     (['placeholder', 'title', 'aria-label'].indexOf(name) > -1 ||
-      (tagName === 'input' && name === 'value' && element.getAttribute('type')?.toLocaleLowerCase() === 'submit'))
+      (tagName === 'input' &&
+        name === 'value' &&
+        element.getAttribute('type') &&
+        ['submit', 'button'].indexOf(
+          element.getAttribute('type')!.toLowerCase(),
+        ) > -1))
   ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   }
