@@ -163,8 +163,10 @@ export type recordOptions<T> = {
     plugins?: RecordPlugin[];
     mousemoveWait?: number;
     keepIframeSrcFn?: KeepIframeSrcFn;
+    onMutation?: (mutations: MutationRecord[]) => boolean;
 };
 export type observerParam = {
+    onMutation?: (mutations: MutationRecord[]) => boolean;
     mutationCb: mutationCallBack;
     mousemoveCb: mousemoveCallBack;
     mouseInteractionCb: mouseInteractionCallBack;
@@ -208,7 +210,7 @@ export type observerParam = {
         options: unknown;
     }>;
 };
-export type MutationBufferParam = Pick<observerParam, 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
+export type MutationBufferParam = Pick<observerParam, 'onMutation' | 'mutationCb' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'maskTextClass' | 'maskTextSelector' | 'unmaskTextSelector' | 'inlineStylesheet' | 'maskInputSelector' | 'unmaskInputSelector' | 'maskAllText' | 'maskInputOptions' | 'maskTextFn' | 'maskInputFn' | 'recordCanvas' | 'inlineImages' | 'slimDOMOptions' | 'doc' | 'mirror' | 'iframeManager' | 'shadowDomManager' | 'canvasManager'>;
 export type hooksParam = {
     mutation?: mutationCallBack;
     mousemove?: mousemoveCallBack;

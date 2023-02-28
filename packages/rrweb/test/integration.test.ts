@@ -58,6 +58,7 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
         maskInputSelector: ${JSON.stringify(options.maskInputSelector)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
+        onMutation: ${options.onMutation || undefined},
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
@@ -215,6 +216,35 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
   });
+
+  it('can configure onMutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', { 
+        onMutation: `(mutations) => { window.lastMutationsLength = mutations.length; return mutations.length < 500 }`
+       }),
+    );
+
+    await page.evaluate(() => {
+      const ul = document.querySelector('ul') as HTMLUListElement;
+
+      for(let i = 0; i < 2000; i++) {
+        const li = document.createElement('li');
+        ul.appendChild(li);
+        const p = document.querySelector('p') as HTMLParagraphElement;
+        p.appendChild(document.createElement('span'));
+      }
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+
+    const lastMutationsLength = await page.evaluate('window.lastMutationsLength');
+    expect(lastMutationsLength).toBe(4000);
+  });
+
 
   it('can freeze mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
