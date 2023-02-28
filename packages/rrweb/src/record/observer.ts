@@ -109,7 +109,14 @@ export function initMutationObserver(
   }
 
   const observer = new mutationObserverCtor(
-    callbackWrapper(mutationBuffer.processMutations.bind(mutationBuffer)),
+    callbackWrapper((mutations) => {
+      // If this callback returns `false`, we do not want to process the mutations
+      // This can be used to e.g. do a manual full snapshot when mutations become too large, or similar.
+      if (options.onMutation && options.onMutation(mutations) === false) {
+         return;
+      }
+      mutationBuffer.processMutations(mutations);
+    }),
   );
 
   observer.observe(rootEl, {

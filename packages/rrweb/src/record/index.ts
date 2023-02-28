@@ -75,6 +75,7 @@ function record<T = eventWithTime>(
     inlineImages = false,
     plugins,
     keepIframeSrcFn = () => false,
+    onMutation,
   } = options;
   // runtime checks for user options
   if (!emit) {
@@ -233,6 +234,7 @@ function record<T = eventWithTime>(
     mutationCb: wrappedMutationEmit,
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
+      onMutation,
       blockClass,
       blockSelector,
       unblockSelector,
@@ -351,6 +353,7 @@ function record<T = eventWithTime>(
     const observe = (doc: Document) => {
       return callbackWrapper(initObservers)(
         {
+          onMutation,
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>
             wrappedEmit(
