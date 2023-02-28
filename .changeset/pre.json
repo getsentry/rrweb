@@ -11,14 +11,20 @@
     "@rrweb/web-extension": "2.0.0-alpha.4"
   },
   "changesets": [
+    "chatty-cherries-train",
     "five-peas-lay",
+    "grumpy-ways-own",
+    "large-ants-prove",
     "loud-seals-raise",
     "lovely-pears-cross",
     "mighty-frogs-sparkle",
     "nervous-poets-grin",
     "real-trains-switch",
     "serious-ants-juggle",
+    "stupid-ghosts-help",
+    "swift-peas-film",
     "tidy-yaks-joke",
-    "twenty-lies-switch"
+    "twenty-lies-switch",
+    "violet-melons-itch"
   ]
 }
