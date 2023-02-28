@@ -236,6 +236,7 @@ function getHref() {
 
 export function transformAttribute(
   doc: Document,
+  element: HTMLElement,
   tagName: string,
   name: string,
   value: string | null,
@@ -265,7 +266,8 @@ export function transformAttribute(
     return absoluteToDoc(doc, value);
   } else if (
     maskAllText &&
-    ['placeholder', 'title', 'aria-label'].indexOf(name) > -1
+    (['placeholder', 'title', 'aria-label'].indexOf(name) > -1 ||
+      (tagName === 'input' && name === 'value' && element.getAttribute('type')?.toLocaleLowerCase() === 'submit'))
   ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   }
@@ -468,8 +470,8 @@ function serializeNode(
   } = options;
   // Only record root id when document object is not the base document
   let rootId: number | undefined;
-  if (((doc as unknown) as INode).__sn) {
-    const docId = ((doc as unknown) as INode).__sn.id;
+  if ((doc as unknown as INode).__sn) {
+    const docId = (doc as unknown as INode).__sn.id;
     rootId = docId === 1 ? undefined : docId;
   }
   switch (n.nodeType) {
@@ -509,6 +511,7 @@ function serializeNode(
         if (!skipAttribute(tagName, name, value)) {
           attributes[name] = transformAttribute(
             doc,
+            n as HTMLElement,
             tagName,
             name,
             value,
@@ -773,7 +776,9 @@ function serializeNode(
   }
 }
 
-function lowerIfExists(maybeAttr: string | number | boolean | null | undefined): string {
+function lowerIfExists(
+  maybeAttr: string | number | boolean | null | undefined,
+): string {
   if (maybeAttr === undefined || maybeAttr === null) {
     return '';
   } else {
