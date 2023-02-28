@@ -94,6 +94,7 @@ function record<T = eventWithTime>(
     keepIframeSrcFn = () => false,
     ignoreCSSAttributes = new Set([]),
     errorHandler,
+    onMutation,
   } = options;
 
   registerErrorHandler(errorHandler);
@@ -328,6 +329,7 @@ function record<T = eventWithTime>(
     mutationCb: wrappedMutationEmit,
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
+      onMutation,
       blockClass,
       blockSelector,
       maskAllText,
@@ -442,6 +444,7 @@ function record<T = eventWithTime>(
     const observe = (doc: Document) => {
       return callbackWrapper(initObservers)(
         {
+          onMutation,
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>
             wrappedEmit(
