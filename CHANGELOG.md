@@ -4,6 +4,11 @@
 
 - “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
 
+## 1.105.0
+
+- feat: Add `onMutation` option to `record` (#70)
+- fix: Ensure `<input type='submit' value='Btn text'>` is masked (#69)
+
 ## 1.104.1
 
 - fix(snapshot): Handle removed attributes (#65)
