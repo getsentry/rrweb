@@ -530,6 +530,17 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('should mask text in form elements', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'form.html', { maskAllText: true }),
+    );
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
   it('should not record blocked elements and its child nodes', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');

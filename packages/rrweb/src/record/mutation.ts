@@ -543,9 +543,11 @@ export default class MutationBuffer {
           }
         } else {
           // overwrite attribute if the mutations was triggered in same time
+          const element = m.target as HTMLElement;
           item.attributes[m.attributeName!] = transformAttribute(
             this.doc,
-            (m.target as HTMLElement).tagName,
+            element,
+            element.tagName,
             m.attributeName!,
             value!,
             this.maskAllText,

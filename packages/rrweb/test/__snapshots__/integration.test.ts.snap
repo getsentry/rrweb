@@ -1558,8 +1558,23 @@ exports[`record integration tests can record form interactions 1`] = `
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 71
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "input",
+                        "attributes": {
+                          "type": "submit",
+                          "value": "Submit form"
+                        },
+                        "childNodes": [],
+                        "id": 72
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 73
                       }
                     ],
                     "id": 18
@@ -1567,7 +1582,7 @@ exports[`record integration tests can record form interactions 1`] = `
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 72
+                    "id": 74
                   },
                   {
                     "type": 2,
@@ -1577,15 +1592,15 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 74
+                        "id": 76
                       }
                     ],
-                    "id": 73
+                    "id": 75
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 75
+                    "id": 77
                   }
                 ],
                 "id": 16
@@ -3405,8 +3420,23 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 71
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "input",
+                        "attributes": {
+                          "type": "submit",
+                          "value": "Submit form"
+                        },
+                        "childNodes": [],
+                        "id": 72
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 73
                       }
                     ],
                     "id": 18
@@ -3414,7 +3444,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 72
+                    "id": 74
                   },
                   {
                     "type": 2,
@@ -3424,15 +3454,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 74
+                        "id": 76
                       }
                     ],
-                    "id": 73
+                    "id": 75
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 75
+                    "id": 77
                   }
                 ],
                 "id": 16
@@ -4783,6 +4813,563 @@ exports[`record integration tests should mask only inputs 1`] = `
                       }
                     ],
                     "id": 44
+                  }
+                ],
+                "id": 16
+              }
+            ],
+            "id": 3
+          }
+        ],
+        "id": 1
+      },
+      "initialOffset": {
+        "left": 0,
+        "top": 0
+      }
+    }
+  }
+]"
+`;
+
+exports[`record integration tests should mask text in form elements 1`] = `
+"[
+  {
+    "type": 0,
+    "data": {}
+  },
+  {
+    "type": 1,
+    "data": {}
+  },
+  {
+    "type": 4,
+    "data": {
+      "href": "about:blank",
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  {
+    "type": 2,
+    "data": {
+      "node": {
+        "type": 0,
+        "childNodes": [
+          {
+            "type": 1,
+            "name": "html",
+            "publicId": "",
+            "systemId": "",
+            "id": 2
+          },
+          {
+            "type": 2,
+            "tagName": "html",
+            "attributes": {
+              "lang": "en"
+            },
+            "childNodes": [
+              {
+                "type": 2,
+                "tagName": "head",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 5
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "charset": "UTF-8"
+                    },
+                    "childNodes": [],
+                    "id": 6
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 7
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "name": "viewport",
+                      "content": "width=device-width, initial-scale=1.0"
+                    },
+                    "childNodes": [],
+                    "id": 8
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 9
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "http-equiv": "X-UA-Compatible",
+                      "content": "ie=edge"
+                    },
+                    "childNodes": [],
+                    "id": 10
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 11
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "title",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "**** ******",
+                        "id": 13
+                      }
+                    ],
+                    "id": 12
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n  ",
+                    "id": 14
+                  }
+                ],
+                "id": 4
+              },
+              {
+                "type": 3,
+                "textContent": "\\n\\n  ",
+                "id": 15
+              },
+              {
+                "type": 2,
+                "tagName": "body",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 17
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "form",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 19
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "text"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 21
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text"
+                            },
+                            "childNodes": [],
+                            "id": 22
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 23
+                          }
+                        ],
+                        "id": 20
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 24
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 26
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "on"
+                            },
+                            "childNodes": [],
+                            "id": 27
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 28
+                          }
+                        ],
+                        "id": 25
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 29
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {},
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 31
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "off",
+                              "checked": true
+                            },
+                            "childNodes": [],
+                            "id": 32
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 33
+                          }
+                        ],
+                        "id": 30
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 34
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "checkbox"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 36
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "checkbox"
+                            },
+                            "childNodes": [],
+                            "id": 37
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 38
+                          }
+                        ],
+                        "id": 35
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 39
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "textarea"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 41
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 42
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 43
+                          }
+                        ],
+                        "id": 40
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 44
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 46
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "select",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "value": "1"
+                            },
+                            "childNodes": [
+                              {
+                                "type": 3,
+                                "textContent": "\\n          ",
+                                "id": 48
+                              },
+                              {
+                                "type": 2,
+                                "tagName": "option",
+                                "attributes": {
+                                  "value": "1",
+                                  "selected": true
+                                },
+                                "childNodes": [
+                                  {
+                                    "type": 3,
+                                    "textContent": "*",
+                                    "id": 50
+                                  }
+                                ],
+                                "id": 49
+                              },
+                              {
+                                "type": 3,
+                                "textContent": "\\n          ",
+                                "id": 51
+                              },
+                              {
+                                "type": 2,
+                                "tagName": "option",
+                                "attributes": {
+                                  "value": "2"
+                                },
+                                "childNodes": [
+                                  {
+                                    "type": 3,
+                                    "textContent": "*",
+                                    "id": 53
+                                  }
+                                ],
+                                "id": 52
+                              },
+                              {
+                                "type": 3,
+                                "textContent": "\\n        ",
+                                "id": 54
+                              }
+                            ],
+                            "id": 47
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 55
+                          }
+                        ],
+                        "id": 45
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 56
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "password"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 58
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "password"
+                            },
+                            "childNodes": [],
+                            "id": 59
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 60
+                          }
+                        ],
+                        "id": 57
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 61
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "empty"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 63
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "id": "empty"
+                            },
+                            "childNodes": [],
+                            "id": 64
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 65
+                          }
+                        ],
+                        "id": 62
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 66
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 68
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 69
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 70
+                          }
+                        ],
+                        "id": 67
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 71
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "input",
+                        "attributes": {
+                          "type": "submit",
+                          "value": "****** ****"
+                        },
+                        "childNodes": [],
+                        "id": 72
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 73
+                      }
+                    ],
+                    "id": 18
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n  \\n    ",
+                    "id": 74
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "script",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "SCRIPT_PLACEHOLDER",
+                        "id": 76
+                      }
+                    ],
+                    "id": 75
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    \\n    \\n\\n",
+                    "id": 77
                   }
                 ],
                 "id": 16
@@ -8594,8 +9181,23 @@ exports[`record integration tests should not record input values if maskAllInput
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 71
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "input",
+                        "attributes": {
+                          "type": "submit",
+                          "value": "Submit form"
+                        },
+                        "childNodes": [],
+                        "id": 72
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 73
                       }
                     ],
                     "id": 18
@@ -8603,7 +9205,7 @@ exports[`record integration tests should not record input values if maskAllInput
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 72
+                    "id": 74
                   },
                   {
                     "type": 2,
@@ -8613,15 +9215,15 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 74
+                        "id": 76
                       }
                     ],
-                    "id": 73
+                    "id": 75
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 75
+                    "id": 77
                   }
                 ],
                 "id": 16
@@ -12712,8 +13314,23 @@ exports[`record integration tests should record input userTriggered values if us
                       },
                       {
                         "type": 3,
-                        "textContent": "\\n    ",
+                        "textContent": "\\n      ",
                         "id": 71
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "input",
+                        "attributes": {
+                          "type": "submit",
+                          "value": "Submit form"
+                        },
+                        "childNodes": [],
+                        "id": 72
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n    ",
+                        "id": 73
                       }
                     ],
                     "id": 18
@@ -12721,7 +13338,7 @@ exports[`record integration tests should record input userTriggered values if us
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 72
+                    "id": 74
                   },
                   {
                     "type": 2,
@@ -12731,15 +13348,15 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 74
+                        "id": 76
                       }
                     ],
-                    "id": 73
+                    "id": 75
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 75
+                    "id": 77
                   }
                 ],
                 "id": 16
