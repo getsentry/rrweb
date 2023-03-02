@@ -1411,7 +1411,7 @@ exports[`record integration tests can record form interactions 1`] = `
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "1",
+                                    "textContent": "Option A",
                                     "id": 50
                                   }
                                 ],
@@ -1431,7 +1431,7 @@ exports[`record integration tests can record form interactions 1`] = `
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "2",
+                                    "textContent": "Option BB",
                                     "id": 53
                                   }
                                 ],
@@ -3273,7 +3273,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "1",
+                                    "textContent": "Option A",
                                     "id": 50
                                   }
                                 ],
@@ -3293,7 +3293,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "2",
+                                    "textContent": "Option BB",
                                     "id": 53
                                   }
                                 ],
@@ -5180,7 +5180,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "*",
+                                    "textContent": "Option A",
                                     "id": 50
                                   }
                                 ],
@@ -5200,7 +5200,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "*",
+                                    "textContent": "Option BB",
                                     "id": 53
                                   }
                                 ],
@@ -9029,12 +9029,12 @@ exports[`record integration tests should not record input values if maskAllInput
                                 "type": 2,
                                 "tagName": "option",
                                 "attributes": {
-                                  "value": "1"
+                                  "value": "*"
                                 },
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "1",
+                                    "textContent": "********",
                                     "id": 50
                                   }
                                 ],
@@ -9049,12 +9049,12 @@ exports[`record integration tests should not record input values if maskAllInput
                                 "type": 2,
                                 "tagName": "option",
                                 "attributes": {
-                                  "value": "2"
+                                  "value": "*"
                                 },
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "2",
+                                    "textContent": "*********",
                                     "id": 53
                                   }
                                 ],
@@ -10030,7 +10030,7 @@ exports[`record integration tests should not record input values on selectively 
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "*",
+                                    "textContent": "1",
                                     "id": 50
                                   }
                                 ],
@@ -10050,7 +10050,7 @@ exports[`record integration tests should not record input values on selectively 
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "*",
+                                    "textContent": "2",
                                     "id": 53
                                   }
                                 ],
@@ -13167,7 +13167,7 @@ exports[`record integration tests should record input userTriggered values if us
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "1",
+                                    "textContent": "Option A",
                                     "id": 50
                                   }
                                 ],
@@ -13187,7 +13187,7 @@ exports[`record integration tests should record input userTriggered values if us
                                 "childNodes": [
                                   {
                                     "type": 3,
-                                    "textContent": "2",
+                                    "textContent": "Option BB",
                                     "id": 53
                                   }
                                 ],

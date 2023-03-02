@@ -561,13 +561,20 @@ function serializeNode(
           attributes._cssText = absoluteToStylesheet(cssText, getHref());
         }
       }
+
       // form fields
       if (
         tagName === 'input' ||
         tagName === 'textarea' ||
-        tagName === 'select'
+        tagName === 'select' ||
+        tagName === 'option'
       ) {
-        const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
+        const el = n as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | HTMLOptionElement;
+        const value = el.value;
         if (
           attributes.type !== 'radio' &&
           attributes.type !== 'checkbox' &&
@@ -576,7 +583,7 @@ function serializeNode(
           value
         ) {
           attributes.value = maskInputValue({
-            input: n as HTMLElement,
+            input: el,
             type: attributes.type,
             tagName,
             value,
@@ -741,6 +748,20 @@ function serializeNode(
       if (parentTagName === 'TEXTAREA' && textContent) {
         // textarea textContent should be masked via `value` attributes
         textContent = '';
+      } else if (parentTagName === 'OPTION' && textContent) {
+        // mask option text like value
+        const option = n.parentNode as HTMLOptionElement;
+
+        textContent = maskInputValue({
+          input: option,
+          type: null,
+          tagName: parentTagName,
+          value: textContent,
+          maskInputSelector,
+          unmaskInputSelector,
+          maskInputOptions,
+          maskInputFn,
+        });
       } else if (
         !isStyle &&
         !isScript &&
