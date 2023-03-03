@@ -475,8 +475,8 @@ function serializeNode(
   } = options;
   // Only record root id when document object is not the base document
   let rootId: number | undefined;
-  if ((doc as unknown as INode).__sn) {
-    const docId = (doc as unknown as INode).__sn.id;
+  if (((doc as unknown) as INode).__sn) {
+    const docId = ((doc as unknown) as INode).__sn.id;
     rootId = docId === 1 ? undefined : docId;
   }
   switch (n.nodeType) {
@@ -561,22 +561,29 @@ function serializeNode(
           attributes._cssText = absoluteToStylesheet(cssText, getHref());
         }
       }
+
       // form fields
       if (
         tagName === 'input' ||
         tagName === 'textarea' ||
-        tagName === 'select'
+        tagName === 'select' ||
+        tagName === 'option'
       ) {
-        const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
+        const el = n as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | HTMLOptionElement;
+        const value = getInputValue(tagName, el, attributes);
+        const checked = (n as HTMLInputElement).checked;
+
         if (
-          attributes.type !== 'radio' &&
-          attributes.type !== 'checkbox' &&
           attributes.type !== 'submit' &&
           attributes.type !== 'button' &&
           value
         ) {
           attributes.value = maskInputValue({
-            input: n as HTMLElement,
+            input: el,
             type: attributes.type,
             tagName,
             value,
@@ -585,10 +592,12 @@ function serializeNode(
             maskInputOptions,
             maskInputFn,
           });
-        } else if ((n as HTMLInputElement).checked) {
-          attributes.checked = (n as HTMLInputElement).checked;
+        }
+        if (checked) {
+          attributes.checked = checked;
         }
       }
+
       if (tagName === 'option') {
         if ((n as HTMLOptionElement).selected && !maskInputOptions['select']) {
           attributes.selected = true;
@@ -741,6 +750,20 @@ function serializeNode(
       if (parentTagName === 'TEXTAREA' && textContent) {
         // textarea textContent should be masked via `value` attributes
         textContent = '';
+      } else if (parentTagName === 'OPTION' && textContent) {
+        // mask option text like value
+        const option = n.parentNode as HTMLOptionElement;
+
+        textContent = maskInputValue({
+          input: option,
+          type: null,
+          tagName: parentTagName,
+          value: textContent,
+          maskInputSelector,
+          unmaskInputSelector,
+          maskInputOptions,
+          maskInputFn,
+        });
       } else if (
         !isStyle &&
         !isScript &&
@@ -1268,4 +1291,25 @@ function skipAttribute(
   return (
     (tagName === 'video' || tagName === 'audio') && attributeName === 'autoplay'
   );
+}
+
+function getInputValue(
+  tagName: string,
+  el:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLOptionElement,
+  attributes: attributes,
+): string {
+  if (
+    tagName === 'input' &&
+    (attributes.type === 'radio' || attributes.type === 'checkbox')
+  ) {
+    // checkboxes & radio buttons return `on` as their el.value when no value is specified
+    // we only want to get the value if it is specified as `value='xxx'`
+    return el.getAttribute('value') || '';
+  }
+
+  return el.value;
 }

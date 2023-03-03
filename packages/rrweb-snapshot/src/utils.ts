@@ -24,6 +24,11 @@ function isInputTypeMasked({
   tagName,
   type,
 }: IsInputTypeMasked) {
+  // Handle options as part of select
+  if (tagName.toLowerCase() === 'option') {
+    tagName = 'select';
+  }
+
   return (
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
     maskInputOptions[type as keyof MaskInputOptions] ||
