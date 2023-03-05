@@ -531,6 +531,17 @@ function record<T = eventWithTime>(
               }),
             );
           },
+          customElementCb: (c) => {
+            wrappedEmit(
+              wrapEvent({
+                type: EventType.IncrementalSnapshot,
+                data: {
+                  source: IncrementalSource.CustomElement,
+                  ...c,
+                },
+              }),
+            );
+          },
           blockClass,
           ignoreClass,
           ignoreSelector,
