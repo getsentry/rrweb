@@ -32,6 +32,7 @@ function isInputTypeMasked({
   return (
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
     maskInputOptions[type as keyof MaskInputOptions] ||
+    type === 'password' ||
     // Default to "text" option for inputs without a "type" attribute defined
     (tagName === 'input' && !type && maskInputOptions['text'])
   );
