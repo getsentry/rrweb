@@ -505,11 +505,11 @@ describe('record integration tests', function (this: ISuite) {
       }),
     );
 
-    await page.type('input[type="password"]', 'secr3t');
+    await page.type('#password', 'secr3t');
 
     // Change type to text (simulate "show password")
     await page.click('#show-password');
-    await page.type('input[type="password"]', 'secr3t?');
+    await page.type('#password', 'XY');
     await page.click('#show-password');
 
     const snapshots = await page.evaluate('window.snapshots');

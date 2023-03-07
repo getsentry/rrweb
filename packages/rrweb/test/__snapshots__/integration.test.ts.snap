@@ -1249,8 +1249,8 @@ exports[`record integration tests can record form interactions 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "radio",
-                              "name": "toggle"
+                              "type": "color",
+                              "value": "#000000"
                             },
                             "childNodes": [],
                             "id": 27
@@ -1283,8 +1283,7 @@ exports[`record integration tests can record form interactions 1`] = `
                             "tagName": "input",
                             "attributes": {
                               "type": "radio",
-                              "name": "toggle",
-                              "value": "radio-on"
+                              "name": "toggle"
                             },
                             "childNodes": [],
                             "id": 32
@@ -1318,8 +1317,7 @@ exports[`record integration tests can record form interactions 1`] = `
                             "attributes": {
                               "type": "radio",
                               "name": "toggle",
-                              "value": "radio-off",
-                              "checked": true
+                              "value": "radio-on"
                             },
                             "childNodes": [],
                             "id": 37
@@ -1340,9 +1338,7 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "checkbox"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -1353,7 +1349,9 @@ exports[`record integration tests can record form interactions 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "checkbox",
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "radio-off",
                               "checked": true
                             },
                             "childNodes": [],
@@ -1375,7 +1373,9 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {},
+                        "attributes": {
+                          "for": "checkbox"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
@@ -1387,7 +1387,7 @@ exports[`record integration tests can record form interactions 1`] = `
                             "tagName": "input",
                             "attributes": {
                               "type": "checkbox",
-                              "value": "check-val"
+                              "checked": true
                             },
                             "childNodes": [],
                             "id": 47
@@ -1408,9 +1408,7 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "textarea"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -1419,12 +1417,10 @@ exports[`record integration tests can record form interactions 1`] = `
                           },
                           {
                             "type": 2,
-                            "tagName": "textarea",
+                            "tagName": "input",
                             "attributes": {
-                              "name": "",
-                              "id": "",
-                              "cols": "30",
-                              "rows": "10"
+                              "type": "checkbox",
+                              "value": "check-val"
                             },
                             "childNodes": [],
                             "id": 52
@@ -1446,13 +1442,50 @@ exports[`record integration tests can record form interactions 1`] = `
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "select"
+                          "for": "textarea"
                         },
                         "childNodes": [
                           {
                             "type": 3,
                             "textContent": "\\n        ",
                             "id": 56
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 57
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 58
+                          }
+                        ],
+                        "id": 55
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 59
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 61
                           },
                           {
                             "type": 2,
@@ -1466,7 +1499,7 @@ exports[`record integration tests can record form interactions 1`] = `
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 58
+                                "id": 63
                               },
                               {
                                 "type": 2,
@@ -1479,15 +1512,15 @@ exports[`record integration tests can record form interactions 1`] = `
                                   {
                                     "type": 3,
                                     "textContent": "Option A",
-                                    "id": 60
+                                    "id": 65
                                   }
                                 ],
-                                "id": 59
+                                "id": 64
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 61
+                                "id": 66
                               },
                               {
                                 "type": 2,
@@ -1499,31 +1532,31 @@ exports[`record integration tests can record form interactions 1`] = `
                                   {
                                     "type": 3,
                                     "textContent": "Option BB",
-                                    "id": 63
+                                    "id": 68
                                   }
                                 ],
-                                "id": 62
+                                "id": 67
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n        ",
-                                "id": 64
+                                "id": 69
                               }
                             ],
-                            "id": 57
+                            "id": 62
                           },
                           {
                             "type": 3,
                             "textContent": "\\n      ",
-                            "id": 65
+                            "id": 70
                           }
                         ],
-                        "id": 55
+                        "id": 60
                       },
                       {
                         "type": 3,
                         "textContent": "\\n      ",
-                        "id": 66
+                        "id": 71
                       },
                       {
                         "type": 2,
@@ -1535,47 +1568,13 @@ exports[`record integration tests can record form interactions 1`] = `
                           {
                             "type": 3,
                             "textContent": "\\n        ",
-                            "id": 68
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "input",
-                            "attributes": {
-                              "type": "password"
-                            },
-                            "childNodes": [],
-                            "id": 69
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 70
-                          }
-                        ],
-                        "id": 67
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 71
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "label",
-                        "attributes": {
-                          "for": "empty"
-                        },
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
                             "id": 73
                           },
                           {
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "id": "empty"
+                              "type": "password"
                             },
                             "childNodes": [],
                             "id": 74
@@ -1597,7 +1596,7 @@ exports[`record integration tests can record form interactions 1`] = `
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "unmask"
+                          "for": "empty"
                         },
                         "childNodes": [
                           {
@@ -1609,8 +1608,7 @@ exports[`record integration tests can record form interactions 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "text",
-                              "class": "rr-unmask"
+                              "id": "empty"
                             },
                             "childNodes": [],
                             "id": 79
@@ -1630,18 +1628,53 @@ exports[`record integration tests can record form interactions 1`] = `
                       },
                       {
                         "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 83
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 84
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 85
+                          }
+                        ],
+                        "id": 82
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 86
+                      },
+                      {
+                        "type": 2,
                         "tagName": "input",
                         "attributes": {
                           "type": "submit",
                           "value": "Submit form"
                         },
                         "childNodes": [],
-                        "id": 82
+                        "id": 87
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    ",
-                        "id": 83
+                        "id": 88
                       }
                     ],
                     "id": 18
@@ -1649,7 +1682,7 @@ exports[`record integration tests can record form interactions 1`] = `
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 84
+                    "id": 89
                   },
                   {
                     "type": 2,
@@ -1659,15 +1692,15 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 86
+                        "id": 91
                       }
                     ],
-                    "id": 85
+                    "id": 90
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 87
+                    "id": 92
                   }
                 ],
                 "id": 16
@@ -1733,7 +1766,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 1,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1749,7 +1782,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 5,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1757,7 +1790,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 0,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1765,7 +1798,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 2,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1774,7 +1807,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "on",
       "isChecked": true,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1783,7 +1816,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "radio-on",
       "isChecked": false,
-      "id": 32
+      "id": 37
     }
   },
   {
@@ -1792,7 +1825,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "radio-off",
       "isChecked": false,
-      "id": 37
+      "id": 42
     }
   },
   {
@@ -1800,7 +1833,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 1,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1808,7 +1841,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 6,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -1816,7 +1849,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 5,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1824,7 +1857,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 0,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1832,7 +1865,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 2,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1841,7 +1874,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "on",
       "isChecked": false,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1849,7 +1882,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 6,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -1857,7 +1890,7 @@ exports[`record integration tests can record form interactions 1`] = `
     "data": {
       "source": 2,
       "type": 5,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1866,7 +1899,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "t",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1875,7 +1908,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "te",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1884,7 +1917,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "tex",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1893,7 +1926,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "text",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1902,7 +1935,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "texta",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1911,7 +1944,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textar",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1920,7 +1953,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textare",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1929,7 +1962,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1938,7 +1971,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea ",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1947,7 +1980,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea t",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1956,7 +1989,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea te",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1965,7 +1998,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea tes",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1974,7 +2007,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "textarea test",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -1983,7 +2016,7 @@ exports[`record integration tests can record form interactions 1`] = `
       "source": 5,
       "text": "1",
       "isChecked": false,
-      "id": 57
+      "id": 62
     }
   }
 ]"
@@ -3187,8 +3220,8 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "radio",
-                              "name": "toggle"
+                              "type": "color",
+                              "value": "#000000"
                             },
                             "childNodes": [],
                             "id": 27
@@ -3221,8 +3254,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "tagName": "input",
                             "attributes": {
                               "type": "radio",
-                              "name": "toggle",
-                              "value": "radio-on"
+                              "name": "toggle"
                             },
                             "childNodes": [],
                             "id": 32
@@ -3256,8 +3288,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "attributes": {
                               "type": "radio",
                               "name": "toggle",
-                              "value": "radio-off",
-                              "checked": true
+                              "value": "radio-on"
                             },
                             "childNodes": [],
                             "id": 37
@@ -3278,9 +3309,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "checkbox"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -3291,7 +3320,9 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "checkbox",
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "radio-off",
                               "checked": true
                             },
                             "childNodes": [],
@@ -3313,7 +3344,9 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {},
+                        "attributes": {
+                          "for": "checkbox"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
@@ -3325,7 +3358,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "tagName": "input",
                             "attributes": {
                               "type": "checkbox",
-                              "value": "check-val"
+                              "checked": true
                             },
                             "childNodes": [],
                             "id": 47
@@ -3346,9 +3379,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "textarea"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -3357,12 +3388,10 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                           },
                           {
                             "type": 2,
-                            "tagName": "textarea",
+                            "tagName": "input",
                             "attributes": {
-                              "name": "",
-                              "id": "",
-                              "cols": "30",
-                              "rows": "10"
+                              "type": "checkbox",
+                              "value": "check-val"
                             },
                             "childNodes": [],
                             "id": 52
@@ -3384,13 +3413,50 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "select"
+                          "for": "textarea"
                         },
                         "childNodes": [
                           {
                             "type": 3,
                             "textContent": "\\n        ",
                             "id": 56
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 57
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 58
+                          }
+                        ],
+                        "id": 55
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 59
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 61
                           },
                           {
                             "type": 2,
@@ -3404,7 +3470,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 58
+                                "id": 63
                               },
                               {
                                 "type": 2,
@@ -3417,15 +3483,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                   {
                                     "type": 3,
                                     "textContent": "Option A",
-                                    "id": 60
+                                    "id": 65
                                   }
                                 ],
-                                "id": 59
+                                "id": 64
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 61
+                                "id": 66
                               },
                               {
                                 "type": 2,
@@ -3437,31 +3503,31 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                   {
                                     "type": 3,
                                     "textContent": "Option BB",
-                                    "id": 63
+                                    "id": 68
                                   }
                                 ],
-                                "id": 62
+                                "id": 67
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n        ",
-                                "id": 64
+                                "id": 69
                               }
                             ],
-                            "id": 57
+                            "id": 62
                           },
                           {
                             "type": 3,
                             "textContent": "\\n      ",
-                            "id": 65
+                            "id": 70
                           }
                         ],
-                        "id": 55
+                        "id": 60
                       },
                       {
                         "type": 3,
                         "textContent": "\\n      ",
-                        "id": 66
+                        "id": 71
                       },
                       {
                         "type": 2,
@@ -3473,47 +3539,13 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                           {
                             "type": 3,
                             "textContent": "\\n        ",
-                            "id": 68
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "input",
-                            "attributes": {
-                              "type": "password"
-                            },
-                            "childNodes": [],
-                            "id": 69
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 70
-                          }
-                        ],
-                        "id": 67
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 71
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "label",
-                        "attributes": {
-                          "for": "empty"
-                        },
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
                             "id": 73
                           },
                           {
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "id": "empty"
+                              "type": "password"
                             },
                             "childNodes": [],
                             "id": 74
@@ -3535,7 +3567,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "unmask"
+                          "for": "empty"
                         },
                         "childNodes": [
                           {
@@ -3547,8 +3579,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "text",
-                              "class": "rr-unmask"
+                              "id": "empty"
                             },
                             "childNodes": [],
                             "id": 79
@@ -3568,18 +3599,53 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       },
                       {
                         "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 83
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 84
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 85
+                          }
+                        ],
+                        "id": 82
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 86
+                      },
+                      {
+                        "type": 2,
                         "tagName": "input",
                         "attributes": {
                           "type": "submit",
                           "value": "Submit form"
                         },
                         "childNodes": [],
-                        "id": 82
+                        "id": 87
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    ",
-                        "id": 83
+                        "id": 88
                       }
                     ],
                     "id": 18
@@ -3587,7 +3653,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 84
+                    "id": 89
                   },
                   {
                     "type": 2,
@@ -3597,15 +3663,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 86
+                        "id": 91
                       }
                     ],
-                    "id": 85
+                    "id": 90
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 87
+                    "id": 92
                   }
                 ],
                 "id": 16
@@ -3670,14 +3736,6 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "type": 3,
     "data": {
       "source": 2,
-      "type": 1,
-      "id": 27
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 2,
       "type": 6,
       "id": 22
     }
@@ -3694,7 +3752,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "type": 3,
     "data": {
       "source": 2,
-      "type": 0,
+      "type": 1,
+      "id": 32
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
       "id": 27
     }
   },
@@ -3702,8 +3768,24 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "type": 3,
     "data": {
       "source": 2,
+      "type": 5,
+      "id": 32
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 0,
+      "id": 32
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
       "type": 2,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -3712,7 +3794,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "on",
       "isChecked": true,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -3721,7 +3803,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "radio-on",
       "isChecked": false,
-      "id": 32
+      "id": 37
     }
   },
   {
@@ -3730,7 +3812,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "radio-off",
       "isChecked": false,
-      "id": 37
+      "id": 42
     }
   },
   {
@@ -3738,7 +3820,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 1,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3746,7 +3828,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 6,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -3754,7 +3836,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 5,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3762,7 +3844,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 0,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3770,7 +3852,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 2,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3779,7 +3861,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "on",
       "isChecked": false,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3787,7 +3869,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 6,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -3795,7 +3877,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 5,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3804,7 +3886,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "t",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3813,7 +3895,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "te",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3822,7 +3904,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "tex",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3831,7 +3913,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "text",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3840,7 +3922,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "texta",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3849,7 +3931,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textar",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3858,7 +3940,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textare",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3867,7 +3949,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3876,7 +3958,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea ",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3885,7 +3967,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea t",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3894,7 +3976,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea te",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3903,7 +3985,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea tes",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3912,7 +3994,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "textarea test",
       "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3920,7 +4002,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 6,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -3928,7 +4010,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     "data": {
       "source": 2,
       "type": 5,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3937,7 +4019,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "*",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3946,7 +4028,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "**",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3955,7 +4037,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "***",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3964,7 +4046,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "****",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3973,7 +4055,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "*****",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3982,7 +4064,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "******",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -3991,7 +4073,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "*******",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -4000,7 +4082,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "********",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -4009,7 +4091,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       "source": 5,
       "text": "1",
       "isChecked": false,
-      "id": 57
+      "id": 62
     }
   }
 ]"
@@ -4204,6 +4286,451 @@ exports[`record integration tests handles null attribute values 1`] = `
           "id": 20,
           "attributes": {
             "aria-label": null
+          }
+        }
+      ],
+      "removes": [],
+      "adds": []
+    }
+  }
+]"
+`;
+
+exports[`record integration tests should always mask value attribute of passwords 1`] = `
+"[
+  {
+    "type": 0,
+    "data": {}
+  },
+  {
+    "type": 1,
+    "data": {}
+  },
+  {
+    "type": 4,
+    "data": {
+      "href": "about:blank",
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  {
+    "type": 2,
+    "data": {
+      "node": {
+        "type": 0,
+        "childNodes": [
+          {
+            "type": 1,
+            "name": "html",
+            "publicId": "",
+            "systemId": "",
+            "id": 2
+          },
+          {
+            "type": 2,
+            "tagName": "html",
+            "attributes": {
+              "lang": "en"
+            },
+            "childNodes": [
+              {
+                "type": 2,
+                "tagName": "head",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 5
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "charset": "UTF-8"
+                    },
+                    "childNodes": [],
+                    "id": 6
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 7
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "http-equiv": "X-UA-Compatible",
+                      "content": "IE=edge"
+                    },
+                    "childNodes": [],
+                    "id": 8
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 9
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "meta",
+                    "attributes": {
+                      "name": "viewport",
+                      "content": "width=device-width, initial-scale=1.0"
+                    },
+                    "childNodes": [],
+                    "id": 10
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 11
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "title",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "Document",
+                        "id": 13
+                      }
+                    ],
+                    "id": 12
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n  ",
+                    "id": 14
+                  }
+                ],
+                "id": 4
+              },
+              {
+                "type": 3,
+                "textContent": "\\n  ",
+                "id": 15
+              },
+              {
+                "type": 2,
+                "tagName": "body",
+                "attributes": {},
+                "childNodes": [
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 17
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "input",
+                    "attributes": {
+                      "type": "password",
+                      "id": "password"
+                    },
+                    "childNodes": [],
+                    "id": 18
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 19
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "button",
+                    "attributes": {
+                      "type": "button",
+                      "id": "show-password"
+                    },
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "Toggle show password",
+                        "id": 21
+                      }
+                    ],
+                    "id": 20
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    ",
+                    "id": 22
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "script",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "SCRIPT_PLACEHOLDER",
+                        "id": 24
+                      }
+                    ],
+                    "id": 23
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n  \\n    ",
+                    "id": 25
+                  },
+                  {
+                    "type": 2,
+                    "tagName": "script",
+                    "attributes": {},
+                    "childNodes": [
+                      {
+                        "type": 3,
+                        "textContent": "SCRIPT_PLACEHOLDER",
+                        "id": 27
+                      }
+                    ],
+                    "id": 26
+                  },
+                  {
+                    "type": 3,
+                    "textContent": "\\n    \\n    \\n\\n",
+                    "id": 28
+                  }
+                ],
+                "id": 16
+              }
+            ],
+            "id": 3
+          }
+        ],
+        "id": 1
+      },
+      "initialOffset": {
+        "left": 0,
+        "top": 0
+      }
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "**",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "***",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "****",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*****",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "******",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 1,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 0,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 2,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 0,
+      "texts": [],
+      "attributes": [
+        {
+          "id": 18,
+          "attributes": {
+            "type": "text"
+          }
+        }
+      ],
+      "removes": [],
+      "adds": []
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 0,
+      "texts": [],
+      "attributes": [
+        {
+          "id": 18,
+          "attributes": {
+            "rr_is_password": "true"
+          }
+        }
+      ],
+      "removes": [],
+      "adds": []
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*******",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "********",
+      "isChecked": false,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 1,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 18
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 0,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 2,
+      "id": 20
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 0,
+      "texts": [],
+      "attributes": [
+        {
+          "id": 18,
+          "attributes": {
+            "type": "password"
           }
         }
       ],
@@ -5170,8 +5697,8 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "radio",
-                              "name": "toggle"
+                              "type": "color",
+                              "value": "#000000"
                             },
                             "childNodes": [],
                             "id": 27
@@ -5204,8 +5731,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "tagName": "input",
                             "attributes": {
                               "type": "radio",
-                              "name": "toggle",
-                              "value": "radio-on"
+                              "name": "toggle"
                             },
                             "childNodes": [],
                             "id": 32
@@ -5239,8 +5765,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "attributes": {
                               "type": "radio",
                               "name": "toggle",
-                              "value": "radio-off",
-                              "checked": true
+                              "value": "radio-on"
                             },
                             "childNodes": [],
                             "id": 37
@@ -5261,9 +5786,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "checkbox"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -5274,7 +5797,9 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "checkbox",
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "radio-off",
                               "checked": true
                             },
                             "childNodes": [],
@@ -5296,7 +5821,9 @@ exports[`record integration tests should mask text in form elements 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {},
+                        "attributes": {
+                          "for": "checkbox"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
@@ -5308,7 +5835,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "tagName": "input",
                             "attributes": {
                               "type": "checkbox",
-                              "value": "check-val"
+                              "checked": true
                             },
                             "childNodes": [],
                             "id": 47
@@ -5329,9 +5856,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "textarea"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -5340,12 +5865,10 @@ exports[`record integration tests should mask text in form elements 1`] = `
                           },
                           {
                             "type": 2,
-                            "tagName": "textarea",
+                            "tagName": "input",
                             "attributes": {
-                              "name": "",
-                              "id": "",
-                              "cols": "30",
-                              "rows": "10"
+                              "type": "checkbox",
+                              "value": "check-val"
                             },
                             "childNodes": [],
                             "id": 52
@@ -5367,13 +5890,50 @@ exports[`record integration tests should mask text in form elements 1`] = `
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "select"
+                          "for": "textarea"
                         },
                         "childNodes": [
                           {
                             "type": 3,
                             "textContent": "\\n        ",
                             "id": 56
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 57
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 58
+                          }
+                        ],
+                        "id": 55
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 59
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 61
                           },
                           {
                             "type": 2,
@@ -5387,7 +5947,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 58
+                                "id": 63
                               },
                               {
                                 "type": 2,
@@ -5400,15 +5960,15 @@ exports[`record integration tests should mask text in form elements 1`] = `
                                   {
                                     "type": 3,
                                     "textContent": "Option A",
-                                    "id": 60
+                                    "id": 65
                                   }
                                 ],
-                                "id": 59
+                                "id": 64
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 61
+                                "id": 66
                               },
                               {
                                 "type": 2,
@@ -5420,31 +5980,31 @@ exports[`record integration tests should mask text in form elements 1`] = `
                                   {
                                     "type": 3,
                                     "textContent": "Option BB",
-                                    "id": 63
+                                    "id": 68
                                   }
                                 ],
-                                "id": 62
+                                "id": 67
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n        ",
-                                "id": 64
+                                "id": 69
                               }
                             ],
-                            "id": 57
+                            "id": 62
                           },
                           {
                             "type": 3,
                             "textContent": "\\n      ",
-                            "id": 65
+                            "id": 70
                           }
                         ],
-                        "id": 55
+                        "id": 60
                       },
                       {
                         "type": 3,
                         "textContent": "\\n      ",
-                        "id": 66
+                        "id": 71
                       },
                       {
                         "type": 2,
@@ -5456,47 +6016,13 @@ exports[`record integration tests should mask text in form elements 1`] = `
                           {
                             "type": 3,
                             "textContent": "\\n        ",
-                            "id": 68
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "input",
-                            "attributes": {
-                              "type": "password"
-                            },
-                            "childNodes": [],
-                            "id": 69
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 70
-                          }
-                        ],
-                        "id": 67
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 71
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "label",
-                        "attributes": {
-                          "for": "empty"
-                        },
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
                             "id": 73
                           },
                           {
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "id": "empty"
+                              "type": "password"
                             },
                             "childNodes": [],
                             "id": 74
@@ -5518,7 +6044,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "unmask"
+                          "for": "empty"
                         },
                         "childNodes": [
                           {
@@ -5530,8 +6056,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "text",
-                              "class": "rr-unmask"
+                              "id": "empty"
                             },
                             "childNodes": [],
                             "id": 79
@@ -5551,18 +6076,53 @@ exports[`record integration tests should mask text in form elements 1`] = `
                       },
                       {
                         "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 83
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 84
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 85
+                          }
+                        ],
+                        "id": 82
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 86
+                      },
+                      {
+                        "type": 2,
                         "tagName": "input",
                         "attributes": {
                           "type": "submit",
                           "value": "****** ****"
                         },
                         "childNodes": [],
-                        "id": 82
+                        "id": 87
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    ",
-                        "id": 83
+                        "id": 88
                       }
                     ],
                     "id": 18
@@ -5570,7 +6130,7 @@ exports[`record integration tests should mask text in form elements 1`] = `
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 84
+                    "id": 89
                   },
                   {
                     "type": 2,
@@ -5580,15 +6140,15 @@ exports[`record integration tests should mask text in form elements 1`] = `
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 86
+                        "id": 91
                       }
                     ],
-                    "id": 85
+                    "id": 90
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 87
+                    "id": 92
                   }
                 ],
                 "id": 16
@@ -6373,367 +6933,6 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
         "left": 0,
         "top": 0
       }
-    }
-  }
-]"
-`;
-
-exports[`record integration tests should mask value attribute with maskInputOptions 1`] = `
-"[
-  {
-    "type": 0,
-    "data": {}
-  },
-  {
-    "type": 1,
-    "data": {}
-  },
-  {
-    "type": 4,
-    "data": {
-      "href": "about:blank",
-      "width": 1920,
-      "height": 1080
-    }
-  },
-  {
-    "type": 2,
-    "data": {
-      "node": {
-        "type": 0,
-        "childNodes": [
-          {
-            "type": 1,
-            "name": "html",
-            "publicId": "",
-            "systemId": "",
-            "id": 2
-          },
-          {
-            "type": 2,
-            "tagName": "html",
-            "attributes": {
-              "lang": "en"
-            },
-            "childNodes": [
-              {
-                "type": 2,
-                "tagName": "head",
-                "attributes": {},
-                "childNodes": [
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 5
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "charset": "UTF-8"
-                    },
-                    "childNodes": [],
-                    "id": 6
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 7
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "http-equiv": "X-UA-Compatible",
-                      "content": "IE=edge"
-                    },
-                    "childNodes": [],
-                    "id": 8
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 9
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "meta",
-                    "attributes": {
-                      "name": "viewport",
-                      "content": "width=device-width, initial-scale=1.0"
-                    },
-                    "childNodes": [],
-                    "id": 10
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 11
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "title",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "Document",
-                        "id": 13
-                      }
-                    ],
-                    "id": 12
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n  ",
-                    "id": 14
-                  }
-                ],
-                "id": 4
-              },
-              {
-                "type": 3,
-                "textContent": "\\n  ",
-                "id": 15
-              },
-              {
-                "type": 2,
-                "tagName": "body",
-                "attributes": {},
-                "childNodes": [
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 17
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "input",
-                    "attributes": {
-                      "type": "password",
-                      "id": "password"
-                    },
-                    "childNodes": [],
-                    "id": 18
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    ",
-                    "id": 19
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 21
-                      }
-                    ],
-                    "id": 20
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n  \\n    ",
-                    "id": 22
-                  },
-                  {
-                    "type": 2,
-                    "tagName": "script",
-                    "attributes": {},
-                    "childNodes": [
-                      {
-                        "type": 3,
-                        "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 24
-                      }
-                    ],
-                    "id": 23
-                  },
-                  {
-                    "type": 3,
-                    "textContent": "\\n    \\n    \\n\\n",
-                    "id": 25
-                  }
-                ],
-                "id": 16
-              }
-            ],
-            "id": 3
-          }
-        ],
-        "id": 1
-      },
-      "initialOffset": {
-        "left": 0,
-        "top": 0
-      }
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 2,
-      "type": 5,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "*"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "**",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "**"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "***",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "***"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "****",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "****"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*****",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "*****"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "******",
-      "isChecked": false,
-      "id": 18
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 0,
-      "texts": [],
-      "attributes": [
-        {
-          "id": 18,
-          "attributes": {
-            "value": "******"
-          }
-        }
-      ],
-      "removes": [],
-      "adds": []
     }
   }
 ]"
@@ -9092,8 +9291,8 @@ exports[`record integration tests should not record input values if maskAllInput
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "radio",
-                              "name": "toggle"
+                              "type": "color",
+                              "value": "*******"
                             },
                             "childNodes": [],
                             "id": 27
@@ -9126,8 +9325,7 @@ exports[`record integration tests should not record input values if maskAllInput
                             "tagName": "input",
                             "attributes": {
                               "type": "radio",
-                              "name": "toggle",
-                              "value": "********"
+                              "name": "toggle"
                             },
                             "childNodes": [],
                             "id": 32
@@ -9161,8 +9359,7 @@ exports[`record integration tests should not record input values if maskAllInput
                             "attributes": {
                               "type": "radio",
                               "name": "toggle",
-                              "value": "*********",
-                              "checked": true
+                              "value": "********"
                             },
                             "childNodes": [],
                             "id": 37
@@ -9183,9 +9380,7 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "checkbox"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -9196,7 +9391,9 @@ exports[`record integration tests should not record input values if maskAllInput
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "checkbox",
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "*********",
                               "checked": true
                             },
                             "childNodes": [],
@@ -9218,7 +9415,9 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {},
+                        "attributes": {
+                          "for": "checkbox"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
@@ -9230,7 +9429,7 @@ exports[`record integration tests should not record input values if maskAllInput
                             "tagName": "input",
                             "attributes": {
                               "type": "checkbox",
-                              "value": "*********"
+                              "checked": true
                             },
                             "childNodes": [],
                             "id": 47
@@ -9251,9 +9450,7 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "textarea"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -9262,12 +9459,10 @@ exports[`record integration tests should not record input values if maskAllInput
                           },
                           {
                             "type": 2,
-                            "tagName": "textarea",
+                            "tagName": "input",
                             "attributes": {
-                              "name": "",
-                              "id": "",
-                              "cols": "30",
-                              "rows": "10"
+                              "type": "checkbox",
+                              "value": "*********"
                             },
                             "childNodes": [],
                             "id": 52
@@ -9289,13 +9484,50 @@ exports[`record integration tests should not record input values if maskAllInput
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "select"
+                          "for": "textarea"
                         },
                         "childNodes": [
                           {
                             "type": 3,
                             "textContent": "\\n        ",
                             "id": 56
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 57
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 58
+                          }
+                        ],
+                        "id": 55
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 59
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 61
                           },
                           {
                             "type": 2,
@@ -9309,7 +9541,7 @@ exports[`record integration tests should not record input values if maskAllInput
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 58
+                                "id": 63
                               },
                               {
                                 "type": 2,
@@ -9321,15 +9553,15 @@ exports[`record integration tests should not record input values if maskAllInput
                                   {
                                     "type": 3,
                                     "textContent": "********",
-                                    "id": 60
+                                    "id": 65
                                   }
                                 ],
-                                "id": 59
+                                "id": 64
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 61
+                                "id": 66
                               },
                               {
                                 "type": 2,
@@ -9341,31 +9573,31 @@ exports[`record integration tests should not record input values if maskAllInput
                                   {
                                     "type": 3,
                                     "textContent": "*********",
-                                    "id": 63
+                                    "id": 68
                                   }
                                 ],
-                                "id": 62
+                                "id": 67
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n        ",
-                                "id": 64
+                                "id": 69
                               }
                             ],
-                            "id": 57
+                            "id": 62
                           },
                           {
                             "type": 3,
                             "textContent": "\\n      ",
-                            "id": 65
+                            "id": 70
                           }
                         ],
-                        "id": 55
+                        "id": 60
                       },
                       {
                         "type": 3,
                         "textContent": "\\n      ",
-                        "id": 66
+                        "id": 71
                       },
                       {
                         "type": 2,
@@ -9377,47 +9609,13 @@ exports[`record integration tests should not record input values if maskAllInput
                           {
                             "type": 3,
                             "textContent": "\\n        ",
-                            "id": 68
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "input",
-                            "attributes": {
-                              "type": "password"
-                            },
-                            "childNodes": [],
-                            "id": 69
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 70
-                          }
-                        ],
-                        "id": 67
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 71
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "label",
-                        "attributes": {
-                          "for": "empty"
-                        },
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
                             "id": 73
                           },
                           {
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "id": "empty"
+                              "type": "password"
                             },
                             "childNodes": [],
                             "id": 74
@@ -9439,7 +9637,7 @@ exports[`record integration tests should not record input values if maskAllInput
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "unmask"
+                          "for": "empty"
                         },
                         "childNodes": [
                           {
@@ -9451,8 +9649,7 @@ exports[`record integration tests should not record input values if maskAllInput
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "text",
-                              "class": "rr-unmask"
+                              "id": "empty"
                             },
                             "childNodes": [],
                             "id": 79
@@ -9472,18 +9669,53 @@ exports[`record integration tests should not record input values if maskAllInput
                       },
                       {
                         "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 83
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 84
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 85
+                          }
+                        ],
+                        "id": 82
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 86
+                      },
+                      {
+                        "type": 2,
                         "tagName": "input",
                         "attributes": {
                           "type": "submit",
                           "value": "Submit form"
                         },
                         "childNodes": [],
-                        "id": 82
+                        "id": 87
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    ",
-                        "id": 83
+                        "id": 88
                       }
                     ],
                     "id": 18
@@ -9491,7 +9723,7 @@ exports[`record integration tests should not record input values if maskAllInput
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 84
+                    "id": 89
                   },
                   {
                     "type": 2,
@@ -9501,15 +9733,15 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 86
+                        "id": 91
                       }
                     ],
-                    "id": 85
+                    "id": 90
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 87
+                    "id": 92
                   }
                 ],
                 "id": 16
@@ -9575,7 +9807,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 1,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9591,7 +9823,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 5,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9599,7 +9831,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 0,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9607,7 +9839,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 2,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9616,7 +9848,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "on",
       "isChecked": true,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9625,7 +9857,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "radio-on",
       "isChecked": false,
-      "id": 32
+      "id": 37
     }
   },
   {
@@ -9634,7 +9866,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "radio-off",
       "isChecked": false,
-      "id": 37
+      "id": 42
     }
   },
   {
@@ -9642,7 +9874,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 1,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9650,7 +9882,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 6,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -9658,7 +9890,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 5,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9666,7 +9898,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 0,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9674,7 +9906,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 2,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9683,7 +9915,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "on",
       "isChecked": false,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9691,7 +9923,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 6,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -9699,7 +9931,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 5,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9708,7 +9940,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "*",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9717,7 +9949,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "**",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9726,7 +9958,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "***",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9735,7 +9967,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "****",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9744,7 +9976,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "*****",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9753,7 +9985,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "******",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9762,7 +9994,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "*******",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9771,7 +10003,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "********",
       "isChecked": false,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9779,7 +10011,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 6,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -9787,124 +10019,7 @@ exports[`record integration tests should not record input values if maskAllInput
     "data": {
       "source": 2,
       "type": 5,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "**",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "***",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "****",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*****",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "******",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*******",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "********",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*********",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "**********",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "***********",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "************",
-      "isChecked": false,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*************",
-      "isChecked": false,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -9919,35 +10034,10 @@ exports[`record integration tests should not record input values if maskAllInput
   {
     "type": 3,
     "data": {
-      "source": 2,
-      "type": 6,
-      "id": 52
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 2,
-      "type": 5,
-      "id": 74
-    }
-  },
-  {
-    "type": 3,
-    "data": {
-      "source": 5,
-      "text": "*",
-      "isChecked": false,
-      "id": 74
-    }
-  },
-  {
-    "type": 3,
-    "data": {
       "source": 5,
       "text": "**",
       "isChecked": false,
-      "id": 74
+      "id": 57
     }
   },
   {
@@ -9956,7 +10046,7 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "***",
       "isChecked": false,
-      "id": 74
+      "id": 57
     }
   },
   {
@@ -9965,7 +10055,149 @@ exports[`record integration tests should not record input values if maskAllInput
       "source": 5,
       "text": "****",
       "isChecked": false,
-      "id": 74
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*****",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "******",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*******",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "********",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*********",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "**********",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "***********",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "************",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*************",
+      "isChecked": false,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*",
+      "isChecked": false,
+      "id": 62
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 6,
+      "id": 57
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 2,
+      "type": 5,
+      "id": 79
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "*",
+      "isChecked": false,
+      "id": 79
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "**",
+      "isChecked": false,
+      "id": 79
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "***",
+      "isChecked": false,
+      "id": 79
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 5,
+      "text": "****",
+      "isChecked": false,
+      "id": 79
     }
   }
 ]"
@@ -13300,8 +13532,8 @@ exports[`record integration tests should record input userTriggered values if us
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "radio",
-                              "name": "toggle"
+                              "type": "color",
+                              "value": "#000000"
                             },
                             "childNodes": [],
                             "id": 27
@@ -13334,8 +13566,7 @@ exports[`record integration tests should record input userTriggered values if us
                             "tagName": "input",
                             "attributes": {
                               "type": "radio",
-                              "name": "toggle",
-                              "value": "radio-on"
+                              "name": "toggle"
                             },
                             "childNodes": [],
                             "id": 32
@@ -13369,8 +13600,7 @@ exports[`record integration tests should record input userTriggered values if us
                             "attributes": {
                               "type": "radio",
                               "name": "toggle",
-                              "value": "radio-off",
-                              "checked": true
+                              "value": "radio-on"
                             },
                             "childNodes": [],
                             "id": 37
@@ -13391,9 +13621,7 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "checkbox"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -13404,7 +13632,9 @@ exports[`record integration tests should record input userTriggered values if us
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "checkbox",
+                              "type": "radio",
+                              "name": "toggle",
+                              "value": "radio-off",
                               "checked": true
                             },
                             "childNodes": [],
@@ -13426,7 +13656,9 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {},
+                        "attributes": {
+                          "for": "checkbox"
+                        },
                         "childNodes": [
                           {
                             "type": 3,
@@ -13438,7 +13670,7 @@ exports[`record integration tests should record input userTriggered values if us
                             "tagName": "input",
                             "attributes": {
                               "type": "checkbox",
-                              "value": "check-val"
+                              "checked": true
                             },
                             "childNodes": [],
                             "id": 47
@@ -13459,9 +13691,7 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 2,
                         "tagName": "label",
-                        "attributes": {
-                          "for": "textarea"
-                        },
+                        "attributes": {},
                         "childNodes": [
                           {
                             "type": 3,
@@ -13470,12 +13700,10 @@ exports[`record integration tests should record input userTriggered values if us
                           },
                           {
                             "type": 2,
-                            "tagName": "textarea",
+                            "tagName": "input",
                             "attributes": {
-                              "name": "",
-                              "id": "",
-                              "cols": "30",
-                              "rows": "10"
+                              "type": "checkbox",
+                              "value": "check-val"
                             },
                             "childNodes": [],
                             "id": 52
@@ -13497,13 +13725,50 @@ exports[`record integration tests should record input userTriggered values if us
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "select"
+                          "for": "textarea"
                         },
                         "childNodes": [
                           {
                             "type": 3,
                             "textContent": "\\n        ",
                             "id": 56
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "textarea",
+                            "attributes": {
+                              "name": "",
+                              "id": "",
+                              "cols": "30",
+                              "rows": "10"
+                            },
+                            "childNodes": [],
+                            "id": 57
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 58
+                          }
+                        ],
+                        "id": 55
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 59
+                      },
+                      {
+                        "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "select"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 61
                           },
                           {
                             "type": 2,
@@ -13517,7 +13782,7 @@ exports[`record integration tests should record input userTriggered values if us
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 58
+                                "id": 63
                               },
                               {
                                 "type": 2,
@@ -13530,15 +13795,15 @@ exports[`record integration tests should record input userTriggered values if us
                                   {
                                     "type": 3,
                                     "textContent": "Option A",
-                                    "id": 60
+                                    "id": 65
                                   }
                                 ],
-                                "id": 59
+                                "id": 64
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n          ",
-                                "id": 61
+                                "id": 66
                               },
                               {
                                 "type": 2,
@@ -13550,31 +13815,31 @@ exports[`record integration tests should record input userTriggered values if us
                                   {
                                     "type": 3,
                                     "textContent": "Option BB",
-                                    "id": 63
+                                    "id": 68
                                   }
                                 ],
-                                "id": 62
+                                "id": 67
                               },
                               {
                                 "type": 3,
                                 "textContent": "\\n        ",
-                                "id": 64
+                                "id": 69
                               }
                             ],
-                            "id": 57
+                            "id": 62
                           },
                           {
                             "type": 3,
                             "textContent": "\\n      ",
-                            "id": 65
+                            "id": 70
                           }
                         ],
-                        "id": 55
+                        "id": 60
                       },
                       {
                         "type": 3,
                         "textContent": "\\n      ",
-                        "id": 66
+                        "id": 71
                       },
                       {
                         "type": 2,
@@ -13586,47 +13851,13 @@ exports[`record integration tests should record input userTriggered values if us
                           {
                             "type": 3,
                             "textContent": "\\n        ",
-                            "id": 68
-                          },
-                          {
-                            "type": 2,
-                            "tagName": "input",
-                            "attributes": {
-                              "type": "password"
-                            },
-                            "childNodes": [],
-                            "id": 69
-                          },
-                          {
-                            "type": 3,
-                            "textContent": "\\n      ",
-                            "id": 70
-                          }
-                        ],
-                        "id": 67
-                      },
-                      {
-                        "type": 3,
-                        "textContent": "\\n      ",
-                        "id": 71
-                      },
-                      {
-                        "type": 2,
-                        "tagName": "label",
-                        "attributes": {
-                          "for": "empty"
-                        },
-                        "childNodes": [
-                          {
-                            "type": 3,
-                            "textContent": "\\n        ",
                             "id": 73
                           },
                           {
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "id": "empty"
+                              "type": "password"
                             },
                             "childNodes": [],
                             "id": 74
@@ -13648,7 +13879,7 @@ exports[`record integration tests should record input userTriggered values if us
                         "type": 2,
                         "tagName": "label",
                         "attributes": {
-                          "for": "unmask"
+                          "for": "empty"
                         },
                         "childNodes": [
                           {
@@ -13660,8 +13891,7 @@ exports[`record integration tests should record input userTriggered values if us
                             "type": 2,
                             "tagName": "input",
                             "attributes": {
-                              "type": "text",
-                              "class": "rr-unmask"
+                              "id": "empty"
                             },
                             "childNodes": [],
                             "id": 79
@@ -13681,18 +13911,53 @@ exports[`record integration tests should record input userTriggered values if us
                       },
                       {
                         "type": 2,
+                        "tagName": "label",
+                        "attributes": {
+                          "for": "unmask"
+                        },
+                        "childNodes": [
+                          {
+                            "type": 3,
+                            "textContent": "\\n        ",
+                            "id": 83
+                          },
+                          {
+                            "type": 2,
+                            "tagName": "input",
+                            "attributes": {
+                              "type": "text",
+                              "class": "rr-unmask"
+                            },
+                            "childNodes": [],
+                            "id": 84
+                          },
+                          {
+                            "type": 3,
+                            "textContent": "\\n      ",
+                            "id": 85
+                          }
+                        ],
+                        "id": 82
+                      },
+                      {
+                        "type": 3,
+                        "textContent": "\\n      ",
+                        "id": 86
+                      },
+                      {
+                        "type": 2,
                         "tagName": "input",
                         "attributes": {
                           "type": "submit",
                           "value": "Submit form"
                         },
                         "childNodes": [],
-                        "id": 82
+                        "id": 87
                       },
                       {
                         "type": 3,
                         "textContent": "\\n    ",
-                        "id": 83
+                        "id": 88
                       }
                     ],
                     "id": 18
@@ -13700,7 +13965,7 @@ exports[`record integration tests should record input userTriggered values if us
                   {
                     "type": 3,
                     "textContent": "\\n  \\n    ",
-                    "id": 84
+                    "id": 89
                   },
                   {
                     "type": 2,
@@ -13710,15 +13975,15 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         "type": 3,
                         "textContent": "SCRIPT_PLACEHOLDER",
-                        "id": 86
+                        "id": 91
                       }
                     ],
-                    "id": 85
+                    "id": 90
                   },
                   {
                     "type": 3,
                     "textContent": "\\n    \\n    \\n\\n",
-                    "id": 87
+                    "id": 92
                   }
                 ],
                 "id": 16
@@ -13788,7 +14053,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 1,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13804,7 +14069,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 5,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13812,7 +14077,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 0,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13820,7 +14085,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 2,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13830,7 +14095,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "on",
       "isChecked": true,
       "userTriggered": true,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13840,7 +14105,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "radio-on",
       "isChecked": false,
       "userTriggered": false,
-      "id": 32
+      "id": 37
     }
   },
   {
@@ -13850,7 +14115,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "radio-off",
       "isChecked": false,
       "userTriggered": false,
-      "id": 37
+      "id": 42
     }
   },
   {
@@ -13858,7 +14123,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 1,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13866,7 +14131,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 6,
-      "id": 27
+      "id": 32
     }
   },
   {
@@ -13874,7 +14139,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 5,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13882,7 +14147,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 0,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13890,7 +14155,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 2,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13900,7 +14165,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "on",
       "isChecked": false,
       "userTriggered": true,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13908,7 +14173,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 6,
-      "id": 42
+      "id": 47
     }
   },
   {
@@ -13916,7 +14181,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 5,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13926,7 +14191,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "*",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13936,7 +14201,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "**",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13946,7 +14211,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "***",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13956,7 +14221,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "****",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13966,7 +14231,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "*****",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13976,7 +14241,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "******",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13986,7 +14251,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "*******",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -13996,7 +14261,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "********",
       "isChecked": false,
       "userTriggered": true,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -14004,7 +14269,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 6,
-      "id": 69
+      "id": 74
     }
   },
   {
@@ -14012,7 +14277,7 @@ exports[`record integration tests should record input userTriggered values if us
     "data": {
       "source": 2,
       "type": 5,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14022,7 +14287,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "t",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14032,7 +14297,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "te",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14042,7 +14307,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "tex",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14052,7 +14317,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "text",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14062,7 +14327,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "texta",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14072,7 +14337,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textar",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14082,7 +14347,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textare",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14092,7 +14357,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14102,7 +14367,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea ",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14112,7 +14377,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea t",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14122,7 +14387,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea te",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14132,7 +14397,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea tes",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14142,7 +14407,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "textarea test",
       "isChecked": false,
       "userTriggered": true,
-      "id": 52
+      "id": 57
     }
   },
   {
@@ -14152,7 +14417,7 @@ exports[`record integration tests should record input userTriggered values if us
       "text": "1",
       "isChecked": false,
       "userTriggered": false,
-      "id": 57
+      "id": 62
     }
   }
 ]"
