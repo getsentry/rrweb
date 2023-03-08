@@ -479,12 +479,13 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: {
           text: false,
           textarea: false,
-          password: true,
+          color: true
         },
       }),
     );
 
     await page.type('input[type="text"]', 'test');
+    await page.type('input[type="color"]', '#FF0000');
     await page.click('input[type="radio"]');
     await page.click('input[type="checkbox"]');
     await page.type('textarea', 'textarea test');
@@ -495,18 +496,21 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('should mask value attribute with maskInputOptions', async () => {
+  it('should always mask value attribute of passwords', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'password.html', {
-        maskInputOptions: {
-          password: true,
-        },
+        maskInputOptions: {},
       }),
     );
 
-    await page.type('input[type="password"]', 'secr3t');
+    await page.type('#password', 'secr3t');
+
+    // Change type to text (simulate "show password")
+    await page.click('#show-password');
+    await page.type('#password', 'XY');
+    await page.click('#show-password');
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);

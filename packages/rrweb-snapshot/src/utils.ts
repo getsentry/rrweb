@@ -29,9 +29,13 @@ function isInputTypeMasked({
     tagName = 'select';
   }
 
+  // We only care about the type if it is a string
+  const actualType = typeof type === 'string' ? type.toLowerCase() : undefined;
+
   return (
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-    maskInputOptions[type as keyof MaskInputOptions] ||
+    (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
+    actualType === 'password' ||
     // Default to "text" option for inputs without a "type" attribute defined
     (tagName === 'input' && !type && maskInputOptions['text'])
   );
@@ -76,6 +80,10 @@ export function maskInputValue({
 
   if (unmaskInputSelector && input.matches(unmaskInputSelector)) {
     return text;
+  }
+
+  if (input.hasAttribute('rr_is_password')) {
+    type = 'password';
   }
 
   if (

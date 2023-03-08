@@ -96,7 +96,7 @@ export type MaskInputOptions = Partial<{
   // unify textarea and select element with text input
   textarea: boolean;
   select: boolean;
-  password: boolean;
+  // password is _always_ masked, can't opt out of this
   radio: boolean;
   checkbox: boolean;
 }>;

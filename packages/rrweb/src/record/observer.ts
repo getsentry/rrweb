@@ -365,7 +365,7 @@ function initInputObserver({
     ) {
       return;
     }
-    const type: string | undefined = (target as HTMLInputElement).type;
+    let type: string | undefined = (target as HTMLInputElement).type;
     if (
       (target as HTMLElement).classList.contains(ignoreClass) ||
       (ignoreSelector && (target as HTMLElement).matches(ignoreSelector))
@@ -375,6 +375,11 @@ function initInputObserver({
 
     let text = (target as HTMLInputElement).value;
     let isChecked = false;
+
+    if ((target as HTMLElement).hasAttribute('rr_is_password')) {
+      type = 'password';
+    }
+
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
     } else if (

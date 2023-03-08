@@ -77,7 +77,6 @@ export type MaskInputOptions = Partial<{
     week: boolean;
     textarea: boolean;
     select: boolean;
-    password: boolean;
     radio: boolean;
     checkbox: boolean;
 }>;

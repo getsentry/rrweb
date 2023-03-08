@@ -1201,12 +1201,9 @@ function snapshot(
           week: true,
           textarea: true,
           select: true,
-          password: true,
         }
       : maskAllInputs === false
-      ? {
-          password: true,
-        }
+      ? {}
       : maskAllInputs;
   const slimDOMOptions: SlimDOMOptions =
     slimDOM === true || slimDOM === 'all'
