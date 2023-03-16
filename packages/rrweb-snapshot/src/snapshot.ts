@@ -241,6 +241,7 @@ export function transformAttribute(
   name: string,
   value: string | null,
   maskAllText: boolean,
+  unmaskTextSelector: string | undefined | null,
   maskTextFn: MaskTextFn | undefined,
 ): string | null {
   if (!value) {
@@ -266,18 +267,32 @@ export function transformAttribute(
     return absoluteToDoc(doc, value);
   } else if (
     maskAllText &&
-    (['placeholder', 'title', 'aria-label'].indexOf(name) > -1 ||
-      (tagName === 'input' &&
-        name === 'value' &&
-        element.getAttribute('type') &&
-        ['submit', 'button'].indexOf(
-          element.getAttribute('type')!.toLowerCase(),
-        ) > -1))
+    _shouldMaskAttribute(element, name, tagName, { unmaskTextSelector })
   ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   }
 
   return value;
+}
+
+function _shouldMaskAttribute(
+  element: HTMLElement,
+  name: string,
+  tagName: string,
+  { unmaskTextSelector }: { unmaskTextSelector: string | undefined | null },
+): boolean {
+  if (unmaskTextSelector && element.matches(unmaskTextSelector)) {
+    return false;
+  }
+  return (
+    ['placeholder', 'title', 'aria-label'].indexOf(name) > -1 ||
+    (tagName === 'input' &&
+      name === 'value' &&
+      element.hasAttribute('type') &&
+      ['submit', 'button'].indexOf(
+        element.getAttribute('type')!.toLowerCase(),
+      ) > -1)
+  );
 }
 
 export function _isBlockedElement(
@@ -521,6 +536,7 @@ function serializeNode(
             name,
             value,
             maskAllText,
+            unmaskTextSelector,
             maskTextFn,
           );
         }

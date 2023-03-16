@@ -562,6 +562,7 @@ export default class MutationBuffer {
             m.attributeName!,
             value!,
             this.maskAllText,
+            this.unmaskTextSelector,
             this.maskTextFn
           );
         }

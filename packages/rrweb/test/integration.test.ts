@@ -10,7 +10,12 @@ import {
   waitForRAF,
   replaceLast,
 } from './utils';
-import { recordOptions, eventWithTime, EventType, IncrementalSource } from '../src/types';
+import {
+  recordOptions,
+  eventWithTime,
+  EventType,
+  IncrementalSource,
+} from '../src/types';
 import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
 
 interface ISuite {
@@ -28,7 +33,10 @@ interface IMimeType {
  * Used to filter scroll events out of snapshots as they are flakey
  */
 function isNotScroll(snapshot: eventWithTime) {
-  return !(snapshot.type === EventType.IncrementalSnapshot && snapshot.data.source === IncrementalSource.Scroll)
+  return !(
+    snapshot.type === EventType.IncrementalSnapshot &&
+    snapshot.data.source === IncrementalSource.Scroll
+  );
 }
 
 describe('record integration tests', function (this: ISuite) {
@@ -222,15 +230,15 @@ describe('record integration tests', function (this: ISuite) {
     await page.goto('about:blank');
 
     await page.setContent(
-      getHtml.call(this, 'mutation-observer.html', { 
-        onMutation: `(mutations) => { window.lastMutationsLength = mutations.length; return mutations.length < 500 }`
-       }),
+      getHtml.call(this, 'mutation-observer.html', {
+        onMutation: `(mutations) => { window.lastMutationsLength = mutations.length; return mutations.length < 500 }`,
+      }),
     );
 
     await page.evaluate(() => {
       const ul = document.querySelector('ul') as HTMLUListElement;
 
-      for(let i = 0; i < 2000; i++) {
+      for (let i = 0; i < 2000; i++) {
         const li = document.createElement('li');
         ul.appendChild(li);
         const p = document.querySelector('p') as HTMLParagraphElement;
@@ -241,10 +249,11 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
 
-    const lastMutationsLength = await page.evaluate('window.lastMutationsLength');
+    const lastMutationsLength = await page.evaluate(
+      'window.lastMutationsLength',
+    );
     expect(lastMutationsLength).toBe(4000);
   });
-
 
   it('can freeze mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
@@ -335,6 +344,36 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('correctly masks & unmasks attribute values', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'attributes-mask.html', {
+        maskAllText: true,
+        unmaskTextSelector: '.rr-unmask',
+      }),
+    );
+
+    // Change attributes, should still be masked
+    await page.evaluate(() => {
+      document
+        .querySelectorAll('body [title]')
+        .forEach((el) => el.setAttribute('title', 'new title'));
+      document
+        .querySelectorAll('body [aria-label]')
+        .forEach((el) => el.setAttribute('aria-label', 'new aria label'));
+      document
+        .querySelectorAll('body [placeholder]')
+        .forEach((el) => el.setAttribute('placeholder', 'new placeholder'));
+      document
+        .querySelectorAll('input[type="button"],input[type="submit"]')
+        .forEach((el) => el.setAttribute('value', 'new value'));
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
   it('should record input values if dynamically added and maskAllInputs is false', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -353,7 +392,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -376,7 +417,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#textarea', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -384,7 +427,10 @@ describe('record integration tests', function (this: ISuite) {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
-      getHtml.call(this, 'empty.html', { maskAllInputs: false, maskInputSelector: '.rr-mask' }),
+      getHtml.call(this, 'empty.html', {
+        maskAllInputs: false,
+        maskInputSelector: '.rr-mask',
+      }),
     );
 
     await page.evaluate(() => {
@@ -399,7 +445,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input-masked', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -421,7 +469,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -444,7 +494,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#textarea', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -452,7 +504,10 @@ describe('record integration tests', function (this: ISuite) {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
-      getHtml.call(this, 'empty.html', { maskAllInputs: true, unmaskInputSelector: '.rr-unmask'}),
+      getHtml.call(this, 'empty.html', {
+        maskAllInputs: true,
+        unmaskInputSelector: '.rr-unmask',
+      }),
     );
 
     await page.evaluate(() => {
@@ -467,7 +522,9 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input-unmasked', 'moo');
 
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots.filter(isNotScroll));
   });
 
@@ -479,7 +536,7 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: {
           text: false,
           textarea: false,
-          color: true
+          color: true,
         },
       }),
     );
