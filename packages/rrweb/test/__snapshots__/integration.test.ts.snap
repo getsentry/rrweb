@@ -4440,13 +4440,13 @@ exports[`record integration tests correctly masks & unmasks attribute values 1`]
         {
           "id": 32,
           "attributes": {
-            "value": "new value"
+            "value": "*** *****"
           }
         },
         {
           "id": 34,
           "attributes": {
-            "value": "new value"
+            "value": "*** *****"
           }
         }
       ],
@@ -6523,6 +6523,23 @@ exports[`record integration tests should mask text in form elements 1`] = `
         "left": 0,
         "top": 0
       }
+    }
+  },
+  {
+    "type": 3,
+    "data": {
+      "source": 0,
+      "texts": [],
+      "attributes": [
+        {
+          "id": 87,
+          "attributes": {
+            "value": "*** *****"
+          }
+        }
+      ],
+      "removes": [],
+      "adds": []
     }
   }
 ]"

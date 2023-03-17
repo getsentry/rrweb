@@ -113,7 +113,7 @@ export function initMutationObserver(
       // If this callback returns `false`, we do not want to process the mutations
       // This can be used to e.g. do a manual full snapshot when mutations become too large, or similar.
       if (options.onMutation && options.onMutation(mutations) === false) {
-         return;
+        return;
       }
       mutationBuffer.processMutations(mutations);
     }),
@@ -231,7 +231,9 @@ function initMouseInteractionObserver({
   const getHandler = (eventKey: keyof typeof MouseInteractions) => {
     return (event: MouseEvent | TouchEvent) => {
       const target = getEventTarget(event) as Node;
-      if (isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+      if (
+        isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+      ) {
         return;
       }
       const e = isTouchEvent(event) ? event.changedTouches[0] : event;
@@ -275,11 +277,20 @@ export function initScrollObserver({
   sampling,
 }: Pick<
   observerParam,
-  'scrollCb' | 'doc' | 'mirror' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'sampling'
+  | 'scrollCb'
+  | 'doc'
+  | 'mirror'
+  | 'blockClass'
+  | 'blockSelector'
+  | 'unblockSelector'
+  | 'sampling'
 >): listenerHandler {
   const updatePosition = throttle<UIEvent>((evt) => {
     const target = getEventTarget(evt);
-    if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+    if (
+      !target ||
+      isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+    ) {
       return;
     }
     const id = mirror.getId(target as INode);
@@ -350,17 +361,18 @@ function initInputObserver({
 }: observerParam): listenerHandler {
   function eventHandler(event: Event) {
     let target = getEventTarget(event);
+    const tagName = target && (target as Element).tagName;
+
     const userTriggered = event.isTrusted;
     /**
      * If a site changes the value 'selected' of an option element, the value of its parent element, usually a select element, will be changed as well.
      * We can treat this change as a value change of the select element the current target belongs to.
      */
-    if (target && (target as Element).tagName === 'OPTION')
-      target = (target as Element).parentElement;
+    if (tagName === 'OPTION') target = (target as Element).parentElement;
     if (
       !target ||
-      !(target as Element).tagName ||
-      INPUT_TAGS.indexOf((target as Element).tagName) < 0 ||
+      !tagName ||
+      INPUT_TAGS.indexOf(tagName) < 0 ||
       isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
     ) {
       return;
@@ -386,7 +398,7 @@ function initInputObserver({
       hasInputMaskOptions({
         maskInputOptions,
         maskInputSelector,
-        tagName: (target as HTMLElement).tagName,
+        tagName,
         type,
       })
     ) {
@@ -395,7 +407,7 @@ function initInputObserver({
         maskInputOptions,
         maskInputSelector,
         unmaskInputSelector,
-        tagName: (target as HTMLElement).tagName,
+        tagName,
         type,
         value: text,
         maskInputFn,
@@ -754,7 +766,10 @@ function initMediaInteractionObserver({
     throttle(
       callbackWrapper((event: Event) => {
         const target = getEventTarget(event);
-        if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+        if (
+          !target ||
+          isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+        ) {
           return;
         }
         const { currentTime, volume, muted } = target as HTMLMediaElement;
