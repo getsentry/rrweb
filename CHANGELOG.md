@@ -4,6 +4,14 @@
 
 - “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
 
+## 1.106.0
+
+- feat(replay): Check for node existance in mirror before appending (#82)
+- feat: Ensure password inputs are always masked (#78)
+- fix: Ensure text masking for updated attributes works (#83)
+- fix: Ensure unmaskTextSelector is used for masked attributes (#81)
+- fix: Mask `<option>` values for selects & radio/checkbox `value` (#75)
+
 ## 1.105.0
 
 - feat: Add `onMutation` option to `record` (#70)
