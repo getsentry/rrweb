@@ -237,8 +237,8 @@ function getHref() {
 export function transformAttribute(
   doc: Document,
   element: HTMLElement,
-  tagName: string,
-  name: string,
+  _tagName: string,
+  _name: string,
   value: string | null,
   maskAllText: boolean,
   unmaskTextSelector: string | undefined | null,
@@ -247,6 +247,9 @@ export function transformAttribute(
   if (!value) {
     return value;
   }
+
+  const name = _name.toLowerCase();
+  const tagName = _tagName.toLowerCase();
 
   // relative path in attribute
   if (name === 'src' || name === 'href') {

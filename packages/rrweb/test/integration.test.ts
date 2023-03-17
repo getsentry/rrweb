@@ -598,6 +598,13 @@ describe('record integration tests', function (this: ISuite) {
       getHtml.call(this, 'form.html', { maskAllText: true }),
     );
 
+    // Ensure also masked when we change stuff
+    await page.evaluate(() => {
+      document
+        .querySelector('input[type="submit"]')
+        ?.setAttribute('value', 'new value');
+    });
+
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
   });
