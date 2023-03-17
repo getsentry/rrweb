@@ -267,7 +267,7 @@ export function transformAttribute(
     return absoluteToDoc(doc, value);
   } else if (
     maskAllText &&
-    _shouldMaskAttribute(element, name, tagName, { unmaskTextSelector })
+    _shouldMaskAttribute(element, name, tagName, unmaskTextSelector)
   ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
   }
@@ -279,15 +279,15 @@ function _shouldMaskAttribute(
   element: HTMLElement,
   attribute: string,
   tagName: string,
-  { unmaskTextSelector }: { unmaskTextSelector: string | undefined | null },
+  unmaskTextSelector: string | undefined | null,
 ): boolean {
   if (unmaskTextSelector && element.matches(unmaskTextSelector)) {
     return false;
   }
   return (
-    ['placeholder', 'title', 'aria-label'].indexOf(name) > -1 ||
+    ['placeholder', 'title', 'aria-label'].indexOf(attribute) > -1 ||
     (tagName === 'input' &&
-      name === 'value' &&
+      attribute === 'value' &&
       element.hasAttribute('type') &&
       ['submit', 'button'].indexOf(
         element.getAttribute('type')!.toLowerCase(),
