@@ -277,7 +277,7 @@ export function transformAttribute(
 
 function _shouldMaskAttribute(
   element: HTMLElement,
-  name: string,
+  attribute: string,
   tagName: string,
   { unmaskTextSelector }: { unmaskTextSelector: string | undefined | null },
 ): boolean {
