@@ -2,6 +2,7 @@ import {
   INode,
   hasInputMaskOptions,
   maskInputValue,
+  getInputType,
 } from '@sentry-internal/rrweb-snapshot';
 import { FontFaceSet } from 'css-font-loading-module';
 import {
@@ -377,20 +378,20 @@ function initInputObserver({
     ) {
       return;
     }
-    let type: string | undefined = (target as HTMLInputElement).type;
+    const el = target as
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement;
+    const type = getInputType(el);
     if (
-      (target as HTMLElement).classList.contains(ignoreClass) ||
-      (ignoreSelector && (target as HTMLElement).matches(ignoreSelector))
+      el.classList.contains(ignoreClass) ||
+      (ignoreSelector && el.matches(ignoreSelector))
     ) {
       return;
     }
 
     let text = (target as HTMLInputElement).value;
     let isChecked = false;
-
-    if ((target as HTMLElement).hasAttribute('rr_is_password')) {
-      type = 'password';
-    }
 
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;

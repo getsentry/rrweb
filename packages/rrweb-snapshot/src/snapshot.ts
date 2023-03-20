@@ -18,6 +18,7 @@ import {
   isElement,
   isShadowRoot,
   maskInputValue,
+  getInputType,
 } from './utils';
 
 let _id = 1;
@@ -593,6 +594,7 @@ function serializeNode(
           | HTMLTextAreaElement
           | HTMLSelectElement
           | HTMLOptionElement;
+        const type = getInputType(el);
         const value = getInputValue(tagName, el, attributes);
         const checked = (n as HTMLInputElement).checked;
 

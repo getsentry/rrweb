@@ -18,4 +18,5 @@ interface MaskInputValue extends HasInputMaskOptions {
 }
 export declare function maskInputValue({ input, maskInputSelector, unmaskInputSelector, maskInputOptions, tagName, type, value, maskInputFn, }: MaskInputValue): string;
 export declare function is2DCanvasBlank(canvas: HTMLCanvasElement): boolean;
+export declare function getInputType(element: HTMLElement): Lowercase<string> | null;
 export {};

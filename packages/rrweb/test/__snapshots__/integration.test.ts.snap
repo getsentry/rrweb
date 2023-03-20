@@ -4999,7 +4999,7 @@ exports[`record integration tests should always mask value attribute of password
         {
           "id": 18,
           "attributes": {
-            "rr_is_password": "true"
+            "data-rr-is-password": "true"
           }
         }
       ],

@@ -507,10 +507,10 @@ export default class MutationBuffer {
         // This is used to ensure we do not unmask value when using e.g. a "Show password" type button
         if (
           m.attributeName === 'type' &&
-          (m.target as HTMLElement).tagName === 'INPUT' &&
+          target.tagName === 'INPUT' &&
           (m.oldValue || '').toLowerCase() === 'password'
         ) {
-          (m.target as HTMLElement).setAttribute('rr_is_password', 'true');
+          target.setAttribute('data-rr-is-password', 'true');
         }
 
         if (m.attributeName === 'style') {
