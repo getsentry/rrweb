@@ -1,4 +1,4 @@
-import { INode, MaskInputFn, MaskInputOptions } from './types';
+import { attributes, INode, MaskInputFn, MaskInputOptions } from './types';
 
 export function isElement(n: Node | INode): n is Element {
   return n.nodeType === n.ELEMENT_NODE;
@@ -151,4 +151,23 @@ export function getInputType(element: HTMLElement): Lowercase<string> | null {
     : type
     ? (type.toLowerCase() as Lowercase<string>)
     : null;
+}
+
+export function getInputValue(
+  el:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLOptionElement,
+  tagName: Uppercase<string>,
+  type: attributes[string],
+): string {
+  const normalizedType = typeof type === 'string' ? type.toLowerCase() : '';
+  if (tagName === 'INPUT' && (type === 'radio' || type === 'checkbox')) {
+    // checkboxes & radio buttons return `on` as their el.value when no value is specified
+    // we only want to get the value if it is specified as `value='xxx'`
+    return el.getAttribute('value') || '';
+  }
+
+  return el.value;
 }

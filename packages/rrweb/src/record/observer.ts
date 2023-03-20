@@ -3,6 +3,7 @@ import {
   hasInputMaskOptions,
   maskInputValue,
   getInputType,
+  getInputValue,
 } from '@sentry-internal/rrweb-snapshot';
 import { FontFaceSet } from 'css-font-loading-module';
 import {
@@ -362,7 +363,8 @@ function initInputObserver({
 }: observerParam): listenerHandler {
   function eventHandler(event: Event) {
     let target = getEventTarget(event);
-    const tagName = target && (target as Element).tagName;
+    const tagName =
+      target && (((target as Element).tagName as unknown) as Uppercase<string>);
 
     const userTriggered = event.isTrusted;
     /**
@@ -390,12 +392,13 @@ function initInputObserver({
       return;
     }
 
-    let text = (target as HTMLInputElement).value;
+    let text = getInputValue(el, tagName, type);
     let isChecked = false;
 
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
-    } else if (
+    }
+    if (
       hasInputMaskOptions({
         maskInputOptions,
         maskInputSelector,
@@ -404,7 +407,7 @@ function initInputObserver({
       })
     ) {
       text = maskInputValue({
-        input: target as HTMLElement,
+        input: el,
         maskInputOptions,
         maskInputSelector,
         unmaskInputSelector,
@@ -429,11 +432,21 @@ function initInputObserver({
         .querySelectorAll(`input[type="radio"][name="${name}"]`)
         .forEach((el) => {
           if (el !== target) {
+            const text = maskInputValue({
+              input: el as HTMLInputElement,
+              maskInputOptions,
+              maskInputSelector,
+              unmaskInputSelector,
+              tagName,
+              type,
+              value: getInputValue(el as HTMLInputElement, tagName, type),
+              maskInputFn,
+            });
             cbWithDedup(
               el,
               callbackWrapper(wrapEventWithUserTriggeredFlag)(
                 {
-                  text: (el as HTMLInputElement).value,
+                  text,
                   isChecked: !isChecked,
                   userTriggered: false,
                 },

@@ -1,4 +1,4 @@
-import { INode, MaskInputFn, MaskInputOptions } from './types';
+import { attributes, INode, MaskInputFn, MaskInputOptions } from './types';
 export declare function isElement(n: Node | INode): n is Element;
 export declare function isShadowRoot(n: Node): n is ShadowRoot;
 interface IsInputTypeMasked {
@@ -19,4 +19,5 @@ interface MaskInputValue extends HasInputMaskOptions {
 export declare function maskInputValue({ input, maskInputSelector, unmaskInputSelector, maskInputOptions, tagName, type, value, maskInputFn, }: MaskInputValue): string;
 export declare function is2DCanvasBlank(canvas: HTMLCanvasElement): boolean;
 export declare function getInputType(element: HTMLElement): Lowercase<string> | null;
+export declare function getInputValue(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLOptionElement, tagName: Uppercase<string>, type: attributes[string]): string;
 export {};
