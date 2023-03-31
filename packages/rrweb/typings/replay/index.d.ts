@@ -43,6 +43,7 @@ export declare class Replayer {
     disableInteract(): void;
     resetCache(): void;
     private setupDom;
+    private handleClick;
     private handleResize;
     private applyEventsSynchronously;
     private getCastFn;
