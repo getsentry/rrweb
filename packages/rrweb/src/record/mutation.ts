@@ -476,15 +476,15 @@ export default class MutationBuffer {
       }
       case 'attributes': {
         const target = m.target as HTMLElement;
-        let value = (m.target as HTMLElement).getAttribute(m.attributeName!);
+        let value = target.getAttribute(m.attributeName!);
         if (m.attributeName === 'value') {
           value = maskInputValue({
             input: target,
             maskInputSelector: this.maskInputSelector,
             unmaskInputSelector: this.unmaskInputSelector,
             maskInputOptions: this.maskInputOptions,
-            tagName: (m.target as HTMLElement).tagName,
-            type: (m.target as HTMLElement).getAttribute('type'),
+            tagName: target.tagName,
+            type: target.getAttribute('type'),
             value,
             maskInputFn: this.maskInputFn,
           });
@@ -502,6 +502,17 @@ export default class MutationBuffer {
           };
           this.attributes.push(item);
         }
+
+        // Keep this property on inputs that used to be password inputs
+        // This is used to ensure we do not unmask value when using e.g. a "Show password" type button
+        if (
+          m.attributeName === 'type' &&
+          (m.target as HTMLElement).tagName === 'INPUT' &&
+          (m.oldValue || '').toLowerCase() === 'password'
+        ) {
+          (m.target as HTMLElement).setAttribute('rr_is_password', 'true');
+        }
+
         if (m.attributeName === 'style') {
           const old = this.doc.createElement('span');
           if (m.oldValue) {
@@ -543,12 +554,15 @@ export default class MutationBuffer {
           }
         } else {
           // overwrite attribute if the mutations was triggered in same time
+          const element = m.target as HTMLElement;
           item.attributes[m.attributeName!] = transformAttribute(
             this.doc,
-            (m.target as HTMLElement).tagName,
+            element,
+            element.tagName,
             m.attributeName!,
             value!,
             this.maskAllText,
+            this.unmaskTextSelector,
             this.maskTextFn
           );
         }

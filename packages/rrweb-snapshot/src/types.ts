@@ -21,7 +21,7 @@ export type documentTypeNode = {
 };
 
 export type attributes = {
-  [key: string]: string | number | boolean;
+  [key: string]: string | number | boolean | null;
 };
 export type elementNode = {
   type: NodeType.Element;
@@ -96,7 +96,9 @@ export type MaskInputOptions = Partial<{
   // unify textarea and select element with text input
   textarea: boolean;
   select: boolean;
-  password: boolean;
+  // password is _always_ masked, can't opt out of this
+  radio: boolean;
+  checkbox: boolean;
 }>;
 
 export type SlimDOMOptions = Partial<{

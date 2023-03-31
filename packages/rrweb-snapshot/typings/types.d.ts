@@ -18,7 +18,7 @@ export type documentTypeNode = {
     systemId: string;
 };
 export type attributes = {
-    [key: string]: string | number | boolean;
+    [key: string]: string | number | boolean | null;
 };
 export type elementNode = {
     type: NodeType.Element;
@@ -77,7 +77,8 @@ export type MaskInputOptions = Partial<{
     week: boolean;
     textarea: boolean;
     select: boolean;
-    password: boolean;
+    radio: boolean;
+    checkbox: boolean;
 }>;
 export type SlimDOMOptions = Partial<{
     script: boolean;

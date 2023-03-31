@@ -10,7 +10,12 @@ import {
   waitForRAF,
   replaceLast,
 } from './utils';
-import { recordOptions, eventWithTime, EventType } from '../src/types';
+import {
+  recordOptions,
+  eventWithTime,
+  EventType,
+  IncrementalSource,
+} from '../src/types';
 import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
 
 interface ISuite {
@@ -22,6 +27,16 @@ interface ISuite {
 
 interface IMimeType {
   [key: string]: string;
+}
+
+/**
+ * Used to filter scroll events out of snapshots as they are flakey
+ */
+function isNotScroll(snapshot: eventWithTime) {
+  return !(
+    snapshot.type === EventType.IncrementalSnapshot &&
+    snapshot.data.source === IncrementalSource.Scroll
+  );
 }
 
 describe('record integration tests', function (this: ISuite) {
@@ -49,10 +64,13 @@ describe('record integration tests', function (this: ISuite) {
         blockSelector: ${JSON.stringify(options.blockSelector)},
         maskAllInputs: ${options.maskAllInputs},
         maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
+        maskInputSelector: ${JSON.stringify(options.maskInputSelector)},
         userTriggeredOnInput: ${options.userTriggeredOnInput},
+        onMutation: ${options.onMutation || undefined},
         maskAllText: ${options.maskAllText},
         maskTextFn: ${options.maskTextFn},
         unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
+        unmaskInputSelector: ${JSON.stringify(options.unmaskInputSelector)},
         blockSelector: ${JSON.stringify(options.blockSelector)},
         unblockSelector: ${JSON.stringify(options.unblockSelector)},
         recordCanvas: ${options.recordCanvas},
@@ -121,6 +139,37 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('handles null attribute values', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        maskAllInputs: true,
+        maskAllText: true,
+      }),
+    );
+
+    await page.evaluate(() => {
+      const li = document.createElement('li');
+      const ul = document.querySelector('ul') as HTMLUListElement;
+      ul.appendChild(li);
+
+      li.setAttribute('aria-label', 'label');
+      li.setAttribute('id', 'test-li');
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    await page.evaluate(() => {
+      const li = document.querySelector('#test-li') as HTMLLIElement;
+      // This triggers the mutation observer with a `null` attribute value
+      li.removeAttribute('aria-label');
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
   it('can record character data muatations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -176,6 +225,36 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('can configure onMutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        onMutation: `(mutations) => { window.lastMutationsLength = mutations.length; return mutations.length < 500 }`,
+      }),
+    );
+
+    await page.evaluate(() => {
+      const ul = document.querySelector('ul') as HTMLUListElement;
+
+      for (let i = 0; i < 2000; i++) {
+        const li = document.createElement('li');
+        ul.appendChild(li);
+        const p = document.querySelector('p') as HTMLParagraphElement;
+        p.appendChild(document.createElement('span'));
+      }
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+
+    const lastMutationsLength = await page.evaluate(
+      'window.lastMutationsLength',
+    );
+    expect(lastMutationsLength).toBe(4000);
+  });
+
   it('can freeze mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -225,7 +304,10 @@ describe('record integration tests', function (this: ISuite) {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
-      getHtml.call(this, 'form.html', { maskAllInputs: true }),
+      getHtml.call(this, 'form.html', {
+        maskAllInputs: true,
+        unmaskTextSelector: '.rr-unmask',
+      }),
     );
 
     await page.type('input[type="text"]', 'test');
@@ -234,9 +316,216 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[type="password"]', 'password');
     await page.type('textarea', 'textarea test');
     await page.select('select', '1');
+    await page.type('#empty', 'test');
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
+  });
+
+  it('should not record input values on selectively masked elements when maskAllInputs is disabled', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'form-masked.html', {
+        maskAllInputs: false,
+        maskInputSelector: '.rr-mask',
+      }),
+    );
+
+    await page.type('input[type="text"]', 'test');
+    await page.click('input[type="radio"]');
+    await page.click('input[type="checkbox"]');
+    await page.type('input[type="password"]', 'password');
+    await page.type('textarea', 'textarea test');
+    await page.select('select', '1');
+    await page.type('#empty', 'test');
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('correctly masks & unmasks attribute values', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'attributes-mask.html', {
+        maskAllText: true,
+        unmaskTextSelector: '.rr-unmask',
+      }),
+    );
+
+    // Change attributes, should still be masked
+    await page.evaluate(() => {
+      document
+        .querySelectorAll('body [title]')
+        .forEach((el) => el.setAttribute('title', 'new title'));
+      document
+        .querySelectorAll('body [aria-label]')
+        .forEach((el) => el.setAttribute('aria-label', 'new aria label'));
+      document
+        .querySelectorAll('body [placeholder]')
+        .forEach((el) => el.setAttribute('placeholder', 'new placeholder'));
+      document
+        .querySelectorAll('input[type="button"],input[type="submit"]')
+        .forEach((el) => el.setAttribute('value', 'new value'));
+    });
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should record input values if dynamically added and maskAllInputs is false', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: false }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input';
+      el.value = 'input should not be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record textarea values if dynamically added and maskAllInputs is false', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: false }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('textarea');
+      el.id = 'textarea';
+      el.innerText = `textarea should not be masked
+`;
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#textarea', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record input values if dynamically added, maskAllInputs is false, and mask selector is used', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', {
+        maskAllInputs: false,
+        maskInputSelector: '.rr-mask',
+      }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input-masked';
+      el.className = 'rr-mask';
+      el.value = 'input should be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input-masked', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should not record input values if dynamically added and maskAllInputs is true', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input';
+      el.value = 'input should be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should not record textarea values if dynamically added and maskAllInputs is true', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('textarea');
+      el.id = 'textarea';
+      el.innerText = `textarea should be masked
+`;
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#textarea', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
+  });
+
+  it('should record input values if dynamically added, maskAllInputs is true, and unmask selector is used', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', {
+        maskAllInputs: true,
+        unmaskInputSelector: '.rr-unmask',
+      }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.id = 'input-unmasked';
+      el.className = 'rr-unmask';
+      el.value = 'input should be unmasked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+
+    await page.type('#input-unmasked', 'moo');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots.filter(isNotScroll));
   });
 
   it('can use maskInputOptions to configure which type of inputs should be masked', async () => {
@@ -247,12 +536,13 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: {
           text: false,
           textarea: false,
-          password: true,
+          color: true,
         },
       }),
     );
 
     await page.type('input[type="text"]', 'test');
+    await page.type('input[type="color"]', '#FF0000');
     await page.click('input[type="radio"]');
     await page.click('input[type="checkbox"]');
     await page.type('textarea', 'textarea test');
@@ -263,18 +553,21 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('should mask value attribute with maskInputOptions', async () => {
+  it('should always mask value attribute of passwords', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'password.html', {
-        maskInputOptions: {
-          password: true,
-        },
+        maskInputOptions: {},
       }),
     );
 
-    await page.type('input[type="password"]', 'secr3t');
+    await page.type('#password', 'secr3t');
+
+    // Change type to text (simulate "show password")
+    await page.click('#show-password');
+    await page.type('#password', 'XY');
+    await page.click('#show-password');
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
@@ -293,6 +586,24 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[type="password"]', 'password');
     await page.type('textarea', 'textarea test');
     await page.select('select', '1');
+
+    const snapshots = await page.evaluate('window.snapshots');
+    assertSnapshot(snapshots);
+  });
+
+  it('should mask text in form elements', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'form.html', { maskAllText: true }),
+    );
+
+    // Ensure also masked when we change stuff
+    await page.evaluate(() => {
+      document
+        .querySelector('input[type="submit"]')
+        ?.setAttribute('value', 'new value');
+    });
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
@@ -334,9 +645,11 @@ describe('record integration tests', function (this: ISuite) {
   it('should not record blocked elements from blockSelector, when dynamically added', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'block.html', {
-      blockSelector: 'video'
-    }));
+    await page.setContent(
+      getHtml.call(this, 'block.html', {
+        blockSelector: 'video',
+      }),
+    );
 
     await page.evaluate(() => {
       const el2 = document.createElement('video');
@@ -372,10 +685,12 @@ describe('record integration tests', function (this: ISuite) {
   it('should only record unblocked elements', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'block.html', {
-      blockSelector: 'img,svg',
-      unblockSelector: '.rr-unblock',
-    }));
+    await page.setContent(
+      getHtml.call(this, 'block.html', {
+        blockSelector: 'img,svg',
+        unblockSelector: '.rr-unblock',
+      }),
+    );
 
     const snapshots = await page.evaluate('window.snapshots');
     assertSnapshot(snapshots);
@@ -432,7 +747,9 @@ describe('record integration tests', function (this: ISuite) {
       }),
     );
     await waitForRAF(page);
-    const snapshots = await page.evaluate('window.snapshots') as eventWithTime[];
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     for (const event of snapshots) {
       if (event.type === EventType.FullSnapshot) {
         visitSnapshot(event.data.node, (n) => {

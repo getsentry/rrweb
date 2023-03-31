@@ -1,6 +1,6 @@
 import {
   INode,
-  MaskInputOptions,
+  hasInputMaskOptions,
   maskInputValue,
 } from '@sentry-internal/rrweb-snapshot';
 import { FontFaceSet } from 'css-font-loading-module';
@@ -109,7 +109,14 @@ export function initMutationObserver(
   }
 
   const observer = new mutationObserverCtor(
-    callbackWrapper(mutationBuffer.processMutations.bind(mutationBuffer)),
+    callbackWrapper((mutations) => {
+      // If this callback returns `false`, we do not want to process the mutations
+      // This can be used to e.g. do a manual full snapshot when mutations become too large, or similar.
+      if (options.onMutation && options.onMutation(mutations) === false) {
+        return;
+      }
+      mutationBuffer.processMutations(mutations);
+    }),
   );
 
   observer.observe(rootEl, {
@@ -224,7 +231,9 @@ function initMouseInteractionObserver({
   const getHandler = (eventKey: keyof typeof MouseInteractions) => {
     return (event: MouseEvent | TouchEvent) => {
       const target = getEventTarget(event) as Node;
-      if (isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+      if (
+        isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+      ) {
         return;
       }
       const e = isTouchEvent(event) ? event.changedTouches[0] : event;
@@ -268,11 +277,20 @@ export function initScrollObserver({
   sampling,
 }: Pick<
   observerParam,
-  'scrollCb' | 'doc' | 'mirror' | 'blockClass' | 'blockSelector' | 'unblockSelector' | 'sampling'
+  | 'scrollCb'
+  | 'doc'
+  | 'mirror'
+  | 'blockClass'
+  | 'blockSelector'
+  | 'unblockSelector'
+  | 'sampling'
 >): listenerHandler {
   const updatePosition = throttle<UIEvent>((evt) => {
     const target = getEventTarget(evt);
-    if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+    if (
+      !target ||
+      isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+    ) {
       return;
     }
     const id = mirror.getId(target as INode);
@@ -343,44 +361,53 @@ function initInputObserver({
 }: observerParam): listenerHandler {
   function eventHandler(event: Event) {
     let target = getEventTarget(event);
+    const tagName = target && (target as Element).tagName;
+
     const userTriggered = event.isTrusted;
     /**
      * If a site changes the value 'selected' of an option element, the value of its parent element, usually a select element, will be changed as well.
      * We can treat this change as a value change of the select element the current target belongs to.
      */
-    if (target && (target as Element).tagName === 'OPTION')
-      target = (target as Element).parentElement;
+    if (tagName === 'OPTION') target = (target as Element).parentElement;
     if (
       !target ||
-      !(target as Element).tagName ||
-      INPUT_TAGS.indexOf((target as Element).tagName) < 0 ||
+      !tagName ||
+      INPUT_TAGS.indexOf(tagName) < 0 ||
       isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
     ) {
       return;
     }
-    const type: string | undefined = (target as HTMLInputElement).type;
+    let type: string | undefined = (target as HTMLInputElement).type;
     if (
       (target as HTMLElement).classList.contains(ignoreClass) ||
       (ignoreSelector && (target as HTMLElement).matches(ignoreSelector))
     ) {
       return;
     }
+
     let text = (target as HTMLInputElement).value;
     let isChecked = false;
+
+    if ((target as HTMLElement).hasAttribute('rr_is_password')) {
+      type = 'password';
+    }
+
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
     } else if (
-      maskInputOptions[
-        (target as Element).tagName.toLowerCase() as keyof MaskInputOptions
-      ] ||
-      maskInputOptions[type as keyof MaskInputOptions]
+      hasInputMaskOptions({
+        maskInputOptions,
+        maskInputSelector,
+        tagName,
+        type,
+      })
     ) {
       text = maskInputValue({
         input: target as HTMLElement,
         maskInputOptions,
         maskInputSelector,
         unmaskInputSelector,
-        tagName: (target as HTMLElement).tagName,
+        tagName,
         type,
         value: text,
         maskInputFn,
@@ -739,7 +766,10 @@ function initMediaInteractionObserver({
     throttle(
       callbackWrapper((event: Event) => {
         const target = getEventTarget(event);
-        if (!target || isBlocked(target as Node, blockClass, blockSelector, unblockSelector)) {
+        if (
+          !target ||
+          isBlocked(target as Node, blockClass, blockSelector, unblockSelector)
+        ) {
           return;
         }
         const { currentTime, volume, muted } = target as HTMLMediaElement;

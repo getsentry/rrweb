@@ -25,8 +25,8 @@ const tagNameRegex = new RegExp('[^a-z0-9-_:]');
 
 export const IGNORED_NODE = -2;
 
-function defaultMaskFn(str: string) {
-  return str.replace(/[\S]/g, '*');
+function defaultMaskFn(str: string | undefined) {
+  return str ? str.replace(/[\S]/g, '*') : '';
 }
 
 function genId(): number {
@@ -236,35 +236,66 @@ function getHref() {
 
 export function transformAttribute(
   doc: Document,
-  tagName: string,
-  name: string,
-  value: string,
+  element: HTMLElement,
+  _tagName: string,
+  _name: string,
+  value: string | null,
   maskAllText: boolean,
+  unmaskTextSelector: string | undefined | null,
   maskTextFn: MaskTextFn | undefined,
-): string {
+): string | null {
+  if (!value) {
+    return value;
+  }
+
+  const name = _name.toLowerCase();
+  const tagName = _tagName.toLowerCase();
+
   // relative path in attribute
-  if (name === 'src' || (name === 'href' && value)) {
+  if (name === 'src' || name === 'href') {
     return absoluteToDoc(doc, value);
-  } else if (name === 'xlink:href' && value && value[0] !== '#') {
+  } else if (name === 'xlink:href' && value[0] !== '#') {
     // xlink:href starts with # is an id pointer
     return absoluteToDoc(doc, value);
   } else if (
     name === 'background' &&
-    value &&
     (tagName === 'table' || tagName === 'td' || tagName === 'th')
   ) {
     return absoluteToDoc(doc, value);
-  } else if (name === 'srcset' && value) {
+  } else if (name === 'srcset') {
     return getAbsoluteSrcsetString(doc, value);
-  } else if (name === 'style' && value) {
+  } else if (name === 'style') {
     return absoluteToStylesheet(value, getHref());
-  } else if (tagName === 'object' && name === 'data' && value) {
+  } else if (tagName === 'object' && name === 'data') {
     return absoluteToDoc(doc, value);
-  } else if (maskAllText && ['placeholder', 'title', 'aria-label'].indexOf(name) > -1) {
+  } else if (
+    maskAllText &&
+    _shouldMaskAttribute(element, name, tagName, unmaskTextSelector)
+  ) {
     return maskTextFn ? maskTextFn(value) : defaultMaskFn(value);
-  } else {
-    return value;
   }
+
+  return value;
+}
+
+function _shouldMaskAttribute(
+  element: HTMLElement,
+  attribute: string,
+  tagName: string,
+  unmaskTextSelector: string | undefined | null,
+): boolean {
+  if (unmaskTextSelector && element.matches(unmaskTextSelector)) {
+    return false;
+  }
+  return (
+    ['placeholder', 'title', 'aria-label'].indexOf(attribute) > -1 ||
+    (tagName === 'input' &&
+      attribute === 'value' &&
+      element.hasAttribute('type') &&
+      ['submit', 'button'].indexOf(
+        element.getAttribute('type')!.toLowerCase(),
+      ) > -1)
+  );
 }
 
 export function _isBlockedElement(
@@ -500,7 +531,18 @@ function serializeNode(
       const tagName = getValidTagName(n as HTMLElement);
       let attributes: attributes = {};
       for (const { name, value } of Array.from((n as HTMLElement).attributes)) {
-        attributes[name] = transformAttribute(doc, tagName, name, value, maskAllText, maskTextFn);
+        if (!skipAttribute(tagName, name, value)) {
+          attributes[name] = transformAttribute(
+            doc,
+            n as HTMLElement,
+            tagName,
+            name,
+            value,
+            maskAllText,
+            unmaskTextSelector,
+            maskTextFn,
+          );
+        }
       }
       // remote css
       if (tagName === 'link' && inlineStylesheet) {
@@ -538,22 +580,29 @@ function serializeNode(
           attributes._cssText = absoluteToStylesheet(cssText, getHref());
         }
       }
+
       // form fields
       if (
         tagName === 'input' ||
         tagName === 'textarea' ||
-        tagName === 'select'
+        tagName === 'select' ||
+        tagName === 'option'
       ) {
-        const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
+        const el = n as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | HTMLOptionElement;
+        const value = getInputValue(tagName, el, attributes);
+        const checked = (n as HTMLInputElement).checked;
+
         if (
-          attributes.type !== 'radio' &&
-          attributes.type !== 'checkbox' &&
           attributes.type !== 'submit' &&
           attributes.type !== 'button' &&
           value
         ) {
           attributes.value = maskInputValue({
-            input: n as HTMLElement,
+            input: el,
             type: attributes.type,
             tagName,
             value,
@@ -562,10 +611,12 @@ function serializeNode(
             maskInputOptions,
             maskInputFn,
           });
-        } else if ((n as HTMLInputElement).checked) {
-          attributes.checked = (n as HTMLInputElement).checked;
+        }
+        if (checked) {
+          attributes.checked = checked;
         }
       }
+
       if (tagName === 'option') {
         if ((n as HTMLOptionElement).selected && !maskInputOptions['select']) {
           attributes.selected = true;
@@ -716,17 +767,20 @@ function serializeNode(
       }
 
       if (parentTagName === 'TEXTAREA' && textContent) {
-        // Ensure that textContent === attribute.value
-        // (masking options can make them different)
-        // replay will remove duplicate textContent.
+        // textarea textContent should be masked via `value` attributes
+        textContent = '';
+      } else if (parentTagName === 'OPTION' && textContent) {
+        // mask option text like value
+        const option = n.parentNode as HTMLOptionElement;
+
         textContent = maskInputValue({
-          input: n.parentNode as HTMLElement,
+          input: option,
+          type: null,
+          tagName: parentTagName,
+          value: textContent,
           maskInputSelector,
           unmaskInputSelector,
           maskInputOptions,
-          tagName: parentTagName,
-          type: null,
-          value: textContent,
           maskInputFn,
         });
       } else if (
@@ -769,8 +823,10 @@ function serializeNode(
   }
 }
 
-function lowerIfExists(maybeAttr: string | number | boolean): string {
-  if (maybeAttr === undefined) {
+function lowerIfExists(
+  maybeAttr: string | number | boolean | null | undefined,
+): string {
+  if (maybeAttr === undefined || maybeAttr === null) {
     return '';
   } else {
     return (maybeAttr as string).toLowerCase();
@@ -791,7 +847,8 @@ function slimDOMExcluded(
       (sn.tagName === 'script' ||
         // (module)preload link
         (sn.tagName === 'link' &&
-          (sn.attributes.rel === 'preload' || sn.attributes.rel === 'modulepreload') &&
+          (sn.attributes.rel === 'preload' ||
+            sn.attributes.rel === 'modulepreload') &&
           sn.attributes.as === 'script') ||
         // prefetch link
         (sn.tagName === 'link' &&
@@ -1163,12 +1220,9 @@ function snapshot(
           week: true,
           textarea: true,
           select: true,
-          password: true,
         }
       : maskAllInputs === false
-      ? {
-          password: true,
-        }
+      ? {}
       : maskAllInputs;
   const slimDOMOptions: SlimDOMOptions =
     slimDOM === true || slimDOM === 'all'
@@ -1243,3 +1297,35 @@ export function cleanupSnapshot() {
 }
 
 export default snapshot;
+
+/** We want to skip `autoplay` attribute, as this has weird results when replaying.  */
+function skipAttribute(
+  tagName: string,
+  attributeName: string,
+  value?: unknown,
+) {
+  return (
+    (tagName === 'video' || tagName === 'audio') && attributeName === 'autoplay'
+  );
+}
+
+function getInputValue(
+  tagName: string,
+  el:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLOptionElement,
+  attributes: attributes,
+): string {
+  if (
+    tagName === 'input' &&
+    (attributes.type === 'radio' || attributes.type === 'checkbox')
+  ) {
+    // checkboxes & radio buttons return `on` as their el.value when no value is specified
+    // we only want to get the value if it is specified as `value='xxx'`
+    return el.getAttribute('value') || '';
+  }
+
+  return el.value;
+}

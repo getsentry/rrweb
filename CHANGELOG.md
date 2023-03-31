@@ -1,30 +1,61 @@
 # Changelog
 
-## v1.103.0
+## Unreleased
+
+- “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
+
+## 1.106.0
+
+- feat(replay): Check for node existance in mirror before appending (#82)
+- feat: Ensure password inputs are always masked (#78)
+- fix: Ensure text masking for updated attributes works (#83)
+- fix: Ensure unmaskTextSelector is used for masked attributes (#81)
+- fix: Mask `<option>` values for selects & radio/checkbox `value` (#75)
+
+## 1.105.0
+
+- feat: Add `onMutation` option to `record` (#70)
+- fix: Ensure `<input type='submit' value='Btn text'>` is masked (#69)
+
+## 1.104.1
+
+- fix(snapshot): Handle removed attributes (#65)
+
+## 1.104.0
+
+- fix: masking inputs on change when `maskAllInputs:false` (#61)
+- fix: Run prepublish scripts before building tarballs (#64)
+- fix: textarea value is being duplicated (#62)
+- feat: Export `typings/types` (#60)
+- feat: Remove `autoplay` attribute from audio/video tags (#59)
+- fix: more robust `rootShadowHost` check (#50)
+- fix: Exclude `modulepreload` as well (#52)
+
+## 1.103.0
 
 - feat: Check `blockSelector` for blocking elements as well (#49)
 
-## v1.102.0
+## 1.102.0
 
 - feat: Add `maskAllText` option
 - feat: With maskAllText, mask the attributes: placeholder, title, `aria-label`
 - feat: fix masking on `textarea`
 
-## v1.101.2
+## 1.101.2
 
 - fix: Ensure we do not check `window` in module scope (#47)
 
-## v1.101.1
+## 1.101.1
 
 - fix: Fix accidential `dependencies` of `rrweb-snapshot` (#45)
 
-## v1.101.0
+## 1.101.0
 
 - feat: Wrap rrweb callbacks in wrapper to better handle errors (#41)
 - fix(replayer): Fix null objects on playback (#38)
 - fix: Ensure CSS support is checked more robustly (#42)
 
-## v1.100.2
+## 1.100.2
 
 - fix: Catch style mutation handling (#33)
 - fix: Handle case where `event` is null/undefined (#32)

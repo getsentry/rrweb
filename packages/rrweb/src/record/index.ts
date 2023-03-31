@@ -75,6 +75,7 @@ function record<T = eventWithTime>(
     inlineImages = false,
     plugins,
     keepIframeSrcFn = () => false,
+    onMutation,
   } = options;
   // runtime checks for user options
   if (!emit) {
@@ -103,11 +104,12 @@ function record<T = eventWithTime>(
           week: true,
           textarea: true,
           select: true,
-          password: true,
+          radio: true,
+          checkbox: true,
         }
       : _maskInputOptions !== undefined
       ? _maskInputOptions
-      : { password: true };
+      : {};
 
   const slimDOMOptions: SlimDOMOptions =
     _slimDOMOptions === true || _slimDOMOptions === 'all'
@@ -233,6 +235,7 @@ function record<T = eventWithTime>(
     mutationCb: wrappedMutationEmit,
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
+      onMutation,
       blockClass,
       blockSelector,
       unblockSelector,
@@ -351,6 +354,7 @@ function record<T = eventWithTime>(
     const observe = (doc: Document) => {
       return callbackWrapper(initObservers)(
         {
+          onMutation,
           mutationCb: wrappedMutationEmit,
           mousemoveCb: (positions, source) =>
             wrappedEmit(

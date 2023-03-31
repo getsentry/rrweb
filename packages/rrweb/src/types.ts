@@ -244,9 +244,11 @@ export type recordOptions<T> = {
   // departed, please use sampling options
   mousemoveWait?: number;
   keepIframeSrcFn?: KeepIframeSrcFn;
+  onMutation?: (mutations: MutationRecord[]) => boolean,
 };
 
 export type observerParam = {
+  onMutation?: (mutations: MutationRecord[]) => boolean,
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;
@@ -293,6 +295,7 @@ export type observerParam = {
 
 export type MutationBufferParam = Pick<
   observerParam,
+  | 'onMutation'
   | 'mutationCb'
   | 'blockClass'
   | 'blockSelector'

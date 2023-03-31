@@ -9,6 +9,63 @@ export function isShadowRoot(n: Node): n is ShadowRoot {
   return Boolean(host && host.shadowRoot && host.shadowRoot === n);
 }
 
+interface IsInputTypeMasked {
+  maskInputOptions: MaskInputOptions;
+  tagName: string;
+  type: string | number | boolean | null;
+}
+
+/**
+ * Check `maskInputOptions` if the element, based on tag name and `type` attribute, should be masked.
+ * If `<input>` has no `type`, default to using `type="text"`.
+ */
+function isInputTypeMasked({
+  maskInputOptions,
+  tagName,
+  type,
+}: IsInputTypeMasked) {
+  // Handle options as part of select
+  if (tagName.toLowerCase() === 'option') {
+    tagName = 'select';
+  }
+
+  // We only care about the type if it is a string
+  const actualType = typeof type === 'string' ? type.toLowerCase() : undefined;
+
+  return (
+    maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
+    (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
+    actualType === 'password' ||
+    // Default to "text" option for inputs without a "type" attribute defined
+    (tagName === 'input' && !type && maskInputOptions['text'])
+  );
+}
+
+interface HasInputMaskOptions extends IsInputTypeMasked {
+  maskInputSelector: string | null;
+}
+
+/**
+ * Determine if there are masking options configured and if `maskInputValue` needs to be called
+ */
+export function hasInputMaskOptions({
+  tagName,
+  type,
+  maskInputOptions,
+  maskInputSelector,
+}: HasInputMaskOptions) {
+  return (
+    maskInputSelector || isInputTypeMasked({ maskInputOptions, tagName, type })
+  );
+}
+
+interface MaskInputValue extends HasInputMaskOptions {
+  input: HTMLElement;
+  unmaskInputSelector: string | null;
+  value: string | null;
+  maskInputFn?: MaskInputFn;
+}
+
 export function maskInputValue({
   input,
   maskInputSelector,
@@ -18,25 +75,19 @@ export function maskInputValue({
   type,
   value,
   maskInputFn,
-}: {
-  input: HTMLElement;
-  maskInputSelector: string | null;
-  unmaskInputSelector: string | null;
-  maskInputOptions: MaskInputOptions;
-  tagName: string;
-  type: string | number | boolean | null;
-  value: string | null;
-  maskInputFn?: MaskInputFn;
-}): string {
+}: MaskInputValue): string {
   let text = value || '';
 
   if (unmaskInputSelector && input.matches(unmaskInputSelector)) {
     return text;
   }
 
+  if (input.hasAttribute('rr_is_password')) {
+    type = 'password';
+  }
+
   if (
-    maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-    maskInputOptions[type as keyof MaskInputOptions] ||
+    isInputTypeMasked({ maskInputOptions, tagName, type }) ||
     (maskInputSelector && input.matches(maskInputSelector))
   ) {
     if (maskInputFn) {

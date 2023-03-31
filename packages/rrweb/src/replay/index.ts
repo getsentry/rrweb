@@ -1414,6 +1414,12 @@ export class Replayer {
         return queue.push(mutation);
       }
 
+      // TODO(sentry): We are seeing duplicated node ids in our recording
+      // Handling this in the replayer while we look for root cause in recorder
+      if (this.mirror.getNode(mutation.node.id)) {
+        return;
+      }
+
       let parentInDocument = null;
       if (this.iframe.contentDocument.contains) {
         parentInDocument = this.iframe.contentDocument.contains(parent);
