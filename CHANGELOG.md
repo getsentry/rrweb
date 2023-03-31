@@ -4,6 +4,9 @@
 
 - “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
 
+## 1.107.0
+feat: Use JS to disable clicks in Replayer (#54)
+
 ## 1.106.0
 
 - feat(replay): Check for node existance in mirror before appending (#82)
