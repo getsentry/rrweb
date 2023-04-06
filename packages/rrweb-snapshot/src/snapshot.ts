@@ -363,21 +363,40 @@ export function needMaskingText(
         : node.parentElement;
     if (el === null) return false;
 
-    const unmaskDistance = distanceToMatch(
-      el,
-      createMatchPredicate(unmaskTextClass, unmaskTextSelector),
-    );
-
     let maskDistance = -1;
-    if (maskAllText && unmaskDistance < 0) {
-      return true;
-    }
+    let unmaskDistance = -1;
 
-    maskDistance = distanceToMatch(
-      el,
-      createMatchPredicate(maskTextClass, maskTextSelector),
-      unmaskDistance >= 0 ? unmaskDistance : Infinity,
-    );
+    if (maskAllText) {
+      unmaskDistance = distanceToMatch(
+        el,
+        createMatchPredicate(unmaskTextClass, unmaskTextSelector),
+      );
+
+      if (unmaskDistance < 0) {
+        return true;
+      }
+
+      maskDistance = distanceToMatch(
+        el,
+        createMatchPredicate(maskTextClass, maskTextSelector),
+        unmaskDistance >= 0 ? unmaskDistance : Infinity,
+      );
+    } else {
+      maskDistance = distanceToMatch(
+        el,
+        createMatchPredicate(maskTextClass, maskTextSelector),
+      );
+
+      if (maskDistance < 0) {
+        return false;
+      }
+
+      unmaskDistance = distanceToMatch(
+        el,
+        createMatchPredicate(unmaskTextClass, unmaskTextSelector),
+        maskDistance >= 0 ? maskDistance : Infinity,
+      );
+    }
 
     return maskDistance >= 0
       ? unmaskDistance >= 0
