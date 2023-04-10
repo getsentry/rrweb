@@ -161,7 +161,7 @@ describe('benchmark: mutation observer', () => {
             });
           },
           suite.eval,
-          suite.recordOptions || {}
+          suite.recordOptions || {},
         )) as number;
       };
 
