@@ -76,7 +76,7 @@ export function validateStringifiedCssRule(cssStringified: string): string {
   // Safari does not escape selectors with : properly
   if (cssStringified.indexOf(':') > -1) {
     // Replace e.g. [aa:bb] with [aa\\:bb]
-    const regex = /(\[(?:.*)[^\\])(:(?:.*)\])/gm;
+    const regex = /(\[(?:[\w-]+)[^\\])(:(?:[\w-]+)\])/gm;
     return cssStringified.replace(regex, '$1\\$2');
   }
 
