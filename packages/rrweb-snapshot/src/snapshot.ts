@@ -69,7 +69,6 @@ function getCssRuleString(rule: CSSRule): string {
     }
   }
 
-  return cssStringified;
   return validateStringifiedCssRule(cssStringified);
 }
 
