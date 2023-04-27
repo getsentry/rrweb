@@ -69,6 +69,7 @@ function getCssRuleString(rule: CSSRule): string {
     }
   }
 
+  return cssStringified;
   return validateStringifiedCssRule(cssStringified);
 }
 
@@ -90,7 +91,7 @@ function isCSSImportRule(rule: CSSRule): rule is CSSImportRule {
 function stringifyStyleSheet(sheet: CSSStyleSheet): string {
   return sheet.cssRules
     ? Array.from(sheet.cssRules)
-        .map((rule) => rule.cssText || '')
+        .map((rule) => rule.cssText ? validateStringifiedCssRule(rule.cssText) : '')
         .join('')
     : '';
 }
