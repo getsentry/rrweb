@@ -14,10 +14,12 @@ import {
   ICanvas,
 } from './types';
 import {
+  getInputValue,
   is2DCanvasBlank,
   isElement,
   isShadowRoot,
   maskInputValue,
+  getInputType,
 } from './utils';
 
 let _id = 1;
@@ -593,17 +595,18 @@ function serializeNode(
           | HTMLTextAreaElement
           | HTMLSelectElement
           | HTMLOptionElement;
-        const value = getInputValue(tagName, el, attributes);
+        const type = getInputType(el);
+        const value = getInputValue(el, tagName.toUpperCase() as unknown as Uppercase<typeof tagName>, type);
         const checked = (n as HTMLInputElement).checked;
 
         if (
-          attributes.type !== 'submit' &&
-          attributes.type !== 'button' &&
+          type !== 'submit' &&
+          type !== 'button' &&
           value
         ) {
           attributes.value = maskInputValue({
             input: el,
-            type: attributes.type,
+            type,
             tagName,
             value,
             maskInputSelector,
@@ -1309,23 +1312,3 @@ function skipAttribute(
   );
 }
 
-function getInputValue(
-  tagName: string,
-  el:
-    | HTMLInputElement
-    | HTMLTextAreaElement
-    | HTMLSelectElement
-    | HTMLOptionElement,
-  attributes: attributes,
-): string {
-  if (
-    tagName === 'input' &&
-    (attributes.type === 'radio' || attributes.type === 'checkbox')
-  ) {
-    // checkboxes & radio buttons return `on` as their el.value when no value is specified
-    // we only want to get the value if it is specified as `value='xxx'`
-    return el.getAttribute('value') || '';
-  }
-
-  return el.value;
-}

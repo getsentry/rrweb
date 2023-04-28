@@ -1,4 +1,4 @@
-import { INode, MaskInputFn, MaskInputOptions } from './types';
+import { attributes, INode, MaskInputFn, MaskInputOptions } from './types';
 
 export function isElement(n: Node | INode): n is Element {
   return n.nodeType === n.ELEMENT_NODE;
@@ -82,7 +82,7 @@ export function maskInputValue({
     return text;
   }
 
-  if (input.hasAttribute('rr_is_password')) {
+  if (input.hasAttribute('data-rr-is-password')) {
     type = 'password';
   }
 
@@ -135,4 +135,39 @@ export function is2DCanvasBlank(canvas: HTMLCanvasElement): boolean {
     }
   }
   return true;
+}
+
+/**
+ * Get the type of an input element.
+ * This takes care of the case where a password input is changed to a text input.
+ * In this case, we continue to consider this of type password, in order to avoid leaking sensitive data
+ * where passwords should be masked.
+ */
+export function getInputType(element: HTMLElement): Lowercase<string> | null {
+  const type = (element as HTMLInputElement).type;
+
+  return element.hasAttribute('data-rr-is-password')
+    ? 'password'
+    : type
+    ? (type.toLowerCase() as Lowercase<string>)
+    : null;
+}
+
+export function getInputValue(
+  el:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLOptionElement,
+  tagName: Uppercase<string>,
+  type: attributes[string],
+): string {
+  const normalizedType = typeof type === 'string' ? type.toLowerCase() : '';
+  if (tagName === 'INPUT' && (type === 'radio' || type === 'checkbox')) {
+    // checkboxes & radio buttons return `on` as their el.value when no value is specified
+    // we only want to get the value if it is specified as `value='xxx'`
+    return el.getAttribute('value') || '';
+  }
+
+  return el.value;
 }
