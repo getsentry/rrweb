@@ -5,6 +5,7 @@ import {
   NodeType,
   BuildCache,
   createCache,
+  defineCustomElement,
 } from '@sentry-internal/rrweb-snapshot';
 import * as mittProxy from 'mitt';
 import { polyfill as smoothscrollPolyfill } from './smoothscroll';
@@ -1458,8 +1459,12 @@ export class Replayer {
       if (mutation.node.isShadow) {
         // If the parent is attached a shadow dom after it's created, it won't have a shadow root.
         if (!hasShadowRoot(parent)) {
-          ((parent as Node) as HTMLElement).attachShadow({ mode: 'open' });
-          parent = ((parent as Node) as HTMLElement).shadowRoot!;
+          const parentNode = parent as Node;
+          (parentNode as HTMLElement).attachShadow({ mode: 'open' });
+          parent = (parentNode as HTMLElement).shadowRoot!;
+          if (this.iframe.contentWindow) {
+            defineCustomElement(this.iframe.contentWindow, parentNode.nodeName);
+          }
         } else parent = parent.shadowRoot;
       }
 

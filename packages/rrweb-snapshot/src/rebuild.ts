@@ -8,7 +8,7 @@ import {
   INode,
   BuildCache,
 } from './types';
-import { isElement } from './utils';
+import { defineCustomElement, isElement } from './utils';
 
 const tagMap: tagMap = {
   script: 'noscript',
@@ -284,6 +284,9 @@ function buildNode(
          */
         if (!node.shadowRoot) {
           node.attachShadow({ mode: 'open' });
+          if (doc.defaultView) {
+            defineCustomElement(doc.defaultView, tagName);
+          }
         } else {
           while (node.shadowRoot.firstChild) {
             node.shadowRoot.removeChild(node.shadowRoot.firstChild);
