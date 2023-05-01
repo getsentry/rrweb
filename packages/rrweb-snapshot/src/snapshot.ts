@@ -70,6 +70,18 @@ function getCssRuleString(rule: CSSRule): string {
       // ignore
     }
   }
+
+  return validateStringifiedCssRule(cssStringified);
+}
+
+export function validateStringifiedCssRule(cssStringified: string): string {
+  // Safari does not escape selectors with : properly
+  if (cssStringified.indexOf(':') > -1) {
+    // Replace e.g. [aa:bb] with [aa\\:bb]
+    const regex = /(\[(?:[\w-]+)[^\\])(:(?:[\w-]+)\])/gm;
+    return cssStringified.replace(regex, '$1\\$2');
+  }
+
   return cssStringified;
 }
 
@@ -80,7 +92,7 @@ function isCSSImportRule(rule: CSSRule): rule is CSSImportRule {
 function stringifyStyleSheet(sheet: CSSStyleSheet): string {
   return sheet.cssRules
     ? Array.from(sheet.cssRules)
-        .map((rule) => rule.cssText || '')
+        .map((rule) => rule.cssText ? validateStringifiedCssRule(rule.cssText) : '')
         .join('')
     : '';
 }

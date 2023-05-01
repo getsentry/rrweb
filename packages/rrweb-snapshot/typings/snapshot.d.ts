@@ -1,5 +1,6 @@
 import { serializedNodeWithId, INode, idNodeMap, MaskInputOptions, SlimDOMOptions, DataURLOptions, MaskTextFn, MaskInputFn, KeepIframeSrcFn } from './types';
 export declare const IGNORED_NODE = -2;
+export declare function validateStringifiedCssRule(cssStringified: string): string;
 export declare function absoluteToStylesheet(cssText: string | null, href: string): string;
 export declare function absoluteToDoc(doc: Document, attributeValue: string): string;
 export declare function transformAttribute(doc: Document, element: HTMLElement, _tagName: string, _name: string, value: string | null, maskAllText: boolean, unmaskTextSelector: string | undefined | null, maskTextFn: MaskTextFn | undefined): string | null;
