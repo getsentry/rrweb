@@ -401,8 +401,7 @@ describe('replayer', function () {
     await assertDomSnapshot(page, __filename, 'ordering-events');
   });
 
-  it.only('should have `:defined` web components', async () => {
-    // jest.setTimeout(1000000);
+  it('should have `:defined` web components', async () => {
     await page.evaluate(`events = ${JSON.stringify(shadowDomEvents)}`);
     const result = await page.evaluate(`
       const { Replayer } = rrweb;
