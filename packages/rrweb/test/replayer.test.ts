@@ -12,6 +12,7 @@ import {
 import styleSheetRuleEvents from './events/style-sheet-rule-events';
 import orderingEvents from './events/ordering';
 import iframeEvents from './events/iframe';
+import shadowDomEvents from './events/shadowDom';
 
 interface ISuite {
   code: string;
@@ -20,7 +21,7 @@ interface ISuite {
 }
 
 describe('replayer', function () {
-  jest.setTimeout(10_000);
+  jest.setTimeout(10_000000);
 
   let code: ISuite['code'];
   let browser: ISuite['browser'];
@@ -398,5 +399,20 @@ describe('replayer', function () {
     await page.waitForTimeout(50);
 
     await assertDomSnapshot(page, __filename, 'ordering-events');
+  });
+
+  it.only('should have `:defined` web components', async () => {
+    // jest.setTimeout(1000000);
+    await page.evaluate(`events = ${JSON.stringify(shadowDomEvents)}`);
+    const result = await page.evaluate(`
+      const { Replayer } = rrweb;
+      const replayer = new Replayer(events);
+      replayer.play();
+      replayer.pause(1000);
+      replayer.iframe.contentDocument.querySelectorAll(':not(:defined)').length;
+    `);
+    await page.waitForTimeout(200);
+
+    expect(result).toEqual(0);
   });
 });
