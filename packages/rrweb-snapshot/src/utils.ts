@@ -171,3 +171,20 @@ export function getInputValue(
 
   return el.value;
 }
+
+/**
+ * Ensure we define custom elements as you can have css that targets the
+ * `:defined` pseudo class (e.g. hide until defined)
+ */
+export function defineCustomElement(w: Window, elementName: string) {
+  // We need to define custom elements inside of the correct window (i.e.
+  // inside of the iframe)
+  try {
+    // Can only define custom element once
+    if (!w.customElements.get(elementName)) {
+      // @ts-ignore HTMLElement exists on window
+      const CustomElement = w.HTMLElement as CustomElementConstructor;
+      w.customElements.define(elementName, class extends CustomElement {});
+    }
+  } catch {}
+}

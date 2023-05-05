@@ -20,4 +20,5 @@ export declare function maskInputValue({ input, maskInputSelector, unmaskInputSe
 export declare function is2DCanvasBlank(canvas: HTMLCanvasElement): boolean;
 export declare function getInputType(element: HTMLElement): Lowercase<string> | null;
 export declare function getInputValue(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLOptionElement, tagName: Uppercase<string>, type: attributes[string]): string;
+export declare function defineCustomElement(w: Window, elementName: string): void;
 export {};

@@ -12,6 +12,7 @@ import {
 import styleSheetRuleEvents from './events/style-sheet-rule-events';
 import orderingEvents from './events/ordering';
 import iframeEvents from './events/iframe';
+import shadowDomEvents from './events/shadowDom';
 
 interface ISuite {
   code: string;
@@ -398,5 +399,19 @@ describe('replayer', function () {
     await page.waitForTimeout(50);
 
     await assertDomSnapshot(page, __filename, 'ordering-events');
+  });
+
+  it('should have `:defined` web components', async () => {
+    await page.evaluate(`events = ${JSON.stringify(shadowDomEvents)}`);
+    const result = await page.evaluate(`
+      const { Replayer } = rrweb;
+      const replayer = new Replayer(events);
+      replayer.play();
+      replayer.pause(1000);
+      replayer.iframe.contentDocument.querySelectorAll(':not(:defined)').length;
+    `);
+    await page.waitForTimeout(200);
+
+    expect(result).toEqual(0);
   });
 });
