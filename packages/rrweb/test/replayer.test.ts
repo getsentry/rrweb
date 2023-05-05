@@ -21,7 +21,7 @@ interface ISuite {
 }
 
 describe('replayer', function () {
-  jest.setTimeout(10_000000);
+  jest.setTimeout(10_000);
 
   let code: ISuite['code'];
   let browser: ISuite['browser'];
