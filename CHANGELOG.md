@@ -2,10 +2,15 @@
 
 ## Unreleased
 
+- fix: Fix some input masking (esp for radio buttons) (#85)
+- fix: Unescaped `:` in CSS rule from Safari (#86)
+- feat: Define custom elements (web components) (#87)
+
 - “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
 
 ## 1.107.0
-feat: Use JS to disable clicks in Replayer (#54)
+
+- feat: Use JS to disable clicks in Replayer (#54)
 
 ## 1.106.0
 
