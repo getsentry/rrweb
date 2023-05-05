@@ -4,6 +4,7 @@
 
 - fix: Fix some input masking (esp for radio buttons) (#85)
 - fix: Unescaped `:` in CSS rule from Safari (#86)
+- feat: Define custom elements (web components) (#87)
 
 - “And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott
 
