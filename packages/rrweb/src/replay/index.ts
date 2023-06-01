@@ -682,8 +682,8 @@ export class Replayer {
     this.insertStyleRules(documentElement, head);
     if (!this.service.state.matches('playing')) {
       this.iframe.contentDocument
-        .getElementsByTagName('html')[0]
-        .classList.add('rrweb-paused');
+        ?.getElementsByTagName('html')[0]
+        ?.classList.add('rrweb-paused');
     }
     this.emitter.emit(ReplayerEvents.FullsnapshotRebuilded, event);
     if (!isSync) {
