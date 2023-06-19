@@ -1,5 +1,14 @@
 # rrvideo
 
+## 2.0.0-alpha.9
+
+### Patch Changes
+
+- [#1197](https://github.com/rrweb-io/rrweb/pull/1197) [`23d0138`](https://github.com/rrweb-io/rrweb/commit/23d01387f439db68d2874879242b6ade3e103f75) Thanks [@YunFeng0817](https://github.com/YunFeng0817)! - Refactor: Improve the video quality and add a progress bar for the CLI tool
+
+- Updated dependencies []:
+  - rrweb-player@2.0.0-alpha.9
+
 ## 2.0.0-alpha.8
 
 ### Patch Changes
