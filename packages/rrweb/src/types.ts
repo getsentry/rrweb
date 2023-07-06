@@ -70,9 +70,25 @@ export type recordOptions<T> = {
   mousemoveWait?: number;
   keepIframeSrcFn?: KeepIframeSrcFn;
   errorHandler?: ErrorHandler;
+
+  // XXX(sentry)
+  // onMutation?: (mutations: MutationRecord[]) => boolean;
+  // maskInputSelector?: string;
+  // unmaskInputSelector?: string;
+  // unmaskTextSelector?: string;
+  // unblockSelector?: string;
+  // maskAllText?: boolean;
 };
 
 export type observerParam = {
+  // XXX(sentry)
+  // onMutation?: (mutations: MutationRecord[]) => boolean;
+  // maskInputSelector: string | null;
+  // unmaskInputSelector: string | null;
+  // unmaskTextSelector: string | null;
+  // unblockSelector: string | null;
+  // maskAllText: boolean;
+
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;

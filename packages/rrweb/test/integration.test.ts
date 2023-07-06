@@ -12,7 +12,12 @@ import {
   ISuite,
 } from './utils';
 import type { recordOptions } from '../src/types';
-import { eventWithTime, EventType, RecordPlugin } from '@rrweb/types';
+import {
+  eventWithTime,
+  EventType,
+  RecordPlugin,
+  IncrementalSource,
+} from '@rrweb/types';
 import { visitSnapshot, NodeType } from 'rrweb-snapshot';
 
 describe('record integration tests', function (this: ISuite) {
@@ -122,7 +127,7 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('can record character data muatations', async () => {
+  it('can record character data mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(getHtml.call(this, 'mutation-observer.html'));
@@ -167,7 +172,13 @@ describe('record integration tests', function (this: ISuite) {
   it('handles null attribute values', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'mutation-observer.html', {}));
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        maskAllInputs: true,
+        // XXX(sentry)
+        // maskAllText: true,
+      }),
+    );
 
     await page.evaluate(() => {
       const li = document.createElement('li');
@@ -262,7 +273,11 @@ describe('record integration tests', function (this: ISuite) {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(
-      getHtml.call(this, 'form.html', { maskAllInputs: true }),
+      getHtml.call(this, 'form.html', {
+        maskAllInputs: true,
+        // XXX(sentry)
+        // unmaskTextSelector: '.rr-unmask',
+      }),
     );
 
     await page.type('input[type="text"]', 'test');
@@ -271,6 +286,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[type="password"]', 'password');
     await page.type('textarea', 'textarea test');
     await page.select('select', '1');
+    await page.type('#empty', 'test');
 
     const snapshots = (await page.evaluate(
       'window.snapshots',
@@ -286,12 +302,13 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: {
           text: false,
           textarea: false,
-          password: true,
+          color: true,
         },
       }),
     );
 
     await page.type('input[type="text"]', 'test');
+    await page.type('input[type="color"]', '#FF0000');
     await page.click('input[type="radio"]');
     await page.click('input[type="checkbox"]');
     await page.type('textarea', 'textarea test');

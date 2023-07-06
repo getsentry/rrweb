@@ -2,6 +2,14 @@
  * @jest-environment jsdom
  */
 import { JSDOM } from 'jsdom';
+
+// XXX(sentry)
+import { TextEncoder, TextDecoder } from 'util';
+// @ts-ignore for jsdom
+global.TextEncoder = TextEncoder;
+// @ts-ignore for jsdom
+global.TextDecoder = TextDecoder;
+
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
@@ -112,7 +120,13 @@ describe('absolute url to stylesheet', () => {
 
 describe('isBlockedElement()', () => {
   const subject = (html: string, opt: any = {}) =>
-    _isBlockedElement(render(html), 'rr-block', opt.blockSelector);
+    _isBlockedElement(
+      render(html),
+      'rr-block',
+      opt.blockSelector,
+      // XXX(sentry)
+      // opt.unblockSelector,
+    );
 
   const render = (html: string): HTMLElement =>
     JSDOM.fragment(html).querySelector('div')!;
@@ -150,6 +164,14 @@ describe('style elements', () => {
       maskTextFn: undefined,
       maskInputFn: undefined,
       slimDOMOptions: {},
+
+      // XXX(sentry)
+      // @ts-expect-error
+      unblockSelector: null,
+      unmaskTextSelector: null,
+      maskInputSelector: null,
+      unmaskInputSelector: null,
+      maskAllText: false,
     });
   };
 

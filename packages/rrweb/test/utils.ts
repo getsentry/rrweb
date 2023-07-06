@@ -588,6 +588,13 @@ export async function waitForRAF(
 }
 
 export function generateRecordSnippet(options: recordOptions<eventWithTime>) {
+  // XXX(sentry)
+  // maskInputSelector: ${JSON.stringify(options.maskInputSelector)},
+  // onMutation: ${options.onMutation || undefined},
+  // maskAllText: ${options.maskAllText},
+  // unmaskTextSelector: ${JSON.stringify(options.unmaskTextSelector)},
+  // unmaskInputSelector: ${JSON.stringify(options.unmaskInputSelector)},
+  // unblockSelector: ${JSON.stringify(options.unblockSelector)},
   return `
   window.snapshots = [];
   rrweb.record({
@@ -595,11 +602,13 @@ export function generateRecordSnippet(options: recordOptions<eventWithTime>) {
       window.snapshots.push(event);
     },
     maskTextSelector: ${JSON.stringify(options.maskTextSelector)},
+    blockSelector: ${JSON.stringify(options.blockSelector)},
     maskAllInputs: ${options.maskAllInputs},
     maskInputOptions: ${JSON.stringify(options.maskAllInputs)},
     userTriggeredOnInput: ${options.userTriggeredOnInput},
     maskTextFn: ${options.maskTextFn},
     maskInputFn: ${options.maskInputFn},
+    blockSelector: ${JSON.stringify(options.blockSelector)},
     recordCanvas: ${options.recordCanvas},
     recordAfter: '${options.recordAfter || 'load'}',
     inlineImages: ${options.inlineImages},

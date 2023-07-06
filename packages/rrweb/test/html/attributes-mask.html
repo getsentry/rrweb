@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>attributes mask</title>
+  </head>
+
+  <body>
+    <form>
+      <div title="Test title" aria-label="Test aria label" class="rr-unmask">
+        Test content
+      </div>
+
+      <div title="Test title 2" aria-label="Test aria label 2">
+        Test content 2
+      </div>
+
+      <input type="text" placeholder="Test placeholder 1" class="rr-unmask"/>
+      <input type="text" placeholder="Test placeholder 2" class=""/>
+
+      <input type="submit" value="Submit button 1" class="rr-unmask" />
+      <input type="submit" value="Submit button 2" class="" />
+
+      <input type="button" value="Button 1" class="" />
+    </form>
+  </body>
+</html>

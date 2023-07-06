@@ -13,26 +13,42 @@
         <input type="text" />
       </label>
       <label>
-        <input type="radio" name="toggle" value="on" />
+        <input type="color" />
       </label>
       <label>
-        <input type="radio" name="toggle" value="off" checked />
+        <input type="radio" name="toggle" />
+      </label>
+      <label>
+        <input type="radio" name="toggle" value="radio-on" />
+      </label>
+      <label>
+        <input type="radio" name="toggle" value="radio-off" checked />
       </label>
       <label for="checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" checked />
+      </label>
+      <label>
+        <input type="checkbox" value="check-val" />
       </label>
       <label for="textarea">
         <textarea name="" id="" cols="30" rows="10" data-unmask-example="true"></textarea>
       </label>
       <label for="select">
-        <select name="" id="">
-          <option value="1">1</option>
-          <option value="2">2</option>
+        <select name="" id="" value="1">
+          <option value="1">Option A</option>
+          <option value="2">Option BB</option>
         </select>
       </label>
       <label for="password">
         <input type="password" />
       </label>
+      <label for="empty">
+        <input id="empty" />
+      </label>
+      <label for="unmask">
+        <input type="text" class="rr-unmask" />
+      </label>
+      <input type="submit" value="Submit form" />
     </form>
   </body>
 </html>
