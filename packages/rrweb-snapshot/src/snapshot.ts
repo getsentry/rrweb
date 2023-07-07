@@ -21,7 +21,9 @@ import {
   isNativeShadowDom,
   stringifyStylesheet,
   getInputType,
+  getInputValue,
   toLowerCase,
+  toUpperCase,
 } from './utils';
 
 let _id = 1;
@@ -636,6 +638,7 @@ function serializeTextNode(
   },
 ): serializedNode {
   const {
+<<<<<<< HEAD
     maskAllText,
     maskTextClass,
     unmaskTextClass,
@@ -644,6 +647,13 @@ function serializeTextNode(
     maskTextFn,
     maskInputOptions,
     maskInputFn,
+=======
+    maskTextClass,
+    maskTextSelector,
+    maskTextFn,
+    maskInputFn,
+    maskInputOptions,
+>>>>>>> b310e6f (feat: Better masking of option/radio/checkbox values)
     rootId,
   } = options;
   // The parent node may not be a html element which has a tagName attribute.
@@ -698,6 +708,18 @@ function serializeTextNode(
     textContent = maskInputFn
       ? maskInputFn(textContent, n.parentNode as HTMLElement)
       : textContent.replace(/[\S]/g, '*');
+  }
+
+  // Handle <option> text like an input value
+  if (parentTagName === 'OPTION' && textContent) {
+    textContent = maskInputValue({
+      element: n as unknown as HTMLElement,
+      type: null,
+      tagName: parentTagName,
+      value: textContent,
+      maskInputOptions,
+      maskInputFn,
+    });
   }
 
   return {
@@ -797,17 +819,22 @@ function serializeElementNode(
     }
   }
   // form fields
-  if (tagName === 'input' || tagName === 'textarea' || tagName === 'select') {
-    const value = (n as HTMLInputElement | HTMLTextAreaElement).value;
+  if (
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'select' ||
+    tagName === 'option'
+  ) {
+    const el = n as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | HTMLSelectElement
+      | HTMLOptionElement;
+
+    const type = getInputType(el);
+    const value = getInputValue(el, toUpperCase(tagName), type);
     const checked = (n as HTMLInputElement).checked;
-    if (
-      attributes.type !== 'radio' &&
-      attributes.type !== 'checkbox' &&
-      attributes.type !== 'submit' &&
-      attributes.type !== 'button' &&
-      value
-    ) {
-      const type = getInputType(n);
+    if (type !== 'submit' && type !== 'button' && value) {
       const forceMask = needMaskingText(
         n,
         maskTextClass,
@@ -816,17 +843,17 @@ function serializeElementNode(
         unmaskTextSelector,
         maskAllText,
       );
-
       attributes.value = maskInputValue({
-        element: n,
+        element: el,
         type,
-        tagName,
+        tagName: toUpperCase(tagName),
         value,
         maskInputOptions,
         maskInputFn,
         forceMask,
       });
-    } else if (checked) {
+    }
+    if (checked) {
       attributes.checked = checked;
     }
   }
