@@ -176,7 +176,7 @@ describe('record integration tests', function (this: ISuite) {
       getHtml.call(this, 'mutation-observer.html', {
         maskAllInputs: true,
         // XXX(sentry)
-        // maskAllText: true,
+        maskAllText: true,
       }),
     );
 
@@ -276,7 +276,7 @@ describe('record integration tests', function (this: ISuite) {
       getHtml.call(this, 'form.html', {
         maskAllInputs: true,
         // XXX(sentry)
-        // unmaskTextSelector: '.rr-unmask',
+        unmaskTextSelector: '.rr-unmask',
       }),
     );
 

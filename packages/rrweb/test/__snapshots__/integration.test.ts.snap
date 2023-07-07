@@ -5179,9 +5179,8 @@ exports[`record integration tests can use maskTextSelector to configure which in
                             \\"type\\": 2,
                             \\"tagName\\": \\"input\\",
                             \\"attributes\\": {
-                              \\"type\\": \\"radio\\",
-                              \\"name\\": \\"toggle\\",
-                              \\"value\\": \\"on\\"
+                              \\"type\\": \\"color\\",
+                              \\"value\\": \\"#000000\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 27
@@ -5214,9 +5213,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                             \\"tagName\\": \\"input\\",
                             \\"attributes\\": {
                               \\"type\\": \\"radio\\",
-                              \\"name\\": \\"toggle\\",
-                              \\"value\\": \\"off\\",
-                              \\"checked\\": true
+                              \\"name\\": \\"toggle\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 32
@@ -5237,9 +5234,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                       {
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
-                        \\"attributes\\": {
-                          \\"for\\": \\"checkbox\\"
-                        },
+                        \\"attributes\\": {},
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
@@ -5250,7 +5245,9 @@ exports[`record integration tests can use maskTextSelector to configure which in
                             \\"type\\": 2,
                             \\"tagName\\": \\"input\\",
                             \\"attributes\\": {
-                              \\"type\\": \\"checkbox\\"
+                              \\"type\\": \\"radio\\",
+                              \\"name\\": \\"toggle\\",
+                              \\"value\\": \\"radio-on\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 37
@@ -5271,9 +5268,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                       {
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
-                        \\"attributes\\": {
-                          \\"for\\": \\"textarea\\"
-                        },
+                        \\"attributes\\": {},
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
@@ -5282,12 +5277,12 @@ exports[`record integration tests can use maskTextSelector to configure which in
                           },
                           {
                             \\"type\\": 2,
-                            \\"tagName\\": \\"textarea\\",
+                            \\"tagName\\": \\"input\\",
                             \\"attributes\\": {
-                              \\"name\\": \\"\\",
-                              \\"id\\": \\"\\",
-                              \\"cols\\": \\"30\\",
-                              \\"rows\\": \\"10\\"
+                              \\"type\\": \\"radio\\",
+                              \\"name\\": \\"toggle\\",
+                              \\"value\\": \\"radio-off\\",
+                              \\"checked\\": true
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 42
@@ -5309,13 +5304,119 @@ exports[`record integration tests can use maskTextSelector to configure which in
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"checkbox\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 46
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"input\\",
+                            \\"attributes\\": {
+                              \\"type\\": \\"checkbox\\",
+                              \\"checked\\": true
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 47
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 48
+                          }
+                        ],
+                        \\"id\\": 45
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 49
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 51
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"input\\",
+                            \\"attributes\\": {
+                              \\"type\\": \\"checkbox\\",
+                              \\"value\\": \\"check-val\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 52
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 53
+                          }
+                        ],
+                        \\"id\\": 50
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 54
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 56
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"data-unmask-example\\": \\"true\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 57
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 58
+                          }
+                        ],
+                        \\"id\\": 55
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 59
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 61
                           },
                           {
                             \\"type\\": 2,
@@ -5329,7 +5430,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 48
+                                \\"id\\": 63
                               },
                               {
                                 \\"type\\": 2,
@@ -5341,16 +5442,16 @@ exports[`record integration tests can use maskTextSelector to configure which in
                                 \\"childNodes\\": [
                                   {
                                     \\"type\\": 3,
-                                    \\"textContent\\": \\"1\\",
-                                    \\"id\\": 50
+                                    \\"textContent\\": \\"Option A\\",
+                                    \\"id\\": 65
                                   }
                                 ],
-                                \\"id\\": 49
+                                \\"id\\": 64
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 51
+                                \\"id\\": 66
                               },
                               {
                                 \\"type\\": 2,
@@ -5361,32 +5462,32 @@ exports[`record integration tests can use maskTextSelector to configure which in
                                 \\"childNodes\\": [
                                   {
                                     \\"type\\": 3,
-                                    \\"textContent\\": \\"2\\",
-                                    \\"id\\": 53
+                                    \\"textContent\\": \\"Option BB\\",
+                                    \\"id\\": 68
                                   }
                                 ],
-                                \\"id\\": 52
+                                \\"id\\": 67
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 54
+                                \\"id\\": 69
                               }
                             ],
-                            \\"id\\": 47
+                            \\"id\\": 62
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 55
+                            \\"id\\": 70
                           }
                         ],
-                        \\"id\\": 45
+                        \\"id\\": 60
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 56
+                        \\"id\\": 71
                       },
                       {
                         \\"type\\": 2,
@@ -5398,7 +5499,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 58
+                            \\"id\\": 73
                           },
                           {
                             \\"type\\": 2,
@@ -5407,20 +5508,104 @@ exports[`record integration tests can use maskTextSelector to configure which in
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 59
+                            \\"id\\": 74
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 60
+                            \\"id\\": 75
                           }
                         ],
-                        \\"id\\": 57
+                        \\"id\\": 72
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"empty\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"input\\",
+                            \\"attributes\\": {
+                              \\"id\\": \\"empty\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 79
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 80
+                          }
+                        ],
+                        \\"id\\": 77
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 81
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"unmask\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 83
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"input\\",
+                            \\"attributes\\": {
+                              \\"type\\": \\"text\\",
+                              \\"class\\": \\"rr-unmask\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 84
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 85
+                          }
+                        ],
+                        \\"id\\": 82
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 86
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"input\\",
+                        \\"attributes\\": {
+                          \\"type\\": \\"submit\\",
+                          \\"value\\": \\"Submit form\\"
+                        },
+                        \\"childNodes\\": [],
+                        \\"id\\": 87
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 61
+                        \\"id\\": 88
                       }
                     ],
                     \\"id\\": 18
@@ -5428,7 +5613,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 62
+                    \\"id\\": 89
                   },
                   {
                     \\"type\\": 2,
@@ -5438,15 +5623,15 @@ exports[`record integration tests can use maskTextSelector to configure which in
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 64
+                        \\"id\\": 91
                       }
                     ],
-                    \\"id\\": 63
+                    \\"id\\": 90
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 65
+                    \\"id\\": 92
                   }
                 ],
                 \\"id\\": 16
@@ -5485,7 +5670,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 1,
-      \\"id\\": 27
+      \\"id\\": 32
     }
   },
   {
@@ -5501,40 +5686,6 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 27
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 0,
-      \\"id\\": 27
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 2,
-      \\"id\\": 27
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 5,
-      \\"text\\": \\"on\\",
-      \\"isChecked\\": true,
-      \\"id\\": 27
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 5,
-      \\"text\\": \\"off\\",
-      \\"isChecked\\": false,
       \\"id\\": 32
     }
   },
@@ -5542,32 +5693,8 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 2,
-      \\"type\\": 1,
-      \\"id\\": 37
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 6,
-      \\"id\\": 27
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 5,
-      \\"id\\": 37
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
       \\"type\\": 0,
-      \\"id\\": 37
+      \\"id\\": 32
     }
   },
   {
@@ -5575,7 +5702,8 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 2,
-      \\"id\\": 37
+      \\"id\\": 32,
+      \\"pointerType\\": 0
     }
   },
   {
@@ -5584,30 +5712,23 @@ exports[`record integration tests can use maskTextSelector to configure which in
       \\"source\\": 5,
       \\"text\\": \\"on\\",
       \\"isChecked\\": true,
-      \\"id\\": 37
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 6,
-      \\"id\\": 37
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 2,
-      \\"type\\": 5,
-      \\"id\\": 42
+      \\"id\\": 32
     }
   },
   {
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"**********\\",
+      \\"text\\": \\"radio-on\\",
+      \\"isChecked\\": false,
+      \\"id\\": 37
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"radio-off\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -5616,8 +5737,16 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 2,
+      \\"type\\": 1,
+      \\"id\\": 47
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
       \\"type\\": 6,
-      \\"id\\": 42
+      \\"id\\": 32
     }
   },
   {
@@ -5625,7 +5754,49 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 59
+      \\"id\\": 47
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 0,
+      \\"id\\": 47
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 2,
+      \\"id\\": 47,
+      \\"pointerType\\": 0
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"on\\",
+      \\"isChecked\\": false,
+      \\"id\\": 47
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 6,
+      \\"id\\": 47
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 5,
+      \\"id\\": 57
     }
   },
   {
@@ -5634,7 +5805,32 @@ exports[`record integration tests can use maskTextSelector to configure which in
       \\"source\\": 5,
       \\"text\\": \\"**********\\",
       \\"isChecked\\": false,
-      \\"id\\": 59
+      \\"id\\": 57
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 6,
+      \\"id\\": 57
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 5,
+      \\"id\\": 74
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"**********\\",
+      \\"isChecked\\": false,
+      \\"id\\": 74
     }
   },
   {
@@ -5643,7 +5839,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
       \\"source\\": 5,
       \\"text\\": \\"1\\",
       \\"isChecked\\": false,
-      \\"id\\": 47
+      \\"id\\": 62
     }
   }
 ]"
@@ -6771,226 +6967,6 @@ exports[`record integration tests should handle recursive console messages 1`] =
       \\"initialOffset\\": {
         \\"left\\": 0,
         \\"top\\": 0
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"isObjTooDeep (:8503:35)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"Object.get (__puppeteer_evaluation_script__:13:33)\\",
-          \\"isObjTooDeep (:8503:25)\\",
-          \\"shouldIgnore (:8567:31)\\",
-          \\"Object.<anonymous> (:8536:13)\\",
-          \\"stringify (:8517:19)\\",
-          \\":8656:47\\",
-          \\"console.log (:8656:36)\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"proxied was accessed so triggering a console.warn\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
       }
     }
   },
@@ -11093,15 +11069,6 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 7,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 5,
       \\"text\\": \\"************************\\",
       \\"isChecked\\": false,
@@ -12773,10 +12740,6 @@ exports[`record integration tests should record after DOMContentLoaded event 1`]
     \\"data\\": {}
   },
   {
-    \\"type\\": 1,
-    \\"data\\": {}
-  },
-  {
     \\"type\\": 4,
     \\"data\\": {
       \\"href\\": \\"about:blank\\",
@@ -12845,6 +12808,10 @@ exports[`record integration tests should record after DOMContentLoaded event 1`]
         \\"top\\": 0
       }
     }
+  },
+  {
+    \\"type\\": 1,
+    \\"data\\": {}
   }
 ]"
 `;

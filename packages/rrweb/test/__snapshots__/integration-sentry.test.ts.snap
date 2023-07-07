@@ -47083,7 +47083,7 @@ exports[`record integration tests should not record input values on selectively 
                               \\"name\\": \\"\\",
                               \\"id\\": \\"\\",
                               \\"class\\": \\"rr-mask\\",
-                              \\"value\\": \\"1\\"
+                              \\"value\\": \\"*\\"
                             },
                             \\"childNodes\\": [
                               {
@@ -47271,7 +47271,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"t\\",
+      \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"id\\": 22
     }
@@ -47280,7 +47280,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"te\\",
+      \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"id\\": 22
     }
@@ -47289,7 +47289,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"tes\\",
+      \\"text\\": \\"***\\",
       \\"isChecked\\": false,
       \\"id\\": 22
     }
@@ -47298,7 +47298,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"test\\",
+      \\"text\\": \\"****\\",
       \\"isChecked\\": false,
       \\"id\\": 22
     }
@@ -47432,7 +47432,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"p\\",
+      \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47441,7 +47441,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"pa\\",
+      \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47450,7 +47450,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"pas\\",
+      \\"text\\": \\"***\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47459,7 +47459,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"pass\\",
+      \\"text\\": \\"****\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47468,7 +47468,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"passw\\",
+      \\"text\\": \\"*****\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47477,7 +47477,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"passwo\\",
+      \\"text\\": \\"******\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47486,7 +47486,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"passwor\\",
+      \\"text\\": \\"*******\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47495,7 +47495,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"password\\",
+      \\"text\\": \\"********\\",
       \\"isChecked\\": false,
       \\"id\\": 59
     }
@@ -47520,7 +47520,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"t\\",
+      \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47529,7 +47529,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"te\\",
+      \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47538,7 +47538,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"tex\\",
+      \\"text\\": \\"***\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47547,7 +47547,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"text\\",
+      \\"text\\": \\"****\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47556,7 +47556,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"texta\\",
+      \\"text\\": \\"*****\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47565,7 +47565,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textar\\",
+      \\"text\\": \\"******\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47574,7 +47574,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textare\\",
+      \\"text\\": \\"*******\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47583,7 +47583,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea\\",
+      \\"text\\": \\"********\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47592,7 +47592,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea \\",
+      \\"text\\": \\"*********\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47601,7 +47601,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea t\\",
+      \\"text\\": \\"**********\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47610,7 +47610,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea te\\",
+      \\"text\\": \\"***********\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47619,7 +47619,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea tes\\",
+      \\"text\\": \\"************\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47628,7 +47628,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"textarea test\\",
+      \\"text\\": \\"*************\\",
       \\"isChecked\\": false,
       \\"id\\": 42
     }
@@ -47637,7 +47637,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"1\\",
+      \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"id\\": 47
     }
@@ -47662,7 +47662,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"t\\",
+      \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"id\\": 64
     }
@@ -47671,7 +47671,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"te\\",
+      \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"id\\": 64
     }
@@ -47680,7 +47680,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"tes\\",
+      \\"text\\": \\"***\\",
       \\"isChecked\\": false,
       \\"id\\": 64
     }
@@ -47689,7 +47689,7 @@ exports[`record integration tests should not record input values on selectively 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"test\\",
+      \\"text\\": \\"****\\",
       \\"isChecked\\": false,
       \\"id\\": 64
     }
@@ -48626,7 +48626,7 @@ exports[`record integration tests should record input values if dynamically adde
             \\"attributes\\": {
               \\"id\\": \\"input-masked\\",
               \\"class\\": \\"rr-mask\\",
-              \\"value\\": \\"input should be masked\\"
+              \\"value\\": \\"**********************\\"
             },
             \\"childNodes\\": [],
             \\"id\\": 21
@@ -48639,7 +48639,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"input should be masked\\",
+      \\"text\\": \\"**********************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -48656,7 +48656,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"input should be maskedm\\",
+      \\"text\\": \\"***********************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -48665,7 +48665,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"input should be maskedmo\\",
+      \\"text\\": \\"************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -48674,7 +48674,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"input should be maskedmoo\\",
+      \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }

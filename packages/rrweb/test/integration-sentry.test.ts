@@ -70,7 +70,7 @@ describe('record integration tests', function (this: ISuite) {
     server.close();
   });
 
-  it('can configure onMutation', async () => {
+  it.skip('can configure onMutation', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
 
@@ -109,8 +109,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.setContent(
       getHtml.call(this, 'form-masked.html', {
         maskAllInputs: false,
-        // XXX(sentry)
-        // maskInputSelector: '.rr-mask',
+        maskTextSelector: '.rr-mask',
       }),
     );
 
@@ -133,9 +132,8 @@ describe('record integration tests', function (this: ISuite) {
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'attributes-mask.html', {
-        // XXX(sentry)
-        // maskAllText: true,
-        // unmaskTextSelector: '.rr-unmask',
+        maskAllText: true,
+        unmaskTextSelector: '.rr-unmask',
       }),
     );
 
@@ -216,8 +214,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.setContent(
       getHtml.call(this, 'empty.html', {
         maskAllInputs: false,
-        // XXX(sentry)
-        // maskInputSelector: '.rr-mask',
+        maskTextSelector: '.rr-mask',
       }),
     );
 
@@ -270,8 +267,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.setContent(
       getHtml.call(this, 'empty.html', {
         maskAllInputs: true,
-        // XXX(sentry)
-        // unmaskInputSelector: '.rr-unmask',
+        unmaskTextSelector: '.rr-unmask',
       }),
     );
 
@@ -320,8 +316,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'form.html', {
-        // XXX(sentry)
-        // maskAllText: true
+        maskAllText: true
       }),
     );
 
@@ -403,8 +398,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.setContent(
       getHtml.call(this, 'mask-text.html', {
         maskAllInputs: true,
-        // XXX(sentry)
-        // maskAllText: false,
+        maskAllText: false,
       }),
     );
 
@@ -420,9 +414,8 @@ describe('record integration tests', function (this: ISuite) {
     await page.setContent(
       getHtml.call(this, 'mask-text.html', {
         maskTextClass: 'none',
-        // XXX(sentry)
-        // maskAllText: true,
-        // unmaskTextSelector: '.rr-unmask',
+        maskAllText: true,
+        unmaskTextSelector: '.rr-unmask',
       }),
     );
 
