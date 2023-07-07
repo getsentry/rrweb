@@ -3,7 +3,11 @@ import {
   maskInputValue,
   Mirror,
   getInputType,
+<<<<<<< HEAD
   toLowerCase,
+=======
+  needMaskingText,
+>>>>>>> pendo-io/md-mask-enhancements-1096
 } from 'rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
 import {
@@ -425,6 +429,11 @@ function initInputObserver({
   maskInputFn,
   sampling,
   userTriggeredOnInput,
+  maskAllText,
+  maskTextClass,
+  unmaskTextClass,
+  maskTextSelector,
+  unmaskTextSelector,
 }: observerParam): listenerHandler {
   function eventHandler(event: Event) {
     let target = getEventTarget(event) as HTMLElement | null;
@@ -454,11 +463,21 @@ function initInputObserver({
     let isChecked = false;
     const type: Lowercase<string> = getInputType(target) || '';
 
+    const forceMask = needMaskingText(
+      target as Node,
+      maskTextClass,
+      maskTextSelector,
+      unmaskTextClass,
+      unmaskTextSelector,
+      maskAllText,
+    );
+
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
     } else if (
       maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-      maskInputOptions[type as keyof MaskInputOptions]
+      maskInputOptions[type as keyof MaskInputOptions] ||
+      forceMask
     ) {
       text = maskInputValue({
         element: target,
@@ -467,6 +486,7 @@ function initInputObserver({
         type,
         value: text,
         maskInputFn,
+        forceMask,
       });
     }
     cbWithDedup(
