@@ -16,7 +16,6 @@ import inputEvents from './events/input';
 import iframeEvents from './events/iframe';
 import selectionEvents from './events/selection';
 import shadowDomEvents from './events/shadow-dom';
-import shadowDomEventsSentry from './events/shadow-dom-sentry';
 import StyleSheetTextMutation from './events/style-sheet-text-mutation';
 import canvasInIframe from './events/canvas-in-iframe';
 import adoptedStyleSheet from './events/adopted-style-sheet';
@@ -1078,20 +1077,6 @@ describe('replayer', function () {
       ),
     ).toBe(':hover');
   });
-
-  it('should have `:defined` web components', async () => {
-    await page.evaluate(`events = ${JSON.stringify(shadowDomEventsSentry)}`);
-    const result = await page.evaluate(`
-      const { Replayer } = rrweb;
-      const replayer = new Replayer(events);
-      replayer.play();
-      replayer.pause(1000);
-      replayer.iframe.contentDocument.querySelectorAll(':not(:defined)').length;
-    `);
-    await page.waitForTimeout(200);
-
-    expect(result).toEqual(0);
-  })
 
   it('should replay styles with :define pseudo-class', async () => {
     await page.evaluate(`events = ${JSON.stringify(customElementDefineClass)}`);
