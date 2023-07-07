@@ -269,7 +269,7 @@ export type hooksParam = {
   canvasMutation?: canvasMutationCallback;
   font?: fontCallback;
   selection?: selectionCallback;
-  customElement?: customElementCallback; 
+  customElement?: customElementCallback;
 };
 
 // https://dom.spec.whatwg.org/#interface-mutationrecord

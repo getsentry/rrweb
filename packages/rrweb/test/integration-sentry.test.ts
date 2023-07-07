@@ -316,7 +316,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'form.html', {
-        maskAllText: true
+        maskAllText: true,
       }),
     );
 
