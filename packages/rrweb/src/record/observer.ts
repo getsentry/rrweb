@@ -3,11 +3,8 @@ import {
   maskInputValue,
   Mirror,
   getInputType,
-<<<<<<< HEAD
   toLowerCase,
-=======
   needMaskingText,
->>>>>>> pendo-io/md-mask-enhancements-1096
 } from 'rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
 import {
