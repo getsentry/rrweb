@@ -5905,7 +5905,7 @@ exports[`record integration tests handles null attribute values 1`] = `
                     \\"childNodes\\": [
                       {
                         \\"type\\": 3,
-                        \\"textContent\\": \\"mutation observer\\",
+                        \\"textContent\\": \\"******** ********\\",
                         \\"id\\": 8
                       }
                     ],
@@ -6000,7 +6000,7 @@ exports[`record integration tests handles null attribute values 1`] = `
         {
           \\"id\\": 20,
           \\"attributes\\": {
-            \\"aria-label\\": \\"label\\",
+            \\"aria-label\\": \\"*****\\",
             \\"id\\": \\"test-li\\"
           }
         }
@@ -6014,7 +6014,7 @@ exports[`record integration tests handles null attribute values 1`] = `
             \\"type\\": 2,
             \\"tagName\\": \\"li\\",
             \\"attributes\\": {
-              \\"aria-label\\": \\"label\\",
+              \\"aria-label\\": \\"*****\\",
               \\"id\\": \\"test-li\\"
             },
             \\"childNodes\\": [],
@@ -9205,7 +9205,7 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
-                            \\"textContent\\": \\"mask10\\",
+                            \\"textContent\\": \\"\\",
                             \\"id\\": 50
                           }
                         ],
