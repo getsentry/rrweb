@@ -5,6 +5,7 @@ import type {
   MaskInputFn,
   MaskTextFn,
   DataURLOptions,
+  MaskAttributeFn,
 } from 'rrweb-snapshot';
 import type { PackFn, UnpackFn } from './packer/base';
 import type { IframeManager } from './record/iframe-manager';
@@ -56,6 +57,7 @@ export type recordOptions<T> = {
   unmaskTextSelector?: string;
   maskAllInputs?: boolean;
   maskInputOptions?: MaskInputOptions;
+  maskAttributeFn?: MaskAttributeFn;
   maskInputFn?: MaskInputFn;
   maskTextFn?: MaskTextFn;
   slimDOMOptions?: SlimDOMOptions | 'all' | true;
@@ -97,6 +99,7 @@ export type observerParam = {
   maskTextSelector: string | null;
   unmaskTextSelector: string | null;
   maskInputOptions: MaskInputOptions;
+  maskAttributeFn?: MaskAttributeFn;
   maskInputFn?: MaskInputFn;
   maskTextFn?: MaskTextFn;
   keepIframeSrcFn: KeepIframeSrcFn;
@@ -144,6 +147,7 @@ export type MutationBufferParam = Pick<
   | 'unmaskTextSelector'
   | 'inlineStylesheet'
   | 'maskInputOptions'
+  | 'maskAttributeFn'
   | 'maskTextFn'
   | 'maskInputFn'
   | 'keepIframeSrcFn'
