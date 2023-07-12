@@ -167,15 +167,17 @@ describe('record integration tests', function (this: ISuite) {
   it('can mask attribute on mutation', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(getHtml.call(this, 'mutation-observer.html', {
-      maskAttributeFn: (key, value) => {
-        if (key === 'placeholder') {
-          return value.replace(/[\S]/g, '*');
-        }
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        maskAttributeFn: (key, value) => {
+          if (key === 'placeholder') {
+            return value.replace(/[\S]/g, '*');
+          }
 
-        return value;
-      }
-    }));
+          return value;
+        },
+      }),
+    );
 
     await page.evaluate(() => {
       const li = document.createElement('li');
@@ -389,11 +391,11 @@ describe('record integration tests', function (this: ISuite) {
   it.only('should mask attribute via function call', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
     await page.setContent(
       getHtml.call(this, 'form.html', {
         maskAttributeFn: (key: string, value: string) => {
-          console.log(key, value)
+          console.log(key, value);
           if (key === 'placeholder') {
             return value.replace(/[\S]/g, '*');
           }
