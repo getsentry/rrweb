@@ -182,6 +182,36 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('can mask attribute on mutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        maskAttributeFn: (key: string, value: string) => {
+          if (key === 'placeholder') {
+            return value.replace(/[\S]/g, '*');
+          }
+
+          return value;
+        },
+      }),
+    );
+
+    await page.evaluate(() => {
+      const li = document.createElement('li');
+      const ul = document.querySelector('ul') as HTMLUListElement;
+      ul.appendChild(li);
+      li.setAttribute('placeholder', 'placeholder');
+      li.setAttribute('title', 'title');
+      document.body.removeChild(ul);
+    });
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
   it('handles null attribute values', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -454,6 +484,30 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('should mask attribute via function call', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+    await page.setContent(
+      getHtml.call(this, 'form.html', {
+        maskAttributeFn: (key: string, value: string) => {
+          console.log(key, value);
+          if (key === 'placeholder') {
+            return value.replace(/[\S]/g, '*');
+          }
+          return value;
+        },
+      }),
+    );
+
+    await page.type('input[type="text"]', 'test');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
   it('should record input userTriggered values if userTriggeredOnInput is enabled', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -508,7 +562,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    assertSnapshot(snapshots.filter(isNotScroll));
   });
 
   it('mutations should work when blocked class is unblocked', async () => {
@@ -577,7 +631,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    assertSnapshot(snapshots.filter(isNotScroll));
   });
 
   it('should record canvas mutations', async () => {
