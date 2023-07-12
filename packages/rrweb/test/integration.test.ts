@@ -164,6 +164,34 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('can mask attribute on mutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(getHtml.call(this, 'mutation-observer.html', {
+      maskAttributeFn: (key, value) => {
+        if (key === 'placeholder') {
+          return value.replace(/[\S]/g, '*');
+        }
+
+        return value;
+      }
+    }));
+
+    await page.evaluate(() => {
+      const li = document.createElement('li');
+      const ul = document.querySelector('ul') as HTMLUListElement;
+      ul.appendChild(li);
+      li.setAttribute('placeholder', 'placeholder');
+      li.setAttribute('title', 'title');
+      document.body.removeChild(ul);
+    });
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
   it('handles null attribute values', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -351,6 +379,30 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[type="password"]', 'password');
     await page.type('textarea', 'textarea test');
     await page.select('select', '1');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
+  it.only('should mask attribute via function call', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    await page.setContent(
+      getHtml.call(this, 'form.html', {
+        maskAttributeFn: (key: string, value: string) => {
+          console.log(key, value)
+          if (key === 'placeholder') {
+            return value.replace(/[\S]/g, '*');
+          }
+          return value;
+        },
+      }),
+    );
+
+    await page.type('input[type="text"]', 'test');
 
     const snapshots = (await page.evaluate(
       'window.snapshots',

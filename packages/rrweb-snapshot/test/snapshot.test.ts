@@ -5,6 +5,7 @@ import { JSDOM } from 'jsdom';
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
+  transformAttribute,
   _isBlockedElement,
 } from '../src/snapshot';
 import { serializedNodeWithId } from '../src/types';
@@ -110,6 +111,21 @@ describe('absolute url to stylesheet', () => {
   });
 });
 
+describe('transformAttribute()', () => {
+  it('handles empty attribute value', () => {
+    expect(transformAttribute(document, 'a', 'data-loading', null, undefined)).toBe(null)
+    expect(transformAttribute(document, 'a', 'data-loading', '', undefined)).toBe('')
+  })
+
+  it('handles custom masking function', () => {
+    const maskAttributeFn = jest.fn().mockImplementation((_key, value): string => {
+      return value.split('').reverse().join('');
+    }) as any;
+    expect(transformAttribute(document, 'a', 'data-loading', 'foo', maskAttributeFn)).toBe('oof')
+    expect(maskAttributeFn).toHaveBeenCalledTimes(1);
+  })
+})
+
 describe('isBlockedElement()', () => {
   const subject = (html: string, opt: any = {}) =>
     _isBlockedElement(render(html), 'rr-block', opt.blockSelector);
@@ -147,6 +163,7 @@ describe('style elements', () => {
       maskTextSelector: null,
       skipChild: false,
       inlineStylesheet: true,
+      maskAttributeFn: undefined,
       maskTextFn: undefined,
       maskInputFn: undefined,
       slimDOMOptions: {},
@@ -192,6 +209,7 @@ describe('scrollTop/scrollLeft', () => {
       maskTextSelector: null,
       skipChild: false,
       inlineStylesheet: true,
+      maskAttributeFn: undefined,
       maskTextFn: undefined,
       maskInputFn: undefined,
       slimDOMOptions: {},

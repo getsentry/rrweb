@@ -11,6 +11,7 @@ import {
   KeepIframeSrcFn,
   ICanvas,
   serializedElementNodeWithId,
+  MaskAttributeFn,
 } from './types';
 import {
   Mirror,
@@ -226,6 +227,7 @@ export function transformAttribute(
   tagName: Lowercase<string>,
   name: Lowercase<string>,
   value: string | null,
+  maskAttributeFn: MaskAttributeFn | undefined,
 ): string | null {
   if (!value) {
     return value;
@@ -252,6 +254,11 @@ export function transformAttribute(
     return absoluteToStylesheet(value, getHref());
   } else if (tagName === 'object' && name === 'data') {
     return absoluteToDoc(doc, value);
+  }
+
+  // Custom attribute masking
+  if (typeof maskAttributeFn === 'function') {
+    return maskAttributeFn(name, value);
   }
 
   return value;
@@ -434,6 +441,7 @@ function serializeNode(
     mirror: Mirror;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    maskAttributeFn: MaskAttributeFn | undefined;
     maskTextClass: string | RegExp;
     maskTextSelector: string | null;
     inlineStylesheet: boolean;
@@ -455,6 +463,7 @@ function serializeNode(
     mirror,
     blockClass,
     blockSelector,
+    maskAttributeFn,
     maskTextClass,
     maskTextSelector,
     inlineStylesheet,
@@ -497,6 +506,7 @@ function serializeNode(
         blockClass,
         blockSelector,
         inlineStylesheet,
+        maskAttributeFn,
         maskInputOptions,
         maskInputFn,
         dataURLOptions,
@@ -602,6 +612,7 @@ function serializeElementNode(
     blockClass: string | RegExp;
     blockSelector: string | null;
     inlineStylesheet: boolean;
+    maskAttributeFn: MaskAttributeFn | undefined;
     maskInputOptions: MaskInputOptions;
     maskInputFn: MaskInputFn | undefined;
     dataURLOptions?: DataURLOptions;
@@ -621,6 +632,7 @@ function serializeElementNode(
     blockSelector,
     inlineStylesheet,
     maskInputOptions = {},
+    maskAttributeFn,
     maskInputFn,
     dataURLOptions = {},
     inlineImages,
@@ -641,6 +653,7 @@ function serializeElementNode(
         tagName,
         toLowerCase(attr.name),
         attr.value,
+        maskAttributeFn,
       );
     }
   }
@@ -935,6 +948,7 @@ export function serializeNodeWithId(
     inlineStylesheet: boolean;
     newlyAddedElement?: boolean;
     maskInputOptions?: MaskInputOptions;
+    maskAttributeFn: MaskAttributeFn | undefined;
     maskTextFn: MaskTextFn | undefined;
     maskInputFn: MaskInputFn | undefined;
     slimDOMOptions: SlimDOMOptions;
@@ -966,6 +980,7 @@ export function serializeNodeWithId(
     skipChild = false,
     inlineStylesheet = true,
     maskInputOptions = {},
+    maskAttributeFn,
     maskTextFn,
     maskInputFn,
     slimDOMOptions,
@@ -990,6 +1005,7 @@ export function serializeNodeWithId(
     maskTextSelector,
     inlineStylesheet,
     maskInputOptions,
+    maskAttributeFn,
     maskTextFn,
     maskInputFn,
     dataURLOptions,
@@ -1063,6 +1079,7 @@ export function serializeNodeWithId(
       skipChild,
       inlineStylesheet,
       maskInputOptions,
+      maskAttributeFn,
       maskTextFn,
       maskInputFn,
       slimDOMOptions,
@@ -1123,6 +1140,7 @@ export function serializeNodeWithId(
             skipChild: false,
             inlineStylesheet,
             maskInputOptions,
+            maskAttributeFn,
             maskTextFn,
             maskInputFn,
             slimDOMOptions,
@@ -1170,6 +1188,7 @@ export function serializeNodeWithId(
             skipChild: false,
             inlineStylesheet,
             maskInputOptions,
+            maskAttributeFn,
             maskTextFn,
             maskInputFn,
             slimDOMOptions,
@@ -1210,6 +1229,7 @@ function snapshot(
     maskTextSelector?: string | null;
     inlineStylesheet?: boolean;
     maskAllInputs?: boolean | MaskInputOptions;
+    maskAttributeFn?: MaskAttributeFn;
     maskTextFn?: MaskTextFn;
     maskInputFn?: MaskTextFn;
     slimDOM?: 'all' | boolean | SlimDOMOptions;
@@ -1241,6 +1261,7 @@ function snapshot(
     inlineImages = false,
     recordCanvas = false,
     maskAllInputs = false,
+    maskAttributeFn,
     maskTextFn,
     maskInputFn,
     slimDOM = false,
@@ -1306,6 +1327,7 @@ function snapshot(
     skipChild: false,
     inlineStylesheet,
     maskInputOptions,
+    maskAttributeFn,
     maskTextFn,
     maskInputFn,
     slimDOMOptions,
