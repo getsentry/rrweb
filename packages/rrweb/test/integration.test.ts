@@ -1141,6 +1141,37 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('should mask texts using maskAllText', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'mask-text.html', {
+        maskAllText: true,
+      }),
+    );
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
+  it('should not mask inputs when maskAllText:true and maskAllInputs:false', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'form.html', {
+        maskAllText: true,
+        maskAllInputs: false,
+      }),
+    );
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
   it('can mask character data mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
