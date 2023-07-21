@@ -164,43 +164,48 @@ export function createMirror(): Mirror {
   return new Mirror();
 }
 
-export function maskInputValue({
-  element,
+export function shouldMaskInput({
   maskInputOptions,
   tagName,
   type,
-  value,
-  maskInputFn,
-  forceMask,
 }: {
-  element: HTMLElement;
   maskInputOptions: MaskInputOptions;
   tagName: Uppercase<string>;
   type: Lowercase<string> | null;
-  value: string | null;
-  maskInputFn?: MaskInputFn;
-  forceMask?: boolean;
-}): string {
-  let text = value || '';
-  const actualType = type && toLowerCase(type);
-
+}): boolean {
   // Handle `option` like `select
   if (tagName === 'OPTION') {
     tagName = 'SELECT';
   }
-
-  if (
+  const actualType = type && toLowerCase(type);
+  return Boolean(
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-    (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
-    forceMask
-  ) {
-    if (maskInputFn) {
-      text = maskInputFn(text, element);
-    } else {
-      text = '*'.repeat(text.length);
-    }
+    (actualType && maskInputOptions[actualType as keyof MaskInputOptions])
+  );
+}
+
+export function maskInputValue({
+  isMasked,
+  element,
+  value,
+  maskInputFn,
+}: {
+  isMasked: boolean;
+  element: HTMLElement;
+  value: string | null;
+  maskInputFn?: MaskInputFn;
+}): string {
+  let text = value || '';
+
+  if (!isMasked) {
+    return text;
   }
-  return text;
+
+  if (maskInputFn) {
+    text = maskInputFn(text, element);
+  }
+
+  return '*'.repeat(text.length);
 }
 
 export function toLowerCase<T extends string>(str: T): Lowercase<T> {
