@@ -517,11 +517,9 @@ describe('record integration tests', function (this: ISuite) {
   it('should mask attribute via function call', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
     await page.setContent(
       getHtml.call(this, 'form.html', {
         maskAttributeFn: (key: string, value: string) => {
-          console.log(key, value);
           if (key === 'placeholder') {
             return value.replace(/[\S]/g, '*');
           }
