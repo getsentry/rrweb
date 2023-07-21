@@ -10,6 +10,12 @@ export {
   ReplayerEvents,
 } from '@sentry-internal/rrweb-types';
 
+export type {
+  fullSnapshotEvent,
+  incrementalSnapshotEvent,
+  inputData,
+} from '@sentry-internal/rrweb-types';
+
 export type { recordOptions } from './types';
 
 const { addCustomEvent } = record;
