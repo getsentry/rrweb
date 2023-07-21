@@ -1,9 +1,9 @@
 import {
-  MaskInputOptions,
   maskInputValue,
   Mirror,
   getInputType,
   getInputValue,
+  shouldMaskInput,
   toLowerCase,
   needMaskingText,
   toUpperCase,
@@ -126,7 +126,7 @@ export function initMutationObserver(
       // If this callback returns `false`, we do not want to process the mutations
       // This can be used to e.g. do a manual full snapshot when mutations become too large, or similar.
       if (options.onMutation && options.onMutation(mutations) === false) {
-         return;
+        return;
       }
       mutationBuffer.processMutations.bind(mutationBuffer)(mutations);
     }),
@@ -439,7 +439,6 @@ function initInputObserver({
   maskInputFn,
   sampling,
   userTriggeredOnInput,
-  maskAllText,
   maskTextClass,
   unmaskTextClass,
   maskTextSelector,
@@ -479,33 +478,32 @@ function initInputObserver({
     let text = getInputValue(el, tagName, type);
     let isChecked = false;
 
+    const isInputMasked = shouldMaskInput({
+      maskInputOptions,
+      tagName,
+      type,
+    });
+
     const forceMask = needMaskingText(
       target as Node,
       maskTextClass,
       maskTextSelector,
       unmaskTextClass,
       unmaskTextSelector,
-      maskAllText,
+      isInputMasked,
     );
 
     if (type === 'radio' || type === 'checkbox') {
       isChecked = (target as HTMLInputElement).checked;
     }
-    if (
-      maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-      (type && maskInputOptions[type as keyof MaskInputOptions]) ||
-      forceMask
-    ) {
-      text = maskInputValue({
-        element: target,
-        maskInputOptions,
-        tagName,
-        type,
-        value: text,
-        maskInputFn,
-        forceMask,
-      });
-    }
+
+    text = maskInputValue({
+      isMasked: forceMask,
+      element: target,
+      value: text,
+      maskInputFn,
+    });
+
     cbWithDedup(
       target,
       callbackWrapper(wrapEventWithUserTriggeredFlag)(
@@ -522,10 +520,9 @@ function initInputObserver({
         .forEach((el) => {
           if (el !== target) {
             const text = maskInputValue({
+              // share mask behavior of `target`
+              isMasked: forceMask,
               element: el as HTMLInputElement,
-              maskInputOptions,
-              tagName,
-              type,
               value: getInputValue(el as HTMLInputElement, tagName, type),
               maskInputFn,
             });

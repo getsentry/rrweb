@@ -11,6 +11,7 @@ import {
   getInputType,
   toLowerCase,
   getInputValue,
+  shouldMaskInput,
 } from '@sentry-internal/rrweb-snapshot';
 import type { observerParam, MutationBufferParam } from '../types';
 import type {
@@ -555,23 +556,26 @@ export default class MutationBuffer {
           const tagName = target.tagName as unknown as Uppercase<string>;
           value = getInputValue(target as HTMLInputElement, tagName, type);
 
+          const isInputMasked = shouldMaskInput({
+            maskInputOptions: this.maskInputOptions,
+            tagName,
+            type,
+          })
+
           const forceMask = needMaskingText(
             m.target,
             this.maskTextClass,
             this.maskTextSelector,
             this.unmaskTextClass,
             this.unmaskTextSelector,
-            this.maskAllText,
+            isInputMasked,
           );
 
           value = maskInputValue({
+            isMasked: forceMask,
             element: target,
-            maskInputOptions: this.maskInputOptions,
-            tagName,
-            type,
             value,
             maskInputFn: this.maskInputFn,
-            forceMask,
           });
         }
         if (

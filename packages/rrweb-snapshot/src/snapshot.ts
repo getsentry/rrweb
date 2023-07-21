@@ -25,6 +25,7 @@ import {
   getInputValue,
   toLowerCase,
   toUpperCase,
+  shouldMaskInput,
 } from './utils';
 
 let _id = 1;
@@ -690,19 +691,16 @@ function serializeTextNode(
   if (isScript) {
     textContent = 'SCRIPT_PLACEHOLDER';
   }
-  if (
-    !isStyle &&
-    !isScript &&
-    textContent &&
-    needMaskingText(
-      n,
-      maskTextClass,
-      maskTextSelector,
-      unmaskTextClass,
-      unmaskTextSelector,
-      maskAllText,
-    )
-  ) {
+  const forceMask = needMaskingText(
+    n,
+    maskTextClass,
+    maskTextSelector,
+    unmaskTextClass,
+    unmaskTextSelector,
+    maskAllText,
+  );
+
+  if (!isStyle && !isScript && textContent && forceMask) {
     textContent = maskTextFn
       ? maskTextFn(textContent)
       : textContent.replace(/[\S]/g, '*');
@@ -715,12 +713,23 @@ function serializeTextNode(
 
   // Handle <option> text like an input value
   if (parentTagName === 'OPTION' && textContent) {
-    textContent = maskInputValue({
-      element: n as unknown as HTMLElement,
+    const isInputMasked = shouldMaskInput({
       type: null,
       tagName: parentTagName,
-      value: textContent,
       maskInputOptions,
+    });
+
+    textContent = maskInputValue({
+      isMasked: needMaskingText(
+        n,
+        maskTextClass,
+        maskTextSelector,
+        unmaskTextClass,
+        unmaskTextSelector,
+        isInputMasked,
+      ),
+      element: n as unknown as HTMLElement,
+      value: textContent,
       maskInputFn,
     });
   }
@@ -848,17 +857,18 @@ function serializeElementNode(
         maskTextSelector,
         unmaskTextClass,
         unmaskTextSelector,
-        maskAllText,
+        shouldMaskInput({
+          type,
+          tagName: toUpperCase(tagName),
+          maskInputOptions,
+        })
       );
 
       attributes.value = maskInputValue({
+        isMasked: forceMask,
         element: el,
-        type,
-        tagName: toUpperCase(tagName),
         value,
-        maskInputOptions,
         maskInputFn,
-        forceMask,
       });
     }
     if (checked) {
