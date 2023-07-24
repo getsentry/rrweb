@@ -16160,7 +16160,7 @@ exports[`record integration tests should record input values if dynamically adde
             \\"attributes\\": {
               \\"id\\": \\"input-unmasked\\",
               \\"class\\": \\"rr-unmask\\",
-              \\"value\\": \\"************************\\"
+              \\"value\\": \\"input should be unmasked\\"
             },
             \\"childNodes\\": [],
             \\"id\\": 21
@@ -16173,7 +16173,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"************************\\",
+      \\"text\\": \\"input should be unmasked\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -16190,7 +16190,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"*************************\\",
+      \\"text\\": \\"input should be unmaskedm\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -16199,7 +16199,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"**************************\\",
+      \\"text\\": \\"input should be unmaskedmo\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
@@ -16208,7 +16208,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"***************************\\",
+      \\"text\\": \\"input should be unmaskedmoo\\",
       \\"isChecked\\": false,
       \\"id\\": 21
     }
