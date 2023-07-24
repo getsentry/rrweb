@@ -873,7 +873,7 @@ function serializeElementNode(
           type,
           tagName: toUpperCase(tagName),
           maskInputOptions,
-        })
+        }),
       );
 
       attributes.value = maskInputValue({
