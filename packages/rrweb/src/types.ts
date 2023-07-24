@@ -78,11 +78,11 @@ export type recordOptions<T> = {
   mousemoveWait?: number;
   keepIframeSrcFn?: KeepIframeSrcFn;
   errorHandler?: ErrorHandler;
-  onMutation?: (mutations: MutationRecord[]) => boolean,
+  onMutation?: (mutations: MutationRecord[]) => boolean;
 };
 
 export type observerParam = {
-  onMutation?: (mutations: MutationRecord[]) => boolean,
+  onMutation?: (mutations: MutationRecord[]) => boolean;
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;

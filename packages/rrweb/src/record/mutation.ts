@@ -560,7 +560,7 @@ export default class MutationBuffer {
             maskInputOptions: this.maskInputOptions,
             tagName,
             type,
-          })
+          });
 
           const forceMask = needMaskingText(
             m.target,
