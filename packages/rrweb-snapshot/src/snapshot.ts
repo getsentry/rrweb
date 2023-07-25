@@ -272,8 +272,13 @@ export function _isBlockedElement(
   element: HTMLElement,
   blockClass: string | RegExp,
   blockSelector: string | null,
+  unblockSelector: string | null,
 ): boolean {
   try {
+    if (unblockSelector && element.matches(unblockSelector)) {
+      return false;
+    }
+
     if (typeof blockClass === 'string') {
       if (element.classList.contains(blockClass)) {
         return true;
@@ -437,6 +442,7 @@ function serializeNode(
     mirror: Mirror;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     maskTextClass: string | RegExp;
     maskTextSelector: string | null;
     inlineStylesheet: boolean;
@@ -458,6 +464,7 @@ function serializeNode(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskTextClass,
     maskTextSelector,
     inlineStylesheet,
@@ -499,6 +506,7 @@ function serializeNode(
         doc,
         blockClass,
         blockSelector,
+        unblockSelector,
         inlineStylesheet,
         maskInputOptions,
         maskInputFn,
@@ -604,6 +612,7 @@ function serializeElementNode(
     doc: Document;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     inlineStylesheet: boolean;
     maskInputOptions: MaskInputOptions;
     maskInputFn: MaskInputFn | undefined;
@@ -622,6 +631,7 @@ function serializeElementNode(
     doc,
     blockClass,
     blockSelector,
+    unblockSelector,
     inlineStylesheet,
     maskInputOptions = {},
     maskInputFn,
@@ -632,7 +642,7 @@ function serializeElementNode(
     newlyAddedElement = false,
     rootId,
   } = options;
-  const needBlock = _isBlockedElement(n, blockClass, blockSelector);
+  const needBlock = _isBlockedElement(n, blockClass, blockSelector, unblockSelector);
   const tagName = getValidTagName(n);
   let attributes: attributes = {};
   const len = n.attributes.length;
@@ -932,6 +942,7 @@ export function serializeNodeWithId(
     mirror: Mirror;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     maskTextClass: string | RegExp;
     maskTextSelector: string | null;
     skipChild: boolean;
@@ -964,6 +975,7 @@ export function serializeNodeWithId(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskTextClass,
     maskTextSelector,
     skipChild = false,
@@ -989,6 +1001,7 @@ export function serializeNodeWithId(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskTextClass,
     maskTextSelector,
     inlineStylesheet,
@@ -1061,6 +1074,7 @@ export function serializeNodeWithId(
       mirror,
       blockClass,
       blockSelector,
+      unblockSelector,
       maskTextClass,
       maskTextSelector,
       skipChild,
@@ -1121,6 +1135,7 @@ export function serializeNodeWithId(
             mirror,
             blockClass,
             blockSelector,
+            unblockSelector,
             maskTextClass,
             maskTextSelector,
             skipChild: false,
@@ -1168,6 +1183,7 @@ export function serializeNodeWithId(
             mirror,
             blockClass,
             blockSelector,
+            unblockSelector,
             maskTextClass,
             maskTextSelector,
             skipChild: false,
@@ -1209,6 +1225,7 @@ function snapshot(
     mirror?: Mirror;
     blockClass?: string | RegExp;
     blockSelector?: string | null;
+    unblockSelector?: string | null;
     maskTextClass?: string | RegExp;
     maskTextSelector?: string | null;
     inlineStylesheet?: boolean;
@@ -1238,6 +1255,7 @@ function snapshot(
     mirror = new Mirror(),
     blockClass = 'rr-block',
     blockSelector = null,
+    unblockSelector = null,
     maskTextClass = 'rr-mask',
     maskTextSelector = null,
     inlineStylesheet = true,
@@ -1304,6 +1322,7 @@ function snapshot(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskTextClass,
     maskTextSelector,
     skipChild: false,

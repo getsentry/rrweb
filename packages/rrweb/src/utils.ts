@@ -227,6 +227,7 @@ export function isBlocked(
   node: Node | null,
   blockClass: blockClass,
   blockSelector: string | null,
+  unblockSelector: string | null,
   checkAncestors: boolean,
 ): boolean {
   if (!node) {
@@ -238,19 +239,22 @@ export function isBlocked(
       : node.parentElement;
   if (!el) return false;
 
+  const isUnblocked = !unblockSelector || !el.matches(unblockSelector);
+
   try {
     if (typeof blockClass === 'string') {
-      if (el.classList.contains(blockClass)) return true;
-      if (checkAncestors && el.closest('.' + blockClass) !== null) return true;
+      if (el.classList.contains(blockClass) && isUnblocked) return true;
+      if (checkAncestors && el.closest('.' + blockClass) !== null && isUnblocked) return true;
     } else {
-      if (classMatchesRegex(el, blockClass, checkAncestors)) return true;
+      if (classMatchesRegex(el, blockClass, checkAncestors) && isUnblocked) return true;
     }
   } catch (e) {
     // e
   }
+
   if (blockSelector) {
-    if (el.matches(blockSelector)) return true;
-    if (checkAncestors && el.closest(blockSelector) !== null) return true;
+    if (el.matches(blockSelector) && isUnblocked) return true;
+    if (checkAncestors && el.closest(blockSelector) !== null && isUnblocked) return true;
   }
   return false;
 }
