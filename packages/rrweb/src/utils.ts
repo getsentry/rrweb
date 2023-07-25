@@ -9,7 +9,12 @@ import type {
   DeprecatedMirror,
   textMutation,
 } from '@sentry-internal/rrweb-types';
-import type { IMirror, Mirror } from '@sentry-internal/rrweb-snapshot';
+import {
+  createMatchPredicate,
+  distanceToMatch,
+  IMirror,
+  Mirror,
+} from '@sentry-internal/rrweb-snapshot';
 import {
   isShadowRoot,
   IGNORED_NODE,
@@ -230,6 +235,7 @@ export function isBlocked(
   node: Node | null,
   blockClass: blockClass,
   blockSelector: string | null,
+  unblockSelector: string | null,
   checkAncestors: boolean,
 ): boolean {
   if (!node) {
@@ -241,21 +247,33 @@ export function isBlocked(
       : node.parentElement;
   if (!el) return false;
 
-  try {
-    if (typeof blockClass === 'string') {
-      if (el.classList.contains(blockClass)) return true;
-      if (checkAncestors && el.closest('.' + blockClass) !== null) return true;
-    } else {
-      if (classMatchesRegex(el, blockClass, checkAncestors)) return true;
-    }
-  } catch (e) {
-    // e
+  const blockedPredicate = createMatchPredicate(blockClass, blockSelector);
+
+  if (!checkAncestors) {
+    const isUnblocked = unblockSelector && el.matches(unblockSelector);
+
+    return blockedPredicate(el) && !isUnblocked;
   }
-  if (blockSelector) {
-    if (el.matches(blockSelector)) return true;
-    if (checkAncestors && el.closest(blockSelector) !== null) return true;
+
+  const blockDistance = distanceToMatch(el, blockedPredicate);
+  let unblockDistance = -1;
+
+  if (blockDistance < 0) {
+    return false;
   }
-  return false;
+
+  if (unblockSelector) {
+    unblockDistance = distanceToMatch(
+      el,
+      createMatchPredicate(null, unblockSelector),
+    );
+  }
+
+  if (blockDistance > -1 && unblockDistance < 0) {
+    return true;
+  }
+
+  return blockDistance < unblockDistance;
 }
 
 export function isSerialized(n: Node, mirror: Mirror): boolean {

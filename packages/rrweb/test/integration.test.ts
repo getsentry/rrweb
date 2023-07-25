@@ -572,6 +572,26 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('should record unblocked elements that are also blocked more generically', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    page.on('console', (msg) => console.log(msg.text()));
+    await page.goto('about:blank');
+    const html = getHtml.call(this, 'unblock.html', {
+      blockSelector: 'div',
+      unblockSelector: '.rr-unblock',
+    });
+    await page.setContent(html);
+
+    await page.type('input', 'should be record');
+    await page.evaluate(`document.getElementById('text').innerText = '1'`);
+    await page.click('#text');
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    assertSnapshot(snapshots);
+  });
+
   it('should not record blocked elements dynamically added', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
@@ -597,7 +617,12 @@ describe('record integration tests', function (this: ISuite) {
   it('mutations should work when blocked class is unblocked', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about: blank');
-    await page.setContent(getHtml.call(this, 'blocked-unblocked.html'));
+    await page.setContent(
+      getHtml.call(this, 'blocked-unblocked.html', {
+        blockSelector: 'p',
+        unblockSelector: '.visible3,.rr-unblock',
+      }),
+    );
 
     const elements1 = (await page.$x(
       '/html/body/div[1]/button',
@@ -608,6 +633,11 @@ describe('record integration tests', function (this: ISuite) {
       '/html/body/div[2]/button',
     )) as puppeteer.ElementHandle<HTMLButtonElement>[];
     await elements2[0].click();
+
+    const elements3 = (await page.$x(
+      '/html/body/div[3]/button',
+    )) as puppeteer.ElementHandle<HTMLButtonElement>[];
+    await elements3[0].click();
 
     const snapshots = (await page.evaluate(
       'window.snapshots',

@@ -272,8 +272,13 @@ export function _isBlockedElement(
   element: HTMLElement,
   blockClass: string | RegExp,
   blockSelector: string | null,
+  unblockSelector: string | null,
 ): boolean {
   try {
+    if (unblockSelector && element.matches(unblockSelector)) {
+      return false;
+    }
+
     if (typeof blockClass === 'string') {
       if (element.classList.contains(blockClass)) {
         return true;
@@ -324,7 +329,7 @@ export function classMatchesRegex(
   return false;
 }
 
-function distanceToMatch(
+export function distanceToMatch(
   node: Node | null,
   matchPredicate: (node: Node) => boolean,
   limit = Infinity,
@@ -337,7 +342,7 @@ function distanceToMatch(
   return distanceToMatch(node.parentNode, matchPredicate, limit, distance + 1);
 }
 
-function createMatchPredicate(
+export function createMatchPredicate(
   className: string | RegExp | null,
   selector: string | null,
 ): (node: Node) => boolean {
@@ -514,6 +519,7 @@ function serializeNode(
     mirror: Mirror;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     maskAllText: boolean;
     maskAttributeFn: MaskAttributeFn | undefined;
     maskTextClass: string | RegExp;
@@ -539,6 +545,7 @@ function serializeNode(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskAllText,
     maskAttributeFn,
     maskTextClass,
@@ -584,6 +591,7 @@ function serializeNode(
         doc,
         blockClass,
         blockSelector,
+        unblockSelector,
         inlineStylesheet,
         maskAttributeFn,
         maskInputOptions,
@@ -748,6 +756,7 @@ function serializeElementNode(
     doc: Document;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     inlineStylesheet: boolean;
     maskAttributeFn: MaskAttributeFn | undefined;
     maskInputOptions: MaskInputOptions;
@@ -772,6 +781,7 @@ function serializeElementNode(
     doc,
     blockClass,
     blockSelector,
+    unblockSelector,
     inlineStylesheet,
     maskInputOptions = {},
     maskAttributeFn,
@@ -788,7 +798,12 @@ function serializeElementNode(
     maskTextSelector,
     unmaskTextSelector,
   } = options;
-  const needBlock = _isBlockedElement(n, blockClass, blockSelector);
+  const needBlock = _isBlockedElement(
+    n,
+    blockClass,
+    blockSelector,
+    unblockSelector,
+  );
   const tagName = getValidTagName(n);
   let attributes: attributes = {};
   const len = n.attributes.length;
@@ -1115,6 +1130,7 @@ export function serializeNodeWithId(
     mirror: Mirror;
     blockClass: string | RegExp;
     blockSelector: string | null;
+    unblockSelector: string | null;
     maskTextClass: string | RegExp;
     unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
@@ -1151,6 +1167,7 @@ export function serializeNodeWithId(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskAllText,
     maskTextClass,
     unmaskTextClass,
@@ -1181,6 +1198,7 @@ export function serializeNodeWithId(
     blockClass,
     blockSelector,
     maskAllText,
+    unblockSelector,
     maskTextClass,
     unmaskTextClass,
     maskTextSelector,
@@ -1257,6 +1275,7 @@ export function serializeNodeWithId(
       blockClass,
       blockSelector,
       maskAllText,
+      unblockSelector,
       maskTextClass,
       unmaskTextClass,
       maskTextSelector,
@@ -1320,6 +1339,7 @@ export function serializeNodeWithId(
             mirror,
             blockClass,
             blockSelector,
+            unblockSelector,
             maskAllText,
             maskTextClass,
             unmaskTextClass,
@@ -1371,6 +1391,7 @@ export function serializeNodeWithId(
             mirror,
             blockClass,
             blockSelector,
+            unblockSelector,
             maskAllText,
             maskTextClass,
             unmaskTextClass,
@@ -1416,6 +1437,7 @@ function snapshot(
     mirror?: Mirror;
     blockClass?: string | RegExp;
     blockSelector?: string | null;
+    unblockSelector?: string | null;
     maskAllText?: boolean;
     maskTextClass?: string | RegExp;
     unmaskTextClass?: string | RegExp | null;
@@ -1449,6 +1471,7 @@ function snapshot(
     mirror = new Mirror(),
     blockClass = 'rr-block',
     blockSelector = null,
+    unblockSelector = null,
     maskAllText = false,
     maskTextClass = 'rr-mask',
     unmaskTextClass = null,
@@ -1519,6 +1542,7 @@ function snapshot(
     mirror,
     blockClass,
     blockSelector,
+    unblockSelector,
     maskAllText,
     maskTextClass,
     unmaskTextClass,

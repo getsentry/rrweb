@@ -6640,8 +6640,154 @@ exports[`record integration tests mutations should work when blocked class is un
                   },
                   {
                     \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n\\\\n    \\",
+                    \\"textContent\\": \\"\\\\n  \\",
                     \\"id\\": 71
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"div\\",
+                    \\"attributes\\": {
+                      \\"class\\": \\"third\\"
+                    },
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 73
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"p\\",
+                        \\"attributes\\": {
+                          \\"class\\": \\"visible3\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"button\\",
+                            \\"attributes\\": {},
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"VISIBLE\\",
+                                \\"id\\": 77
+                              }
+                            ],
+                            \\"id\\": 76
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n    \\",
+                            \\"id\\": 78
+                          }
+                        ],
+                        \\"id\\": 74
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 79
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 80
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 81
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 82
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 83
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"div\\",
+                        \\"attributes\\": {
+                          \\"class\\": \\"rr-block\\",
+                          \\"rr_width\\": \\"1904px\\",
+                          \\"rr_height\\": \\"21px\\"
+                        },
+                        \\"childNodes\\": [],
+                        \\"id\\": 84
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 85
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 86
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 87
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"br\\",
+                        \\"attributes\\": {},
+                        \\"childNodes\\": [],
+                        \\"id\\": 88
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 89
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"button\\",
+                        \\"attributes\\": {
+                          \\"onclick\\": \\"mutate3()\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"MUTATE\\",
+                            \\"id\\": 91
+                          }
+                        ],
+                        \\"id\\": 90
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n  \\",
+                        \\"id\\": 92
+                      }
+                    ],
+                    \\"id\\": 72
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n\\\\n    \\",
+                    \\"id\\": 93
                   },
                   {
                     \\"type\\": 2,
@@ -6651,15 +6797,15 @@ exports[`record integration tests mutations should work when blocked class is un
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 73
+                        \\"id\\": 95
                       }
                     ],
-                    \\"id\\": 72
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\",
-                    \\"id\\": 74
+                    \\"id\\": 96
                   }
                 ],
                 \\"id\\": 12
@@ -6733,69 +6879,69 @@ exports[`record integration tests mutations should work when blocked class is un
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 75
+            \\"id\\": 97
           }
         },
         {
-          \\"parentId\\": 75,
+          \\"parentId\\": 97,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 76
+            \\"id\\": 98
           }
         },
         {
-          \\"parentId\\": 76,
+          \\"parentId\\": 98,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"button\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 77
+            \\"id\\": 99
           }
         },
         {
-          \\"parentId\\": 77,
+          \\"parentId\\": 99,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 3,
             \\"textContent\\": \\"I1I2 VISIBLE\\",
-            \\"id\\": 78
+            \\"id\\": 100
           }
         },
         {
-          \\"parentId\\": 75,
-          \\"nextId\\": 76,
+          \\"parentId\\": 97,
+          \\"nextId\\": 98,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 79
+            \\"id\\": 101
           }
         },
         {
-          \\"parentId\\": 79,
+          \\"parentId\\": 101,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"button\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 80
+            \\"id\\": 102
           }
         },
         {
-          \\"parentId\\": 80,
+          \\"parentId\\": 102,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 3,
             \\"textContent\\": \\"I1I1 VISIBLE\\",
-            \\"id\\": 81
+            \\"id\\": 103
           }
         }
       ]
@@ -6865,69 +7011,203 @@ exports[`record integration tests mutations should work when blocked class is un
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 82
+            \\"id\\": 104
           }
         },
         {
-          \\"parentId\\": 82,
+          \\"parentId\\": 104,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 83
+            \\"id\\": 105
           }
         },
         {
-          \\"parentId\\": 83,
+          \\"parentId\\": 105,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"button\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 84
+            \\"id\\": 106
           }
         },
         {
-          \\"parentId\\": 84,
+          \\"parentId\\": 106,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 3,
             \\"textContent\\": \\"I1I2 VISIBLE\\",
-            \\"id\\": 85
+            \\"id\\": 107
           }
         },
         {
-          \\"parentId\\": 82,
-          \\"nextId\\": 83,
+          \\"parentId\\": 104,
+          \\"nextId\\": 105,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"div\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 86
+            \\"id\\": 108
           }
         },
         {
-          \\"parentId\\": 86,
+          \\"parentId\\": 108,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 2,
             \\"tagName\\": \\"button\\",
             \\"attributes\\": {},
             \\"childNodes\\": [],
-            \\"id\\": 87
+            \\"id\\": 109
           }
         },
         {
-          \\"parentId\\": 87,
+          \\"parentId\\": 109,
           \\"nextId\\": null,
           \\"node\\": {
             \\"type\\": 3,
             \\"textContent\\": \\"I1I1 VISIBLE\\",
-            \\"id\\": 88
+            \\"id\\": 110
+          }
+        }
+      ]
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 1,
+      \\"id\\": 90
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 6,
+      \\"id\\": 68
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 5,
+      \\"id\\": 90
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 0,
+      \\"id\\": 90
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 2,
+      \\"id\\": 90,
+      \\"pointerType\\": 0
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 0,
+      \\"texts\\": [],
+      \\"attributes\\": [
+        {
+          \\"id\\": 84,
+          \\"attributes\\": {
+            \\"class\\": \\"notB\\"
+          }
+        }
+      ],
+      \\"removes\\": [],
+      \\"adds\\": [
+        {
+          \\"parentId\\": 74,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"div\\",
+            \\"attributes\\": {},
+            \\"childNodes\\": [],
+            \\"id\\": 111
+          }
+        },
+        {
+          \\"parentId\\": 111,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"div\\",
+            \\"attributes\\": {},
+            \\"childNodes\\": [],
+            \\"id\\": 112
+          }
+        },
+        {
+          \\"parentId\\": 112,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"button\\",
+            \\"attributes\\": {},
+            \\"childNodes\\": [],
+            \\"id\\": 113
+          }
+        },
+        {
+          \\"parentId\\": 113,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 3,
+            \\"textContent\\": \\"I1I2 VISIBLE\\",
+            \\"id\\": 114
+          }
+        },
+        {
+          \\"parentId\\": 111,
+          \\"nextId\\": 112,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"p\\",
+            \\"attributes\\": {
+              \\"class\\": \\"rr-unblock\\"
+            },
+            \\"childNodes\\": [],
+            \\"id\\": 115
+          }
+        },
+        {
+          \\"parentId\\": 115,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"button\\",
+            \\"attributes\\": {},
+            \\"childNodes\\": [],
+            \\"id\\": 116
+          }
+        },
+        {
+          \\"parentId\\": 116,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 3,
+            \\"textContent\\": \\"I1I1 VISIBLE\\",
+            \\"id\\": 117
           }
         }
       ]
@@ -9481,6 +9761,14 @@ exports[`record integration tests should nest record iframe 1`] = `
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
     }
   }
 ]"
@@ -14316,6 +14604,14 @@ exports[`record integration tests should record images inside iframe with blob u
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 0,
       \\"adds\\": [
         {
@@ -17116,6 +17412,14 @@ exports[`record integration tests should record nested iframes and shadow doms 1
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 0,
       \\"texts\\": [],
       \\"attributes\\": [],
@@ -17195,6 +17499,14 @@ exports[`record integration tests should record nested iframes and shadow doms 1
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
     }
   },
   {
@@ -18668,6 +18980,424 @@ exports[`record integration tests should record textarea values if dynamically a
       \\"text\\": \\"mootextarea should not be masked\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  }
+]"
+`;
+
+exports[`record integration tests should record unblocked elements that are also blocked more generically 1`] = `
+"[
+  {
+    \\"type\\": 0,
+    \\"data\\": {}
+  },
+  {
+    \\"type\\": 1,
+    \\"data\\": {}
+  },
+  {
+    \\"type\\": 4,
+    \\"data\\": {
+      \\"href\\": \\"about:blank\\",
+      \\"width\\": 1920,
+      \\"height\\": 1080
+    }
+  },
+  {
+    \\"type\\": 2,
+    \\"data\\": {
+      \\"node\\": {
+        \\"type\\": 0,
+        \\"childNodes\\": [
+          {
+            \\"type\\": 1,
+            \\"name\\": \\"html\\",
+            \\"publicId\\": \\"\\",
+            \\"systemId\\": \\"\\",
+            \\"id\\": 2
+          },
+          {
+            \\"type\\": 2,
+            \\"tagName\\": \\"html\\",
+            \\"attributes\\": {
+              \\"lang\\": \\"en\\"
+            },
+            \\"childNodes\\": [
+              {
+                \\"type\\": 2,
+                \\"tagName\\": \\"head\\",
+                \\"attributes\\": {},
+                \\"childNodes\\": [
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 5
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"meta\\",
+                    \\"attributes\\": {
+                      \\"charset\\": \\"UTF-8\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 6
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 7
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"meta\\",
+                    \\"attributes\\": {
+                      \\"name\\": \\"viewport\\",
+                      \\"content\\": \\"width=device-width, initial-scale=1.0\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 8
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 9
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"meta\\",
+                    \\"attributes\\": {
+                      \\"http-equiv\\": \\"X-UA-Compatible\\",
+                      \\"content\\": \\"ie=edge\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 10
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 11
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"title\\",
+                    \\"attributes\\": {},
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"Unblock record\\",
+                        \\"id\\": 13
+                      }
+                    ],
+                    \\"id\\": 12
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n  \\",
+                    \\"id\\": 14
+                  }
+                ],
+                \\"id\\": 4
+              },
+              {
+                \\"type\\": 3,
+                \\"textContent\\": \\"\\\\n  \\",
+                \\"id\\": 15
+              },
+              {
+                \\"type\\": 2,
+                \\"tagName\\": \\"body\\",
+                \\"attributes\\": {},
+                \\"childNodes\\": [
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 17
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"div\\",
+                    \\"attributes\\": {
+                      \\"class\\": \\"rr-unblock\\",
+                      \\"style\\": \\"width: 50px; height: 50px;\\"
+                    },
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 19
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"input\\",
+                        \\"attributes\\": {
+                          \\"type\\": \\"text\\"
+                        },
+                        \\"childNodes\\": [],
+                        \\"id\\": 20
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\" \\",
+                        \\"id\\": 21
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"span\\",
+                        \\"attributes\\": {
+                          \\"id\\": \\"text\\"
+                        },
+                        \\"childNodes\\": [],
+                        \\"id\\": 22
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n    \\",
+                        \\"id\\": 23
+                      }
+                    ],
+                    \\"id\\": 18
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n  \\\\n    \\",
+                    \\"id\\": 24
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"script\\",
+                    \\"attributes\\": {},
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
+                        \\"id\\": 26
+                      }
+                    ],
+                    \\"id\\": 25
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
+                    \\"id\\": 27
+                  }
+                ],
+                \\"id\\": 16
+              }
+            ],
+            \\"id\\": 3
+          }
+        ],
+        \\"id\\": 1
+      },
+      \\"initialOffset\\": {
+        \\"left\\": 0,
+        \\"top\\": 0
+      }
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 5,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"s\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"sh\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"sho\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"shou\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"shoul\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should \\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should b\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be \\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be r\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be re\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be rec\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be reco\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be recor\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"should be record\\",
+      \\"isChecked\\": false,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 0,
+      \\"texts\\": [],
+      \\"attributes\\": [],
+      \\"removes\\": [],
+      \\"adds\\": [
+        {
+          \\"parentId\\": 22,
+          \\"nextId\\": null,
+          \\"node\\": {
+            \\"type\\": 3,
+            \\"textContent\\": \\"1\\",
+            \\"id\\": 28
+          }
+        }
+      ]
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 1,
+      \\"id\\": 22
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 6,
+      \\"id\\": 20
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 0,
+      \\"id\\": 22
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 2,
+      \\"type\\": 2,
+      \\"id\\": 22,
+      \\"pointerType\\": 0
     }
   }
 ]"
