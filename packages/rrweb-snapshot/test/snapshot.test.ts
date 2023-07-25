@@ -158,7 +158,7 @@ describe('transformAttribute()', () => {
 
 describe('isBlockedElement()', () => {
   const subject = (html: string, opt: any = {}) =>
-    _isBlockedElement(render(html), 'rr-block', opt.blockSelector);
+    _isBlockedElement(render(html), 'rr-block', opt.blockSelector, opt.unblockSelector);
 
   const render = (html: string): HTMLElement =>
     JSDOM.fragment(html).querySelector('div')!;
@@ -189,6 +189,7 @@ describe('style elements', () => {
       mirror: new Mirror(),
       blockClass: 'blockblock',
       blockSelector: null,
+      unblockSelector: null,
       maskAllText: false,
       maskTextClass: 'maskmask',
       unmaskTextClass: 'unmaskmask',
@@ -238,6 +239,7 @@ describe('scrollTop/scrollLeft', () => {
       mirror: new Mirror(),
       blockClass: 'blockblock',
       blockSelector: null,
+      unblockSelector: null,
       maskAllText: false,
       maskTextClass: 'maskmask',
       unmaskTextClass: 'unmaskmask',

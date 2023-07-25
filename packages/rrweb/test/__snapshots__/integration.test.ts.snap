@@ -6858,7 +6858,7 @@ exports[`record integration tests mutations should work when blocked class is un
                         \\"attributes\\": {
                           \\"class\\": \\"rr-block\\",
                           \\"rr_width\\": \\"1904px\\",
-                          \\"rr_height\\": \\"21.5px\\"
+                          \\"rr_height\\": \\"21px\\"
                         },
                         \\"childNodes\\": [],
                         \\"id\\": 84
@@ -10635,6 +10635,14 @@ exports[`record integration tests should nest record iframe 1`] = `
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
     }
   }
 ]"
@@ -18923,6 +18931,14 @@ exports[`record integration tests should record nested iframes and shadow doms 1
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
     }
   },
   {
