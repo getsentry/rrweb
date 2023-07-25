@@ -14,6 +14,7 @@ export default function initCanvasContextObserver(
   win: IWindow,
   blockClass: blockClass,
   blockSelector: string | null,
+  unblockSelector: string | null,
   setPreserveDrawingBufferToTrue: boolean,
 ): listenerHandler {
   const handlers: listenerHandler[] = [];
@@ -33,7 +34,9 @@ export default function initCanvasContextObserver(
           contextType: string,
           ...args: Array<unknown>
         ) {
-          if (!isBlocked(this, blockClass, blockSelector, true)) {
+          if (
+            !isBlocked(this, blockClass, blockSelector, unblockSelector, true)
+          ) {
             const ctxName = getNormalizedContextName(contextType);
             if (!('__context' in this)) this.__context = ctxName;
 

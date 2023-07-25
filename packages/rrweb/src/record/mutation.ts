@@ -172,6 +172,7 @@ export default class MutationBuffer {
   private mutationCb: observerParam['mutationCb'];
   private blockClass: observerParam['blockClass'];
   private blockSelector: observerParam['blockSelector'];
+  private unblockSelector: observerParam['unblockSelector'];
   private maskAllText: observerParam['maskAllText'];
   private maskTextClass: observerParam['maskTextClass'];
   private unmaskTextClass: observerParam['unmaskTextClass'];
@@ -201,6 +202,7 @@ export default class MutationBuffer {
         'mutationCb',
         'blockClass',
         'blockSelector',
+        'unblockSelector',
         'maskAllText',
         'maskTextClass',
         'unmaskTextClass',
@@ -308,6 +310,7 @@ export default class MutationBuffer {
         blockClass: this.blockClass,
         blockSelector: this.blockSelector,
         maskAllText: this.maskAllText,
+        unblockSelector: this.unblockSelector,
         maskTextClass: this.maskTextClass,
         unmaskTextClass: this.unmaskTextClass,
         maskTextSelector: this.maskTextSelector,
@@ -523,7 +526,13 @@ export default class MutationBuffer {
       case 'characterData': {
         const value = m.target.textContent;
         if (
-          !isBlocked(m.target, this.blockClass, this.blockSelector, false) &&
+          !isBlocked(
+            m.target,
+            this.blockClass,
+            this.blockSelector,
+            this.unblockSelector,
+            false,
+          ) &&
           value !== m.oldValue
         ) {
           this.texts.push({
@@ -579,7 +588,13 @@ export default class MutationBuffer {
           });
         }
         if (
-          isBlocked(m.target, this.blockClass, this.blockSelector, false) ||
+          isBlocked(
+            m.target,
+            this.blockClass,
+            this.blockSelector,
+            this.unblockSelector,
+            false,
+          ) ||
           value === m.oldValue
         ) {
           return;
@@ -667,8 +682,17 @@ export default class MutationBuffer {
         /**
          * Parent is blocked, ignore all child mutations
          */
-        if (isBlocked(m.target, this.blockClass, this.blockSelector, true))
+        if (
+          isBlocked(
+            m.target,
+            this.blockClass,
+            this.blockSelector,
+            this.unblockSelector,
+            true,
+          )
+        ) {
           return;
+        }
 
         m.addedNodes.forEach((n) => this.genAdds(n, m.target));
         m.removedNodes.forEach((n) => {
@@ -677,7 +701,13 @@ export default class MutationBuffer {
             ? this.mirror.getId(m.target.host)
             : this.mirror.getId(m.target);
           if (
-            isBlocked(m.target, this.blockClass, this.blockSelector, false) ||
+            isBlocked(
+              m.target,
+              this.blockClass,
+              this.blockSelector,
+              this.unblockSelector,
+              false,
+            ) ||
             isIgnored(n, this.mirror) ||
             !isSerialized(n, this.mirror)
           ) {
@@ -755,7 +785,15 @@ export default class MutationBuffer {
 
     // if this node is blocked `serializeNode` will turn it into a placeholder element
     // but we have to remove it's children otherwise they will be added as placeholders too
-    if (!isBlocked(n, this.blockClass, this.blockSelector, false)) {
+    if (
+      !isBlocked(
+        n,
+        this.blockClass,
+        this.blockSelector,
+        this.unblockSelector,
+        false,
+      )
+    ) {
       n.childNodes.forEach((childN) => this.genAdds(childN));
       if (hasShadowRoot(n)) {
         n.shadowRoot.childNodes.forEach((childN) => {
