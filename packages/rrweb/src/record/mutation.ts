@@ -488,7 +488,13 @@ export default class MutationBuffer {
       case 'characterData': {
         const value = m.target.textContent;
         if (
-          !isBlocked(m.target, this.blockClass, this.blockSelector, this.unblockSelector, false) &&
+          !isBlocked(
+            m.target,
+            this.blockClass,
+            this.blockSelector,
+            this.unblockSelector,
+            false,
+          ) &&
           value !== m.oldValue
         ) {
           this.texts.push({

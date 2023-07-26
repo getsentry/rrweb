@@ -642,7 +642,12 @@ function serializeElementNode(
     newlyAddedElement = false,
     rootId,
   } = options;
-  const needBlock = _isBlockedElement(n, blockClass, blockSelector, unblockSelector);
+  const needBlock = _isBlockedElement(
+    n,
+    blockClass,
+    blockSelector,
+    unblockSelector,
+  );
   const tagName = getValidTagName(n);
   let attributes: attributes = {};
   const len = n.attributes.length;

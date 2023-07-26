@@ -244,9 +244,15 @@ export function isBlocked(
   try {
     if (typeof blockClass === 'string') {
       if (el.classList.contains(blockClass) && isUnblocked) return true;
-      if (checkAncestors && el.closest('.' + blockClass) !== null && isUnblocked) return true;
+      if (
+        checkAncestors &&
+        el.closest('.' + blockClass) !== null &&
+        isUnblocked
+      )
+        return true;
     } else {
-      if (classMatchesRegex(el, blockClass, checkAncestors) && isUnblocked) return true;
+      if (classMatchesRegex(el, blockClass, checkAncestors) && isUnblocked)
+        return true;
     }
   } catch (e) {
     // e
@@ -254,7 +260,8 @@ export function isBlocked(
 
   if (blockSelector) {
     if (el.matches(blockSelector) && isUnblocked) return true;
-    if (checkAncestors && el.closest(blockSelector) !== null && isUnblocked) return true;
+    if (checkAncestors && el.closest(blockSelector) !== null && isUnblocked)
+      return true;
   }
   return false;
 }
