@@ -420,12 +420,13 @@ describe('record integration tests', function (this: ISuite) {
         maskInputOptions: {
           text: false,
           textarea: false,
-          password: true,
+          color: true
         },
       }),
     );
 
     await page.type('input[type="text"]', 'test');
+    await page.type('input[type="color"]', '#FF0000');
     await page.click('input[type="radio"]');
     await page.click('input[type="checkbox"]');
     await page.type('textarea', 'textarea test');
@@ -466,9 +467,7 @@ describe('record integration tests', function (this: ISuite) {
     await page.goto('about:blank');
     await page.setContent(
       getHtml.call(this, 'password.html', {
-        maskInputOptions: {
-          password: true,
-        },
+        maskInputOptions: {},
       }),
     );
 
