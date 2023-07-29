@@ -231,7 +231,7 @@ export function shouldMaskInput({
       (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
       actualType === 'password' ||
       // Default to "text" option for inputs without a "type" attribute defined
-      (tagName === 'INPUT' && !type && maskInputOptions['text'])
+      (tagName === 'INPUT' && !type && maskInputOptions['text']),
   );
 }
 
