@@ -14,6 +14,7 @@ export type {
   fullSnapshotEvent,
   incrementalSnapshotEvent,
   inputData,
+  eventWithTime,
 } from '@sentry-internal/rrweb-types';
 
 export type { recordOptions } from './types';
