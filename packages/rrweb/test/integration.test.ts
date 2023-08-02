@@ -140,7 +140,7 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
-  it('can record character data muatations', async () => {
+  it('can record character data mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
     await page.setContent(getHtml.call(this, 'mutation-observer.html'));

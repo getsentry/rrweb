@@ -1281,7 +1281,7 @@ exports[`record integration tests can record attribute mutation 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record character data muatations 1`] = `
+exports[`record integration tests can record character data mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -10636,14 +10636,6 @@ exports[`record integration tests should nest record iframe 1`] = `
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
     }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
-    }
   }
 ]"
 `;
@@ -16087,6 +16079,14 @@ exports[`record integration tests should record images inside iframe with blob u
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 0,
       \\"adds\\": [
         {
@@ -18606,6 +18606,14 @@ exports[`record integration tests should record mutations in iframes accross pag
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 4,
+      \\"width\\": 1920,
+      \\"height\\": 1080
     }
   },
   {
