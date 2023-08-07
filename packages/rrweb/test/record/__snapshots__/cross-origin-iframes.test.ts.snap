@@ -2123,7 +2123,7 @@ exports[`cross origin iframes form.html should map input events correctly 1`] = 
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"id\\": 74
     }

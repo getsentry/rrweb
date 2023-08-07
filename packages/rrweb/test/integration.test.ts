@@ -21,16 +21,6 @@ import {
 } from '@sentry-internal/rrweb-types';
 import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
 
-/**
- * Used to filter scroll events out of snapshots as they are flakey
- */
-function isNotScroll(snapshot: eventWithTime) {
-  return !(
-    snapshot.type === EventType.IncrementalSnapshot &&
-    snapshot.data.source === IncrementalSource.Scroll
-  );
-}
-
 describe('record integration tests', function (this: ISuite) {
   jest.setTimeout(10_000);
 
@@ -256,7 +246,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('can record style changes compactly and preserve css var() functions', async () => {
@@ -331,8 +321,7 @@ describe('record integration tests', function (this: ISuite) {
       }
     });
 
-    const snapshots = await page.evaluate('window.snapshots');
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
 
     const lastMutationsLength = await page.evaluate(
       'window.lastMutationsLength',
@@ -573,7 +562,6 @@ describe('record integration tests', function (this: ISuite) {
 
   it('should record unblocked elements that are also blocked more generically', async () => {
     const page: puppeteer.Page = await browser.newPage();
-    page.on('console', (msg) => console.log(msg.text()));
     await page.goto('about:blank');
     const html = getHtml.call(this, 'unblock.html', {
       blockSelector: 'div',
@@ -610,7 +598,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('mutations should work when blocked class is unblocked', async () => {
@@ -689,7 +677,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should record canvas mutations', async () => {
@@ -738,7 +726,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should record textarea values if dynamically added and maskAllInputs is false', async () => {
@@ -763,7 +751,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should not record input values if dynamically added, maskAllInputs is false, and mask selector is used', async () => {
@@ -791,7 +779,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should not record input values if dynamically added and maskAllInputs is true', async () => {
@@ -837,7 +825,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should record input values if dynamically added, maskAllInputs is true, and unmask selector is used', async () => {
@@ -865,7 +853,7 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
   it('should record webgl canvas mutations', async () => {
@@ -1050,7 +1038,6 @@ describe('record integration tests', function (this: ISuite) {
 
   it('should record images with blob url', async () => {
     const page: puppeteer.Page = await browser.newPage();
-    page.on('console', (msg) => console.log(msg.text()));
     await page.goto(`${serverURL}/html`);
     page.setContent(
       getHtml.call(this, 'image-blob-url.html', { inlineImages: true }),
@@ -1067,7 +1054,6 @@ describe('record integration tests', function (this: ISuite) {
 
   it('should record images inside iframe with blob url', async () => {
     const page: puppeteer.Page = await browser.newPage();
-    page.on('console', (msg) => console.log(msg.text()));
     await page.goto(`${serverURL}/html`);
     await page.setContent(
       getHtml.call(this, 'frame-image-blob-url.html', { inlineImages: true }),
@@ -1084,7 +1070,6 @@ describe('record integration tests', function (this: ISuite) {
 
   it('should record images inside iframe with blob url after iframe was reloaded', async () => {
     const page: puppeteer.Page = await browser.newPage();
-    page.on('console', (msg) => console.log(msg.text()));
     await page.goto(`${serverURL}/html`);
     await page.setContent(
       getHtml.call(this, 'frame2.html', { inlineImages: true }),
@@ -1310,13 +1295,12 @@ describe('record integration tests', function (this: ISuite) {
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
-    assertSnapshot(snapshots.filter(isNotScroll));
+    assertSnapshot(snapshots);
   });
 
-  it('should record mutations in iframes accross pages', async () => {
+  it('should record mutations in iframes across pages', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto(`${serverURL}/html`);
-    page.on('console', (msg) => console.log(msg.text()));
     await page.setContent(getHtml.call(this, 'frame2.html'));
 
     await page.waitForSelector('iframe'); // wait for iframe to get added
@@ -1475,7 +1459,9 @@ describe('record integration tests', function (this: ISuite) {
       }),
     );
 
-    const snapshots = await page.evaluate('window.snapshots');
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
     assertSnapshot(snapshots);
   });
 
