@@ -158,7 +158,12 @@ describe('transformAttribute()', () => {
 
 describe('isBlockedElement()', () => {
   const subject = (html: string, opt: any = {}) =>
-    _isBlockedElement(render(html), 'rr-block', opt.blockSelector, opt.unblockSelector);
+    _isBlockedElement(
+      render(html),
+      'rr-block',
+      opt.blockSelector,
+      opt.unblockSelector,
+    );
 
   const render = (html: string): HTMLElement =>
     JSDOM.fragment(html).querySelector('div')!;

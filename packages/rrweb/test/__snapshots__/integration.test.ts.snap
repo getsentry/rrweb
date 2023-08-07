@@ -2789,7 +2789,7 @@ exports[`record integration tests can record form interactions 1`] = `
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"id\\": 62
     }
@@ -5335,7 +5335,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"id\\": 62
     }
@@ -6105,7 +6105,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"id\\": 62
     }
@@ -12235,6 +12235,15 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 12.5,
+      \\"y\\": 0
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 5,
       \\"text\\": \\"************************\\",
       \\"isChecked\\": false,
@@ -12248,15 +12257,6 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 27.5,
-      \\"y\\": 0
     }
   }
 ]"
@@ -12472,6 +12472,15 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"***********************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 12.5,
+      \\"y\\": 0
     }
   },
   {
@@ -13454,7 +13463,7 @@ exports[`record integration tests should not record input values if maskAllInput
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"id\\": 62
     }
@@ -16087,14 +16096,6 @@ exports[`record integration tests should record images inside iframe with blob u
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 0,
       \\"adds\\": [
         {
@@ -17554,7 +17555,7 @@ exports[`record integration tests should record input userTriggered values if us
     \\"type\\": 3,
     \\"data\\": {
       \\"source\\": 5,
-      \\"text\\": \\"\\",
+      \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": false,
       \\"id\\": 62
@@ -17755,6 +17756,15 @@ exports[`record integration tests should record input values if dynamically adde
       \\"text\\": \\"input should not be masked\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 24,
+      \\"y\\": 0
     }
   },
   {
@@ -18005,6 +18015,15 @@ exports[`record integration tests should record input values if dynamically adde
       \\"text\\": \\"input should be unmaskedm\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 27.5,
+      \\"y\\": 0
     }
   },
   {
@@ -18380,7 +18399,7 @@ exports[`record integration tests should record moved shadow DOM 2 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record mutations in iframes accross pages 1`] = `
+exports[`record integration tests should record mutations in iframes across pages 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -18614,14 +18633,6 @@ exports[`record integration tests should record mutations in iframes accross pag
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
     }
   },
   {
@@ -19023,14 +19034,6 @@ exports[`record integration tests should record nested iframes and shadow doms 1
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
     }
   },
   {
