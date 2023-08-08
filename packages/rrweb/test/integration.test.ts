@@ -720,10 +720,7 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input', 'moo');
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should record textarea values if dynamically added and maskAllInputs is false', async () => {
@@ -745,10 +742,7 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#textarea', 'moo');
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should not record input values if dynamically added, maskAllInputs is false, and mask selector is used', async () => {
@@ -841,10 +835,7 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input-unmasked', 'moo');
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should record webgl canvas mutations', async () => {
