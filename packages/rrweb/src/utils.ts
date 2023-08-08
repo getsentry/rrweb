@@ -15,10 +15,7 @@ import {
   IMirror,
   Mirror,
 } from '@sentry-internal/rrweb-snapshot';
-import {
-  isShadowRoot,
-  IGNORED_NODE,
-} from '@sentry-internal/rrweb-snapshot';
+import { isShadowRoot, IGNORED_NODE } from '@sentry-internal/rrweb-snapshot';
 import type { RRNode, RRIFrameElement } from '@sentry-internal/rrdom';
 
 export function on(
