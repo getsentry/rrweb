@@ -103,14 +103,18 @@ export function getServerURL(server: http.Server): string {
  * Also remove timestamp from event.
  * @param snapshots incrementalSnapshotEvent[]
  */
-function stringifySnapshots(snapshots: eventWithTime[]): string {
+function stringifySnapshots(
+  snapshots: eventWithTime[],
+  { includeScroll }: { includeScroll: boolean },
+): string {
   return JSON.stringify(
     snapshots
       .filter((s) => {
         if (
           s.type === EventType.IncrementalSnapshot &&
           (s.data.source === IncrementalSource.MouseMove ||
-            s.data.source === IncrementalSource.ViewportResize)
+            s.data.source === IncrementalSource.ViewportResize ||
+            (!includeScroll && s.data.source === IncrementalSource.Scroll))
         ) {
           return false;
         }
@@ -291,6 +295,7 @@ function stringifyDomSnapshot(mhtml: string): string {
 
 export async function assertSnapshot(
   snapshotsOrPage: eventWithTime[] | puppeteer.Page,
+  options: { includeScroll: boolean } = { includeScroll: false },
 ) {
   let snapshots: eventWithTime[];
   if (!Array.isArray(snapshotsOrPage)) {
@@ -308,7 +313,7 @@ export async function assertSnapshot(
   }
 
   expect(snapshots).toBeDefined();
-  expect(stringifySnapshots(snapshots)).toMatchSnapshot();
+  expect(stringifySnapshots(snapshots, options)).toMatchSnapshot();
 }
 
 export function replaceLast(str: string, find: string, replace: string) {

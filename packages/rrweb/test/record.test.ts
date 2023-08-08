@@ -221,7 +221,7 @@ describe('record', function (this: ISuite) {
       p.scrollLeft = 10;
     });
     await waitForRAF(ctx.page);
-    assertSnapshot(ctx.events);
+    assertSnapshot(ctx.events, { includeScroll: true });
   });
 
   it('should record selection event', async () => {
