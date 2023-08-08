@@ -225,11 +225,10 @@ export function shouldMaskInput({
   if (tagName === 'OPTION') {
     tagName = 'SELECT';
   }
-  const actualType = type && toLowerCase(type);
   return Boolean(
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-      (actualType && maskInputOptions[actualType as keyof MaskInputOptions]) ||
-      actualType === 'password' ||
+      (type && maskInputOptions[type as keyof MaskInputOptions]) ||
+      type === 'password' ||
       // Default to "text" option for inputs without a "type" attribute defined
       (tagName === 'INPUT' && !type && maskInputOptions['text']),
   );
