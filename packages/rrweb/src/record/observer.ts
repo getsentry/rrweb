@@ -1269,7 +1269,12 @@ function initCustomElementObserver({
   customElementCb,
 }: observerParam): listenerHandler {
   const win = doc.defaultView as IWindow;
-  if (!win || !win.customElements) return () => {};
+  if (!win || !win.customElements) {
+    return () => {
+      // do nothing
+    };
+  }
+
   const restoreHandler = patch(
     win.customElements,
     'define',
@@ -1291,7 +1296,9 @@ function initCustomElementObserver({
               name,
             },
           });
-        } catch (e) {}
+        } catch (e) {
+          // do nothing
+        }
         return original.apply(this, [name, constructor, options]);
       };
     },
