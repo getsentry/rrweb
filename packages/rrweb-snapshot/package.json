@@ -4,10 +4,11 @@
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
     "prepare": "npm run prepack",
-    "prepack": "npm run bundle && npm run typings",
+    "prepack": "npm run bundle",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
+    "build:tarball": "npm pack",
     "bundle": "rollup --config",
     "bundle:es-only": "cross-env ES_ONLY=true rollup --config",
     "dev": "yarn bundle:es-only --watch",
