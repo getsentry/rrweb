@@ -9,8 +9,11 @@
     "rrweb-types"
   ],
   "scripts": {
+    "prepare": "npm run prepack",
+    "prepack": "npm run build",
     "dev": "vite",
     "build": "tsc -noEmit && vite build",
+    "build:tarball": "npm pack",
     "check-types": "tsc -noEmit",
     "prepublish": "npm run build",
     "lint": "yarn eslint src/**/*.ts"
