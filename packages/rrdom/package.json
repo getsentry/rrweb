@@ -19,13 +19,16 @@
     "url": "git+https://github.com/rrweb-io/rrweb.git"
   },
   "scripts": {
+    "prepare": "npm run prepack",
+    "prepack": "npm run typings && npm run bundle",
     "dev": "rollup -c -w",
     "build:tarball": "npm pack",
     "bundle": "rollup --config",
     "bundle:es-only": "cross-env ES_ONLY=true rollup --config",
     "check-types": "tsc -noEmit",
     "test": "jest",
-    "prepublish": "npm run bundle",
+    "typings": "tsc -d --declarationDir typings",
+    "prepublish": "npm run typings && npm run bundle",
     "lint": "yarn eslint src/**/*.ts"
   },
   "bugs": {
