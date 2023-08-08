@@ -1,8 +1,12 @@
 # Changelog
 
+## 2.0.0-alpha.10
+
+- WIP, Sentry pre-release with additional upstream PRs
+
 ## v1.0.0
 
-### Featrues & Improvements
+### Features & Improvements
 
 - Support record same-origin non-sandboxed iframe.
 - Support record open-mode shadow DOM.
