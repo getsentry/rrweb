@@ -626,10 +626,7 @@ describe('record integration tests', function (this: ISuite) {
     )) as puppeteer.ElementHandle<HTMLButtonElement>[];
     await elements3[0].click();
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should record DOM node movement 1', async () => {
@@ -776,10 +773,7 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#input-masked', 'moo');
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should not record input values if dynamically added and maskAllInputs is true', async () => {
@@ -822,10 +816,7 @@ describe('record integration tests', function (this: ISuite) {
 
     await page.type('#textarea', 'moo');
 
-    const snapshots = (await page.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
-    assertSnapshot(snapshots);
+    await assertSnapshot(page);
   });
 
   it('should record input values if dynamically added, maskAllInputs is true, and unmask selector is used', async () => {

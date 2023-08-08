@@ -724,7 +724,7 @@ function serializeTextNode(
       ? maskTextFn(textContent)
       : textContent.replace(/[\S]/g, '*');
   }
-  if (isTextarea && textContent && maskInputOptions.textarea) {
+  if (isTextarea && textContent && (maskInputOptions.textarea || forceMask)) {
     textContent = maskInputFn
       ? maskInputFn(textContent, n.parentNode as HTMLElement)
       : textContent.replace(/[\S]/g, '*');

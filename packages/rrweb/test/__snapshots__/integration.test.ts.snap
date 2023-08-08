@@ -2336,13 +2336,139 @@ exports[`record integration tests can record form interactions 1`] = `
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea textcontent\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea textcontent\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea text\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea text\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -2356,7 +2482,7 @@ exports[`record integration tests can record form interactions 1`] = `
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -2369,15 +2495,15 @@ exports[`record integration tests can record form interactions 1`] = `
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Option A\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -2389,31 +2515,31 @@ exports[`record integration tests can record form interactions 1`] = `
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Opt. B\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -2425,7 +2551,7 @@ exports[`record integration tests can record form interactions 1`] = `
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -2434,20 +2560,20 @@ exports[`record integration tests can record form interactions 1`] = `
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -2455,7 +2581,7 @@ exports[`record integration tests can record form interactions 1`] = `
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -2465,15 +2591,15 @@ exports[`record integration tests can record form interactions 1`] = `
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -2791,7 +2917,7 @@ exports[`record integration tests can record form interactions 1`] = `
       \\"source\\": 5,
       \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
-      \\"id\\": 62
+      \\"id\\": 79
     }
   }
 ]"
@@ -4778,13 +4904,139 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea textcontent\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea textcontent\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea text\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea text\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -4798,7 +5050,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -4811,15 +5063,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Option A\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -4831,31 +5083,31 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Opt. B\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -4867,7 +5119,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -4876,20 +5128,20 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -4897,7 +5149,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -4907,15 +5159,15 @@ exports[`record integration tests can use maskInputOptions to configure which ty
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -5256,7 +5508,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5265,7 +5517,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"*\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5274,7 +5526,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"**\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5283,7 +5535,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"***\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5292,7 +5544,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"****\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5301,7 +5553,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"*****\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5310,7 +5562,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"******\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5319,7 +5571,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"*******\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5328,7 +5580,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"********\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -5337,7 +5589,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
       \\"source\\": 5,
       \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
-      \\"id\\": 62
+      \\"id\\": 79
     }
   }
 ]"
@@ -5762,13 +6014,139 @@ exports[`record integration tests can use maskTextSelector to configure which in
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"**********\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"**********\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"**********\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"**********\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -5782,7 +6160,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -5795,15 +6173,15 @@ exports[`record integration tests can use maskTextSelector to configure which in
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Option A\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -5815,31 +6193,31 @@ exports[`record integration tests can use maskTextSelector to configure which in
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Opt. B\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -5851,7 +6229,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -5860,20 +6238,20 @@ exports[`record integration tests can use maskTextSelector to configure which in
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -5881,7 +6259,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -5891,15 +6269,15 @@ exports[`record integration tests can use maskTextSelector to configure which in
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -6089,7 +6467,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -6098,7 +6476,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
       \\"source\\": 5,
       \\"text\\": \\"**********\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -6107,7 +6485,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
       \\"source\\": 5,
       \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
-      \\"id\\": 62
+      \\"id\\": 79
     }
   }
 ]"
@@ -6858,7 +7236,7 @@ exports[`record integration tests mutations should work when blocked class is un
                         \\"attributes\\": {
                           \\"class\\": \\"rr-block\\",
                           \\"rr_width\\": \\"1904px\\",
-                          \\"rr_height\\": \\"21px\\"
+                          \\"rr_height\\": \\"21.5px\\"
                         },
                         \\"childNodes\\": [],
                         \\"id\\": 84
@@ -7948,13 +8326,139 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea textcontent\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea textcontent\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea text\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea text\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -7968,7 +8472,7 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -7981,15 +8485,15 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Option A\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -8001,31 +8505,31 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Opt. B\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -8037,7 +8541,7 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -8046,20 +8550,20 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -8067,7 +8571,7 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -8077,15 +8581,15 @@ exports[`record integration tests should mask attribute via function call 1`] = 
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -10636,14 +11140,6 @@ exports[`record integration tests should nest record iframe 1`] = `
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
     }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
-    }
   }
 ]"
 `;
@@ -11067,13 +11563,139 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea textcontent\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"******** ***********\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea text\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"******** ****\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -11087,7 +11709,7 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -11100,15 +11722,15 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"****** *\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -11120,31 +11742,31 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"**** *\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -11156,7 +11778,7 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -11165,20 +11787,20 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -11186,7 +11808,7 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -11196,15 +11818,15 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -12235,15 +12857,6 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 12.5,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 5,
       \\"text\\": \\"************************\\",
       \\"isChecked\\": false,
@@ -12257,6 +12870,15 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 27.5,
+      \\"y\\": 0
     }
   }
 ]"
@@ -12460,6 +13082,15 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 2,
+      \\"y\\": 0
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
       \\"id\\": 21
@@ -12472,15 +13103,6 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"***********************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 12.5,
-      \\"y\\": 0
     }
   },
   {
@@ -12923,13 +13545,139 @@ exports[`record integration tests should not record input values if maskAllInput
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"********************\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"******** ***********\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"*************\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"******** ****\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -12943,7 +13691,7 @@ exports[`record integration tests should not record input values if maskAllInput
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -12955,15 +13703,15 @@ exports[`record integration tests should not record input values if maskAllInput
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"********\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -12975,31 +13723,31 @@ exports[`record integration tests should not record input values if maskAllInput
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"******\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -13011,7 +13759,7 @@ exports[`record integration tests should not record input values if maskAllInput
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -13020,20 +13768,20 @@ exports[`record integration tests should not record input values if maskAllInput
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -13041,7 +13789,7 @@ exports[`record integration tests should not record input values if maskAllInput
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -13051,15 +13799,15 @@ exports[`record integration tests should not record input values if maskAllInput
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -13251,7 +13999,7 @@ exports[`record integration tests should not record input values if maskAllInput
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13260,7 +14008,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"*\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13269,7 +14017,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"**\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13278,7 +14026,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"***\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13287,7 +14035,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"****\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13296,7 +14044,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"*****\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13305,7 +14053,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"******\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13314,7 +14062,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"*******\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13323,7 +14071,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"********\\",
       \\"isChecked\\": false,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13331,7 +14079,7 @@ exports[`record integration tests should not record input values if maskAllInput
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 6,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -13465,7 +14213,7 @@ exports[`record integration tests should not record input values if maskAllInput
       \\"source\\": 5,
       \\"text\\": \\"**\\",
       \\"isChecked\\": false,
-      \\"id\\": 62
+      \\"id\\": 79
     }
   }
 ]"
@@ -16985,13 +17733,139 @@ exports[`record integration tests should record input userTriggered values if us
                         \\"type\\": 2,
                         \\"tagName\\": \\"label\\",
                         \\"attributes\\": {
-                          \\"for\\": \\"select\\"
+                          \\"for\\": \\"textarea-value\\"
                         },
                         \\"childNodes\\": [
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
                             \\"id\\": 61
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea-value\\"
+                            },
+                            \\"childNodes\\": [],
+                            \\"id\\": 62
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 63
+                          }
+                        ],
+                        \\"id\\": 60
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 64
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-text-content\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 66
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea textcontent\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea textcontent\\",
+                                \\"id\\": 68
+                              }
+                            ],
+                            \\"id\\": 67
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 69
+                          }
+                        ],
+                        \\"id\\": 65
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 70
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"textarea-value-and-text\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 72
+                          },
+                          {
+                            \\"type\\": 2,
+                            \\"tagName\\": \\"textarea\\",
+                            \\"attributes\\": {
+                              \\"name\\": \\"\\",
+                              \\"id\\": \\"\\",
+                              \\"cols\\": \\"30\\",
+                              \\"rows\\": \\"10\\",
+                              \\"value\\": \\"textarea text\\"
+                            },
+                            \\"childNodes\\": [
+                              {
+                                \\"type\\": 3,
+                                \\"textContent\\": \\"textarea text\\",
+                                \\"id\\": 74
+                              }
+                            ],
+                            \\"id\\": 73
+                          },
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n      \\",
+                            \\"id\\": 75
+                          }
+                        ],
+                        \\"id\\": 71
+                      },
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"\\\\n      \\",
+                        \\"id\\": 76
+                      },
+                      {
+                        \\"type\\": 2,
+                        \\"tagName\\": \\"label\\",
+                        \\"attributes\\": {
+                          \\"for\\": \\"select\\"
+                        },
+                        \\"childNodes\\": [
+                          {
+                            \\"type\\": 3,
+                            \\"textContent\\": \\"\\\\n        \\",
+                            \\"id\\": 78
                           },
                           {
                             \\"type\\": 2,
@@ -17005,7 +17879,7 @@ exports[`record integration tests should record input userTriggered values if us
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 63
+                                \\"id\\": 80
                               },
                               {
                                 \\"type\\": 2,
@@ -17018,15 +17892,15 @@ exports[`record integration tests should record input userTriggered values if us
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Option A\\",
-                                    \\"id\\": 65
+                                    \\"id\\": 82
                                   }
                                 ],
-                                \\"id\\": 64
+                                \\"id\\": 81
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n          \\",
-                                \\"id\\": 66
+                                \\"id\\": 83
                               },
                               {
                                 \\"type\\": 2,
@@ -17038,31 +17912,31 @@ exports[`record integration tests should record input userTriggered values if us
                                   {
                                     \\"type\\": 3,
                                     \\"textContent\\": \\"Opt. B\\",
-                                    \\"id\\": 68
+                                    \\"id\\": 85
                                   }
                                 ],
-                                \\"id\\": 67
+                                \\"id\\": 84
                               },
                               {
                                 \\"type\\": 3,
                                 \\"textContent\\": \\"\\\\n        \\",
-                                \\"id\\": 69
+                                \\"id\\": 86
                               }
                             ],
-                            \\"id\\": 62
+                            \\"id\\": 79
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 70
+                            \\"id\\": 87
                           }
                         ],
-                        \\"id\\": 60
+                        \\"id\\": 77
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n      \\",
-                        \\"id\\": 71
+                        \\"id\\": 88
                       },
                       {
                         \\"type\\": 2,
@@ -17074,7 +17948,7 @@ exports[`record integration tests should record input userTriggered values if us
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n        \\",
-                            \\"id\\": 73
+                            \\"id\\": 90
                           },
                           {
                             \\"type\\": 2,
@@ -17083,20 +17957,20 @@ exports[`record integration tests should record input userTriggered values if us
                               \\"type\\": \\"password\\"
                             },
                             \\"childNodes\\": [],
-                            \\"id\\": 74
+                            \\"id\\": 91
                           },
                           {
                             \\"type\\": 3,
                             \\"textContent\\": \\"\\\\n      \\",
-                            \\"id\\": 75
+                            \\"id\\": 92
                           }
                         ],
-                        \\"id\\": 72
+                        \\"id\\": 89
                       },
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"\\\\n    \\",
-                        \\"id\\": 76
+                        \\"id\\": 93
                       }
                     ],
                     \\"id\\": 18
@@ -17104,7 +17978,7 @@ exports[`record integration tests should record input userTriggered values if us
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n  \\\\n    \\",
-                    \\"id\\": 77
+                    \\"id\\": 94
                   },
                   {
                     \\"type\\": 2,
@@ -17114,15 +17988,15 @@ exports[`record integration tests should record input userTriggered values if us
                       {
                         \\"type\\": 3,
                         \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 79
+                        \\"id\\": 96
                       }
                     ],
-                    \\"id\\": 78
+                    \\"id\\": 95
                   },
                   {
                     \\"type\\": 3,
                     \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 80
+                    \\"id\\": 97
                   }
                 ],
                 \\"id\\": 16
@@ -17322,7 +18196,7 @@ exports[`record integration tests should record input userTriggered values if us
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17332,7 +18206,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"*\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17342,7 +18216,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"**\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17352,7 +18226,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"***\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17362,7 +18236,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"****\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17372,7 +18246,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"*****\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17382,7 +18256,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"******\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17392,7 +18266,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"*******\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17402,7 +18276,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"********\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": true,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17410,7 +18284,7 @@ exports[`record integration tests should record input userTriggered values if us
     \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 6,
-      \\"id\\": 74
+      \\"id\\": 91
     }
   },
   {
@@ -17558,7 +18432,7 @@ exports[`record integration tests should record input userTriggered values if us
       \\"text\\": \\"AA\\",
       \\"isChecked\\": false,
       \\"userTriggered\\": false,
-      \\"id\\": 62
+      \\"id\\": 79
     }
   }
 ]"
@@ -17761,15 +18635,6 @@ exports[`record integration tests should record input values if dynamically adde
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 24,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
       \\"id\\": 21
@@ -17782,6 +18647,15 @@ exports[`record integration tests should record input values if dynamically adde
       \\"text\\": \\"input should not be maskedm\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 35,
+      \\"y\\": 0
     }
   },
   {
@@ -18003,6 +18877,15 @@ exports[`record integration tests should record input values if dynamically adde
   {
     \\"type\\": 3,
     \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 16.5,
+      \\"y\\": 0
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
       \\"id\\": 21
@@ -18015,15 +18898,6 @@ exports[`record integration tests should record input values if dynamically adde
       \\"text\\": \\"input should be unmaskedm\\",
       \\"isChecked\\": false,
       \\"id\\": 21
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 27.5,
-      \\"y\\": 0
     }
   },
   {
@@ -18942,14 +19816,6 @@ exports[`record integration tests should record nested iframes and shadow doms 1
       \\"texts\\": [],
       \\"attributes\\": [],
       \\"isAttachIframe\\": true
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 4,
-      \\"width\\": 1920,
-      \\"height\\": 1080
     }
   },
   {
