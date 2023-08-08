@@ -13,8 +13,11 @@
   "scripts": {
     "install": "playwright install",
     "build": "tsc",
+    "build:tarball": "npm pack",
     "test": "jest",
     "check-types": "tsc -noEmit",
+    "prepare": "npm run prepack",
+    "prepack": "npm run build",
     "prepublish": "yarn build"
   },
   "author": "yanzhen@smartx.com",
