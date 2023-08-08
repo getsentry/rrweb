@@ -230,10 +230,7 @@ describe('cross origin iframes', function (this: ISuite) {
       await frame.type('textarea', 'textarea test');
       await frame.select('select', '1');
 
-      const snapshots = (await ctx.page.evaluate(
-        'window.snapshots',
-      )) as eventWithTime[];
-      assertSnapshot(snapshots);
+      assertSnapshot(ctx.page);
     });
 
     it('should map scroll events correctly', async () => {

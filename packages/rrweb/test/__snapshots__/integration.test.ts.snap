@@ -7236,7 +7236,7 @@ exports[`record integration tests mutations should work when blocked class is un
                         \\"attributes\\": {
                           \\"class\\": \\"rr-block\\",
                           \\"rr_width\\": \\"1904px\\",
-                          \\"rr_height\\": \\"21.5px\\"
+                          \\"rr_height\\": \\"21px\\"
                         },
                         \\"childNodes\\": [],
                         \\"id\\": 84
@@ -12866,19 +12866,19 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 5,
-      \\"text\\": \\"*************************\\",
-      \\"isChecked\\": false,
-      \\"id\\": 21
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 14,
+      \\"y\\": 0
     }
   },
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 27.5,
-      \\"y\\": 0
+      \\"source\\": 5,
+      \\"text\\": \\"*************************\\",
+      \\"isChecked\\": false,
+      \\"id\\": 21
     }
   }
 ]"
@@ -13082,15 +13082,6 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 2,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 2,
       \\"type\\": 5,
       \\"id\\": 21
@@ -13121,6 +13112,15 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 3,
+      \\"id\\": 21,
+      \\"x\\": 21,
+      \\"y\\": 0
     }
   }
 ]"
@@ -18654,7 +18654,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"data\\": {
       \\"source\\": 3,
       \\"id\\": 21,
-      \\"x\\": 35,
+      \\"x\\": 29,
       \\"y\\": 0
     }
   },
@@ -18879,7 +18879,7 @@ exports[`record integration tests should record input values if dynamically adde
     \\"data\\": {
       \\"source\\": 3,
       \\"id\\": 21,
-      \\"x\\": 16.5,
+      \\"x\\": 11,
       \\"y\\": 0
     }
   },
