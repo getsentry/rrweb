@@ -719,7 +719,7 @@ function serializeTextNode(
     maskAllText,
   );
 
-  if (!isStyle && !isScript && textContent && forceMask) {
+  if (!isStyle && !isScript && !isTextarea && textContent && forceMask) {
     textContent = maskTextFn
       ? maskTextFn(textContent)
       : textContent.replace(/[\S]/g, '*');
@@ -875,11 +875,10 @@ function serializeElementNode(
 
     const type = getInputType(el);
     const value = getInputValue(el, toUpperCase(tagName), type);
-    const checked = (n as HTMLInputElement).checked;
-    if (attributes.type !== 'submit' && attributes.type !== 'button' && value) {
-      const type = getInputType(n);
+    const checked = (el as HTMLInputElement).checked;
+    if (type !== 'submit' && type !== 'button' && value) {
       const forceMask = needMaskingText(
-        n,
+        el,
         maskTextClass,
         maskTextSelector,
         unmaskTextClass,
