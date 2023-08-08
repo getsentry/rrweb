@@ -9,11 +9,13 @@ import type {
   DeprecatedMirror,
   textMutation,
 } from '@sentry-internal/rrweb-types';
+import type {
+  IMirror,
+  Mirror,
+} from '@sentry-internal/rrweb-snapshot';
 import {
   createMatchPredicate,
   distanceToMatch,
-  IMirror,
-  Mirror,
 } from '@sentry-internal/rrweb-snapshot';
 import { isShadowRoot, IGNORED_NODE } from '@sentry-internal/rrweb-snapshot';
 import type { RRNode, RRIFrameElement } from '@sentry-internal/rrdom';
