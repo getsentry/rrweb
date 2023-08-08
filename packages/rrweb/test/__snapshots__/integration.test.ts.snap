@@ -12866,15 +12866,6 @@ exports[`record integration tests should not record input values if dynamically 
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 14,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 5,
       \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
@@ -13112,15 +13103,6 @@ exports[`record integration tests should not record input values if dynamically 
       \\"text\\": \\"*************************\\",
       \\"isChecked\\": false,
       \\"id\\": 21
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 21,
-      \\"y\\": 0
     }
   }
 ]"
@@ -18652,15 +18634,6 @@ exports[`record integration tests should record input values if dynamically adde
   {
     \\"type\\": 3,
     \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 29,
-      \\"y\\": 0
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
       \\"source\\": 5,
       \\"text\\": \\"input should not be maskedmo\\",
       \\"isChecked\\": false,
@@ -18872,15 +18845,6 @@ exports[`record integration tests should record input values if dynamically adde
       \\"text\\": \\"input should be unmasked\\",
       \\"isChecked\\": false,
       \\"id\\": 21
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 3,
-      \\"id\\": 21,
-      \\"x\\": 11,
-      \\"y\\": 0
     }
   },
   {

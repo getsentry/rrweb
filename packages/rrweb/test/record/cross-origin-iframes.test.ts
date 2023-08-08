@@ -253,7 +253,7 @@ describe('cross origin iframes', function (this: ISuite) {
       const snapshots = (await ctx.page.evaluate(
         'window.snapshots',
       )) as eventWithTime[];
-      assertSnapshot(snapshots);
+      assertSnapshot(snapshots, { includeScroll: true });
     });
   });
 
