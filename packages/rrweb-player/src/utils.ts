@@ -146,7 +146,7 @@ export function typeOf(
 }
 
 /**
- * Forked from '@sentry-internal/rrweb' replay/index.ts. The original function is not exported.
+ * Forked from 'rrweb' replay/index.ts. The original function is not exported.
  * Determine whether the event is a user interaction event
  * @param event - event to be determined
  * @returns true if the event is a user interaction event
@@ -156,12 +156,14 @@ function isUserInteraction(event: eventWithTime): boolean {
     return false;
   }
   return (
+    // @ts-expect-error source does not exist on data
     event.data.source > IncrementalSource.Mutation &&
+    // @ts-expect-error source does not exist on data
     event.data.source <= IncrementalSource.Input
   );
 }
 
-// Forked from '@sentry-internal/rrweb' replay/index.ts. A const threshold of inactive time.
+// Forked from 'rrweb' replay/index.ts. A const threshold of inactive time.
 const SKIP_TIME_THRESHOLD = 10 * 1000;
 
 /**
