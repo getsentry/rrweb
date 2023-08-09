@@ -55,13 +55,18 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Set up Node
-        uses: volta-cli/action@v3
+      - name: Setup Node.js lts/*
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: 'yarn'
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Build Tarballs
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: yarn build:tarball
 
       - name: Upload Artifacts
