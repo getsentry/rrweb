@@ -16,9 +16,7 @@
     "build:tarball": "npm pack",
     "test": "jest",
     "check-types": "tsc -noEmit",
-    "prepare": "npm run prepack",
-    "prepack": "npm run build",
-    "prepublish": "yarn build"
+    "prepare": "yarn build"
   },
   "author": "yanzhen@smartx.com",
   "license": "MIT",
