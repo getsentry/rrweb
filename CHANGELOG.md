@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0-alpha.10
+## 2.0.0-alpha10.0
 
 - WIP, Sentry pre-release with additional upstream PRs
 
