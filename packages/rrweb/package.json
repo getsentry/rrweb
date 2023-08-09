@@ -3,8 +3,6 @@
   "version": "2.0.0-alpha.10",
   "description": "record and replay the web",
   "scripts": {
-    "prepare": "npm run prepack",
-    "prepack": "npm run bundle",
     "retest": "jest --testPathIgnorePatterns test/benchmark",
     "build-and-test": "yarn bundle:browser && yarn retest",
     "test:headless": "PUPPETEER_HEADLESS=true yarn build-and-test",
@@ -19,8 +17,8 @@
     "bundle:browser": "cross-env BROWSER_ONLY=true rollup --config",
     "bundle": "rollup --config",
     "typings": "tsc -d --declarationDir typings",
+    "prepare": "npm run typings && npm run bundle",
     "check-types": "tsc -noEmit",
-    "prepublish": "npm run typings && npm run bundle",
     "lint": "yarn eslint src",
     "benchmark": "jest test/benchmark"
   },

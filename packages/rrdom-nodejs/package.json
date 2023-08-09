@@ -7,7 +7,7 @@
     "bundle:es-only": "cross-env ES_ONLY=true rollup --config",
     "check-types": "tsc -noEmit",
     "test": "jest",
-    "prepublish": "npm run bundle",
+    "prepare": "npm run bundle",
     "lint": "yarn eslint src/**/*.ts"
   },
   "keywords": [
