@@ -156,9 +156,7 @@ function isUserInteraction(event: eventWithTime): boolean {
     return false;
   }
   return (
-    // @ts-expect-error source does not exist on data
     event.data.source > IncrementalSource.Mutation &&
-    // @ts-expect-error source does not exist on data
     event.data.source <= IncrementalSource.Input
   );
 }
