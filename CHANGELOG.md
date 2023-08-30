@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.0.0-alpha10.0
+## 2.0.0-beta11.0
 
-- WIP, Sentry pre-release with additional upstream PRs
+- Sentry fork of rrweb@2.0.0-alpha.11 with additional masking features
 
 ## v1.0.0
 
