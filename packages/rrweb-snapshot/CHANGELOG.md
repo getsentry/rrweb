@@ -1,5 +1,11 @@
 # rrweb-snapshot
 
+## 2.0.0-alpha.12
+
+### Patch Changes
+
+- [#1272](https://github.com/rrweb-io/rrweb/pull/1272) [`58c9104`](https://github.com/rrweb-io/rrweb/commit/58c9104eddc8b7994a067a97daae5684e42f892f) Thanks [@eoghanmurray](https://github.com/eoghanmurray)! - Perf: Avoid creation of intermediary array when iterating over style rules
+
 ## 2.0.0-alpha.11
 
 ### Patch Changes
