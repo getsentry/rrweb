@@ -3,7 +3,7 @@ import type {
   Mirror,
   INode,
   DataURLOptions,
-} from 'rrweb-snapshot';
+} from '@sentry-internal/rrweb-snapshot';
 
 export enum EventType {
   DomContentLoaded,
@@ -191,6 +191,7 @@ export type canvasEventWithTime = eventWithTime & {
 export type blockClass = string | RegExp;
 
 export type maskTextClass = string | RegExp;
+export type unmaskTextClass = string | RegExp | null;
 
 export type SamplingStrategy = Partial<{
   /**

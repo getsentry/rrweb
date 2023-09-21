@@ -134,7 +134,9 @@ export type MaskInputOptions = Partial<{
   // unify textarea and select element with text input
   textarea: boolean;
   select: boolean;
-  password: boolean;
+  // password is _always_ masked, can't opt out of this
+  radio: boolean;
+  checkbox: boolean;
 }>;
 
 export type SlimDOMOptions = Partial<{
@@ -157,6 +159,11 @@ export type DataURLOptions = Partial<{
 
 export type MaskTextFn = (text: string, element: HTMLElement | null) => string;
 export type MaskInputFn = (text: string, element: HTMLElement) => string;
+export type MaskAttributeFn = (
+  attributeName: string,
+  attributeValue: string,
+  element: HTMLElement,
+) => string;
 
 export type KeepIframeSrcFn = (src: string) => boolean;
 
