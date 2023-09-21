@@ -17,9 +17,8 @@ function useSpecialFormat(
   return {
     name: 'use-special-format',
     config(config) {
-      const shouldUse = entriesToUse.includes(
-        (config.build?.lib as LibraryOptions)?.entry,
-      );
+      const shouldUse =
+        config.build?.lib && entriesToUse.includes(config.build.lib.entry);
       if (shouldUse) {
         config.build = config.build ?? {};
         // @ts-expect-error: lib needs to be an object, forcing it.
