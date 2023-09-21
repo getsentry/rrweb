@@ -1,7 +1,6 @@
 import {
   defineConfig,
   LibraryFormats,
-  LibraryOptions,
   PluginOption,
 } from 'vite';
 import webExtension, { readJsonFile } from 'vite-plugin-web-extension';
