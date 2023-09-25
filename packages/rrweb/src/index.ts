@@ -13,8 +13,22 @@ export {
 export type {
   fullSnapshotEvent,
   incrementalSnapshotEvent,
-  inputData,
   eventWithTime,
+  incrementalData,
+  mutationData,
+  mousemoveData,
+  mouseInteractionData,
+  scrollData,
+  viewportResizeData,
+  inputData,
+  mediaInteractionData,
+  styleSheetRuleData,
+  canvasMutationData,
+  fontData,
+  selectionData,
+  styleDeclarationData,
+  adoptedStyleSheetData,
+  customElementData,
 } from '@sentry-internal/rrweb-types';
 
 export type { recordOptions } from './types';
