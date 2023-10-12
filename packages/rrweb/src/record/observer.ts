@@ -724,6 +724,7 @@ function initStyleSheetObserver(
         }
         return target.apply(thisArg, argumentsList);
       },
+      'CSSStyleSheet.insertRule',
     ),
   });
 
@@ -891,6 +892,7 @@ function initStyleSheetObserver(
             }
             return target.apply(thisArg, argumentsList);
           },
+          'CSSStyleSheet.insertRule',
         ),
       },
     );
