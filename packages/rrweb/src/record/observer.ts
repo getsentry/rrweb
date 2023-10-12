@@ -957,10 +957,12 @@ export function initAdoptedStyleSheetObserver(
     host.nodeName === '#document'
       ? (host as Document).defaultView?.Document
       : host.ownerDocument?.defaultView?.ShadowRoot;
-  const originalPropertyDescriptor = patchTarget?.prototype ? Object.getOwnPropertyDescriptor(
-    patchTarget?.prototype,
-    'adoptedStyleSheets',
-  ) : undefined;
+  const originalPropertyDescriptor = patchTarget?.prototype
+    ? Object.getOwnPropertyDescriptor(
+        patchTarget?.prototype,
+        'adoptedStyleSheets',
+      )
+    : undefined;
   if (
     hostId === null ||
     hostId === -1 ||
