@@ -77,6 +77,7 @@ export type recordOptions<T> = {
   packFn?: PackFn;
   sampling?: SamplingStrategy;
   dataURLOptions?: DataURLOptions;
+  recordDOM?: boolean;
   recordCanvas?: boolean;
   recordCrossOriginIframes?: boolean;
   recordAfter?: 'DOMContentLoaded' | 'load';
@@ -123,6 +124,7 @@ export type observerParam = {
   customElementCb: customElementCallback;
   fontCb: fontCallback;
   sampling: SamplingStrategy;
+  recordDOM: boolean;
   recordCanvas: boolean;
   inlineImages: boolean;
   userTriggeredOnInput: boolean;
