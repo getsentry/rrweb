@@ -101,6 +101,7 @@ function record<T = eventWithTime>(
     sampling = {},
     dataURLOptions = {},
     mousemoveWait,
+    recordDOM = true,
     recordCanvas = false,
     recordCrossOriginIframes = false,
     recordAfter = options.recordAfter === 'DOMContentLoaded'
@@ -399,6 +400,9 @@ function record<T = eventWithTime>(
         });
 
   const takeFullSnapshot = (isCheckout = false) => {
+    if (!recordDOM) {
+      return;
+    }
     wrappedEmit(
       wrapEvent({
         type: EventType.Meta,
@@ -604,6 +608,7 @@ function record<T = eventWithTime>(
           maskInputOptions,
           inlineStylesheet,
           sampling,
+          recordDOM,
           recordCanvas,
           inlineImages,
           userTriggeredOnInput,

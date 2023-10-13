@@ -1291,7 +1291,11 @@ export function initObservers(
   }
 
   // We do not use hooks, so we skip this
-  const mutationObserver = initMutationObserver(o, o.doc);
+  // mergeHooks(o, hooks);
+  let mutationObserver: MutationObserver | undefined;
+  if (o.recordDOM) {
+    mutationObserver = initMutationObserver(o, o.doc);
+  }
   const mousemoveHandler = initMoveObserver(o);
   const mouseInteractionHandler = initMouseInteractionObserver(o);
   const scrollHandler = initScrollObserver(o);
@@ -1301,16 +1305,20 @@ export function initObservers(
   const inputHandler = initInputObserver(o);
   const mediaInteractionHandler = initMediaInteractionObserver(o);
 
-  const styleSheetObserver = initStyleSheetObserver(o, { win: currentWindow });
-  const adoptedStyleSheetObserver = initAdoptedStyleSheetObserver(o, o.doc);
-  const styleDeclarationObserver = initStyleDeclarationObserver(o, {
-    win: currentWindow,
-  });
-  const fontObserver = o.collectFonts
-    ? initFontObserver(o)
-    : () => {
-        //
-      };
+  let styleSheetObserver = () => {};
+  let adoptedStyleSheetObserver = () => {};
+  let styleDeclarationObserver = () => {};
+  let fontObserver = () => {};
+  if (o.recordDOM) {
+    styleSheetObserver = initStyleSheetObserver(o, { win: currentWindow });
+    adoptedStyleSheetObserver = initAdoptedStyleSheetObserver(o, o.doc);
+    styleDeclarationObserver = initStyleDeclarationObserver(o, {
+      win: currentWindow,
+    });
+    if (o.collectFonts) {
+      fontObserver = initFontObserver(o);
+    }
+  }
   const selectionObserver = initSelectionObserver(o);
   const customElementObserver = initCustomElementObserver(o);
 
@@ -1324,7 +1332,7 @@ export function initObservers(
 
   return callbackWrapper(() => {
     mutationBuffers.forEach((b) => b.reset());
-    mutationObserver.disconnect();
+    mutationObserver?.disconnect();
     mousemoveHandler();
     mouseInteractionHandler();
     scrollHandler();
