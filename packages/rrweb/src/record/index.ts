@@ -67,11 +67,11 @@ declare global {
 
 let wrappedEmit!: (e: eventWithTime, isCheckout?: boolean) => void;
 
-let takeFullSnapshot!: (isCheckout?: boolean) => void;
+let _takeFullSnapshot!: (isCheckout?: boolean) => void;
 let canvasManager: CanvasManagerInterface;
 let recording = false;
 
-const mirror = createMirror();
+export const mirror = createMirror();
 function record<T = eventWithTime>(
   options: recordOptions<T> = {},
 ): listenerHandler | undefined {
@@ -256,7 +256,7 @@ function record<T = eventWithTime>(
         checkoutEveryNms &&
         e.timestamp - lastFullSnapshotEvent.timestamp > checkoutEveryNms;
       if (exceedCount || exceedTime) {
-        takeFullSnapshot(true);
+        _takeFullSnapshot(true);
       }
     }
   };
@@ -386,7 +386,7 @@ function record<T = eventWithTime>(
           mirror,
         });
 
-  takeFullSnapshot = (isCheckout = false) => {
+  _takeFullSnapshot = (isCheckout = false) => {
     wrappedEmit(
       wrapEvent({
         type: EventType.Meta,
@@ -644,7 +644,7 @@ function record<T = eventWithTime>(
     });
 
     const init = () => {
-      takeFullSnapshot();
+      _takeFullSnapshot();
       handlers.push(observe(document));
       recording = true;
     };
@@ -712,12 +712,14 @@ record.freezePage = () => {
   mutationBuffers.forEach((buf) => buf.freeze());
 };
 
-record.takeFullSnapshot = (isCheckout?: boolean) => {
+export function takeFullSnapshot(isCheckout?: boolean) {
   if (!recording) {
     throw new Error('please take full snapshot after start recording');
   }
-  takeFullSnapshot(isCheckout);
-};
+  _takeFullSnapshot(isCheckout);
+}
+
+record.takeFullSnapshot = takeFullSnapshot;
 
 record.mirror = mirror;
 

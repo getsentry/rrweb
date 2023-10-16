@@ -1,6 +1,5 @@
 import record from './record';
 import { Replayer } from './replay';
-import { _mirror } from './utils';
 import * as utils from './utils';
 
 export {
@@ -27,6 +26,7 @@ export {
   addCustomEvent,
   freezePage,
   Replayer,
-  _mirror as mirror,
   utils,
 };
+
+export { takeFullSnapshot, mirror } from './record';
