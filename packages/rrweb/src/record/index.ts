@@ -29,9 +29,9 @@ import {
   adoptedStyleSheetParam,
 } from '@sentry-internal/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
-import { IframeManager } from './iframe-manager';
-import { ShadowDomManager } from './shadow-dom-manager';
-import { CanvasManager } from './observers/canvas/canvas-manager';
+import { IframeManager, IframeManagerInterface, IframeManagerNoop } from './iframe-manager';
+import { ShadowDomManager, ShadowDomManagerInterface, ShadowDomManagerNoop } from './shadow-dom-manager';
+import { CanvasManager, CanvasManagerInterface, CanvasManagerNoop } from './observers/canvas/canvas-manager';
 import { StylesheetManager } from './stylesheet-manager';
 import ProcessedNodeManager from './processed-node-manager';
 import {
@@ -47,10 +47,16 @@ function wrapEvent(e: event): eventWithTime {
   };
 }
 
+declare global {
+  const __RRWEB_EXCLUDE_CANVAS__: boolean;
+  const __RRWEB_EXCLUDE_SHADOW_DOM__: boolean;
+  const __RRWEB_EXCLUDE_IFRAME__: boolean;
+}
+
 let wrappedEmit!: (e: eventWithTime, isCheckout?: boolean) => void;
 
 let takeFullSnapshot!: (isCheckout?: boolean) => void;
-let canvasManager!: CanvasManager;
+let canvasManager: CanvasManagerInterface;
 let recording = false;
 
 const mirror = createMirror();
@@ -291,7 +297,7 @@ function record<T = eventWithTime>(
     adoptedStyleSheetCb: wrappedAdoptedStyleSheetEmit,
   });
 
-  const iframeManager = new IframeManager({
+  const iframeManager: IframeManagerInterface = __RRWEB_EXCLUDE_IFRAME__ ? new IframeManagerNoop() :  new IframeManager({
     mirror,
     mutationCb: wrappedMutationEmit,
     stylesheetManager: stylesheetManager,
@@ -308,13 +314,13 @@ function record<T = eventWithTime>(
         nodeMirror: mirror,
         crossOriginIframeMirror: iframeManager.crossOriginIframeMirror,
         crossOriginIframeStyleMirror:
-          iframeManager.crossOriginIframeStyleMirror,
+        iframeManager.crossOriginIframeStyleMirror,
       });
   }
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  canvasManager = new CanvasManager({
+  canvasManager = __RRWEB_EXCLUDE_CANVAS__ ? new CanvasManagerNoop() : new CanvasManager({
     recordCanvas,
     mutationCb: wrappedCanvasMutationEmit,
     win: window,
@@ -326,7 +332,7 @@ function record<T = eventWithTime>(
     dataURLOptions,
   });
 
-  const shadowDomManager = new ShadowDomManager({
+  const shadowDomManager: ShadowDomManagerInterface = __RRWEB_EXCLUDE_SHADOW_DOM__ ? new ShadowDomManagerNoop() :  new ShadowDomManager({
     mutationCb: wrappedMutationEmit,
     scrollCb: wrappedScrollEmit,
     bypassOptions: {
