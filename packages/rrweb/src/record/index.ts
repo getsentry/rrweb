@@ -309,15 +309,16 @@ function record<T = eventWithTime>(
     adoptedStyleSheetCb: wrappedAdoptedStyleSheetEmit,
   });
 
-  const iframeManager: IframeManagerInterface = __RRWEB_EXCLUDE_IFRAME__
-    ? new IframeManagerNoop()
-    : new IframeManager({
-        mirror,
-        mutationCb: wrappedMutationEmit,
-        stylesheetManager: stylesheetManager,
-        recordCrossOriginIframes,
-        wrappedEmit,
-      });
+  const iframeManager: IframeManagerInterface =
+    typeof __RRWEB_EXCLUDE_IFRAME__ === 'boolean' && __RRWEB_EXCLUDE_IFRAME__
+      ? new IframeManagerNoop()
+      : new IframeManager({
+          mirror,
+          mutationCb: wrappedMutationEmit,
+          stylesheetManager: stylesheetManager,
+          recordCrossOriginIframes,
+          wrappedEmit,
+        });
 
   /**
    * Exposes mirror to the plugins
@@ -334,21 +335,23 @@ function record<T = eventWithTime>(
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  canvasManager = __RRWEB_EXCLUDE_CANVAS__
-    ? new CanvasManagerNoop()
-    : new CanvasManager({
-        recordCanvas,
-        mutationCb: wrappedCanvasMutationEmit,
-        win: window,
-        blockClass,
-        blockSelector,
-        unblockSelector,
-        mirror,
-        sampling: sampling.canvas,
-        dataURLOptions,
-      });
+  canvasManager =
+    typeof __RRWEB_EXCLUDE_CANVAS__ === 'boolean' && __RRWEB_EXCLUDE_CANVAS__
+      ? new CanvasManagerNoop()
+      : new CanvasManager({
+          recordCanvas,
+          mutationCb: wrappedCanvasMutationEmit,
+          win: window,
+          blockClass,
+          blockSelector,
+          unblockSelector,
+          mirror,
+          sampling: sampling.canvas,
+          dataURLOptions,
+        });
 
   const shadowDomManager: ShadowDomManagerInterface =
+    typeof __RRWEB_EXCLUDE_SHADOW_DOM__ === 'boolean' &&
     __RRWEB_EXCLUDE_SHADOW_DOM__
       ? new ShadowDomManagerNoop()
       : new ShadowDomManager({
