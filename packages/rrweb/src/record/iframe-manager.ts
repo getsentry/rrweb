@@ -22,7 +22,7 @@ export interface IframeManagerInterface {
   attachIframe(
     iframeEl: HTMLIFrameElement,
     childSn: serializedNodeWithId,
-  ) : void;
+  ): void;
 }
 
 export class IframeManagerNoop implements IframeManagerInterface {
@@ -30,7 +30,7 @@ export class IframeManagerNoop implements IframeManagerInterface {
   public crossOriginIframeStyleMirror: CrossOriginIframeMirror;
   public crossOriginIframeRootIdMap: WeakMap<HTMLIFrameElement, number> =
     new WeakMap();
-    
+
   public addIframe() {
     // noop
   }

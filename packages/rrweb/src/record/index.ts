@@ -29,9 +29,21 @@ import {
   adoptedStyleSheetParam,
 } from '@sentry-internal/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
-import { IframeManager, IframeManagerInterface, IframeManagerNoop } from './iframe-manager';
-import { ShadowDomManager, ShadowDomManagerInterface, ShadowDomManagerNoop } from './shadow-dom-manager';
-import { CanvasManager, CanvasManagerInterface, CanvasManagerNoop } from './observers/canvas/canvas-manager';
+import {
+  IframeManager,
+  IframeManagerInterface,
+  IframeManagerNoop,
+} from './iframe-manager';
+import {
+  ShadowDomManager,
+  ShadowDomManagerInterface,
+  ShadowDomManagerNoop,
+} from './shadow-dom-manager';
+import {
+  CanvasManager,
+  CanvasManagerInterface,
+  CanvasManagerNoop,
+} from './observers/canvas/canvas-manager';
 import { StylesheetManager } from './stylesheet-manager';
 import ProcessedNodeManager from './processed-node-manager';
 import {
@@ -297,13 +309,15 @@ function record<T = eventWithTime>(
     adoptedStyleSheetCb: wrappedAdoptedStyleSheetEmit,
   });
 
-  const iframeManager: IframeManagerInterface = __RRWEB_EXCLUDE_IFRAME__ ? new IframeManagerNoop() :  new IframeManager({
-    mirror,
-    mutationCb: wrappedMutationEmit,
-    stylesheetManager: stylesheetManager,
-    recordCrossOriginIframes,
-    wrappedEmit,
-  });
+  const iframeManager: IframeManagerInterface = __RRWEB_EXCLUDE_IFRAME__
+    ? new IframeManagerNoop()
+    : new IframeManager({
+        mirror,
+        mutationCb: wrappedMutationEmit,
+        stylesheetManager: stylesheetManager,
+        recordCrossOriginIframes,
+        wrappedEmit,
+      });
 
   /**
    * Exposes mirror to the plugins
@@ -314,55 +328,60 @@ function record<T = eventWithTime>(
         nodeMirror: mirror,
         crossOriginIframeMirror: iframeManager.crossOriginIframeMirror,
         crossOriginIframeStyleMirror:
-        iframeManager.crossOriginIframeStyleMirror,
+          iframeManager.crossOriginIframeStyleMirror,
       });
   }
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  canvasManager = __RRWEB_EXCLUDE_CANVAS__ ? new CanvasManagerNoop() : new CanvasManager({
-    recordCanvas,
-    mutationCb: wrappedCanvasMutationEmit,
-    win: window,
-    blockClass,
-    blockSelector,
-    unblockSelector,
-    mirror,
-    sampling: sampling.canvas,
-    dataURLOptions,
-  });
+  canvasManager = __RRWEB_EXCLUDE_CANVAS__
+    ? new CanvasManagerNoop()
+    : new CanvasManager({
+        recordCanvas,
+        mutationCb: wrappedCanvasMutationEmit,
+        win: window,
+        blockClass,
+        blockSelector,
+        unblockSelector,
+        mirror,
+        sampling: sampling.canvas,
+        dataURLOptions,
+      });
 
-  const shadowDomManager: ShadowDomManagerInterface = __RRWEB_EXCLUDE_SHADOW_DOM__ ? new ShadowDomManagerNoop() :  new ShadowDomManager({
-    mutationCb: wrappedMutationEmit,
-    scrollCb: wrappedScrollEmit,
-    bypassOptions: {
-      onMutation,
-      blockClass,
-      blockSelector,
-      unblockSelector,
-      maskAllText,
-      maskTextClass,
-      unmaskTextClass,
-      maskTextSelector,
-      unmaskTextSelector,
-      inlineStylesheet,
-      maskInputOptions,
-      dataURLOptions,
-      maskAttributeFn,
-      maskTextFn,
-      maskInputFn,
-      recordCanvas,
-      inlineImages,
-      sampling,
-      slimDOMOptions,
-      iframeManager,
-      stylesheetManager,
-      canvasManager,
-      keepIframeSrcFn,
-      processedNodeManager,
-    },
-    mirror,
-  });
+  const shadowDomManager: ShadowDomManagerInterface =
+    __RRWEB_EXCLUDE_SHADOW_DOM__
+      ? new ShadowDomManagerNoop()
+      : new ShadowDomManager({
+          mutationCb: wrappedMutationEmit,
+          scrollCb: wrappedScrollEmit,
+          bypassOptions: {
+            onMutation,
+            blockClass,
+            blockSelector,
+            unblockSelector,
+            maskAllText,
+            maskTextClass,
+            unmaskTextClass,
+            maskTextSelector,
+            unmaskTextSelector,
+            inlineStylesheet,
+            maskInputOptions,
+            dataURLOptions,
+            maskAttributeFn,
+            maskTextFn,
+            maskInputFn,
+            recordCanvas,
+            inlineImages,
+            sampling,
+            slimDOMOptions,
+            iframeManager,
+            stylesheetManager,
+            canvasManager,
+            keepIframeSrcFn,
+            processedNodeManager,
+          },
+          mirror,
+        });
 
   takeFullSnapshot = (isCheckout = false) => {
     wrappedEmit(
