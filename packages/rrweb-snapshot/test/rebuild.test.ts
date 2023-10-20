@@ -59,8 +59,7 @@ describe('rebuild', function () {
             rr_width: '50px',
             rr_height: '50px',
           },
-          childNodes: [
-          ],
+          childNodes: [],
         },
         {
           doc: document,
