@@ -127,7 +127,6 @@ function buildNode(
   },
 ): Node | null {
   const { doc, hackCss, cache } = options;
-  console.log('buildNode');
   switch (n.type) {
     case NodeType.Document:
       return doc.implementation.createDocument(null, '', null);
