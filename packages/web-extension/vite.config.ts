@@ -12,8 +12,13 @@ function useSpecialFormat(
   return {
     name: 'use-special-format',
     config(config) {
-      const shouldUse =
-        config.build?.lib && entriesToUse.includes(config.build.lib.entry);
+      const entry = config.build?.lib && config.build.lib.entry;
+      const shouldUse = Array.isArray(entry)
+        ? entriesToUse.some((entryToUse) => entry.includes(entryToUse))
+        : typeof entry === 'string'
+        ? entriesToUse.includes(entry)
+        : false;
+
       if (shouldUse) {
         config.build = config.build ?? {};
         // @ts-expect-error: lib needs to be an object, forcing it.
