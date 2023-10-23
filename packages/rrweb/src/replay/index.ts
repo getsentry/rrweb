@@ -1960,7 +1960,7 @@ export class Replayer {
         styleSheet.rules,
         data.index,
       ) as unknown as CSSStyleRule;
-      rule.style.setProperty(
+      rule.style && rule.style.setProperty(
         data.set.property,
         data.set.value,
         data.set.priority,
@@ -1972,7 +1972,7 @@ export class Replayer {
         styleSheet.rules,
         data.index,
       ) as unknown as CSSStyleRule;
-      rule.style.removeProperty(data.remove.property);
+      rule.style && rule.style.removeProperty(data.remove.property);
     }
   }
 
