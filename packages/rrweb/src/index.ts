@@ -18,9 +18,6 @@ export type {
 
 export type { recordOptions } from './types';
 
-const { addCustomEvent } = record;
-const { freezePage } = record;
+export { record, Replayer, utils };
 
-export { record, addCustomEvent, freezePage, Replayer, utils };
-
-export { takeFullSnapshot, mirror } from './record';
+export { takeFullSnapshot, mirror, freezePage, addCustomEvent } from './record';
