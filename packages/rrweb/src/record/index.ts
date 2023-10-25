@@ -3,6 +3,7 @@ import {
   MaskInputOptions,
   SlimDOMOptions,
   createMirror,
+  DataURLOptions,
 } from '@sentry-internal/rrweb-snapshot';
 import { initObservers, mutationBuffers } from './observer';
 import {
@@ -27,6 +28,8 @@ import {
   scrollCallback,
   canvasMutationParam,
   adoptedStyleSheetParam,
+  SamplingStrategy,
+  blockClass,
 } from '@sentry-internal/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
 import {
@@ -112,6 +115,7 @@ function record<T = eventWithTime>(
     ignoreCSSAttributes = new Set([]),
     errorHandler,
     onMutation,
+    canvasManager: customCanvasManager,
   } = options;
 
   registerErrorHandler(errorHandler);
@@ -322,20 +326,18 @@ function record<T = eventWithTime>(
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  const canvasManager: CanvasManagerInterface =
-    typeof __RRWEB_EXCLUDE_CANVAS__ === 'boolean' && __RRWEB_EXCLUDE_CANVAS__
-      ? new CanvasManagerNoop()
-      : new CanvasManager({
-          recordCanvas,
-          mutationCb: wrappedCanvasMutationEmit,
-          win: window,
-          blockClass,
-          blockSelector,
-          unblockSelector,
-          mirror,
-          sampling: sampling.canvas,
-          dataURLOptions,
-        });
+  const canvasManager: CanvasManagerInterface = customCanvasManager
+    ? customCanvasManager
+    : typeof __RRWEB_EXCLUDE_CANVAS__ === 'boolean' && __RRWEB_EXCLUDE_CANVAS__
+    ? new CanvasManagerNoop()
+    : getCanvasManager({
+        recordCanvas,
+        blockClass,
+        blockSelector,
+        unblockSelector,
+        sampling,
+        dataURLOptions,
+      });
 
   const shadowDomManager: ShadowDomManagerInterface =
     typeof __RRWEB_EXCLUDE_SHADOW_DOM__ === 'boolean' &&
@@ -687,6 +689,14 @@ export function takeFullSnapshot(isCheckout?: boolean) {
   _takeFullSnapshot(isCheckout);
 }
 
+function wrappedEmit(e: eventWithTime) {
+  if (!_wrappedEmit) {
+    return;
+  }
+
+  _wrappedEmit(e);
+}
+
 // record.addCustomEvent is removed because Sentry Session Replay does not use it
 // record.freezePage is removed because Sentry Session Replay does not use it
 
@@ -695,3 +705,31 @@ record.mirror = mirror;
 record.takeFullSnapshot = takeFullSnapshot;
 
 export default record;
+
+const wrappedCanvasMutationEmit = (p: canvasMutationParam) =>
+  wrappedEmit(
+    wrapEvent({
+      type: EventType.IncrementalSnapshot,
+      data: {
+        source: IncrementalSource.CanvasMutation,
+        ...p,
+      },
+    }),
+  );
+
+export function getCanvasManager(options: {
+  recordCanvas: boolean;
+  blockClass: blockClass;
+  blockSelector: string | null;
+  unblockSelector: string | null;
+  sampling: SamplingStrategy;
+  dataURLOptions: DataURLOptions;
+}): CanvasManagerInterface {
+  return new CanvasManager({
+    ...options,
+    sampling: options.sampling.canvas,
+    mutationCb: wrappedCanvasMutationEmit,
+    win: window,
+    mirror,
+  });
+}

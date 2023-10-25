@@ -80,6 +80,7 @@ export type recordOptions<T> = {
   keepIframeSrcFn?: KeepIframeSrcFn;
   errorHandler?: ErrorHandler;
   onMutation?: (mutations: MutationRecord[]) => boolean;
+  canvasManager?: CanvasManagerInterface;
 };
 
 export type observerParam = {
