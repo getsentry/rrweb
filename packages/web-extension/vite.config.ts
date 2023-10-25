@@ -12,8 +12,11 @@ function useSpecialFormat(
   return {
     name: 'use-special-format',
     config(config) {
-      const entryOrEntries =  config.build?.lib ? config.build.lib.entry : undefined;
-      const entry = typeof entryOrEntries === 'string' ? entryOrEntries : undefined;
+      const entryOrEntries = config.build?.lib
+        ? config.build.lib.entry
+        : undefined;
+      const entry =
+        typeof entryOrEntries === 'string' ? entryOrEntries : undefined;
       const shouldUse = entry && entriesToUse.includes(entry);
       if (shouldUse) {
         config.build = config.build ?? {};
