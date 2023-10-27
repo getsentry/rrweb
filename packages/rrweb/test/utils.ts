@@ -711,6 +711,7 @@ export function generateRecordSnippet(options: recordOptions<eventWithTime>) {
     recordAfter: '${options.recordAfter || 'load'}',
     inlineImages: ${options.inlineImages},
     plugins: ${options.plugins}
+    canvasManager: ${options.recordCanvas ? 'rrweb.getCanvasManager()' : 'undefined'}
   });
   `;
 }
