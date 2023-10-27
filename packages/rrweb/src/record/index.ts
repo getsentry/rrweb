@@ -62,7 +62,6 @@ function wrapEvent(e: event): eventWithTime {
 }
 
 declare global {
-  const __RRWEB_EXCLUDE_CANVAS__: boolean;
   const __RRWEB_EXCLUDE_SHADOW_DOM__: boolean;
   const __RRWEB_EXCLUDE_IFRAME__: boolean;
 }
@@ -328,16 +327,7 @@ function record<T = eventWithTime>(
 
   const canvasManager: CanvasManagerInterface = customCanvasManager
     ? customCanvasManager
-    : typeof __RRWEB_EXCLUDE_CANVAS__ === 'boolean' && __RRWEB_EXCLUDE_CANVAS__
-    ? new CanvasManagerNoop()
-    : getCanvasManager({
-        recordCanvas,
-        blockClass,
-        blockSelector,
-        unblockSelector,
-        sampling,
-        dataURLOptions,
-      });
+    : new CanvasManagerNoop();
 
   const shadowDomManager: ShadowDomManagerInterface =
     typeof __RRWEB_EXCLUDE_SHADOW_DOM__ === 'boolean' &&
