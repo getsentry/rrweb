@@ -28,8 +28,6 @@ import {
   scrollCallback,
   canvasMutationParam,
   adoptedStyleSheetParam,
-  SamplingStrategy,
-  blockClass,
 } from '@sentry-internal/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
 import {
@@ -44,6 +42,7 @@ import {
 } from './shadow-dom-manager';
 import {
   CanvasManager,
+  CanvasManagerConstructorOptions,
   CanvasManagerInterface,
   CanvasManagerNoop,
 } from './observers/canvas/canvas-manager';
@@ -114,7 +113,7 @@ function record<T = eventWithTime>(
     ignoreCSSAttributes = new Set([]),
     errorHandler,
     onMutation,
-    canvasManager: customCanvasManager,
+    getCanvasManager,
   } = options;
 
   registerErrorHandler(errorHandler);
@@ -325,8 +324,15 @@ function record<T = eventWithTime>(
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  const canvasManager: CanvasManagerInterface = customCanvasManager
-    ? customCanvasManager
+  const canvasManager: CanvasManagerInterface = getCanvasManager
+    ? getCanvasManager({
+        recordCanvas,
+        blockClass,
+        blockSelector,
+        unblockSelector,
+        sampling: sampling['canvas'],
+        dataURLOptions,
+      })
     : new CanvasManagerNoop();
 
   const shadowDomManager: ShadowDomManagerInterface =
@@ -707,17 +713,14 @@ const wrappedCanvasMutationEmit = (p: canvasMutationParam) =>
     }),
   );
 
-export function getCanvasManager(options: {
-  recordCanvas: boolean;
-  blockClass: blockClass;
-  blockSelector: string | null;
-  unblockSelector: string | null;
-  sampling: SamplingStrategy;
-  dataURLOptions: DataURLOptions;
-}): CanvasManagerInterface {
+export function getCanvasManager(
+  options: Omit<
+    CanvasManagerConstructorOptions,
+    'mutationCb' | 'win' | 'mirror'
+  >,
+): CanvasManagerInterface {
   return new CanvasManager({
     ...options,
-    sampling: options.sampling.canvas,
     mutationCb: wrappedCanvasMutationEmit,
     win: window,
     mirror,

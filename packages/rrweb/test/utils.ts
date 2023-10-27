@@ -710,8 +710,10 @@ export function generateRecordSnippet(options: recordOptions<eventWithTime>) {
     recordCanvas: ${options.recordCanvas},
     recordAfter: '${options.recordAfter || 'load'}',
     inlineImages: ${options.inlineImages},
-    plugins: ${options.plugins}
-    canvasManager: ${options.recordCanvas ? 'rrweb.getCanvasManager()' : 'undefined'}
+    plugins: ${options.plugins},
+    getCanvasManager: ${
+      options.recordCanvas ? 'rrweb.getCanvasManager' : 'undefined'
+    }
   });
   `;
 }
