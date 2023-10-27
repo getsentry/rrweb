@@ -58,13 +58,14 @@ declare global {
   const __RRWEB_EXCLUDE_IFRAME__: boolean;
 }
 
-let wrappedEmit!: (e: eventWithTime, isCheckout?: boolean) => void;
+// These are stored in module scope because we access them in other exported methods
+let _wrappedEmit:
+  | undefined
+  | ((e: eventWithoutTime, isCheckout?: boolean) => void);
+let _takeFullSnapshot: undefined | ((isCheckout?: boolean) => void);
 
-let takeFullSnapshot!: (isCheckout?: boolean) => void;
-let canvasManager: CanvasManagerInterface;
-let recording = false;
+export const mirror = createMirror();
 
-const mirror = createMirror();
 function record<T = eventWithTime>(
   options: recordOptions<T> = {},
 ): listenerHandler | undefined {
@@ -200,7 +201,7 @@ function record<T = eventWithTime>(
     }
     return e as unknown as T;
   };
-  wrappedEmit = (r: eventWithoutTime, isCheckout?: boolean) => {
+  const wrappedEmit = (r: eventWithoutTime, isCheckout?: boolean) => {
     const e = r as eventWithTime;
     e.timestamp = nowTimestamp();
     if (
@@ -251,6 +252,7 @@ function record<T = eventWithTime>(
       }
     }
   };
+  _wrappedEmit = wrappedEmit;
 
   const wrappedMutationEmit = (m: mutationCallbackParam) => {
     wrappedEmit({
@@ -310,7 +312,7 @@ function record<T = eventWithTime>(
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  canvasManager =
+  const canvasManager: CanvasManagerInterface =
     typeof __RRWEB_EXCLUDE_CANVAS__ === 'boolean' && __RRWEB_EXCLUDE_CANVAS__
       ? new CanvasManagerNoop()
       : new CanvasManager({
@@ -361,7 +363,7 @@ function record<T = eventWithTime>(
           mirror,
         });
 
-  takeFullSnapshot = (isCheckout = false) => {
+  const takeFullSnapshot = (isCheckout = false) => {
     if (!recordDOM) {
       return;
     }
@@ -446,6 +448,7 @@ function record<T = eventWithTime>(
         mirror.getId(document),
       );
   };
+  _takeFullSnapshot = takeFullSnapshot;
 
   try {
     const handlers: listenerHandler[] = [];
@@ -589,7 +592,6 @@ function record<T = eventWithTime>(
     const init = () => {
       takeFullSnapshot();
       handlers.push(observe(document));
-      recording = true;
     };
     if (
       document.readyState === 'interactive' ||
@@ -623,7 +625,7 @@ function record<T = eventWithTime>(
     return () => {
       handlers.forEach((h) => h());
       processedNodeManager.destroy();
-      recording = false;
+      _takeFullSnapshot = undefined;
       unregisterErrorHandler();
     };
   } catch (error) {
@@ -632,30 +634,35 @@ function record<T = eventWithTime>(
   }
 }
 
-record.addCustomEvent = <T>(tag: string, payload: T) => {
-  if (!recording) {
+export function addCustomEvent<T>(tag: string, payload: T) {
+  if (!_wrappedEmit) {
     throw new Error('please add custom event after start recording');
   }
-  wrappedEmit({
+  _wrappedEmit({
     type: EventType.Custom,
     data: {
       tag,
       payload,
     },
   });
-};
+}
 
-record.freezePage = () => {
+export function freezePage() {
   mutationBuffers.forEach((buf) => buf.freeze());
-};
+}
 
-record.takeFullSnapshot = (isCheckout?: boolean) => {
-  if (!recording) {
+export function takeFullSnapshot(isCheckout?: boolean) {
+  if (!_takeFullSnapshot) {
     throw new Error('please take full snapshot after start recording');
   }
-  takeFullSnapshot(isCheckout);
-};
+  _takeFullSnapshot(isCheckout);
+}
 
+// record.addCustomEvent is removed because Sentry Session Replay does not use it
+// record.freezePage is removed because Sentry Session Replay does not use it
+
+// For backwards compatibility - we can eventually remove this when we migrated to using the exported `mirror` & `takeFullSnapshot`
 record.mirror = mirror;
+record.takeFullSnapshot = takeFullSnapshot;
 
 export default record;
