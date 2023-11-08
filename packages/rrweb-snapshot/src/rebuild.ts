@@ -71,6 +71,12 @@ export function adaptCssForReplay(cssText: string, cache: BuildCache): string {
   const cachedStyle = cache?.stylesWithHoverClass.get(cssText);
   if (cachedStyle) return cachedStyle;
 
+  if (cssText.length >= 1_000_000) {
+    // Skip adding hover class for large stylesheets, otherwise we will run
+    // into perf issues that will block main thread
+    return cssText;
+  }
+
   const ast = parse(cssText, {
     silent: true,
   });
