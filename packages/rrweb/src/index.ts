@@ -33,4 +33,3 @@ export {
   addCustomEvent,
   getCanvasManager,
 } from './record';
-
