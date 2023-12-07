@@ -12,15 +12,19 @@ export {
 } from '@sentry-internal/rrweb-types';
 
 export type {
+  canvasMutationParam,
+  canvasMutationData,
+  eventWithTime,
   fullSnapshotEvent,
   incrementalSnapshotEvent,
   inputData,
-  eventWithTime,
 } from '@sentry-internal/rrweb-types';
 
-export type { recordOptions } from './types';
+export type { ReplayPlugin, recordOptions } from './types';
 
 export { canvasMutation, record, Replayer, utils };
+
+export { deserializeArg } from './replay/canvas/deserialize-args';
 
 export {
   takeFullSnapshot,
