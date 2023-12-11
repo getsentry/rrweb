@@ -439,16 +439,13 @@ function record<T = eventWithTime>(
       return console.warn('Failed to snapshot the document');
     }
 
-    wrappedEmit(
-      {
-        type: EventType.FullSnapshot,
-        data: {
-          node,
-          initialOffset: getWindowScroll(window),
-        },
+    wrappedEmit({
+      type: EventType.FullSnapshot,
+      data: {
+        node,
+        initialOffset: getWindowScroll(window),
       },
-      isCheckout,
-    );
+    });
     mutationBuffers.forEach((buf) => buf.unlock()); // generate & emit any mutations that happened during snapshotting, as can now apply against the newly built mirror
 
     // Some old browsers don't support adoptedStyleSheets.
