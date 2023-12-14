@@ -337,14 +337,17 @@ function record<T = eventWithTime>(
 
   const processedNodeManager = new ProcessedNodeManager();
 
-  const canvasManager: CanvasManagerInterface = _getCanvasManager(getCanvasManager, {
-    recordCanvas,
-    blockClass,
-    blockSelector,
-    unblockSelector,
-    sampling: sampling['canvas'],
-    dataURLOptions,
-  });
+  const canvasManager: CanvasManagerInterface = _getCanvasManager(
+    getCanvasManager,
+    {
+      recordCanvas,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+      sampling: sampling['canvas'],
+      dataURLOptions,
+    },
+  );
 
   const shadowDomManager: ShadowDomManagerInterface =
     typeof __RRWEB_EXCLUDE_SHADOW_DOM__ === 'boolean' &&
@@ -737,11 +740,15 @@ type PublicGetCanvasManagerOptions = Omit<
   PrivateOptions
 >;
 
-interface PrivateGetCanvasManagerOptions extends PublicGetCanvasManagerOptions, Pick<CanvasManagerConstructorOptions, PrivateOptions> {}
+interface PrivateGetCanvasManagerOptions
+  extends PublicGetCanvasManagerOptions,
+    Pick<CanvasManagerConstructorOptions, PrivateOptions> {}
 
 function _getCanvasManager(
-  getCanvasManagerFn: undefined | ((options: PrivateGetCanvasManagerOptions) => CanvasManagerInterface),
-  options: PublicGetCanvasManagerOptions
+  getCanvasManagerFn:
+    | undefined
+    | ((options: PrivateGetCanvasManagerOptions) => CanvasManagerInterface),
+  options: PublicGetCanvasManagerOptions,
 ) {
   return getCanvasManagerFn
     ? getCanvasManagerFn({
