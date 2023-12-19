@@ -25,7 +25,10 @@
   "bugs": {
     "url": "https://github.com/getsentry/rrweb/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@sentry-internal/rrweb-snapshot": "2.6.0",
+    "@sentry-internal/rrweb-types": "2.6.0"
+  },
   "engines": {
     "node": ">=12"
   }

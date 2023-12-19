@@ -9,16 +9,25 @@
     "preserveConstEnums": true,
     "rootDir": "src",
     "outDir": "build",
-    "lib": ["webworker", "scripthost"],
+    "lib": [
+      "webworker",
+      "scripthost"
+    ],
     "allowSyntheticDefaultImports": true,
     "declarationMap": false,
     "skipLibCheck": true,
     "composite": true
   },
-  "references": [],
+  "references": [
+    {
+      "path": "../rrweb-snapshot"
+    }
+  ],
   "exclude": [
     "test",
     "scripts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }
