@@ -12920,11 +12920,6 @@ rollup-plugin-typescript2@^0.31.2:
     resolve "^1.20.0"
     tslib "^2.3.1"
 
-rollup-plugin-web-worker-loader@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/rollup-plugin-web-worker-loader/-/rollup-plugin-web-worker-loader-1.6.1.tgz"
-  integrity sha512-4QywQSz1NXFHKdyiou16mH3ijpcfLtLGOrAqvAqu1Gx+P8+zj+3gwC2BSL/VW1d+LW4nIHC8F7d7OXhs9UdR2A==
-
 rollup-pluginutils@^2.8.2:
   version "2.8.2"
   resolved "https://registry.npmjs.org/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz"
