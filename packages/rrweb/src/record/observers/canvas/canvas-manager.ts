@@ -272,8 +272,10 @@ export class CanvasManager implements CanvasManagerInterface {
               [bitmap],
             );
           })
-          .catch(() => {
-            // noop
+          .catch((error) => {
+            callbackWrapper(() => {
+              throw error;
+            })();
           });
       });
       rafId = requestAnimationFrame(takeCanvasSnapshots);
