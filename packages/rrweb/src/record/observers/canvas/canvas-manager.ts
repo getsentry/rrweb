@@ -20,6 +20,7 @@ import initCanvas2DMutationObserver from './2d';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';
 import { getImageBitmapDataUrlWorkerURL } from '@sentry-internal/rrweb-worker';
+import { callbackWrapper } from '../../error-handler';
 
 export type RafStamps = { latestId: number; invokeId: number | null };
 
@@ -110,15 +111,15 @@ export class CanvasManager implements CanvasManagerInterface {
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
 
-    if (recordCanvas && sampling === 'all')
-      this.initCanvasMutationObserver(
-        win,
-        blockClass,
-        blockSelector,
-        unblockSelector,
-      );
-    if (recordCanvas && typeof sampling === 'number')
-      try {
+    callbackWrapper(() => {
+      if (recordCanvas && sampling === 'all')
+        this.initCanvasMutationObserver(
+          win,
+          blockClass,
+          blockSelector,
+          unblockSelector,
+        );
+      if (recordCanvas && typeof sampling === 'number')
         this.initCanvasFPSObserver(
           sampling,
           win,
@@ -129,9 +130,7 @@ export class CanvasManager implements CanvasManagerInterface {
             dataURLOptions,
           },
         );
-      } catch {
-        // Error when initializing canvas...
-      }
+    })();
   }
 
   private processMutation: canvasManagerMutationCallback = (
