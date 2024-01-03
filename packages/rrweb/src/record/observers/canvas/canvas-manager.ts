@@ -35,10 +35,16 @@ export interface CanvasManagerInterface {
   unfreeze(): void;
   lock(): void;
   unlock(): void;
+  snapshot(
+    canvasElement: HTMLCanvasElement,
+    dataURLOptions: DataURLOptions,
+    sampling?: number | 'all',
+  ): void;
 }
 
 export interface CanvasManagerConstructorOptions {
   recordCanvas: boolean;
+  manualSnapshot?: boolean;
   mutationCb: canvasMutationCallback;
   win: IWindow;
   blockClass: blockClass;
@@ -63,6 +69,9 @@ export class CanvasManagerNoop implements CanvasManagerInterface {
     // noop
   }
   public unlock() {
+    // noop
+  }
+  public snapshot() {
     // noop
   }
 }
@@ -98,6 +107,20 @@ export class CanvasManager implements CanvasManagerInterface {
     this.locked = false;
   }
 
+  public snapshot(
+    canvasElement: HTMLCanvasElement,
+    dataURLOptions: DataURLOptions,
+    sampling?: number,
+  ) {
+    this.takeCanvasSnapshot(
+      sampling || 1,
+      {
+        dataURLOptions,
+      },
+      canvasElement,
+    );
+  }
+
   constructor(options: CanvasManagerConstructorOptions) {
     const {
       sampling = 'all',
@@ -112,14 +135,18 @@ export class CanvasManager implements CanvasManagerInterface {
     this.mirror = options.mirror;
 
     callbackWrapper(() => {
-      if (recordCanvas && sampling === 'all')
+      if (recordCanvas && sampling === 'all' && !options.manualSnapshot)
         this.initCanvasMutationObserver(
           win,
           blockClass,
           blockSelector,
           unblockSelector,
         );
-      if (recordCanvas && typeof sampling === 'number')
+      if (
+        recordCanvas &&
+        typeof sampling === 'number' &&
+        !options.manualSnapshot
+      )
         this.initCanvasFPSObserver(
           sampling,
           win,
@@ -326,6 +353,102 @@ export class CanvasManager implements CanvasManagerInterface {
       canvasContextReset();
       canvas2DReset();
       canvasWebGL1and2Reset();
+    };
+  }
+
+  private takeCanvasSnapshot(
+    fps: number,
+    options: {
+      dataURLOptions: DataURLOptions;
+    },
+    canvasElement: HTMLCanvasElement,
+  ) {
+    const snapshotInProgressMap: Map<number, boolean> = new Map();
+    const worker = new Worker(getImageBitmapDataUrlWorkerURL());
+    worker.onmessage = (e) => {
+      const data = e.data as ImageBitmapDataURLWorkerResponse;
+      const { id } = data;
+      snapshotInProgressMap.set(id, false);
+
+      if (!('base64' in data)) return;
+
+      const { base64, type, width, height } = data;
+      this.mutationCb({
+        id,
+        type: CanvasContext['2D'],
+        commands: [
+          {
+            property: 'clearRect', // wipe canvas
+            args: [0, 0, width, height],
+          },
+          {
+            property: 'drawImage', // draws (semi-transparent) image
+            args: [
+              {
+                rr_type: 'ImageBitmap',
+                args: [
+                  {
+                    rr_type: 'Blob',
+                    data: [{ rr_type: 'ArrayBuffer', base64 }],
+                    type,
+                  },
+                ],
+              } as CanvasArg,
+              0,
+              0,
+            ],
+          },
+        ],
+      });
+    };
+
+    const timeBetweenSnapshots = 1000 / fps;
+    let lastSnapshotTime = 0;
+    let rafId: number;
+
+    const getCanvas = (
+      canvasElement: HTMLCanvasElement,
+    ): HTMLCanvasElement[] => {
+      const matchedCanvas: HTMLCanvasElement[] = [];
+      matchedCanvas.push(canvasElement);
+      return matchedCanvas;
+    };
+
+    const takeCanvasSnapshots = (timestamp: DOMHighResTimeStamp) => {
+      if (
+        lastSnapshotTime &&
+        timestamp - lastSnapshotTime < timeBetweenSnapshots
+      ) {
+        rafId = requestAnimationFrame(takeCanvasSnapshots);
+        return;
+      }
+      lastSnapshotTime = timestamp;
+
+      getCanvas(canvasElement)
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        .forEach(async (canvas: HTMLCanvasElement) => {
+          const id = this.mirror.getId(canvas);
+          if (snapshotInProgressMap.get(id)) return;
+          snapshotInProgressMap.set(id, true);
+          const bitmap = await createImageBitmap(canvas);
+          worker.postMessage(
+            {
+              id,
+              bitmap,
+              width: canvas.width,
+              height: canvas.height,
+              dataURLOptions: options.dataURLOptions,
+            },
+            [bitmap],
+          );
+        });
+      rafId = requestAnimationFrame(takeCanvasSnapshots);
+    };
+
+    rafId = requestAnimationFrame(takeCanvasSnapshots);
+
+    this.resetObservers = () => {
+      cancelAnimationFrame(rafId);
     };
   }
 

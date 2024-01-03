@@ -744,7 +744,7 @@ interface PrivateGetCanvasManagerOptions
   extends PublicGetCanvasManagerOptions,
     Pick<CanvasManagerConstructorOptions, PrivateOptions> {}
 
-function _getCanvasManager(
+export function _getCanvasManager(
   getCanvasManagerFn:
     | undefined
     | ((options: PrivateGetCanvasManagerOptions) => CanvasManagerInterface),

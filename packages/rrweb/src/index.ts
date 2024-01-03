@@ -32,4 +32,5 @@ export {
   freezePage,
   addCustomEvent,
   getCanvasManager,
+  _getCanvasManager,
 } from './record';
