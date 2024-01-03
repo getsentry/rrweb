@@ -36,9 +36,9 @@ export interface CanvasManagerInterface {
   lock(): void;
   unlock(): void;
   snapshot(
-    canvasElement: HTMLCanvasElement,
     dataURLOptions: DataURLOptions,
-    sampling?: number,
+    sampling: number,
+    canvasElement?: HTMLCanvasElement,
   ): void;
 }
 
@@ -80,6 +80,7 @@ export class CanvasManager implements CanvasManagerInterface {
   private pendingCanvasMutations: pendingCanvasMutationsMap = new Map();
   private rafStamps: RafStamps = { latestId: 0, invokeId: null };
   private mirror: Mirror;
+  private window: IWindow;
 
   private mutationCb: canvasMutationCallback;
   private resetObservers?: listenerHandler;
@@ -108,12 +109,12 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   public snapshot(
-    canvasElement: HTMLCanvasElement,
     dataURLOptions: DataURLOptions,
-    sampling?: number,
+    sampling: number,
+    canvasElement?: HTMLCanvasElement,
   ) {
-    this.takeCanvasSnapshot(
-      sampling || 1,
+    this.canvasSnapshot(
+      sampling,
       {
         dataURLOptions,
       },
@@ -133,6 +134,7 @@ export class CanvasManager implements CanvasManagerInterface {
     } = options;
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
+    this.window = options.win;
 
     callbackWrapper(() => {
       if (recordCanvas && sampling === 'all' && !options.manualSnapshot)
@@ -356,12 +358,12 @@ export class CanvasManager implements CanvasManagerInterface {
     };
   }
 
-  private takeCanvasSnapshot(
+  private canvasSnapshot(
     fps: number,
     options: {
       dataURLOptions: DataURLOptions;
     },
-    canvasElement: HTMLCanvasElement,
+    canvasElement?: HTMLCanvasElement,
   ) {
     const snapshotInProgressMap: Map<number, boolean> = new Map();
     const worker = new Worker(getImageBitmapDataUrlWorkerURL());
@@ -407,10 +409,17 @@ export class CanvasManager implements CanvasManagerInterface {
     let rafId: number;
 
     const getCanvas = (
-      canvasElement: HTMLCanvasElement,
+      canvasElement?: HTMLCanvasElement,
     ): HTMLCanvasElement[] => {
       const matchedCanvas: HTMLCanvasElement[] = [];
-      matchedCanvas.push(canvasElement);
+      if (canvasElement) {
+        matchedCanvas.push(canvasElement);
+      } else {
+        this.window.document.querySelectorAll('canvas').forEach((canvas) => {
+          matchedCanvas.push(canvas);
+        });
+      }
+
       return matchedCanvas;
     };
 
