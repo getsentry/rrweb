@@ -38,7 +38,7 @@ export interface CanvasManagerInterface {
   snapshot(
     canvasElement: HTMLCanvasElement,
     dataURLOptions: DataURLOptions,
-    sampling?: number | 'all',
+    sampling?: number,
   ): void;
 }
 
