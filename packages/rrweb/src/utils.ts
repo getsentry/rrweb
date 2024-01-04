@@ -627,7 +627,6 @@ function getRequestAnimationFrameImplementation(): typeof requestAnimationFrame 
     requestAnimationFrameImplementation.bind(window));
 }
 
-
 export function onRequestAnimationFrame(
   ...rest: Parameters<typeof requestAnimationFrame>
 ): ReturnType<typeof requestAnimationFrame> {
