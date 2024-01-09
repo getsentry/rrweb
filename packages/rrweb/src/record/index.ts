@@ -739,7 +739,9 @@ export default record;
 function _getCanvasManager(
   getCanvasManagerFn:
     | undefined
-    | ((options: Partial<CanvasManagerConstructorOptions>) => CanvasManagerInterface),
+    | ((
+        options: Partial<CanvasManagerConstructorOptions>,
+      ) => CanvasManagerInterface),
   options: CanvasManagerConstructorOptions,
 ) {
   try {

@@ -26,12 +26,7 @@ export { record, Replayer, utils, canvasMutation };
 
 export { deserializeArg } from './replay/canvas/deserialize-args';
 
-export {
-  takeFullSnapshot,
-  mirror,
-  freezePage,
-  addCustomEvent,
-} from './record';
+export { takeFullSnapshot, mirror, freezePage, addCustomEvent } from './record';
 
-export {CanvasManager} from './record/observers/canvas/canvas-manager';
-export type {CanvasManagerConstructorOptions} from './record/observers/canvas/canvas-manager';
+export { CanvasManager } from './record/observers/canvas/canvas-manager';
+export type { CanvasManagerConstructorOptions } from './record/observers/canvas/canvas-manager';
