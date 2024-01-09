@@ -52,7 +52,7 @@ import {
   registerErrorHandler,
   unregisterErrorHandler,
 } from './error-handler';
-export type {CanvasManagerConstructorOptions} from './observers/canvas/canvas-manager';
+export type { CanvasManagerConstructorOptions } from './observers/canvas/canvas-manager';
 
 function wrapEvent(e: event): eventWithTime {
   const eWithTime = e as eventWithTime;
@@ -756,4 +756,4 @@ function _getCanvasManager(
   }
 }
 
-export {CanvasManager};
+export { CanvasManager };
