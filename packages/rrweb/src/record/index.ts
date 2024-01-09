@@ -40,6 +40,7 @@ import {
   ShadowDomManagerNoop,
 } from './shadow-dom-manager';
 import {
+  CanvasManager,
   CanvasManagerConstructorOptions,
   CanvasManagerInterface,
   CanvasManagerNoop,
@@ -51,6 +52,7 @@ import {
   registerErrorHandler,
   unregisterErrorHandler,
 } from './error-handler';
+export type {CanvasManagerConstructorOptions} from './observers/canvas/canvas-manager';
 
 function wrapEvent(e: event): eventWithTime {
   const eWithTime = e as eventWithTime;
@@ -753,3 +755,5 @@ function _getCanvasManager(
     return new CanvasManagerNoop();
   }
 }
+
+export {CanvasManager};
