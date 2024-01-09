@@ -66,10 +66,10 @@ const setup = function (
     ctx.page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
     await ctx.page.evaluate((canvasSample) => {
-      const { record, getCanvasManager } = (window as unknown as IWindow).rrweb;
+      const { record, CanvasManager } = (window as unknown as IWindow).rrweb;
       record({
         recordCanvas: true,
-        getCanvasManager,
+        getCanvasManager: (options) => new CanvasManager(options),
         sampling: {
           canvas: canvasSample,
         },
