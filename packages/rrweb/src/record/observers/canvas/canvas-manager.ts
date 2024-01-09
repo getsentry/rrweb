@@ -116,6 +116,7 @@ export class CanvasManager implements CanvasManagerInterface {
       blockSelector,
       unblockSelector,
       recordCanvas,
+      dataURLOptions,
     } = options;
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
@@ -135,10 +136,14 @@ export class CanvasManager implements CanvasManagerInterface {
         );
       if (recordCanvas && typeof sampling === 'number')
         this.initCanvasFPSObserver(
+          sampling,
           win,
           blockClass,
           blockSelector,
           unblockSelector,
+          {
+            dataURLOptions,
+          },
         );
     })();
   }
@@ -161,10 +166,14 @@ export class CanvasManager implements CanvasManagerInterface {
   };
 
   private initCanvasFPSObserver(
+    fps: number,
     win: IWindow,
     blockClass: blockClass,
     blockSelector: string | null,
     unblockSelector: string | null,
+    options: {
+      dataURLOptions: DataURLOptions;
+    },
   ) {
     const canvasContextReset = initCanvasContextObserver(
       win,
@@ -173,7 +182,15 @@ export class CanvasManager implements CanvasManagerInterface {
       unblockSelector,
       true,
     );
-    const rafId = this.takeSnapshot(false);
+    const rafId = this.takeSnapshot(
+      false,
+      fps,
+      win,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+      options.dataURLOptions,
+    );
 
     this.resetObservers = () => {
       canvasContextReset();
@@ -222,7 +239,16 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   private manualSnapshot(canvasElement?: HTMLCanvasElement) {
-    const rafId = this.takeSnapshot(true, canvasElement);
+    const rafId = this.takeSnapshot(
+      true,
+      this.options.sampling === 'all' ? 2 : this.options.sampling || 2,
+      this.options.win,
+      this.options.blockClass,
+      this.options.blockSelector,
+      this.options.unblockSelector,
+      this.options.dataURLOptions,
+      canvasElement,
+    );
 
     this.resetObservers = () => {
       cancelAnimationFrame(rafId);
@@ -231,6 +257,12 @@ export class CanvasManager implements CanvasManagerInterface {
 
   private takeSnapshot(
     manualSnapshot: boolean,
+    fps: number,
+    win: IWindow,
+    blockClass: blockClass,
+    blockSelector: string | null,
+    unblockSelector: string | null,
+    dataURLOptions: DataURLOptions,
     canvasElement?: HTMLCanvasElement,
   ) {
     const snapshotInProgressMap: Map<number, boolean> = new Map();
@@ -272,8 +304,7 @@ export class CanvasManager implements CanvasManagerInterface {
       });
     };
 
-    const timeBetweenSnapshots =
-      1000 / (this.options.sampling === 'all' ? 2 : this.options.sampling || 2);
+    const timeBetweenSnapshots = 1000 / fps;
     let lastSnapshotTime = 0;
     let rafId: number;
 
@@ -285,15 +316,9 @@ export class CanvasManager implements CanvasManagerInterface {
       }
 
       const matchedCanvas: HTMLCanvasElement[] = [];
-      window.document.querySelectorAll('canvas').forEach((canvas) => {
+      win.document.querySelectorAll('canvas').forEach((canvas) => {
         if (
-          !isBlocked(
-            canvas,
-            this.options.blockClass,
-            this.options.blockSelector,
-            this.options.unblockSelector,
-            true,
-          )
+          !isBlocked(canvas, blockClass, blockSelector, unblockSelector, true)
         ) {
           matchedCanvas.push(canvas);
         }
@@ -349,7 +374,7 @@ export class CanvasManager implements CanvasManagerInterface {
                 bitmap,
                 width: canvas.width,
                 height: canvas.height,
-                dataUrlOptions: this.options.dataURLOptions,
+                dataURLOptions,
               },
               [bitmap],
             );
