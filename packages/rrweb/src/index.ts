@@ -31,6 +31,5 @@ export {
   mirror,
   freezePage,
   addCustomEvent,
-  createCanvasManager,
   getCanvasManager,
 } from './record';

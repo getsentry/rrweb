@@ -70,7 +70,6 @@ let _wrappedEmit:
   | undefined
   | ((e: eventWithTime, isCheckout?: boolean) => void);
 let _takeFullSnapshot: undefined | ((isCheckout?: boolean) => void);
-let _canvasManager: undefined | CanvasManagerInterface;
 
 export const mirror = createMirror();
 
@@ -349,8 +348,6 @@ function record<T = eventWithTime>(
       dataURLOptions,
     },
   );
-
-  _canvasManager = canvasManager;
 
   const shadowDomManager: ShadowDomManagerInterface =
     typeof __RRWEB_EXCLUDE_SHADOW_DOM__ === 'boolean' &&
@@ -776,26 +773,4 @@ export function getCanvasManager(
   options: PublicGetCanvasManagerOptions,
 ): CanvasManagerInterface {
   return new CanvasManager(options as CanvasManagerConstructorOptions);
-}
-
-export function createCanvasManager(
-  options: PublicGetCanvasManagerOptions,
-): CanvasManagerInterface {
-  return _canvasManager
-    ? _canvasManager
-    : new CanvasManager({
-        ...options,
-        mirror,
-        win: window,
-        mutationCb: (p: canvasMutationParam) =>
-          wrappedEmit(
-            wrapEvent({
-              type: EventType.IncrementalSnapshot,
-              data: {
-                source: IncrementalSource.CanvasMutation,
-                ...p,
-              },
-            }),
-          ),
-      });
 }
