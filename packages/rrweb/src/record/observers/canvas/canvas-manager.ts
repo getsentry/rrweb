@@ -35,14 +35,7 @@ export interface CanvasManagerInterface {
   unfreeze(): void;
   lock(): void;
   unlock(): void;
-  snapshot(
-    dataURLOptions: DataURLOptions,
-    sampling: number,
-    blockClass: blockClass,
-    blockSelector: string | null,
-    unblockSelector: string | null,
-    canvasElement?: HTMLCanvasElement,
-  ): void;
+  snapshot(canvasElement?: HTMLCanvasElement): void;
 }
 
 export interface CanvasManagerConstructorOptions {
@@ -82,8 +75,8 @@ export class CanvasManagerNoop implements CanvasManagerInterface {
 export class CanvasManager implements CanvasManagerInterface {
   private pendingCanvasMutations: pendingCanvasMutationsMap = new Map();
   private rafStamps: RafStamps = { latestId: 0, invokeId: null };
+  private options: CanvasManagerConstructorOptions;
   private mirror: Mirror;
-  private window: IWindow;
 
   private mutationCb: canvasMutationCallback;
   private resetObservers?: listenerHandler;
@@ -111,24 +104,8 @@ export class CanvasManager implements CanvasManagerInterface {
     this.locked = false;
   }
 
-  public snapshot(
-    dataURLOptions: DataURLOptions,
-    sampling: number,
-    blockClass: blockClass,
-    blockSelector: string | null,
-    unblockSelector: string | null,
-    canvasElement?: HTMLCanvasElement,
-  ) {
-    this.manualSnapshot(
-      sampling,
-      {
-        dataURLOptions,
-      },
-      blockClass,
-      blockSelector,
-      unblockSelector,
-      canvasElement,
-    );
+  public snapshot(canvasElement?: HTMLCanvasElement) {
+    this.manualSnapshot(canvasElement);
   }
 
   constructor(options: CanvasManagerConstructorOptions) {
@@ -139,34 +116,31 @@ export class CanvasManager implements CanvasManagerInterface {
       blockSelector,
       unblockSelector,
       recordCanvas,
-      dataURLOptions,
     } = options;
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
-    this.window = options.win;
+    this.options = options;
 
-    if (!options.manualSnapshot) {
-      callbackWrapper(() => {
-        if (recordCanvas && sampling === 'all')
-          this.initCanvasMutationObserver(
-            win,
-            blockClass,
-            blockSelector,
-            unblockSelector,
-          );
-        if (recordCanvas && typeof sampling === 'number')
-          this.initCanvasFPSObserver(
-            sampling,
-            win,
-            blockClass,
-            blockSelector,
-            unblockSelector,
-            {
-              dataURLOptions,
-            },
-          );
-      })();
+    if (options.manualSnapshot) {
+      return;
     }
+
+    callbackWrapper(() => {
+      if (recordCanvas && sampling === 'all')
+        this.initCanvasMutationObserver(
+          win,
+          blockClass,
+          blockSelector,
+          unblockSelector,
+        );
+      if (recordCanvas && typeof sampling === 'number')
+        this.initCanvasFPSObserver(
+          win,
+          blockClass,
+          blockSelector,
+          unblockSelector,
+        );
+    })();
   }
 
   private processMutation: canvasManagerMutationCallback = (
@@ -187,14 +161,10 @@ export class CanvasManager implements CanvasManagerInterface {
   };
 
   private initCanvasFPSObserver(
-    fps: number,
     win: IWindow,
     blockClass: blockClass,
     blockSelector: string | null,
     unblockSelector: string | null,
-    options: {
-      dataURLOptions: DataURLOptions;
-    },
   ) {
     const canvasContextReset = initCanvasContextObserver(
       win,
@@ -203,16 +173,7 @@ export class CanvasManager implements CanvasManagerInterface {
       unblockSelector,
       true,
     );
-    const rafId = this.snapshotCanvas(
-      false,
-      fps,
-      options,
-      blockClass,
-      blockSelector,
-      unblockSelector,
-      undefined,
-      win,
-    );
+    const rafId = this.takeSnapshot(false);
 
     this.resetObservers = () => {
       canvasContextReset();
@@ -260,44 +221,18 @@ export class CanvasManager implements CanvasManagerInterface {
     };
   }
 
-  private manualSnapshot(
-    fps: number,
-    options: {
-      dataURLOptions: DataURLOptions;
-    },
-    blockClass: blockClass,
-    blockSelector: string | null,
-    unblockSelector: string | null,
-    canvasElement?: HTMLCanvasElement,
-  ) {
-    const rafId = this.snapshotCanvas(
-      true,
-      fps,
-      options,
-      blockClass,
-      blockSelector,
-      unblockSelector,
-      canvasElement,
-    );
+  private manualSnapshot(canvasElement?: HTMLCanvasElement) {
+    const rafId = this.takeSnapshot(true, canvasElement);
 
     this.resetObservers = () => {
       cancelAnimationFrame(rafId);
     };
   }
 
-  private snapshotCanvas(
+  private takeSnapshot(
     manualSnapshot: boolean,
-    fps: number,
-    options: {
-      dataURLOptions: DataURLOptions;
-    },
-    blockClass: blockClass,
-    blockSelector: string | null,
-    unblockSelector: string | null,
     canvasElement?: HTMLCanvasElement,
-    win?: IWindow,
   ) {
-    const window = win || this.window;
     const snapshotInProgressMap: Map<number, boolean> = new Map();
     const worker = new Worker(getImageBitmapDataUrlWorkerURL());
     worker.onmessage = (e) => {
@@ -337,36 +272,32 @@ export class CanvasManager implements CanvasManagerInterface {
       });
     };
 
-    const timeBetweenSnapshots = 1000 / fps;
+    const timeBetweenSnapshots =
+      1000 / (this.options.sampling === 'all' ? 2 : this.options.sampling || 2);
     let lastSnapshotTime = 0;
     let rafId: number;
 
     const getCanvas = (
       canvasElement?: HTMLCanvasElement,
     ): HTMLCanvasElement[] => {
-      const matchedCanvas: HTMLCanvasElement[] = [];
       if (canvasElement) {
+        return [canvasElement];
+      }
+
+      const matchedCanvas: HTMLCanvasElement[] = [];
+      window.document.querySelectorAll('canvas').forEach((canvas) => {
         if (
           !isBlocked(
-            canvasElement,
-            blockClass,
-            blockSelector,
-            unblockSelector,
+            canvas,
+            this.options.blockClass,
+            this.options.blockSelector,
+            this.options.unblockSelector,
             true,
           )
         ) {
-          matchedCanvas.push(canvasElement);
+          matchedCanvas.push(canvas);
         }
-      } else {
-        window.document.querySelectorAll('canvas').forEach((canvas) => {
-          if (
-            !isBlocked(canvas, blockClass, blockSelector, unblockSelector, true)
-          ) {
-            matchedCanvas.push(canvas);
-          }
-        });
-      }
-
+      });
       return matchedCanvas;
     };
 
@@ -375,7 +306,7 @@ export class CanvasManager implements CanvasManagerInterface {
         lastSnapshotTime &&
         timestamp - lastSnapshotTime < timeBetweenSnapshots
       ) {
-        rafId = requestAnimationFrame(takeCanvasSnapshots);
+        rafId = onRequestAnimationFrame(takeCanvasSnapshots);
         return;
       }
       lastSnapshotTime = timestamp;
@@ -418,7 +349,7 @@ export class CanvasManager implements CanvasManagerInterface {
                 bitmap,
                 width: canvas.width,
                 height: canvas.height,
-                dataURLOptions: options.dataURLOptions,
+                dataUrlOptions: this.options.dataURLOptions,
               },
               [bitmap],
             );
@@ -429,10 +360,10 @@ export class CanvasManager implements CanvasManagerInterface {
             })();
           });
       });
-      rafId = requestAnimationFrame(takeCanvasSnapshots);
+      rafId = onRequestAnimationFrame(takeCanvasSnapshots);
     };
 
-    rafId = requestAnimationFrame(takeCanvasSnapshots);
+    rafId = onRequestAnimationFrame(takeCanvasSnapshots);
     return rafId;
   }
 
