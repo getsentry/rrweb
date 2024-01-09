@@ -31,5 +31,7 @@ export {
   mirror,
   freezePage,
   addCustomEvent,
-  getCanvasManager,
 } from './record';
+
+export {CanvasManager} from './record/observers/canvas/canvas-manager';
+export type {CanvasManagerConstructorOptions} from './record/observers/canvas/canvas-manager';
