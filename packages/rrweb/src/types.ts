@@ -85,10 +85,7 @@ export type recordOptions<T> = {
   errorHandler?: ErrorHandler;
   onMutation?: (mutations: MutationRecord[]) => boolean;
   getCanvasManager?: (
-    options: Omit<
-      CanvasManagerConstructorOptions,
-      'mutationCb' | 'win' | 'mirror'
-    >,
+    options: CanvasManagerConstructorOptions,
   ) => CanvasManagerInterface;
 };
 
