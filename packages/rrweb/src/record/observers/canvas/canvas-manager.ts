@@ -104,10 +104,6 @@ export class CanvasManager implements CanvasManagerInterface {
     this.locked = false;
   }
 
-  public snapshot(canvasElement?: HTMLCanvasElement) {
-    this.manualSnapshot(canvasElement);
-  }
-
   constructor(options: CanvasManagerConstructorOptions) {
     const {
       sampling = 'all',
@@ -238,7 +234,7 @@ export class CanvasManager implements CanvasManagerInterface {
     };
   }
 
-  private manualSnapshot(canvasElement?: HTMLCanvasElement) {
+  public snapshot(canvasElement?: HTMLCanvasElement) {
     const { options } = this;
     const rafId = this.takeSnapshot(
       true,
