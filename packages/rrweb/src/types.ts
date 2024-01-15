@@ -71,6 +71,7 @@ export type recordOptions<T> = {
   packFn?: PackFn;
   sampling?: SamplingStrategy;
   dataURLOptions?: DataURLOptions;
+  isManualSnapshot?: boolean;
   recordCanvas?: boolean;
   recordCrossOriginIframes?: boolean;
   recordAfter?: 'DOMContentLoaded' | 'load';

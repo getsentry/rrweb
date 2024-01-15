@@ -101,6 +101,7 @@ function record<T = eventWithTime>(
     sampling = {},
     dataURLOptions = {},
     mousemoveWait,
+    isManualSnapshot,
     recordCanvas = false,
     recordCrossOriginIframes = false,
     recordAfter = options.recordAfter === 'DOMContentLoaded'
@@ -352,6 +353,7 @@ function record<T = eventWithTime>(
             },
           }),
         ),
+      isManualSnapshot,
       recordCanvas,
       blockClass,
       blockSelector,
