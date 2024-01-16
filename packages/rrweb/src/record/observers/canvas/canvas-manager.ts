@@ -235,7 +235,6 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   public snapshot(canvasElement?: HTMLCanvasElement) {
-    console.log('manual snapshot');
     const { options } = this;
     const rafId = this.takeSnapshot(
       true,
@@ -254,7 +253,7 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   private takeSnapshot(
-    enableManualSnapshot: boolean,
+    isManualSnapshot: boolean,
     fps: number,
     win: IWindow,
     blockClass: blockClass,
@@ -339,7 +338,7 @@ export class CanvasManager implements CanvasManagerInterface {
         if (snapshotInProgressMap.get(id)) return;
         snapshotInProgressMap.set(id, true);
         if (
-          !enableManualSnapshot &&
+          !isManualSnapshot &&
           ['webgl', 'webgl2'].includes((canvas as ICanvas).__context)
         ) {
           // if the canvas hasn't been modified recently,
