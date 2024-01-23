@@ -740,7 +740,7 @@ function serializeTextNode(
         unmaskTextSelector,
         isInputMasked,
       ),
-      element: (n as unknown) as HTMLElement,
+      element: n as unknown as HTMLElement,
       value: textContent,
       maskInputFn,
     });
