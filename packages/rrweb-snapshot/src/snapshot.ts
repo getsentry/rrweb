@@ -740,7 +740,7 @@ function serializeTextNode(
         unmaskTextSelector,
         isInputMasked,
       ),
-      element: n as unknown as HTMLElement,
+      element: (n as unknown) as HTMLElement,
       value: textContent,
       maskInputFn,
     });
@@ -813,7 +813,9 @@ function serializeElementNode(
   const len = n.attributes.length;
   for (let i = 0; i < len; i++) {
     const attr = n.attributes[i];
-    if (!ignoreAttribute(tagName, attr.name, attr.value)) {
+    // Looks like `attr.name` can be undefined although the types say differently
+    // see: https://github.com/getsentry/sentry-javascript/issues/10292
+    if (attr.name && !ignoreAttribute(tagName, attr.name, attr.value)) {
       attributes[attr.name] = transformAttribute(
         doc,
         tagName,
