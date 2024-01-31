@@ -347,6 +347,7 @@ function record<T = eventWithTime>(
       unblockSelector,
       sampling: sampling['canvas'],
       dataURLOptions,
+      errorHandler,
     },
   );
 
