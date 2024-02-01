@@ -404,9 +404,7 @@ describe('record integration tests', function (this: ISuite) {
   it('should not record input values for inputs we enforce', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');
-    await page.setContent(
-      getHtml.call(this, 'blank.html'),
-    );
+    await page.setContent(getHtml.call(this, 'blank.html'));
 
     // Dynamically add elements to page
     await page.evaluate(() => {
@@ -418,7 +416,6 @@ describe('record integration tests', function (this: ISuite) {
         'cc-exp-month',
         'cc-exp-year',
         'cc-csc',
-    
       ];
       const parent = document.body;
       autocompleteValues.forEach((autocomplete) => {
@@ -443,7 +440,6 @@ describe('record integration tests', function (this: ISuite) {
     await page.type('input[autocomplete="cc-exp-year"]', 'new');
     await page.type('input[autocomplete="cc-csc"]', 'new');
     await page.type('input[autocomplete="name"]', 'allowed');
-
 
     const snapshots = (await page.evaluate(
       'window.snapshots',
