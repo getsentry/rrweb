@@ -458,26 +458,38 @@ export function parse(css: string, options: ParserOptions = {}) {
     const len = splitSelectors.length;
     const finalSelectors = [];
     while (i < len) {
-      // Lo
+      // Look for selectors with opening parens - `(` and search rest of
+      // selectors for the first one with matching number of closing
+      // parens `)`
       const openingParensCount = (splitSelectors[i].match(/\(/g) || []).length;
+
       if (openingParensCount > 1) {
+        // At least one opening parens was found, prepare to look through
+        // rest of selectors
         let foundClosingSelector = false;
-        // Loop starting with next item in array, until we find matching number of ending parens
+
+        // Loop starting with next item in array, until we find matching
+        // number of ending parens
         j = i + 1;
         while (j < len) {
           // peek into next item to count the number of closing brackets
           if (
             (splitSelectors[j].match(/\)/g) || []).length === openingParensCount
           ) {
-            // Join all elements from i to j
+            // Matching # of closing parens was found, join all elements
+            // from i to j
             finalSelectors.push(splitSelectors.slice(i, j + 1).join(','));
+
             // we will want to skip the items that we have joined together
             i = j + 1;
+
             // Use to continue the outer loop
             foundClosingSelector = true;
+
             // break out of inner loop so we found matching closing parens
             break;
           }
+
           // No matching closing parens found, keep moving through index
           j++;
         }
@@ -489,8 +501,13 @@ export function parse(css: string, options: ParserOptions = {}) {
 
         // No matching closing selector was found, either invalid CSS,
         // or unbalanced number of opening parens were used as CSS
-        // selectors. Since no balance of parens were found, treat the
-        // rest of the list of selectors as selectors.
+        // selectors. Assume that rest of the list of selectors are
+        // selectors and break to avoid iterating through the list of
+        // selectors again.
+        splitSelectors
+          .slice(i, len)
+          .forEach((selector) => finalSelectors.push(selector));
+        break;
       }
 
       // No opening parens found, contiue looking through list

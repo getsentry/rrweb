@@ -137,7 +137,7 @@ describe('css parser', () => {
       ],
     ],
     ['.bar((( {}', ['.bar(((']],
-    ['.foo,.bar((( {}', ['.foo', '.bar(((']],
+    ['.foo,.bar(((,.baz {}', ['.foo', '.bar(((', '.baz']],
     [
       '.foo,.bar:has(input:is(:disabled)){color: red;}',
       ['.foo', '.bar:has(input:is(:disabled))'],
