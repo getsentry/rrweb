@@ -119,6 +119,64 @@ describe('css parser', () => {
     expect(out3).toEqual('[data-aa\\:other] { color: red; }');
   });
 
+  it.each([
+    ['.foo,.bar {}', ['.foo', '.bar']],
+    ['.bar:has(:disabled) {}', ['.bar:has(:disabled)']],
+    [
+      '.bar:has(input:is(:disabled),button:has(:disabled)) {}',
+      ['.bar:has(input:is(:disabled),button:has(:disabled))'],
+    ],
+    [
+      '.bar:has(input:is(:disabled),button:has(:disabled,.baz)) {}',
+      ['.bar:has(input:is(:disabled),button:has(:disabled,.baz))'],
+    ],
+    [
+      '.bar:has(input:is(:disabled),button:has(:disabled,.baz), div:has(:disabled,.baz)){color: red;}',
+      [
+        '.bar:has(input:is(:disabled),button:has(:disabled,.baz),div:has(:disabled,.baz))',
+      ],
+    ],
+    ['.bar((( {}', ['.bar(((']],
+    ['.foo,.bar((( {}', ['.foo', '.bar(((']],
+    [
+      '.foo,.bar:has(input:is(:disabled)){color: red;}',
+      ['.foo', '.bar:has(input:is(:disabled))'],
+    ],
+    [
+      '.foo,.bar:has(input:is(:disabled),button:has(:disabled,.baz)){color: red;}',
+      ['.foo', '.bar:has(input:is(:disabled),button:has(:disabled,.baz))'],
+    ],
+    [
+      '.foo,.bar:has(input:is(:disabled),button:has(:disabled), div:has(:disabled,.baz)){color: red;}',
+      [
+        '.foo',
+        '.bar:has(input:is(:disabled),button:has(:disabled),div:has(:disabled,.baz))',
+      ],
+    ],
+    [
+      '.foo,.bar:has(input:is(:disabled),button:has(:disabled,.baz), div:has(:disabled,.baz)){color: red;}',
+      [
+        '.foo',
+        '.bar:has(input:is(:disabled),button:has(:disabled,.baz),div:has(:disabled,.baz))',
+      ],
+    ],
+    ['.bar:has(:disabled), .foo {}', ['.bar:has(:disabled)', '.foo']],
+    [
+      '.bar:has(input:is(:disabled),.foo,button:is(:disabled)), .foo {}',
+      ['.bar:has(input:is(:disabled),.foo,button:is(:disabled))', '.foo'],
+    ],
+  ])(
+    'can parse selector(s) with functional pseudo classes: %s',
+    (cssText, expected) => {
+      expect(
+        parse(
+          cssText,
+          // @ts-ignore
+        ).stylesheet?.rules[0].selectors,
+      ).toEqual(expected);
+    },
+  );
+
   it('parses imports with quotes correctly', () => {
     const out1 = escapeImportStatement({
       cssText: `@import url("/foo.css;900;800"");`,

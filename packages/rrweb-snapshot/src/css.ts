@@ -437,15 +437,70 @@ export function parse(css: string, options: ParserOptions = {}) {
     }
     /* @fix Remove all comments from selectors
      * http://ostermiller.org/findcomment.html */
-    return trim(m[0])
+    const splitSelectors = trim(m[0])
       .replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*\/+/g, '')
       .replace(/"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/g, (m) => {
         return m.replace(/,/g, '\u200C');
       })
-      .split(/\s*(?![^(]*\)),\s*/)
-      .map((s) => {
+      .split(/\s*(?![^(]*\)),\s*/);
+
+    if (splitSelectors.length <= 1) {
+      return splitSelectors.map((s) => {
         return s.replace(/\u200C/g, ',');
       });
+    }
+
+    // For each selector, need to check if we properly split on `,`
+    // Example case where selector is:
+    // .bar:has(input:is(:disabled), button:is(:disabled))
+    let i = 0;
+    let j = 0;
+    const len = splitSelectors.length;
+    const finalSelectors = [];
+    while (i < len) {
+      // Lo
+      const openingParensCount = (splitSelectors[i].match(/\(/g) || []).length;
+      if (openingParensCount > 1) {
+        let foundClosingSelector = false;
+        // Loop starting with next item in array, until we find matching number of ending parens
+        j = i + 1;
+        while (j < len) {
+          // peek into next item to count the number of closing brackets
+          if (
+            (splitSelectors[j].match(/\)/g) || []).length === openingParensCount
+          ) {
+            // Join all elements from i to j
+            finalSelectors.push(splitSelectors.slice(i, j + 1).join(','));
+            // we will want to skip the items that we have joined together
+            i = j + 1;
+            // Use to continue the outer loop
+            foundClosingSelector = true;
+            // break out of inner loop so we found matching closing parens
+            break;
+          }
+          // No matching closing parens found, keep moving through index
+          j++;
+        }
+
+        if (foundClosingSelector) {
+          // Matching closing selector was found, move to next selector
+          continue;
+        }
+
+        // No matching closing selector was found, either invalid CSS,
+        // or unbalanced number of opening parens were used as CSS
+        // selectors. Since no balance of parens were found, treat the
+        // rest of the list of selectors as selectors.
+      }
+
+      // No opening parens found, contiue looking through list
+      finalSelectors.push(splitSelectors[i]);
+      i++;
+    }
+
+    return finalSelectors.map((s) => {
+      return s.replace(/\u200C/g, ',');
+    });
   }
 
   /**
