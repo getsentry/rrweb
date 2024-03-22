@@ -136,7 +136,7 @@ describe('css parser', () => {
       ['.bar:has(div,input:is(:disabled),button:has(:disabled,.baz))'],
     ],
     [
-      '.bar:has(input), .foo:has(input, button), .baz',
+      '.bar:has(input), .foo:has(input, button), .baz {}',
       ['.bar:has(input)', '.foo:has(input, button)', '.baz'],
     ],
     [
