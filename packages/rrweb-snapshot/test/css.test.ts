@@ -122,10 +122,7 @@ describe('css parser', () => {
   it.each([
     ['.foo,.bar {}', ['.foo', '.bar']],
     ['.bar:has(:disabled) {}', ['.bar:has(:disabled)']],
-    [
-      '.bar:has(input, button) {}',
-      ['.bar:has(input,button)'],
-    ],
+    ['.bar:has(input, button) {}', ['.bar:has(input,button)']],
     [
       '.bar:has(input:is(:disabled),button:has(:disabled)) {}',
       ['.bar:has(input:is(:disabled),button:has(:disabled))'],
@@ -175,9 +172,12 @@ describe('css parser', () => {
     ],
     [
       '.bar:has(input:is(:disabled),.foo,button:is(:disabled)), .foo:has(input, button), .baz,  {}',
-      ['.bar:has(input:is(:disabled),.foo,button:is(:disabled))', '.foo:has(input, button)', '.baz'],
+      [
+        '.bar:has(input:is(:disabled),.foo,button:is(:disabled))',
+        '.foo:has(input, button)',
+        '.baz',
+      ],
     ],
-
   ])(
     'can parse selector(s) with functional pseudo classes: %s',
     (cssText, expected) => {
