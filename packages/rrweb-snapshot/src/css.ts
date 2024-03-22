@@ -462,8 +462,11 @@ export function parse(css: string, options: ParserOptions = {}) {
       // selectors for the first one with matching number of closing
       // parens `)`
       const openingParensCount = (splitSelectors[i].match(/\(/g) || []).length;
+      const closingParensCount = (splitSelectors[i].match(/\)/g) || []).length;
+      let unbalancedParens = openingParensCount - closingParensCount;
+      console.log(splitSelectors);
 
-      if (openingParensCount >= 1) {
+      if (unbalancedParens >= 1) {
         // At least one opening parens was found, prepare to look through
         // rest of selectors
         let foundClosingSelector = false;
@@ -473,9 +476,14 @@ export function parse(css: string, options: ParserOptions = {}) {
         j = i + 1;
         while (j < len) {
           // peek into next item to count the number of closing brackets
-          if (
-            (splitSelectors[j].match(/\)/g) || []).length === openingParensCount
-          ) {
+          const nextOpeningParensCount = (splitSelectors[j].match(/\(/g) || [])
+            .length;
+          const nextClosingParensCount = (splitSelectors[j].match(/\)/g) || [])
+            .length;
+          const nextUnbalancedParens =
+            nextClosingParensCount - nextOpeningParensCount;
+
+          if (nextUnbalancedParens === unbalancedParens) {
             // Matching # of closing parens was found, join all elements
             // from i to j
             finalSelectors.push(splitSelectors.slice(i, j + 1).join(','));
@@ -490,8 +498,10 @@ export function parse(css: string, options: ParserOptions = {}) {
             break;
           }
 
-          // No matching closing parens found, keep moving through index
+          // No matching closing parens found, keep moving through index, but
+          // update the # of unbalanced parents still outstanding
           j++;
+          unbalancedParens -= nextUnbalancedParens;
         }
 
         if (foundClosingSelector) {
@@ -506,12 +516,12 @@ export function parse(css: string, options: ParserOptions = {}) {
         // selectors again.
         splitSelectors
           .slice(i, len)
-          .forEach((selector) => finalSelectors.push(selector));
+          .forEach((selector) => selector && finalSelectors.push(selector));
         break;
       }
 
       // No opening parens found, contiue looking through list
-      finalSelectors.push(splitSelectors[i]);
+      splitSelectors[i] && finalSelectors.push(splitSelectors[i]);
       i++;
     }
 

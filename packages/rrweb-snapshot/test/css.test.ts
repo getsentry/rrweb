@@ -122,18 +122,18 @@ describe('css parser', () => {
   it.each([
     ['.foo,.bar {}', ['.foo', '.bar']],
     ['.bar:has(:disabled) {}', ['.bar:has(:disabled)']],
-    ['.bar:has(input, button) {}', ['.bar:has(input,button)']],
+    ['.bar:has(input, button) {}', ['.bar:has(input, button)']],
     [
       '.bar:has(input:is(:disabled),button:has(:disabled)) {}',
       ['.bar:has(input:is(:disabled),button:has(:disabled))'],
     ],
     [
       '.bar:has(div, input:is(:disabled), button) {}',
-      ['.bar:has(div, input:is(:disabled), button)'],
+      ['.bar:has(div,input:is(:disabled), button)'],
     ],
     [
       '.bar:has(div, input:is(:disabled),button:has(:disabled,.baz)) {}',
-      ['.bar:has(div, input:is(:disabled),button:has(:disabled,.baz))'],
+      ['.bar:has(div,input:is(:disabled),button:has(:disabled,.baz))'],
     ],
     [
       '.bar:has(input:is(:disabled),button:has(:disabled,.baz), div:has(:disabled,.baz)){color: red;}',
@@ -142,6 +142,12 @@ describe('css parser', () => {
       ],
     ],
     ['.bar((( {}', ['.bar(((']],
+    [
+      '.bar:has(:has(:has(a), :has(:has(:has(b, :has(a), c), e))), input:is(:disabled), button) {}',
+      [
+        '.bar:has(:has(:has(a),:has(:has(:has(b,:has(a), c), e))),input:is(:disabled), button)',
+      ],
+    ],
     ['.foo,.bar(((,.baz {}', ['.foo', '.bar(((', '.baz']],
     [
       '.foo,.bar:has(input:is(:disabled)){color: red;}',
