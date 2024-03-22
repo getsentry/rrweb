@@ -464,7 +464,6 @@ export function parse(css: string, options: ParserOptions = {}) {
       const openingParensCount = (splitSelectors[i].match(/\(/g) || []).length;
       const closingParensCount = (splitSelectors[i].match(/\)/g) || []).length;
       let unbalancedParens = openingParensCount - closingParensCount;
-      console.log(splitSelectors);
 
       if (unbalancedParens >= 1) {
         // At least one opening parens was found, prepare to look through
