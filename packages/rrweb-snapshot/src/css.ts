@@ -463,7 +463,7 @@ export function parse(css: string, options: ParserOptions = {}) {
       // parens `)`
       const openingParensCount = (splitSelectors[i].match(/\(/g) || []).length;
 
-      if (openingParensCount > 1) {
+      if (openingParensCount >= 1) {
         // At least one opening parens was found, prepare to look through
         // rest of selectors
         let foundClosingSelector = false;
