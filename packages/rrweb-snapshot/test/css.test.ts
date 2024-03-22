@@ -136,6 +136,10 @@ describe('css parser', () => {
       ['.bar:has(div,input:is(:disabled),button:has(:disabled,.baz))'],
     ],
     [
+      '.bar:has(input), .foo:has(input, button), .baz',
+      ['.bar:has(input)', '.foo:has(input, button)', '.baz'],
+    ],
+    [
       '.bar:has(input:is(:disabled),button:has(:disabled,.baz), div:has(:disabled,.baz)){color: red;}',
       [
         '.bar:has(input:is(:disabled),button:has(:disabled,.baz),div:has(:disabled,.baz))',
