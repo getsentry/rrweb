@@ -252,6 +252,7 @@ function record<T = eventWithTime>(
         checkoutEveryNth && incrementalSnapshotCount >= checkoutEveryNth;
       const exceedTime =
         checkoutEveryNms &&
+        lastFullSnapshotEvent &&
         e.timestamp - lastFullSnapshotEvent.timestamp > checkoutEveryNms;
       if (exceedCount || exceedTime) {
         takeFullSnapshot(true);
