@@ -46,10 +46,23 @@ async function getTransparentBlobFor(
 // `as any` because: https://github.com/Microsoft/TypeScript/issues/20595
 const worker: ImageBitmapDataURLResponseWorker = self;
 
+function getScaledDimensions(width: number, height: number, maxSize?: number) {
+  // TODO: memoization could be a nice optimization here as canvas sizes should
+  // not be too dynamic
+  if (!maxSize || (width * height <= maxSize)) {
+    return [width, height];
+  }
+
+  const dimensionRatio = width / height;
+  const targetWidth = Math.sqrt(maxSize * dimensionRatio);
+  const targetHeight = targetWidth / dimensionRatio;
+  return [targetWidth, targetHeight];
+}
+
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 worker.onmessage = async function (e) {
   if ('OffscreenCanvas' in globalThis) {
-    const { id, bitmap, width, height, dataURLOptions } = e.data;
+    const { id, bitmap, width, height, maxCanvasSize, dataURLOptions } = e.data;
 
     const transparentBase64 = getTransparentBlobFor(
       width,
@@ -57,10 +70,12 @@ worker.onmessage = async function (e) {
       dataURLOptions,
     );
 
-    const offscreen = new OffscreenCanvas(width, height);
+    const [targetWidth, targetHeight] = getScaledDimensions(width, height, maxCanvasSize);
+    const offscreen = new OffscreenCanvas(targetWidth, targetHeight);
     const ctx = offscreen.getContext('2d')!;
 
-    ctx.drawImage(bitmap, 0, 0);
+    // resize bitmap to fit within maxsize
+    ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
     bitmap.close();
     const blob = await offscreen.convertToBlob(dataURLOptions); // takes a while
     const type = blob.type;
