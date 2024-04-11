@@ -49,7 +49,7 @@ const worker: ImageBitmapDataURLResponseWorker = self;
 function getScaledDimensions(width: number, height: number, maxSize?: number) {
   // TODO: memoization could be a nice optimization here as canvas sizes should
   // not be too dynamic
-  if (!maxSize || (width * height <= maxSize)) {
+  if (!maxSize || width * height <= maxSize) {
     return [width, height];
   }
 
@@ -70,7 +70,11 @@ worker.onmessage = async function (e) {
       dataURLOptions,
     );
 
-    const [targetWidth, targetHeight] = getScaledDimensions(width, height, maxCanvasSize);
+    const [targetWidth, targetHeight] = getScaledDimensions(
+      width,
+      height,
+      maxCanvasSize,
+    );
     const offscreen = new OffscreenCanvas(targetWidth, targetHeight);
     const ctx = offscreen.getContext('2d')!;
 
