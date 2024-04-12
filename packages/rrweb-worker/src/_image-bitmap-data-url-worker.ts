@@ -5,6 +5,8 @@ import type {
   ImageBitmapDataURLWorkerResponse,
 } from '@sentry-internal/rrweb-types';
 
+import { getScaledDimensions } from './getScaledDimensions'
+
 const lastBlobMap: Map<number, string> = new Map();
 const transparentBlobMap: Map<string, string> = new Map();
 
@@ -45,19 +47,6 @@ async function getTransparentBlobFor(
 
 // `as any` because: https://github.com/Microsoft/TypeScript/issues/20595
 const worker: ImageBitmapDataURLResponseWorker = self;
-
-function getScaledDimensions(width: number, height: number, maxSize?: number) {
-  // TODO: memoization could be a nice optimization here as canvas sizes should
-  // not be too dynamic
-  if (!maxSize || width * height <= maxSize) {
-    return [width, height];
-  }
-
-  const dimensionRatio = width / height;
-  const targetWidth = Math.sqrt(maxSize * dimensionRatio);
-  const targetHeight = targetWidth / dimensionRatio;
-  return [targetWidth, targetHeight];
-}
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 worker.onmessage = async function (e) {
