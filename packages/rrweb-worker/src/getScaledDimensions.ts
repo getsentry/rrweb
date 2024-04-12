@@ -1,7 +1,10 @@
-export function getScaledDimensions(width: number, height: number, maxSize?: [width: number, height: number]) {
+export function getScaledDimensions(
+  width: number,
+  height: number,
+  maxSize?: [width: number, height: number],
+) {
   if (!maxSize) {
     return [width, height];
-
   }
   const [maxWidth, maxHeight] = maxSize;
 
@@ -18,11 +21,11 @@ export function getScaledDimensions(width: number, height: number, maxSize?: [wi
 
   // scale down each dimension
   if (targetWidth > maxWidth) {
-    targetHeight = Math.floor(maxWidth * height / width);
+    targetHeight = Math.floor((maxWidth * height) / width);
     targetWidth = maxWidth;
   }
   if (targetHeight > maxHeight) {
-    targetWidth = Math.floor(maxHeight * width / height);
+    targetWidth = Math.floor((maxHeight * width) / height);
     targetHeight = maxHeight;
   }
 

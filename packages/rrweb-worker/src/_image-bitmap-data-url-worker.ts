@@ -5,7 +5,7 @@ import type {
   ImageBitmapDataURLWorkerResponse,
 } from '@sentry-internal/rrweb-types';
 
-import { getScaledDimensions } from './getScaledDimensions'
+import { getScaledDimensions } from './getScaledDimensions';
 
 const lastBlobMap: Map<number, string> = new Map();
 const transparentBlobMap: Map<string, string> = new Map();
@@ -66,10 +66,16 @@ worker.onmessage = async function (e) {
     );
     const offscreen = new OffscreenCanvas(targetWidth, targetHeight);
     const ctx = offscreen.getContext('bitmaprenderer')!;
-    const resizedBitmap = targetWidth === width && targetHeight === height ? bitmap :
-      // resize bitmap to fit within maxsize
-      // ~95% browser support https://caniuse.com/mdn-api_createimagebitmap_options_resizewidth_parameter
-      await createImageBitmap(bitmap, {resizeWidth: targetWidth, resizeHeight: targetHeight, resizeQuality: 'low'})
+    const resizedBitmap =
+      targetWidth === width && targetHeight === height
+        ? bitmap
+        : // resize bitmap to fit within maxsize
+          // ~95% browser support https://caniuse.com/mdn-api_createimagebitmap_options_resizewidth_parameter
+          await createImageBitmap(bitmap, {
+            resizeWidth: targetWidth,
+            resizeHeight: targetHeight,
+            resizeQuality: 'low',
+          });
 
     ctx.transferFromImageBitmap(resizedBitmap);
     bitmap.close();
