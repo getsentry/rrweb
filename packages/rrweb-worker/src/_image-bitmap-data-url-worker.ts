@@ -65,15 +65,21 @@ worker.onmessage = async function (e) {
       maxCanvasSize,
     );
     const offscreen = new OffscreenCanvas(targetWidth, targetHeight);
-    const ctx = offscreen.getContext('2d')!;
+    const ctx = offscreen.getContext('bitmaprenderer')!;
+    const resizedBitmap = targetWidth === width && targetHeight === height ? bitmap :
+      // resize bitmap to fit within maxsize
+      // ~95% browser support https://caniuse.com/mdn-api_createimagebitmap_options_resizewidth_parameter
+      await createImageBitmap(bitmap, {resizeWidth: targetWidth, resizeHeight: targetHeight, resizeQuality: 'low'})
 
-    // resize bitmap to fit within maxsize
-    ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+    ctx.transferFromImageBitmap(resizedBitmap);
     bitmap.close();
+
+    console.log(dataURLOptions);
     const blob = await offscreen.convertToBlob(dataURLOptions); // takes a while
     const type = blob.type;
     const arrayBuffer = await blob.arrayBuffer();
     const base64 = encode(arrayBuffer); // cpu intensive
+    resizedBitmap.close();
 
     // on first try we should check if canvas is transparent,
     // no need to save it's contents in that case
