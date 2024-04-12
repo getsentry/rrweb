@@ -80,7 +80,6 @@ worker.onmessage = async function (e) {
     ctx.transferFromImageBitmap(resizedBitmap);
     bitmap.close();
 
-    console.log(dataURLOptions);
     const blob = await offscreen.convertToBlob(dataURLOptions); // takes a while
     const type = blob.type;
     const arrayBuffer = await blob.arrayBuffer();
