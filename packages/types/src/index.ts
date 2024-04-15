@@ -523,6 +523,7 @@ export type ImageBitmapDataURLWorkerParams = {
   width: number;
   height: number;
   dataURLOptions: DataURLOptions;
+  maxCanvasSize?: [number, number];
 };
 
 export type ImageBitmapDataURLWorkerResponse =
