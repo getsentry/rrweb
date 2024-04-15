@@ -309,6 +309,8 @@ export class CanvasManager implements CanvasManagerInterface {
               } as CanvasArg,
               0,
               0,
+              // The below args are needed if we enforce a max size, we want to
+              // retain the original size when drawing the image (which should be smaller)
               width,
               height,
             ],
