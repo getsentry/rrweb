@@ -21,6 +21,7 @@ import {
   patch,
   StyleSheetMirror,
   nowTimestamp,
+  setTimeout,
 } from '../utils';
 import type { observerParam, MutationBufferParam } from '../types';
 import {
@@ -1242,12 +1243,8 @@ function initCustomElementObserver({
   customElementCb,
 }: observerParam): listenerHandler {
   const win = doc.defaultView as IWindow;
-  if (!win || !win.customElements) {
-    return () => {
-      // do nothing
-    };
-  }
-
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  if (!win || !win.customElements) return () => {};
   const restoreHandler = patch(
     win.customElements,
     'define',

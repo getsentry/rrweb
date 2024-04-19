@@ -97,6 +97,7 @@ function record<T = eventWithTime>(
     maskAttributeFn,
     maskInputFn,
     maskTextFn,
+    maxCanvasSize = null,
     packFn,
     sampling = {},
     dataURLOptions = {},
@@ -255,6 +256,7 @@ function record<T = eventWithTime>(
         checkoutEveryNth && incrementalSnapshotCount >= checkoutEveryNth;
       const exceedTime =
         checkoutEveryNms &&
+        lastFullSnapshotEvent &&
         e.timestamp - lastFullSnapshotEvent.timestamp > checkoutEveryNms;
       if (exceedCount || exceedTime) {
         takeFullSnapshot(true);
@@ -356,6 +358,7 @@ function record<T = eventWithTime>(
       blockClass,
       blockSelector,
       unblockSelector,
+      maxCanvasSize,
       sampling: sampling['canvas'],
       dataURLOptions,
       errorHandler,
