@@ -47,6 +47,7 @@ export interface CanvasManagerConstructorOptions {
   blockClass: blockClass;
   blockSelector: string | null;
   unblockSelector: string | null;
+  maxCanvasSize?: [number, number] | null;
   mirror: Mirror;
   dataURLOptions: DataURLOptions;
   errorHandler?: ErrorHandler;
@@ -113,6 +114,7 @@ export class CanvasManager implements CanvasManagerInterface {
       blockClass,
       blockSelector,
       unblockSelector,
+      maxCanvasSize,
       recordCanvas,
       dataURLOptions,
       errorHandler,
@@ -144,6 +146,7 @@ export class CanvasManager implements CanvasManagerInterface {
           blockClass,
           blockSelector,
           unblockSelector,
+          maxCanvasSize,
           {
             dataURLOptions,
           },
@@ -174,6 +177,7 @@ export class CanvasManager implements CanvasManagerInterface {
     blockClass: blockClass,
     blockSelector: string | null,
     unblockSelector: string | null,
+    maxCanvasSize: [number, number] | null | undefined,
     options: {
       dataURLOptions: DataURLOptions;
     },
@@ -192,6 +196,7 @@ export class CanvasManager implements CanvasManagerInterface {
       blockClass,
       blockSelector,
       unblockSelector,
+      maxCanvasSize,
       options.dataURLOptions,
     );
 
@@ -250,6 +255,7 @@ export class CanvasManager implements CanvasManagerInterface {
       options.blockClass,
       options.blockSelector,
       options.unblockSelector,
+      options.maxCanvasSize,
       options.dataURLOptions,
       canvasElement,
     );
@@ -266,6 +272,7 @@ export class CanvasManager implements CanvasManagerInterface {
     blockClass: blockClass,
     blockSelector: string | null,
     unblockSelector: string | null,
+    maxCanvasSize: [number, number] | null | undefined,
     dataURLOptions: DataURLOptions,
     canvasElement?: HTMLCanvasElement,
   ) {
@@ -302,6 +309,10 @@ export class CanvasManager implements CanvasManagerInterface {
               } as CanvasArg,
               0,
               0,
+              // The below args are needed if we enforce a max size, we want to
+              // retain the original size when drawing the image (which should be smaller)
+              width,
+              height,
             ],
           },
         ],
@@ -343,6 +354,9 @@ export class CanvasManager implements CanvasManagerInterface {
       getCanvas(canvasElement).forEach((canvas: HTMLCanvasElement) => {
         const id = this.mirror.getId(canvas);
         if (snapshotInProgressMap.get(id)) return;
+        // Don't do anything if canvas height/width is 0, otherwise causes
+        // `createImageBitmap()` to throw
+        if (!canvas.width || !canvas.height) return;
         snapshotInProgressMap.set(id, true);
         if (
           !isManualSnapshot &&
@@ -379,6 +393,7 @@ export class CanvasManager implements CanvasManagerInterface {
                 width: canvas.width,
                 height: canvas.height,
                 dataURLOptions,
+                maxCanvasSize,
               },
               [bitmap],
             );

@@ -1,5 +1,47 @@
 # Changelog
 
+## 2.14.0
+
+### Various fixes & improvements
+
+- sentry: add existing sentry tests (#182) by @billyvg
+- better splitting of selectors (#1440) by @billyvg
+- Fix for test cases mentioned in #1379 (#1401) by @billyvg
+- Revert "fix: Incorrect parsing of functional pseudo class css selector (#169)" (#182) by @billyvg
+- upstream: perf: only call `createHTMLDocument` where it is needed (#179) by @billyvg
+- upstream: perf(rrweb): attribute mutation optimization (#178) by @billyvg
+- upstream: Extended text masking function to include relevant HTMLElement (#164) by @billyvg
+- fix(player): Update import path to use sentry namespace (#177) by @billyvg
+- feat: Ensure to use unwrapped versions of `setTimeout` / `clearTimeout` (#176) by @mydea
+
+## 2.13.0
+
+### Various fixes & improvements
+
+- feat(canvas): Add "maxCanvasSize" option for canvas (#174) by @billyvg
+- test: skip flakey test (cross origin iframe) (#172) by @billyvg
+
+## 2.12.0
+
+### Various fixes & improvements
+
+- fix(canvas): `createImageBitmap` throws when canvas size is 0 (#170) by @billyvg
+- fix: fixes several cases where we access an undefined value (#171) by @billyvg
+- fix: Incorrect parsing of functional pseudo class css selector (#169) by @billyvg
+
+## 2.11.0
+
+- feat: Enforce masking of credit card fields (https://github.com/getsentry/rrweb/pull/166)
+- upstream: Feat: Add support for replaying :defined pseudo-class of custom elements (rrweb-io#1155) (https://github.com/getsentry/rrweb/pull/138)
+
+## 2.10.0
+
+### Various fixes & improvements
+
+- fix(replayer): `<style>` node `rules` attr can be undefined (#162) by @billyvg
+- feat: Register `errorHandler` inside of CanvasManager (#161) by @billyvg
+- fix(snaptshot): Ensure `attr.name` is defined when collecting element attributes (#160) by @Lms24
+
 ## 2.9.0
 
 - fix: Rename isManualSnapshot to enableManualSnapshot (#158)
