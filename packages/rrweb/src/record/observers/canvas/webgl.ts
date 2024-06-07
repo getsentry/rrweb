@@ -17,7 +17,7 @@ function patchGLPrototype(
   blockClass: blockClass,
   blockSelector: string | null,
   unblockSelector: string | null,
-  mirror: Mirror,
+  _mirror: Mirror,
   win: IWindow,
 ): listenerHandler[] {
   const handlers: listenerHandler[] = [];

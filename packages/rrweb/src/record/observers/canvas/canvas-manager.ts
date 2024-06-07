@@ -528,7 +528,7 @@ export class CanvasManager implements CanvasManagerInterface {
 
   flushPendingCanvasMutations() {
     this.pendingCanvasMutations.forEach(
-      (values: canvasMutationCommand[], canvas: HTMLCanvasElement) => {
+      (_values: canvasMutationCommand[], canvas: HTMLCanvasElement) => {
         const id = this.mirror.getId(canvas);
         this.flushPendingCanvasMutationFor(canvas, id);
       },

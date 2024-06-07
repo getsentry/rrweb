@@ -265,6 +265,7 @@ export function parse(css: string, options: ParserOptions = {}) {
    */
 
   class Position {
+    public static content: string;
     public content!: string;
     public start!: Loc;
     public end!: Loc;
@@ -274,6 +275,7 @@ export function parse(css: string, options: ParserOptions = {}) {
       this.start = start;
       this.end = { line: lineno, column };
       this.source = options.source;
+      this.content = Position.content;
     }
   }
 
@@ -281,7 +283,7 @@ export function parse(css: string, options: ParserOptions = {}) {
    * Non-enumerable source string
    */
 
-  Position.prototype.content = css;
+  Position.content = css;
 
   const errorsList: ParserError[] = [];
 
