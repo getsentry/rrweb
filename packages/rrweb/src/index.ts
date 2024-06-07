@@ -1,6 +1,10 @@
 import record from './record';
-
-import { Replayer } from './replay';
+import {
+  Replayer,
+  type playerConfig,
+  type PlayerMachineState,
+  type SpeedMachineState,
+} from './replay';
 import canvasMutation from './replay/canvas';
 import * as utils from './utils';
 
@@ -20,16 +24,22 @@ export type {
   inputData,
 } from '@sentry-internal/rrweb-types';
 
-export type { ReplayPlugin, recordOptions } from './types';
-
-export { record, Replayer, utils, canvasMutation };
-
+export type { recordOptions, ReplayPlugin } from './types';
 export { deserializeArg } from './replay/canvas/deserialize-args';
-
 export {
   CanvasManager,
-  takeFullSnapshot,
-  freezePage,
   addCustomEvent,
+  freezePage,
+  takeFullSnapshot,
 } from './record';
 export type { CanvasManagerConstructorOptions } from './record';
+
+export {
+  record,
+  Replayer,
+  playerConfig,
+  PlayerMachineState,
+  SpeedMachineState,
+  canvasMutation,
+  utils,
+};
