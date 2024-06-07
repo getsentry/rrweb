@@ -1,9 +1,15 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { addHoverClass, buildNodeWithSN, createCache } from '../src/rebuild';
+import { describe, it, beforeEach, expect } from 'vitest';
+import {
+  // adaptCssForReplay,
+  addHoverClass,
+  buildNodeWithSN,
+  createCache,
+} from '../src/rebuild';
 import { NodeType } from '../src/types';
 import { createMirror, Mirror } from '../src/utils';
 

@@ -4,6 +4,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
+import { vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 import {
   buildNodeWithSN,
@@ -27,7 +28,6 @@ import {
   RRElement,
   BaseRRNode as RRNode,
 } from '../src';
-import { compileTSCode } from './utils';
 
 const printRRDomCode = `
 /**
@@ -51,7 +51,7 @@ function walk(node, mirror, blankSpace) {
 `;
 
 describe('RRDocument for browser environment', () => {
-  jest.setTimeout(60_000);
+  vi.setConfig({ testTimeout: 60_000 });
   let mirror: Mirror;
   beforeEach(() => {
     mirror = new Mirror();
@@ -244,7 +244,10 @@ describe('RRDocument for browser environment', () => {
 
     beforeAll(async () => {
       browser = await puppeteer.launch();
-      code = await compileTSCode(path.resolve(__dirname, '../src/index.ts'));
+      code = fs.readFileSync(
+        path.resolve(__dirname, '../dist/rrdom.umd.cjs'),
+        'utf8',
+      );
     });
     afterAll(async () => {
       await browser.close();

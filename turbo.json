@@ -6,7 +6,9 @@
       "dependsOn": ["^prepare"],
       "outputs": ["lib/**", "es/**", "dist/**", "typings/**"]
     },
-    "test": {},
+    "test": {
+      "dependsOn": ["^prepublish"]
+    },
     "test:watch": {
       "persistent": true
     },
