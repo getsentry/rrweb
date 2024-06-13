@@ -11,7 +11,7 @@ import snapshot, {
 } from './snapshot';
 import rebuild, {
   buildNodeWithSN,
-  adaptCssForReplay,
+  addHoverClass,
   createCache,
 } from './rebuild';
 export * from './types';
@@ -22,7 +22,7 @@ export {
   serializeNodeWithId,
   rebuild,
   buildNodeWithSN,
-  adaptCssForReplay,
+  addHoverClass,
   createCache,
   transformAttribute,
   ignoreAttribute,
