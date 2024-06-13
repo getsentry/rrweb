@@ -36,11 +36,11 @@
   "module": "es/rrweb/packages/rrweb/src/entries/all.js",
   "unpkg": "dist/rrweb.js",
   "sideEffects": false,
-  "typings": "typings/entries/all.d.ts",
+  "typings": "typings/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "typings/entries/all.d.ts": [
-        "typings-ts3.8/entries/all.d.ts"
+      "typings/index.d.ts": [
+        "typings-ts3.8/index.d.ts"
       ]
     }
   },
