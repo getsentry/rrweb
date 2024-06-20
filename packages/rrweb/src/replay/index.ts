@@ -1267,14 +1267,6 @@ export class Replayer {
               } else if (d.type === MouseInteractions.TouchStart) {
                 void pointer.pointerEl.offsetWidth; // needed for the position update of moveAndHover to apply without the .touch-active transition
                 pointer.pointerEl.classList.add('touch-active');
-
-                // prevents multiple touch circles from staying on the screen
-                // when the user seeks by breadcrumbs
-                Object.values(this.pointers).forEach((p) => {
-                  if (p !== pointer) {
-                    p.pointerEl.classList.remove('touch-active');
-                  }
-                });
               } else if (d.type === MouseInteractions.TouchEnd) {
                 pointer.pointerEl.remove();
                 if (pointer.mouseTail) {
