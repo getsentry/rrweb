@@ -1223,7 +1223,7 @@ export class Replayer {
                 // prevents multiple touch circles from staying on the screen
                 // when the user seeks by breadcrumbs
                 Object.values(this.pointers).forEach((p) => {
-                  if (p !== pointer) {
+                  if (p !== pointer && !p.touchActive) {
                     p.touchActive = false;
                   }
                 });
