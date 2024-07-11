@@ -1,5 +1,18 @@
 # rrweb
 
+## 2.0.0-alpha.17
+
+### Patch Changes
+
+- [#1417](https://github.com/rrweb-io/rrweb/pull/1417) [`40bbc25`](https://github.com/rrweb-io/rrweb/commit/40bbc25fc287badc317a53f2d3f21b1c9f2b211b) Thanks [@YunFeng0817](https://github.com/YunFeng0817)! - fix: duplicate textContent for style elements cause incremental style mutations to be invalid
+
+- [#1527](https://github.com/rrweb-io/rrweb/pull/1527) [`68076b7`](https://github.com/rrweb-io/rrweb/commit/68076b724ff19d198d4f351a05063b85e1705a8c) Thanks [@arredgroup](https://github.com/arredgroup)! - Export takeFullSnapshot function for a recording process
+
+- Updated dependencies [[`40bbc25`](https://github.com/rrweb-io/rrweb/commit/40bbc25fc287badc317a53f2d3f21b1c9f2b211b)]:
+  - rrweb-snapshot@2.0.0-alpha.17
+  - rrdom@2.0.0-alpha.17
+  - @rrweb/types@2.0.0-alpha.17
+
 ## 2.0.0-alpha.16
 
 ### Patch Changes

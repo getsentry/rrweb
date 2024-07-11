@@ -1,5 +1,11 @@
 # rrweb-snapshot
 
+## 2.0.0-alpha.17
+
+### Patch Changes
+
+- [#1417](https://github.com/rrweb-io/rrweb/pull/1417) [`40bbc25`](https://github.com/rrweb-io/rrweb/commit/40bbc25fc287badc317a53f2d3f21b1c9f2b211b) Thanks [@YunFeng0817](https://github.com/YunFeng0817)! - fix: duplicate textContent for style elements cause incremental style mutations to be invalid
+
 ## 2.0.0-alpha.16
 
 ### Patch Changes

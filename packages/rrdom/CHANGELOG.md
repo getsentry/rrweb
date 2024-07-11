@@ -1,5 +1,12 @@
 # rrdom
 
+## 2.0.0-alpha.17
+
+### Patch Changes
+
+- Updated dependencies [[`40bbc25`](https://github.com/rrweb-io/rrweb/commit/40bbc25fc287badc317a53f2d3f21b1c9f2b211b)]:
+  - rrweb-snapshot@2.0.0-alpha.17
+
 ## 2.0.0-alpha.16
 
 ### Patch Changes
