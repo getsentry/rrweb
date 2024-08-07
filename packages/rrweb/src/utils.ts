@@ -670,3 +670,28 @@ export function clearTimeout(
 ): ReturnType<typeof window.clearTimeout> {
   return getImplementation('clearTimeout')(...rest);
 }
+
+/**
+ * Takes a styles attribute string and converts it to key value pairs
+ * @param styles - The full stype attributes string
+ *
+ */
+export function splitStyleAttributes(styles: string) {
+  const splitStyles = styles.split(';');
+  return splitStyles
+    .filter((value) => value.split(':').length == 2)
+    .map((style) => {
+      let [property, value] = style.trim().split(':');
+
+      property = property.trim();
+      value = value.trim();
+
+      // Convert kebab-case to camelCase
+      const camelCasedProperty = property.replace(
+        /-([a-z])/g,
+        (match, letter: string) => letter.toUpperCase(),
+      );
+
+      return { property: camelCasedProperty, value };
+    });
+}

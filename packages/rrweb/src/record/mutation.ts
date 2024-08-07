@@ -34,6 +34,7 @@ import {
   inDom,
   getShadowHost,
   closestElementOfNode,
+  splitStyleAttributes,
 } from '../utils';
 
 type DoubleLinkedListNode = {
@@ -659,7 +660,16 @@ export default class MutationBuffer {
             }
             const old = this.unattachedDoc.createElement('span');
             if (m.oldValue) {
-              old.setAttribute('style', m.oldValue);
+              console.log('yalc version 3');
+              // Split the style string into individual style rules
+              const styleAttributes = splitStyleAttributes(m.oldValue);
+
+              // set each style property individually to avoid csp error
+              styleAttributes.forEach(({ property, value }) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                old.style[property] = value;
+              });
             }
             for (const pname of Array.from(target.style)) {
               const newValue = target.style.getPropertyValue(pname);
