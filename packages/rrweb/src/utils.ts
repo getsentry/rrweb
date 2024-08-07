@@ -673,7 +673,7 @@ export function clearTimeout(
 
 /**
  * Takes a styles attribute string and converts it to key value pairs
- * @param styles - The full stype attributes string
+ * @param styles - The full styles attributes string
  *
  */
 export function splitStyleAttributes(styles: string) {
