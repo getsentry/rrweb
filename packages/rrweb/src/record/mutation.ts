@@ -660,7 +660,6 @@ export default class MutationBuffer {
             }
             const old = this.unattachedDoc.createElement('span');
             if (m.oldValue) {
-              console.log('yalc version 3');
               // Split the style string into individual style rules
               const styleAttributes = splitStyleAttributes(m.oldValue);
 
