@@ -335,6 +335,7 @@ function diffProps(
         // We want to continue diffing so we quietly catch
         // this exception. Otherwise, this can throw and bubble up to
         // the `ReplayerEvents.Flush` listener and break rendering
+        console.warn(err);
       }
     }
   }

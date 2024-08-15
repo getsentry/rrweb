@@ -358,6 +358,8 @@ describe('diff algorithm for rrdom', () => {
       expect((node as Node as HTMLElement).id).toBe('node1');
       expect((node as Node as HTMLElement).className).toBe('node');
       expect('@click' in (node as Node as HTMLElement)).toBe(false);
+      expect(warn).toHaveBeenCalledTimes(1);
+      warn.mockClear();
     });
 
     it('can update exist properties', () => {
