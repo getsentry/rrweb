@@ -454,3 +454,17 @@ export function clearTimeout(
 ): ReturnType<typeof window.clearTimeout> {
   return getImplementation('clearTimeout')(...rest);
 }
+
+/**
+ * Get the content document of an iframe.
+ * Catching errors is necessary because some older browsers block access to the content document of a sandboxed iframe.
+ */
+export function getIframeContentDocument(iframe?: HTMLIFrameElement) {
+  try {
+    if (iframe) {
+      return iframe.contentDocument;
+    }
+  } catch (e) {
+    // noop
+  }
+}
