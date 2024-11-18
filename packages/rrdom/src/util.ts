@@ -3,12 +3,10 @@
  * Catching errors is necessary because some older browsers block access to the content document of a sandboxed iframe.
  */
 export function getIFrameContentDocument(iframe?: HTMLIFrameElement) {
-  if (iframe) {
-    try {
-      return iframe.contentDocument;
-    } catch (e) {
-      // noop
-    }
+  try {
+    return (iframe as HTMLIFrameElement).contentDocument;
+  } catch (e) {
+    // noop
   }
 }
 
@@ -17,11 +15,9 @@ export function getIFrameContentDocument(iframe?: HTMLIFrameElement) {
  * Catching errors is necessary because some older browsers block access to the content document of a sandboxed iframe.
  */
 export function getIFrameContentWindow(iframe?: HTMLIFrameElement) {
-  if (iframe) {
-    try {
-      return iframe.contentWindow;
-    } catch (e) {
-      // noop
-    }
+  try {
+    return (iframe as HTMLIFrameElement).contentWindow;
+  } catch (e) {
+    // noop
   }
 }

@@ -461,9 +461,7 @@ export function clearTimeout(
  */
 export function getIframeContentDocument(iframe?: HTMLIFrameElement) {
   try {
-    if (iframe) {
-      return iframe.contentDocument;
-    }
+    return (iframe as HTMLIFrameElement).contentDocument;
   } catch (e) {
     // noop
   }
