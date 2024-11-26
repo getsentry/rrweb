@@ -736,7 +736,7 @@ describe('record', function (this: ISuite) {
     assertSnapshot(ctx.events);
   });
 
-  it.only('records correct "all" CSS property order for snapshots and mutations', async () => {
+  it('records correct "all" CSS property order for snapshots and mutations', async () => {
     await ctx.page.evaluate(() => {
       const { record } = (window as unknown as IWindow).rrweb;
 
