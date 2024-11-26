@@ -736,6 +736,79 @@ describe('record', function (this: ISuite) {
     assertSnapshot(ctx.events);
   });
 
+  it.only('records correct "all" CSS property order for snapshots and mutations', async () => {
+    await ctx.page.evaluate(() => {
+      const { record } = (window as unknown as IWindow).rrweb;
+
+      const div = document.createElement('div');
+      div.setAttribute('style', 'all: unset; padding: 8px 4px;');
+      div.innerText = 'Button';
+      document.body.appendChild(div);
+
+      const styleElement = document.createElement('style');
+      document.head.appendChild(styleElement);
+
+      const styleSheet = <CSSStyleSheet>styleElement.sheet;
+      // begin: pre-serialization
+      styleSheet.insertRule('.btn { all: unset; padding: 10px 15px; }');
+
+      record({
+        emit: (window as unknown as IWindow).emit,
+      });
+    });
+    await ctx.page.waitForTimeout(50);
+    assertSnapshot(ctx.events);
+
+    await ctx.page.evaluate(() => {
+      const style = document.getElementsByTagName('style')[0];
+      (style.sheet as CSSStyleSheet).insertRule(
+        '.btn {all: unset; padding: 2px 4px;}',
+      );
+      const div = document.createElement('div');
+      div.setAttribute('style', 'all:unset;padding:3px 6px;');
+      document.body.appendChild(div);
+
+      const style2 = document.createElement('style');
+      document.head.appendChild(style2);
+
+      const styleSheet = <CSSStyleSheet>style2.sheet;
+      // begin: pre-serialization
+      styleSheet.insertRule('.btn2 { all: unset; padding: 4px 8px; }');
+    });
+    ctx.page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+
+    await ctx.page.waitForTimeout(50);
+    const styleSheetMutations = ctx.events.filter(
+      (e) =>
+        e.type === EventType.IncrementalSnapshot &&
+        e.data.source === IncrementalSource.StyleSheetRule,
+    );
+    const mutations = ctx.events.filter(
+      (e) =>
+        e.type === EventType.IncrementalSnapshot &&
+        e.data.source === IncrementalSource.Mutation,
+    );
+
+    // @ts-expect-error data is unknown
+    expect(styleSheetMutations[0].data.adds).toEqual([
+      {
+        rule: '.btn {all: unset; padding: 2px 4px;}',
+      },
+    ]);
+    // @ts-expect-error data is unknown
+    expect(mutations[0].data.adds[0].node.attributes).toEqual({
+      style: 'all:unset;padding:3px 6px;',
+    });
+    // @ts-expect-error data is unknown
+    expect(mutations[0].data.adds[1].node).toMatchObject({
+      tagName: 'style',
+      attributes: {
+        _cssText:
+          '.btn2 { all:unset;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px; }',
+      },
+    });
+  });
+
   describe('loading stylesheets', () => {
     let server: Server;
     let serverURL: string;

@@ -106,6 +106,19 @@ export function stringifyStylesheet(s: CSSStyleSheet): string | null {
   }
 }
 
+/**
+ * There is a bug in chrome (https://issues.chromium.org/issues/41416124) with the `all` property where we can't use `cssText` because it is wrong.
+ * Instead, attempt to serialize the css string using `CSSStyleDeclaration`.
+ */
+export function fixAllCssProperty(rule: CSSStyleRule) {
+  let styles = '';
+  for (let i = 0; i < rule.style.length; i++) {
+    styles += `${rule.style[i]}:${rule.style.getPropertyValue(rule.style[i])};`;
+  }
+
+  return `${rule.selectorText} { ${styles} }`;
+}
+
 export function stringifyRule(rule: CSSRule): string {
   let importStringified;
   if (isCSSImportRule(rule)) {
@@ -119,10 +132,24 @@ export function stringifyRule(rule: CSSRule): string {
     } catch (error) {
       // ignore
     }
-  } else if (isCSSStyleRule(rule) && rule.selectorText.includes(':')) {
-    // Safari does not escape selectors with : properly
-    // see https://bugs.webkit.org/show_bug.cgi?id=184604
-    return fixSafariColons(rule.cssText);
+  } else if (isCSSStyleRule(rule)) {
+    let cssText = rule.cssText;
+    const needsSafariColonFix = rule.selectorText.includes(':');
+    const needsAllFix =
+      typeof rule.style['all'] === 'string' && rule.style['all'];
+
+    if (needsSafariColonFix) {
+      // Safari does not escape selectors with : properly
+      // see https://bugs.webkit.org/show_bug.cgi?id=184604
+      cssText = fixSafariColons(cssText);
+    }
+    if (needsAllFix) {
+      cssText = fixAllCssProperty(rule);
+    }
+
+    if (needsSafariColonFix || needsAllFix) {
+      return cssText;
+    }
   }
 
   return importStringified || rule.cssText;
