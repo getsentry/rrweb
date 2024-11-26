@@ -138,13 +138,18 @@ export function stringifyRule(rule: CSSRule): string {
     const needsAllFix =
       typeof rule.style['all'] === 'string' && rule.style['all'];
 
+    if (needsAllFix) {
+      cssText = fixAllCssProperty(rule);
+    }
+
     if (needsSafariColonFix) {
       // Safari does not escape selectors with : properly
       // see https://bugs.webkit.org/show_bug.cgi?id=184604
+      //
+      // This needs to be after `fixAllCssProperty()` which requires a
+      // `CssStylRule` and generates a string (i.e. `cssText`) and the below
+      // operates on `cssText`
       cssText = fixSafariColons(cssText);
-    }
-    if (needsAllFix) {
-      cssText = fixAllCssProperty(rule);
     }
 
     if (needsSafariColonFix || needsAllFix) {
