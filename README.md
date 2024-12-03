@@ -16,7 +16,7 @@ Apart from some small fixes/changes in this fork, these are the main relevant ch
 - Removed `plugins` related code, so passing `plugins: myPlugins` to `record()` will have no effect
 - Added build flags to allow to disable iframe, canvas & shadow dom recording (in order to get bundle size optimizations)
 - Remove canvas support by default - you have to pass `getCanvasManager` into the `record` method manually
-- Added ability to run inside an iframe and record the iframe's DOM
+- Added ability to run inside an iframe and record the iframe's parent's DOM using a build flag.
 
 # rrweb
 

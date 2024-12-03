@@ -55,9 +55,12 @@ import {
 } from './error-handler';
 export type { CanvasManagerConstructorOptions } from './observers/canvas/canvas-manager';
 
+import { getBaseDocument, getBaseWindow } from './document-utils';
+
 declare global {
   const __RRWEB_EXCLUDE_SHADOW_DOM__: boolean;
   const __RRWEB_EXCLUDE_IFRAME__: boolean;
+  const __RRWEB_RECORD_IFRAME_PARENT__: boolean;
 }
 
 let wrappedEmit!: (e: eventWithoutTime, isCheckout?: boolean) => void;
@@ -132,7 +135,7 @@ function record<T = eventWithTime>(
   registerErrorHandler(errorHandler);
 
   const inEmittingFrame = recordCrossOriginIframes
-    ? window.parent === window
+    ? getBaseWindow().parent === getBaseWindow()
     : true;
 
   let passEmitsToParent = false;
@@ -251,10 +254,10 @@ function record<T = eventWithTime>(
       const message: CrossOriginIframeMessageEventContent<T> = {
         type: 'rrweb',
         event: eventProcessor(e),
-        origin: window.location.origin,
+        origin: getBaseWindow().location.origin,
         isCheckout,
       };
-      window.parent.postMessage(message, '*');
+      getBaseWindow().parent.postMessage(message, '*');
     }
 
     if (e.type === EventType.FullSnapshot) {
@@ -353,7 +356,7 @@ function record<T = eventWithTime>(
     getCanvasManager,
     {
       mirror,
-      win: window,
+      win: getBaseWindow(),
       mutationCb: (p: canvasMutationParam) =>
         wrappedEmit({
           type: EventType.IncrementalSnapshot,
@@ -417,7 +420,7 @@ function record<T = eventWithTime>(
       {
         type: EventType.Meta,
         data: {
-          href: window.location.href,
+          href: getBaseWindow().location.href,
           width: getWindowWidth(),
           height: getWindowHeight(),
         },
@@ -431,7 +434,7 @@ function record<T = eventWithTime>(
     shadowDomManager.init();
 
     mutationBuffers.forEach((buf) => buf.lock()); // don't allow any mirror modifications during snapshotting
-    const node = snapshot(document, {
+    const node = snapshot(getBaseDocument(), {
       mirror,
       blockClass,
       blockSelector,
@@ -458,7 +461,7 @@ function record<T = eventWithTime>(
           stylesheetManager.trackLinkElement(n as HTMLLinkElement);
         }
         if (hasShadowRoot(n)) {
-          shadowDomManager.addShadowRoot(n.shadowRoot, document);
+          shadowDomManager.addShadowRoot(n.shadowRoot, getBaseDocument());
         }
       },
       onIframeLoad: (iframe, childSn) => {
@@ -482,16 +485,19 @@ function record<T = eventWithTime>(
       type: EventType.FullSnapshot,
       data: {
         node,
-        initialOffset: getWindowScroll(window),
+        initialOffset: getWindowScroll(getBaseWindow()),
       },
     });
     mutationBuffers.forEach((buf) => buf.unlock()); // generate & emit any mutations that happened during snapshotting, as can now apply against the newly built mirror
 
     // Some old browsers don't support adoptedStyleSheets.
-    if (document.adoptedStyleSheets && document.adoptedStyleSheets.length > 0)
+    if (
+      getBaseDocument().adoptedStyleSheets &&
+      getBaseDocument().adoptedStyleSheets.length > 0
+    )
       stylesheetManager.adoptStyleSheets(
-        document.adoptedStyleSheets,
-        mirror.getId(document),
+        getBaseDocument().adoptedStyleSheets,
+        mirror.getId(getBaseDocument()),
       );
   };
   _takeFullSnapshot = takeFullSnapshot;
@@ -651,11 +657,11 @@ function record<T = eventWithTime>(
 
     const init = () => {
       takeFullSnapshot();
-      handlers.push(observe(document));
+      handlers.push(observe(getBaseDocument()));
     };
     if (
-      document.readyState === 'interactive' ||
-      document.readyState === 'complete'
+      getBaseDocument().readyState === 'interactive' ||
+      getBaseDocument().readyState === 'complete'
     ) {
       init();
     } else {
@@ -678,7 +684,7 @@ function record<T = eventWithTime>(
             });
             if (recordAfter === 'load') init();
           },
-          window,
+          getBaseWindow(),
         ),
       );
     }
