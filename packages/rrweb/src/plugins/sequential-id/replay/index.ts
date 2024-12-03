@@ -1,6 +1,6 @@
 import type { SequentialIdOptions } from '../record';
 import type { ReplayPlugin } from '../../../types';
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import type { eventWithTime } from '@cartesianio/rrweb-types';
 
 type Options = SequentialIdOptions & {
   warnOnMissingId: boolean;

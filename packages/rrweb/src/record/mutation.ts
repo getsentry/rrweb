@@ -12,7 +12,7 @@ import {
   toLowerCase,
   getInputValue,
   shouldMaskInput,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-snapshot';
 import type { observerParam, MutationBufferParam } from '../types';
 import type {
   mutationRecord,
@@ -22,7 +22,7 @@ import type {
   addedNodeMutation,
   Optional,
   IWindow,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import {
   isBlocked,
   isAncestorRemoved,
@@ -35,7 +35,7 @@ import {
   getShadowHost,
   closestElementOfNode,
 } from '../utils';
-import { getIFrameContentDocument } from '@sentry-internal/rrdom';
+import { getIFrameContentDocument } from '@cartesianio/rrdom';
 
 type DoubleLinkedListNode = {
   previous: DoubleLinkedListNode | null;

@@ -4,7 +4,7 @@ import {
   canvasMutationCommand,
   canvasMutationData,
   canvasMutationParam,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import webglMutation from './webgl';
 import canvas2DMutation from './2d';
 

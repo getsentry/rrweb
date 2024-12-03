@@ -1,18 +1,15 @@
-import type {
-  Mirror,
-  serializedNodeWithId,
-} from '@sentry-internal/rrweb-snapshot';
-import { genId, NodeType } from '@sentry-internal/rrweb-snapshot';
+import type { Mirror, serializedNodeWithId } from '@cartesianio/rrweb-snapshot';
+import { genId, NodeType } from '@cartesianio/rrweb-snapshot';
 import type { CrossOriginIframeMessageEvent } from '../types';
 import CrossOriginIframeMirror from './cross-origin-iframe-mirror';
-import { EventType, IncrementalSource } from '@sentry-internal/rrweb-types';
+import { EventType, IncrementalSource } from '@cartesianio/rrweb-types';
 import type {
   eventWithTime,
   eventWithoutTime,
   mutationCallBack,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import type { StylesheetManager } from './stylesheet-manager';
-import { getIFrameContentDocument } from '@sentry-internal/rrdom';
+import { getIFrameContentDocument } from '@cartesianio/rrdom';
 
 export interface IframeManagerInterface {
   crossOriginIframeMirror: CrossOriginIframeMirror;

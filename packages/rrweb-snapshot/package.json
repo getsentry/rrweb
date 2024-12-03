@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrweb-snapshot",
+  "name": "@cartesianio/rrweb-snapshot",
   "version": "2.29.0",
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {

@@ -1,5 +1,5 @@
-import { EventType } from '@sentry-internal/rrweb-types';
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import { EventType } from '@cartesianio/rrweb-types';
+import type { eventWithTime } from '@cartesianio/rrweb-types';
 
 const now = Date.now();
 const events: eventWithTime[] = [

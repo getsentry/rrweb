@@ -3,7 +3,7 @@ import {
   eventWithTime,
   EventType,
   IncrementalSource,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { onRequestAnimationFrame } from '../utils';
 
 export class Timer {

@@ -9,7 +9,7 @@ export {
   IncrementalSource,
   MouseInteractions,
   ReplayerEvents,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 
 export type {
   canvasMutationParam,
@@ -18,7 +18,7 @@ export type {
   fullSnapshotEvent,
   incrementalSnapshotEvent,
   inputData,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 
 export type { ReplayPlugin, recordOptions } from './types';
 

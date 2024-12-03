@@ -6,7 +6,7 @@ import {
   EventType,
   Emitter,
   IncrementalSource,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { Timer, addDelay } from './timer';
 
 export type PlayerContext = {

@@ -1,19 +1,12 @@
-<p align="center">
-  <a href="https://sentry.io/?utm_source=github&utm_medium=logo" target="_blank">
-    <img src="https://sentry-brand.storage.googleapis.com/sentry-wordmark-dark-280x84.png" alt="Sentry" width="280" height="84">
-  </a>
-</p>
+# Cartesian rrweb Fork
 
-# Sentry rrweb Fork
+This repo is a fork of [rrweb](https://github.com/rrweb-io/rrweb). The purpose is to apply patches and bugfixes to rrweb and release Cartesian-internal packages with our patches included. All credits and attribution for rrweb go to the original creators of the library and all its contributors.
 
-This repo is a fork of [rrweb](https://github.com/rrweb-io/rrweb). The purpose is to apply patches and bugfixes to rrweb and release Sentry-internal packages with our patches included. All credits and attribution for rrweb go to the original creators of the library and all its contributors.
+From this monorepo, Cartesian maintains and publishes the following NPM packages:
 
-From this monorepo, Sentry maintains and publishes the following NPM packages:
-
-- `@sentry-internal/rrweb` (corresponds to the [original `rrweb` package](https://www.npmjs.com/package/rrweb))
-- `@sentry-internal/rrdom` (corresponds to the [original `rrdom` package](https://www.npmjs.com/package/rrdom))
-- `@sentry-internal/rrweb-player` (corresponds to the [original `rrweb-player` package](https://www.npmjs.com/package/rrweb-player))
-- `@sentry-internal/rrweb-snapshot` (corresponds to the [original `rrweb-snapshot` package](https://www.npmjs.com/package/rrweb-snapshot))
+- `@cartesianio/rrweb` (corresponds to the [original `rrweb` package](https://www.npmjs.com/package/rrweb))
+- `@cartesianio/rrdom` (corresponds to the [original `rrdom` package](https://www.npmjs.com/package/rrdom))
+- `@cartesianio/rrweb-snapshot` (corresponds to the [original `rrweb-snapshot` package](https://www.npmjs.com/package/rrweb-snapshot))
 
 ## Major changes from upstream branch
 
@@ -23,6 +16,7 @@ Apart from some small fixes/changes in this fork, these are the main relevant ch
 - Removed `plugins` related code, so passing `plugins: myPlugins` to `record()` will have no effect
 - Added build flags to allow to disable iframe, canvas & shadow dom recording (in order to get bundle size optimizations)
 - Remove canvas support by default - you have to pass `getCanvasManager` into the `record` method manually
+- Added ability to run inside an iframe and record the iframe's DOM
 
 # rrweb
 

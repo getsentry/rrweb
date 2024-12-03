@@ -1,5 +1,5 @@
-import type { RRNode } from '@sentry-internal/rrdom';
-import type { Mirror } from '@sentry-internal/rrweb-snapshot';
+import type { RRNode } from '@cartesianio/rrdom';
+import type { Mirror } from '@cartesianio/rrweb-snapshot';
 import SimplePeer from 'simple-peer-light';
 import type { Replayer } from '../../../replay';
 import type { ReplayPlugin } from '../../../types';

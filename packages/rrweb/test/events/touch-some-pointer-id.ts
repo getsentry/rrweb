@@ -2,7 +2,7 @@ import {
   EventType,
   IncrementalSource,
   MouseInteractions,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import type { eventWithTime } from '../../../types/src';
 
 const events: eventWithTime[] = [

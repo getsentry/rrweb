@@ -1,4 +1,4 @@
-import type { ICrossOriginIframeMirror } from '@sentry-internal/rrweb-types';
+import type { ICrossOriginIframeMirror } from '@cartesianio/rrweb-types';
 export default class CrossOriginIframeMirror
   implements ICrossOriginIframeMirror
 {

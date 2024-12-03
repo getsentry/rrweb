@@ -8,7 +8,7 @@ import {
   EventType,
   IncrementalSource,
   CanvasContext,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import {
   assertSnapshot,
   launchPuppeteer,
@@ -16,7 +16,7 @@ import {
   waitForRAF,
   waitForIFrameLoad,
 } from '../utils';
-import type { ICanvas } from '@sentry-internal/rrweb-snapshot';
+import type { ICanvas } from '@cartesianio/rrweb-snapshot';
 import type { CanvasManager } from '../../src/record/observers/canvas/canvas-manager';
 
 interface ISuite {

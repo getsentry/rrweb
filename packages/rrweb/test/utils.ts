@@ -1,4 +1,4 @@
-import { NodeType } from '@sentry-internal/rrweb-snapshot';
+import { NodeType } from '@cartesianio/rrweb-snapshot';
 import {
   EventType,
   IncrementalSource,
@@ -8,7 +8,7 @@ import {
   Optional,
   mouseInteractionData,
   pluginEvent,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import type { recordOptions } from '../src/types';
 import * as puppeteer from 'puppeteer';
 import { format } from 'prettier';

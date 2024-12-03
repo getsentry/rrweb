@@ -8,14 +8,14 @@ import type {
   IWindow,
   DeprecatedMirror,
   textMutation,
-} from '@sentry-internal/rrweb-types';
-import type { IMirror, Mirror } from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-types';
+import type { IMirror, Mirror } from '@cartesianio/rrweb-snapshot';
 import {
   createMatchPredicate,
   distanceToMatch,
-} from '@sentry-internal/rrweb-snapshot';
-import { isShadowRoot, IGNORED_NODE } from '@sentry-internal/rrweb-snapshot';
-import type { RRNode, RRIFrameElement } from '@sentry-internal/rrdom';
+} from '@cartesianio/rrweb-snapshot';
+import { isShadowRoot, IGNORED_NODE } from '@cartesianio/rrweb-snapshot';
+import type { RRNode, RRIFrameElement } from '@cartesianio/rrdom';
 
 export function on(
   type: string,

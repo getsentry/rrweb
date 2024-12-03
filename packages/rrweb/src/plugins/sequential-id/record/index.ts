@@ -1,4 +1,4 @@
-import type { RecordPlugin } from '@sentry-internal/rrweb-types';
+import type { RecordPlugin } from '@cartesianio/rrweb-types';
 
 export type SequentialIdOptions = {
   key: string;

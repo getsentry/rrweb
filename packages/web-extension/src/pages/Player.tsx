@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Replayer from '@sentry-internal/rrweb-player';
+import Replayer from '@cartesianio/rrweb-player';
 import {
   Box,
   Breadcrumb,

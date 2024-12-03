@@ -6,12 +6,12 @@ import type {
   MaskTextFn,
   DataURLOptions,
   MaskAttributeFn,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-snapshot';
 import type { PackFn, UnpackFn } from './packer/base';
 import type { IframeManagerInterface } from './record/iframe-manager';
 import type { ShadowDomManagerInterface } from './record/shadow-dom-manager';
 import type { Replayer } from './replay';
-import type { RRNode } from '@sentry-internal/rrdom';
+import type { RRNode } from '@cartesianio/rrdom';
 import type {
   CanvasManagerConstructorOptions,
   CanvasManagerInterface,
@@ -42,7 +42,7 @@ import type {
   styleDeclarationCallback,
   styleSheetRuleCallback,
   viewportResizeCallback,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import type ProcessedNodeManager from './record/processed-node-manager';
 
 export type recordOptions<T> = {
@@ -82,6 +82,7 @@ export type recordOptions<T> = {
   plugins?: RecordPlugin[];
   // departed, please use sampling options
   mousemoveWait?: number;
+  // TODO: what does this do?
   keepIframeSrcFn?: KeepIframeSrcFn;
   errorHandler?: ErrorHandler;
   onMutation?: (mutations: MutationRecord[]) => boolean;

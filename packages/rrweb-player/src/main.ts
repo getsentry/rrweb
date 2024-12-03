@@ -1,4 +1,4 @@
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import type { eventWithTime } from '@cartesianio/rrweb-types';
 import _Player from './Player.svelte';
 
 type PlayerProps = {

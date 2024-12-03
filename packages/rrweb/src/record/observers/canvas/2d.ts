@@ -4,7 +4,7 @@ import {
   canvasManagerMutationCallback,
   IWindow,
   listenerHandler,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { hookSetter, isBlocked, patch, setTimeout } from '../../../utils';
 import { serializeArgs } from './serialize-args';
 

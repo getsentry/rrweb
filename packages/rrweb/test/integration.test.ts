@@ -20,8 +20,8 @@ import {
   RecordPlugin,
   IncrementalSource,
   CanvasContext,
-} from '@sentry-internal/rrweb-types';
-import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-types';
+import { visitSnapshot, NodeType } from '@cartesianio/rrweb-snapshot';
 
 describe('record integration tests', function (this: ISuite) {
   jest.setTimeout(10_000);

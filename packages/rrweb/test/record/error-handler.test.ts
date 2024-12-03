@@ -6,7 +6,7 @@ import {
   listenerHandler,
   eventWithTime,
   EventType,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { launchPuppeteer } from '../utils';
 import {
   callbackWrapper,

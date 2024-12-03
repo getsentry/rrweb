@@ -1,4 +1,4 @@
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import type { eventWithTime } from '@cartesianio/rrweb-types';
 
 export enum SyncDataKey {
   settings = 'settings',

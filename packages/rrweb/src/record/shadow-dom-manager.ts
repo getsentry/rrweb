@@ -3,19 +3,19 @@ import type {
   mutationCallBack,
   scrollCallback,
   SamplingStrategy,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import {
   initMutationObserver,
   initScrollObserver,
   initAdoptedStyleSheetObserver,
 } from './observer';
 import { patch, inDom, setTimeout } from '../utils';
-import type { Mirror } from '@sentry-internal/rrweb-snapshot';
-import { isNativeShadowDom } from '@sentry-internal/rrweb-snapshot';
+import type { Mirror } from '@cartesianio/rrweb-snapshot';
+import { isNativeShadowDom } from '@cartesianio/rrweb-snapshot';
 import {
   getIFrameContentDocument,
   getIFrameContentWindow,
-} from '@sentry-internal/rrdom';
+} from '@cartesianio/rrdom';
 
 type BypassOptions = Omit<
   MutationBufferParam,

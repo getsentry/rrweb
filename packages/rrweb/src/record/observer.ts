@@ -7,7 +7,7 @@ import {
   toLowerCase,
   needMaskingText,
   toUpperCase,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
 import {
   throttle,
@@ -37,7 +37,7 @@ import {
   IWindow,
   SelectionRange,
   hooksParam,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import MutationBuffer from './mutation';
 import { callbackWrapper } from './error-handler';
 

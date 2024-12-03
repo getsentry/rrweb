@@ -8,7 +8,7 @@ import {
   serializedNodeWithId,
   createMirror,
   Mirror as NodeMirror,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-snapshot';
 import {
   buildFromDom,
   getDefaultSN,
@@ -25,14 +25,14 @@ import {
   sameNodeType,
 } from '../src/diff';
 import type { IRRElement, IRRNode } from '../src/document';
-import { Replayer } from '@sentry-internal/rrweb';
+import { Replayer } from '@cartesianio/rrweb';
 import type {
   eventWithTime,
   canvasMutationData,
   styleDeclarationData,
   styleSheetRuleData,
-} from '@sentry-internal/rrweb-types';
-import { EventType, IncrementalSource } from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
+import { EventType, IncrementalSource } from '@cartesianio/rrweb-types';
 import { compileTSCode } from './utils';
 
 const elementSn = {

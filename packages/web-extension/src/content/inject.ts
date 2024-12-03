@@ -1,6 +1,6 @@
-import { record } from '@sentry-internal/rrweb';
-import type { recordOptions } from '@sentry-internal/rrweb';
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import { record } from '@cartesianio/rrweb';
+import type { recordOptions } from '@cartesianio/rrweb';
+import type { eventWithTime } from '@cartesianio/rrweb-types';
 import { MessageName, RecordStartedMessage } from '~/types';
 import { isInCrossOriginIFrame } from '~/utils';
 

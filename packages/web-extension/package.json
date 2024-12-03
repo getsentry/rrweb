@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrweb-web-extension",
+  "name": "@cartesianio/rrweb-web-extension",
   "private": true,
   "version": "2.29.0",
   "description": "The web extension of rrweb which helps to run rrweb on any website out of box",
@@ -16,7 +16,7 @@
     "prepare": "npm run pack:chrome && npm run pack:firefox"
   },
   "devDependencies": {
-    "@sentry-internal/rrweb-types": "2.29.0",
+    "@cartesianio/rrweb-types": "2.29.0",
     "@types/react-dom": "^18.0.6",
     "@types/webextension-polyfill": "^0.9.1",
     "@vitejs/plugin-react": "^2.1.0",
@@ -31,8 +31,8 @@
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@sentry-internal/rrweb": "2.29.0",
-    "@sentry-internal/rrweb-player": "2.29.0",
+    "@cartesianio/rrweb": "2.29.0",
+    "@cartesianio/rrweb-player": "2.29.0",
     "@tanstack/react-table": "^8.5.22",
     "framer-motion": "^7.3.6",
     "idb": "^7.1.1",

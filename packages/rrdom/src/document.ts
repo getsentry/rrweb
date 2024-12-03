@@ -1,4 +1,4 @@
-import { NodeType as RRNodeType } from '@sentry-internal/rrweb-snapshot';
+import { NodeType as RRNodeType } from '@cartesianio/rrweb-snapshot';
 import { parseCSSText, camelize, toCSSText } from './style';
 export interface IRRNode {
   parentElement: IRRNode | null;

@@ -1,14 +1,14 @@
 import type {
   elementNode,
   serializedNodeWithId,
-} from '@sentry-internal/rrweb-snapshot';
-import { stringifyRule } from '@sentry-internal/rrweb-snapshot';
+} from '@cartesianio/rrweb-snapshot';
+import { stringifyRule } from '@cartesianio/rrweb-snapshot';
 import type {
   adoptedStyleSheetCallback,
   adoptedStyleSheetParam,
   attributeMutation,
   mutationCallBack,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { StyleSheetMirror } from '../utils';
 
 export class StylesheetManager {

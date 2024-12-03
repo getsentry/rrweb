@@ -2,7 +2,7 @@ import type {
   listenerHandler,
   RecordPlugin,
   IWindow,
-} from '@sentry-internal/rrweb-types';
+} from '@cartesianio/rrweb-types';
 import { patch } from '../../../utils';
 import { ErrorStackParser, StackFrame } from './error-stack-parser';
 import { stringify } from './stringify';
