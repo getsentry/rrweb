@@ -1,4 +1,4 @@
-import { IWindow } from '@cartesianio/rrweb-types';
+import type { IWindow } from '@cartesianio/rrweb-types';
 
 export function getBaseWindow(): IWindow {
   if (

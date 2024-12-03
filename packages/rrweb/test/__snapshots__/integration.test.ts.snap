@@ -7979,7 +7979,7 @@ exports[`record integration tests mutations should work when blocked class is un
                         \\"attributes\\": {
                           \\"class\\": \\"rr-block\\",
                           \\"rr_width\\": \\"1904px\\",
-                          \\"rr_height\\": \\"21px\\"
+                          \\"rr_height\\": \\"21.5px\\"
                         },
                         \\"childNodes\\": [],
                         \\"id\\": 84
