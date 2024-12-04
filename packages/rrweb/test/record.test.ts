@@ -749,7 +749,6 @@ describe('record', function (this: ISuite) {
       document.head.appendChild(styleElement);
 
       const styleSheet = <CSSStyleSheet>styleElement.sheet;
-      // begin: pre-serialization
       styleSheet.insertRule('.btn { all: unset; padding: 10px 15px; }');
 
       record({
@@ -772,7 +771,6 @@ describe('record', function (this: ISuite) {
       document.head.appendChild(style2);
 
       const styleSheet = <CSSStyleSheet>style2.sheet;
-      // begin: pre-serialization
       styleSheet.insertRule('.btn2 { all: unset; padding: 4px 8px; }');
     });
     ctx.page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
@@ -807,6 +805,34 @@ describe('record', function (this: ISuite) {
           '.btn2 { all:unset;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px; }',
       },
     });
+  });
+
+  it('handles `!important` with "all" CSS property', async () => {
+    await ctx.page.evaluate(() => {
+      const { record } = (window as unknown as IWindow).rrweb;
+
+      const div = document.createElement('div');
+      div.setAttribute(
+        'style',
+        'all: unset !important; padding: 8px 4px !important;',
+      );
+      div.innerText = 'Button';
+      document.body.appendChild(div);
+
+      const styleElement = document.createElement('style');
+      document.head.appendChild(styleElement);
+
+      const styleSheet = <CSSStyleSheet>styleElement.sheet;
+      styleSheet.insertRule(
+        '.btn { all: unset !important; padding: 10px 15px !important; }',
+      );
+
+      record({
+        emit: (window as unknown as IWindow).emit,
+      });
+    });
+    await ctx.page.waitForTimeout(50);
+    assertSnapshot(ctx.events);
   });
 
   describe('loading stylesheets', () => {

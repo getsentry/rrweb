@@ -113,7 +113,12 @@ export function stringifyStylesheet(s: CSSStyleSheet): string | null {
 export function fixAllCssProperty(rule: CSSStyleRule) {
   let styles = '';
   for (let i = 0; i < rule.style.length; i++) {
-    styles += `${rule.style[i]}:${rule.style.getPropertyValue(rule.style[i])};`;
+    const styleDeclaration = rule.style;
+    const attribute = styleDeclaration[i];
+    const isImportant = styleDeclaration.getPropertyPriority(attribute);
+    styles += `${attribute}:${styleDeclaration.getPropertyValue(attribute)}${
+      isImportant ? ` !important` : ''
+    };`;
   }
 
   return `${rule.selectorText} { ${styles} }`;
