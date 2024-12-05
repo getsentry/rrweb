@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.30.0
+
+### Various fixes & improvements
+
+- fix(snapshot): Fix CSS expansion of `add` CSS property (#223) by @billyvg
+- Replace release bot with GH app (#225) by @Jeffreyhung
+- fix: Catch calls to iframe content document (#222) by @chargome
+
 ## 2.29.0
 
 ### Various fixes & improvements
