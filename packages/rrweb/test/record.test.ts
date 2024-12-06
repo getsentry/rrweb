@@ -937,6 +937,7 @@ describe('record', function (this: ISuite) {
 
       const link1 = document.createElement('link');
       link1.setAttribute('rel', 'stylesheet');
+      link1.setAttribute('crossorigin', '');
       link1.setAttribute('href', corsStylesheetURL);
       document.head.appendChild(link1);
     }, corsStylesheetURL);
