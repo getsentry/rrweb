@@ -870,8 +870,9 @@ function serializeElementNode(
       cssText = stringifyStylesheet(stylesheet);
     }
     if (cssText) {
-      delete attributes.rel;
-      delete attributes.href;
+      attributes.rel = null;
+      attributes.href = null;
+      attributes.crossorigin = null;
       attributes._cssText = absoluteToStylesheet(cssText, stylesheet!.href!);
     }
   }

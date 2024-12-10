@@ -271,10 +271,31 @@ exports[`record captures CORS stylesheets that are still loading 1`] = `
             \\"tagName\\": \\"link\\",
             \\"attributes\\": {
               \\"rel\\": \\"stylesheet\\",
+              \\"crossorigin\\": \\"\\",
               \\"href\\": \\"https://cdn.jsdelivr.net/npm/pure@2.85.0/index.css\\"
             },
             \\"childNodes\\": [],
             \\"id\\": 9
+          }
+        }
+      ]
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 0,
+      \\"adds\\": [],
+      \\"removes\\": [],
+      \\"texts\\": [],
+      \\"attributes\\": [
+        {
+          \\"id\\": 9,
+          \\"attributes\\": {
+            \\"rel\\": null,
+            \\"crossorigin\\": null,
+            \\"href\\": null,
+            \\"_cssText\\": \\"body { font-family: verdana, helvetica, arial; }.exampleList { margin: 0px; padding: 0px; list-style-type: none; }h3 { margin: 1em 0px 0.3em; float: left; clear: both; }a { color: rgb(51, 102, 153); text-decoration: none; outline: none; padding: 0px 0.5em; }a:hover { background: rgb(51, 102, 153); color: rgb(255, 255, 255); }.run, .debug { display: block; float: left; margin: 1.3em 0px 0px 1em; }.sources, .template { clear: both; padding: 1em; background: rgb(221, 238, 255); margin: 0px 0px 0px 1em; overflow: auto; }#chooseLib a { font-size: 0.8em; background: rgb(255, 255, 187); padding: 0.3em; text-decoration: underline; }#chooseLib a:hover { background: rgb(51, 102, 153); }#examples { display: none; }#chooseLib { line-height: 1.5em; border: 1px solid rgb(204, 204, 204); padding: 1em; background: rgb(255, 255, 204); }input.lib { font-weight: bold; }.note { color: rgb(153, 153, 153); font-size: 0.75em; }pre { font-family: Monaco, \\\\\\"Courier New\\\\\\", monospace; color: rgb(68, 68, 68); font-size: 75%; }#sourceCodes { clear: both; }.sourceCode { background: rgb(238, 238, 255); border: 1px solid rgb(204, 204, 204); padding: 1%; margin: 1%; overflow: auto; max-height: 300px; }.sourceCode pre { }.cols2 .sourceCode { float: left; width: 44%; }.cols3 .sourceCode { float: left; width: 27%; }.playerList td { padding: 0px 1em; border: 1px solid rgb(153, 153, 153); }.odd td { background: rgb(255, 255, 255); }.partialTable td { padding: 0px 1em; border: 1px solid rgb(153, 153, 153); }.teamPlace table { width: 100%; }.scoreBoard td { padding: 0px 1em; border: 1px solid rgb(153, 153, 153); }\\"
           }
         }
       ]
@@ -2303,6 +2324,9 @@ exports[`record captures stylesheets in iframes with \`blob:\` url 1`] = `
                         \\"type\\": 2,
                         \\"tagName\\": \\"link\\",
                         \\"attributes\\": {
+                          \\"rel\\": null,
+                          \\"href\\": null,
+                          \\"crossorigin\\": null,
                           \\"_cssText\\": \\"body { color: pink; }\\"
                         },
                         \\"childNodes\\": [],
@@ -2377,6 +2401,9 @@ exports[`record captures stylesheets with \`blob:\` url 1`] = `
                     \\"type\\": 2,
                     \\"tagName\\": \\"link\\",
                     \\"attributes\\": {
+                      \\"rel\\": null,
+                      \\"href\\": null,
+                      \\"crossorigin\\": null,
                       \\"_cssText\\": \\"body { color: pink; }\\"
                     },
                     \\"childNodes\\": [],
@@ -3349,6 +3376,9 @@ exports[`record loading stylesheets captures stylesheets in iframes that are sti
         {
           \\"id\\": 36,
           \\"attributes\\": {
+            \\"rel\\": null,
+            \\"href\\": null,
+            \\"crossorigin\\": null,
             \\"_cssText\\": \\"body { color: pink; }\\"
           }
         }
@@ -3529,6 +3559,9 @@ exports[`record loading stylesheets captures stylesheets that are still loading 
         {
           \\"id\\": 18,
           \\"attributes\\": {
+            \\"rel\\": null,
+            \\"href\\": null,
+            \\"crossorigin\\": null,
             \\"_cssText\\": \\"body { color: pink; }\\"
           }
         }
