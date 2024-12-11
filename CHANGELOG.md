@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.31.0
+
+### Various fixes & improvements
+
+- fix(snapshot): Change to ignore all `link[rel="modulepreload"]` (#228) by @billyvg
+- fix: remote CSS does not get rebuilt properly (#226) by @billyvg
+- fix(snapshot): Set `<link>` attributes to null for remote CSS (#227) by @billyvg
+
 ## 2.30.0
 
 ### Various fixes & improvements
