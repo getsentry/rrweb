@@ -784,7 +784,7 @@ describe('replayer', function () {
       const replayer = new Replayer(events);
       replayer.play();
     `);
-    await waitForRAF(page);
+    await page.waitForTimeout(50);
 
     await assertDomSnapshot(page);
   });
