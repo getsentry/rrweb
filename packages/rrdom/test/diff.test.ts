@@ -1991,13 +1991,13 @@ describe('diff algorithm for rrdom', () => {
 
     it('should not drop inserted styles when moving a style element with inserted styles', async () => {
       function MockCSSStyleSheet() {
-        this.replaceSync = vi.fn();
+        this.replaceSync = jest.fn();
         this.cssRules = [{ cssText: baseStyle }];
       }
 
-      vi.spyOn(window, 'CSSStyleSheet').mockImplementationOnce(
-        MockCSSStyleSheet as any,
-      );
+      jest
+        .spyOn(window, 'CSSStyleSheet')
+        .mockImplementationOnce(MockCSSStyleSheet as any);
 
       const baseStyle = 'body {margin: 0;}';
       const insertedStyle = 'div {display: flex;}';
