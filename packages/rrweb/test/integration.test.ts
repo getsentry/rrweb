@@ -979,7 +979,7 @@ describe('record integration tests', function (this: ISuite) {
   });
 
   describe('canvas', function (this: ISuite) {
-    jest.setTimeout(10_000);
+    vi.setConfig({ testTimeout: 10_000 });
     it('should record canvas within iframe', async () => {
       const page: puppeteer.Page = await browser.newPage();
       await page.goto(`${serverURL}/html`);

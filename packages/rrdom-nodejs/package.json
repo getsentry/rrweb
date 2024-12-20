@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrdom-nodejs",
+  "name": "rrdom-nodejs",
   "version": "2.31.0",
   "scripts": {
     "dev": "vite build --watch",
@@ -7,7 +7,7 @@
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "prepublish": "npm run build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "keywords": [
@@ -56,7 +56,7 @@
     "@sentry-internal/rrweb-snapshot": "2.31.0",
     "cssom": "^0.5.0",
     "cssstyle": "^2.3.0",
-    "nwsapi": "^2.2.0"
+    "nwsapi": "2.2.0"
   },
   "browserslist": [
     "supports es6-class"

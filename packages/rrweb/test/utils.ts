@@ -105,7 +105,7 @@ export function getServerURL(server: http.Server): string {
  */
 export function stringifySnapshots(
   snapshots: eventWithTime[],
-  { includeScroll }: { includeScroll: boolean },
+  { includeScroll }: { includeScroll?: boolean } = {},
 ): string {
   return JSON.stringify(
     snapshots

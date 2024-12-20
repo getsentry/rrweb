@@ -36,6 +36,8 @@ import { Timer } from './timer';
 import {
   createPlayerService,
   createSpeedService,
+  type PlayerState,
+  type SpeedState,
   type PlayerMachineState,
   type SpeedMachineState,
 } from './machine';
@@ -2326,4 +2328,10 @@ export class Replayer {
   }
 }
 
-export { PlayerMachineState, SpeedMachineState, playerConfig };
+export {
+  type PlayerState,
+  type SpeedState,
+  type PlayerMachineState,
+  type SpeedMachineState,
+  playerConfig,
+};

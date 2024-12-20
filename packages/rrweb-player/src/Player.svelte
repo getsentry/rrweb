@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { Replayer } from '@sentry-internal/rrweb-replay';
-  import { unpack } from '@sentry-internal/rrweb-packer/unpack';
+  import { Replayer } from '@sentry-internal/rrweb';
+  import { unpack } from '@sentry-internal/rrweb-packer';
   import type { eventWithTime } from '@sentry-internal/rrweb-types';
   import {
     inlineCss,
@@ -205,13 +205,14 @@
       {speedOption}
       {skipInactive}
       {tags}
+      {inactiveColor}
       on:fullscreen={() => toggleFullscreen()}
     />
   {/if}
 </div>
 
 <style global>
-  @import '@sentry-internal/rrweb-replay/dist/style.css';
+  @import '@sentry-internal/rrweb/dist/style.css';
 
   .rr-player {
     position: relative;

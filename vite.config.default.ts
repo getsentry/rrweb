@@ -88,7 +88,7 @@ async function buildFile({
     minify,
     sourcemap: true,
     format: isCss ? undefined : ('umd' as Format),
-    target: isCss ? undefined : 'es2017',
+    target: isCss ? undefined : 'es2020',
     treeShaking: !isCss,
     plugins: [
       umdWrapper({
@@ -113,6 +113,7 @@ export default function (
   return defineConfig(() => ({
     build: {
       // See https://vitejs.dev/guide/build.html#library-mode
+      target: 'es2020',
       lib: {
         entry,
         name,

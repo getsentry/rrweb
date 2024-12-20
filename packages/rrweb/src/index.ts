@@ -2,6 +2,8 @@ import record from './record';
 import {
   Replayer,
   type playerConfig,
+  type PlayerState,
+  type SpeedState,
   type PlayerMachineState,
   type SpeedMachineState,
 } from './replay';
@@ -26,20 +28,18 @@ export type {
 
 export type { recordOptions, ReplayPlugin } from './types';
 export { deserializeArg } from './replay/canvas/deserialize-args';
-export {
-  CanvasManager,
-  addCustomEvent,
-  freezePage,
-  takeFullSnapshot,
-} from './record';
+export { addCustomEvent, freezePage, takeFullSnapshot } from './record';
 export type { CanvasManagerConstructorOptions } from './record';
+export { CanvasManager } from './record/observers/canvas/canvas-manager';
 
 export {
   record,
   Replayer,
-  playerConfig,
-  PlayerMachineState,
-  SpeedMachineState,
+  type playerConfig,
+  type PlayerState,
+  type SpeedState,
+  type PlayerMachineState,
+  type SpeedMachineState,
   canvasMutation,
   utils,
 };

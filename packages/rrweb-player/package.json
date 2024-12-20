@@ -19,17 +19,17 @@
     "vite": "^5.2.8"
   },
   "dependencies": {
-    "@tsconfig/svelte": "^1.0.0",
     "@sentry-internal/rrweb": "2.31.0",
-    "@sentry-internal/rrweb-packer": "^2.31.0"
+    "@sentry-internal/rrweb-packer": "^2.31.0",
+    "@tsconfig/svelte": "^1.0.0"
   },
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
-    "prepublishOnly": "yarn build",
+    "build:tarball": "npm pack",
     "start": "vite",
     "check-types": "svelte-check --tsconfig ./tsconfig.json",
-    "prepublish": "yarn build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "description": "rrweb's replayer UI",

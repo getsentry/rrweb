@@ -30,13 +30,12 @@
   },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "tsc -noEmit && vite build",
+    "build": "yarn run check-types && vite build",
     "build:tarball": "npm pack",
-    "check-types": "tsc -noEmit",
+    "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typings": "tsc -d --declarationDir typings",
-    "prepublish": "npm run build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "bugs": {

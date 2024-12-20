@@ -321,7 +321,7 @@ describe('record webgl', function (this: ISuite) {
   });
 
   describe('record canvas within iframe', function (this: ISuite) {
-    jest.setTimeout(10_000);
+    vi.setConfig({ testTimeout: 10_000 });
 
     const ctx: ISuite = setup.call(
       this,

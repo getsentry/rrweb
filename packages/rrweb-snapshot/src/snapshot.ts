@@ -826,7 +826,6 @@ function serializeElementNode(
     keepIframeSrcFn,
     newlyAddedElement = false,
     rootId,
-    maskAllText,
     maskTextClass,
     unmaskTextClass,
     maskTextSelector,

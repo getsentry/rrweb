@@ -4,6 +4,6 @@
   "compilerOptions": {
     "declarationMap": true,
     "emitDeclarationOnly": true,
-    "outDir": "typings"
+    "outDir": "dist/typings"
   }
 }
