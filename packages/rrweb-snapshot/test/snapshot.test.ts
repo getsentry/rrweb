@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { JSDOM } from 'jsdom';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
@@ -139,7 +139,7 @@ describe('transformAttribute()', () => {
   });
 
   it('handles custom masking function', () => {
-    const maskAttributeFn = jest
+    const maskAttributeFn = vi
       .fn()
       .mockImplementation((_key, value): string => {
         return value.split('').reverse().join('');

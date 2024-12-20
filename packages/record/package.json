@@ -55,8 +55,8 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@rrweb/types": "^2.0.0-alpha.14",
-    "rrweb": "^2.0.0-alpha.14"
+    "@sentry-internal/rrweb-types": "^2.0.0-alpha.14",
+    "@sentry-internal/rrweb": "^2.0.0-alpha.14"
   },
   "browserslist": [
     "supports es6-class"

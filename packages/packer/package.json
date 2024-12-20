@@ -1,9 +1,7 @@
 {
   "name": "@rrweb/packer",
-  "version": "2.0.0-alpha.14",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
+  "version": "2.31.0",
   "keywords": [
     "rrweb",
     "@rrweb/packer"
@@ -78,7 +76,7 @@
   },
   "dependencies": {
     "fflate": "^0.4.4",
-    "@rrweb/types": "^2.0.0-alpha.14"
+    "@sentry-internal/rrweb-types": "^2.31.0"
   },
   "browserslist": [
     "supports es6-class"

@@ -14,6 +14,8 @@ From this monorepo, Sentry maintains and publishes the following NPM packages:
 - `@sentry-internal/rrdom` (corresponds to the [original `rrdom` package](https://www.npmjs.com/package/rrdom))
 - `@sentry-internal/rrweb-player` (corresponds to the [original `rrweb-player` package](https://www.npmjs.com/package/rrweb-player))
 - `@sentry-internal/rrweb-snapshot` (corresponds to the [original `rrweb-snapshot` package](https://www.npmjs.com/package/rrweb-snapshot))
+- `@sentry-internal/rrweb-types` (corresponds to the [original `@rrweb/types` package](https://www.npmjs.com/package/@rrweb/types))
+- `@sentry-internal/rrweb-worker` (new package)
 
 ## Major changes from upstream branch
 

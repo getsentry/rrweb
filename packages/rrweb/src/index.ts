@@ -2,6 +2,8 @@ import record from './record';
 import {
   Replayer,
   type playerConfig,
+  type PlayerState,
+  type SpeedState,
   type PlayerMachineState,
   type SpeedMachineState,
 } from './replay';
@@ -37,9 +39,11 @@ export type { CanvasManagerConstructorOptions } from './record';
 export {
   record,
   Replayer,
-  playerConfig,
-  PlayerMachineState,
-  SpeedMachineState,
+  type playerConfig,
+  type PlayerState,
+  type SpeedState,
+  type PlayerMachineState,
+  type SpeedMachineState,
   canvasMutation,
   utils,
 };
