@@ -1,12 +1,13 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/master",
+  "$schema": "https://turbo.build/schema.v1.json",
   "pipeline": {
     "prepare": {
       "dependsOn": ["^prepare"],
       "outputs": ["lib/**", "es/**", "dist/**", "typings/**"]
     },
-    "test": {},
+    "test": {
+      "dependsOn": ["^prepare"]
+    },
     "test:watch": {
       "persistent": true
     },
