@@ -2,16 +2,18 @@
   "name": "@sentry-internal/rrweb-worker",
   "version": "2.31.0",
   "description": "Worker for rrweb",
-  "main": "lib/rrweb-worker/index.cjs",
-  "module": "es/rrweb-worker/index.js",
+  "main": "dist/rrweb-worker.js",
+  "module": "dist/rrweb-worker.mjs",
   "types": "typings/index.d.ts",
   "sideEffects": false,
   "private": true,
   "scripts": {
-    "dev": "yarn bundle --watch",
-    "bundle": "rollup --config",
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "build:old": "rollup --config",
     "typings": "tsc -p tsconfig.types.json",
-    "prepare": "npm run typings && npm run bundle",
+    "prepare": "npm run typings && npm run build",
+    "prepublish": "npm run typings && npm run build",
     "check-types": "tsc -noEmit",
     "test": "yarn jest",
     "lint": "yarn eslint src"
@@ -31,10 +33,7 @@
   },
   "devDependencies": {
     "@types/css-font-loading-module": "0.0.7",
-    "@types/jest": "^29.5.0",
-    "jest": "^29.6.0",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1"
+    "vite": "^5.2.8"
   },
   "engines": {
     "node": ">=12"
