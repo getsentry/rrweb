@@ -1,14 +1,6 @@
-<<<<<<< HEAD:packages/rrweb-player/typings/index.d.ts
-import { playerConfig } from '@sentry-internal/rrweb/typings/types';
-import { eventWithTime } from '@sentry-internal/rrweb-types';
-import { Replayer } from '@sentry-internal/rrweb';
-import { Mirror } from '@sentry-internal/rrweb-snapshot';
-import { SvelteComponent } from 'svelte';
-=======
-import type { eventWithTime } from '@rrweb/types';
-import type { Replayer, playerConfig } from '@rrweb/replay';
-import type { Mirror } from 'rrweb-snapshot';
->>>>>>> ffff0b39 (Chore: Migrate build to vite (#1033)):packages/rrweb-player/src/types.ts
+import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import type { Replayer, playerConfig } from '@sentry-internal/rrweb';
+import type { Mirror } from '@sentry-internal/rrweb-snapshot';
 
 export type RRwebPlayerOptions = {
   target: HTMLElement;

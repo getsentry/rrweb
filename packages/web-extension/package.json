@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrweb-web-extension",
+  "name": "@rrweb/web-extension",
   "private": true,
   "version": "2.31.0",
   "description": "The web extension of rrweb which helps to run rrweb on any website out of box",
@@ -13,13 +13,13 @@
     "build:firefox": "cross-env TARGET_BROWSER=firefox vite build",
     "pack:chrome": "cross-env TARGET_BROWSER=chrome ZIP=true vite build",
     "pack:firefox": "cross-env TARGET_BROWSER=firefox ZIP=true vite build",
-    "check-types": "tsc -noEmit",
     "build": "npm run pack:chrome && npm run pack:firefox",
     "prepublish": "npm run build"
   },
   "devDependencies": {
     "@sentry-internal/rrweb-types": "2.31.0",
     "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.0.6",
     "@types/webextension-polyfill": "^0.9.1",
     "@vitejs/plugin-react": "^4.2.1",
     "cross-env": "^7.0.3",

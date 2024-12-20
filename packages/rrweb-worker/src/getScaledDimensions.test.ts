@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { getScaledDimensions } from './getScaledDimensions';
 
 describe('getScaledDimensions', () => {

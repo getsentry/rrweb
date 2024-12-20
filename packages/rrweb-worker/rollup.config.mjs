@@ -53,28 +53,28 @@ const config = defineConfig([
   {
     ...workerStrBaseConfig,
     output: {
-      file: './es/rrweb-worker/image-bitmap-data-url-worker.js',
+      file: './dist/rrweb-worker/image-bitmap-data-url-worker.mjs',
       format: 'esm',
     },
   },
   {
     ...workerStrBaseConfig,
     output: {
-      file: './lib/rrweb-worker/image-bitmap-data-url-worker.cjs',
+      file: './dist/rrweb-worker/image-bitmap-data-url-worker.js',
       format: 'cjs',
     },
   },
   {
     ...indexBaseConfig,
     output: {
-      file: './es/rrweb-worker/index.js',
+      file: './dist/rrweb-worker/index.mjs',
       format: 'esm',
     },
   },
   {
     ...indexBaseConfig,
     output: {
-      file: './lib/rrweb-worker/index.cjs',
+      file: './dist/rrweb-worker/index.js',
       format: 'cjs',
     },
   },
