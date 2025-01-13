@@ -4,6 +4,7 @@
   "globalDependencies": [
     ".eslintrc.js",
     ".prettierrc",
+    "lerna.json",
     "vite.config.defaults.ts",
     "tsconfig.json"
   ],
