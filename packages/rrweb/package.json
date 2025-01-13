@@ -3,8 +3,7 @@
   "version": "2.31.0",
   "description": "record and replay the web",
   "scripts": {
-    "prepare": "yarn run prepack",
-    "prepack": "yarn run build && yarn run typings:downlevel",
+    "prepare": "yarn run build && yarn run typings:downlevel",
     "retest": "vitest run --exclude test/benchmark",
     "build-and-test": "yarn build && yarn retest",
     "test:headless": "PUPPETEER_HEADLESS=true yarn build-and-test",
@@ -20,7 +19,6 @@
     "build:tarball": "npm pack",
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
     "check-types": "tsc --noEmit",
-    "prepublish": "yarn run build",
     "lint": "yarn eslint src",
     "benchmark": "vitest run --maxConcurrency 1 --no-file-parallelism test/benchmark"
   },

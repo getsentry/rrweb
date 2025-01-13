@@ -35,7 +35,7 @@
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublish": "yarn run build",
+    "prepare": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "bugs": {
