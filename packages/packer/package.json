@@ -1,7 +1,7 @@
 {
   "name": "@rrweb/packer",
   "private": true,
-  "version": "2.31.0",
+  "version": "2.32.0-dev.0",
   "keywords": [
     "rrweb",
     "@rrweb/packer"
@@ -69,14 +69,14 @@
     "package.json"
   ],
   "devDependencies": {
+    "typescript": "^4.7.3",
     "vite": "^5.2.8",
     "vite-plugin-dts": "^3.8.1",
-    "vitest": "^1.4.0",
-    "typescript": "^4.7.3"
+    "vitest": "^1.4.0"
   },
   "dependencies": {
-    "fflate": "^0.4.4",
-    "@sentry-internal/rrweb-types": "^2.31.0"
+    "@sentry-internal/rrweb-types": "2.32.0-dev.0",
+    "fflate": "^0.4.4"
   },
   "browserslist": [
     "supports es6-class"

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.32.0-dev.0
+
+### Various fixes & improvements
+
+- missed some (#234) by @billyvg
+- change turbo to call prepack (#234) by @billyvg
+- simplify to only use prepack (#234) by @billyvg
+- remove prepack (#234) by @billyvg
+- add build:tarball tasks in relevant packages (#234) by @billyvg
+- revert remove lerna (#234) by @billyvg
+- ref: tweaks to tasks to get builds/pkg names working for Sentry (#234) by @billyvg
+- Chore: Delete unused lerna.json file (#1506) by @billyvg
+- Chore: Fix yarn dev (#1501) by @billyvg
+- Chore: Ignore generated files from .svelte-kit for prettier & make video tests more stable (#1500) by @billyvg
+- Chore: Migrate build to vite (#1033) by @billyvg
+- fix: inserted styles lost when moving elements (#233) by @billyvg
+- test(rrweb): Re-enable skipped test (#229) by @billyvg
+
 ## 2.31.0
 
 ### Various fixes & improvements
