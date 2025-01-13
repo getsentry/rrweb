@@ -3,11 +3,11 @@
   "version": "2.31.0",
   "scripts": {
     "dev": "vite build --watch",
-    "build": "yarn turbo run prepublish",
+    "build": "tsc -noEmit && vite build",
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "prepublish": "tsc -noEmit && vite build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "keywords": [

@@ -13,9 +13,7 @@
     "build": "yarn run check-types && vite build",
     "build:tarball": "yarn pack",
     "check-types": "tsc --noEmit",
-    "prepare": "yarn run build",
     "prepack": "yarn run build && yarn run typings:downlevel",
-    "prepublish": "yarn run build",
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
     "lint": "yarn eslint src/**/*.ts"
   },

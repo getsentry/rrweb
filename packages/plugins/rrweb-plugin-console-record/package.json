@@ -29,7 +29,7 @@
     "test:watch": "vitest watch",
     "build": "tsc -noEmit && vite build",
     "check-types": "tsc -noEmit",
-    "prepublish": "npm run build"
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",

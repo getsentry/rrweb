@@ -12,7 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "check-types": "tsc -noEmit",
-    "prepublish": "npm run build",
+    "prepack": "npm run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/packer#readme",

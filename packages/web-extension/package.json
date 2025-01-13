@@ -14,7 +14,7 @@
     "pack:chrome": "cross-env TARGET_BROWSER=chrome ZIP=true vite build",
     "pack:firefox": "cross-env TARGET_BROWSER=firefox ZIP=true vite build",
     "build": "npm run pack:chrome && npm run pack:firefox",
-    "prepublish": "npm run build"
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "@sentry-internal/rrweb-types": "2.31.0",

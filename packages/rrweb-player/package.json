@@ -28,10 +28,9 @@
     "dev": "vite build --watch",
     "build": "vite build",
     "build:tarball": "npm pack",
-    "prepublishOnly": "yarn build",
     "start": "vite",
     "check-types": "svelte-check --tsconfig ./tsconfig.json",
-    "prepublish": "yarn build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "description": "rrweb's replayer UI",

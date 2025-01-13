@@ -4,8 +4,6 @@
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
-    "prepare": "yarn run prepack",
-    "prepack": "yarn run build && yarn run typings:downlevel",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:update": "vitest run --update",
@@ -13,7 +11,7 @@
     "build": "yarn run check-types && vite build",
     "build:tarball": "npm pack",
     "check-types": "tsc --noEmit",
-    "prepublish": "yarn run build",
+    "prepack": "yarn run build && yarn run typings:downlevel",
     "lint": "yarn eslint src"
   },
   "type": "module",
