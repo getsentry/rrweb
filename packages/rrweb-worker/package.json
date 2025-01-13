@@ -10,8 +10,7 @@
   "scripts": {
     "build": "rollup --config",
     "typings": "tsc -p tsconfig.types.json",
-    "prepare": "yarn run typings && yarn run build",
-    "prepublish": "yarn prepare",
+    "prepack": "yarn run typings && yarn run build",
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",

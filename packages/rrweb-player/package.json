@@ -30,7 +30,7 @@
     "build:tarball": "npm pack",
     "start": "vite",
     "check-types": "svelte-check --tsconfig ./tsconfig.json",
-    "prepare": "yarn build",
+    "prepack": "yarn run build",
     "lint": "yarn eslint src/**/*.ts"
   },
   "description": "rrweb's replayer UI",

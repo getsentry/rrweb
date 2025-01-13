@@ -9,8 +9,8 @@
     "tsconfig.json"
   ],
   "tasks": {
-    "prepublish": {
-      "dependsOn": ["^prepublish"],
+    "build": {
+      "dependsOn": ["^build"],
       "outputs": [
         "lib/**",
         "es/**",
@@ -21,7 +21,7 @@
       ]
     },
     "test": {
-      "dependsOn": ["^prepublish"],
+      "dependsOn": ["^build"],
       "passThroughEnv": ["PUPPETEER_HEADLESS"]
     },
     "test:watch": {
@@ -29,11 +29,11 @@
       "passThroughEnv": ["PUPPETEER_HEADLESS"]
     },
     "test:update": {
-      "dependsOn": ["^prepublish"],
+      "dependsOn": ["^build"],
       "passThroughEnv": ["PUPPETEER_HEADLESS"]
     },
     "dev": {
-      // "dependsOn": ["^prepublish"],
+      // "dependsOn": ["^build"],
       "persistent": true,
       "cache": false,
       "passThroughEnv": ["CLEAR_DIST_DIR"]
