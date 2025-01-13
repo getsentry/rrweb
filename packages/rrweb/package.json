@@ -17,6 +17,7 @@
     "live-stream": "yarn build && node scripts/stream.js",
     "dev": "vite build --watch",
     "build": "yarn run check-types && vite build",
+    "build:tarball": "npm pack",
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
     "check-types": "tsc --noEmit",
     "prepublish": "yarn run build",
