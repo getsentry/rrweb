@@ -12,7 +12,7 @@ import type {
   listenerHandler,
   mutationData,
 } from '@sentry-internal/rrweb-types';
-import { unpack } from '@rrweb/packer';
+import { unpack } from '@sentry-internal/rrweb-packer';
 import * as fs from 'fs';
 import * as path from 'path';
 import type * as puppeteer from 'puppeteer';

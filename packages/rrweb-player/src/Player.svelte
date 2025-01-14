@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { Replayer } from '@sentry-internal/rrweb';
-  import { unpack } from '@rrweb/packer/unpack';
+  import { unpack } from '@sentry-internal/rrweb-packer';
   import type { eventWithTime } from '@sentry-internal/rrweb-types';
   import {
     inlineCss,
@@ -212,7 +212,7 @@
 </div>
 
 <style global>
-  @import '@rrweb/replay/dist/style.css';
+  @import '@sentry-internal/rrweb/dist/style.css';
 
   .rr-player {
     position: relative;

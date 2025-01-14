@@ -19,10 +19,9 @@
     "vite": "^5.2.8"
   },
   "dependencies": {
-    "@tsconfig/svelte": "^1.0.0",
     "@sentry-internal/rrweb": "2.31.0",
-    "@rrweb/replay": "2.31.0",
-    "@rrweb/packer": "^2.31.0"
+    "@sentry-internal/rrweb-packer": "^2.31.0",
+    "@tsconfig/svelte": "^1.0.0"
   },
   "scripts": {
     "dev": "vite build --watch",

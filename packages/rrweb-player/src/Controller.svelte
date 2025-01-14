@@ -5,7 +5,7 @@
     Replayer,
     PlayerMachineState,
     SpeedMachineState,
-  } from '@rrweb/replay';
+  } from '@sentry-internal/rrweb';
   import {
     onMount,
     onDestroy,
