@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.32.0-dev.2
+
+### Various fixes & improvements
+
+- need build:tarball for packer package (#234) by @billyvg
+
 ## 2.32.0-dev.1
 
 ### Various fixes & improvements

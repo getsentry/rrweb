@@ -1,6 +1,6 @@
 {
   "name": "@rrweb/replay",
-  "version": "2.32.0-dev.1",
+  "version": "2.32.0-dev.2",
   "publishConfig": {
     "access": "public"
   },
@@ -56,8 +56,8 @@
     "vitest": "^1.4.0"
   },
   "dependencies": {
-    "@sentry-internal/rrweb": "2.32.0-dev.1",
-    "@sentry-internal/rrweb-types": "2.32.0-dev.1"
+    "@sentry-internal/rrweb": "2.32.0-dev.2",
+    "@sentry-internal/rrweb-types": "2.32.0-dev.2"
   },
   "browserslist": [
     "supports es6-class"
