@@ -9,13 +9,13 @@
   },
   "references": [
     {
-      "path": "../types"
+      "path": "../rrweb"
     },
     {
       "path": "../packer"
     },
     {
-      "path": "../rrweb"
+      "path": "../types"
     }
   ]
 }

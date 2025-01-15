@@ -9,10 +9,10 @@
   },
   "references": [
     {
-      "path": "../types"
+      "path": "../rrweb"
     },
     {
-      "path": "../rrweb"
+      "path": "../types"
     }
   ]
 }
