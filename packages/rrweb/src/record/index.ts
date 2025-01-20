@@ -41,7 +41,6 @@ import {
   ShadowDomManagerNoop,
 } from './shadow-dom-manager';
 import {
-  CanvasManager,
   CanvasManagerConstructorOptions,
   CanvasManagerInterface,
   CanvasManagerNoop,
@@ -744,5 +743,3 @@ function _getCanvasManager(
     return new CanvasManagerNoop();
   }
 }
-
-export { CanvasManager };

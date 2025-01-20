@@ -28,13 +28,9 @@ export type {
 
 export type { recordOptions, ReplayPlugin } from './types';
 export { deserializeArg } from './replay/canvas/deserialize-args';
-export {
-  CanvasManager,
-  addCustomEvent,
-  freezePage,
-  takeFullSnapshot,
-} from './record';
+export { addCustomEvent, freezePage, takeFullSnapshot } from './record';
 export type { CanvasManagerConstructorOptions } from './record';
+export { CanvasManager } from './record/observers/canvas/canvas-manager';
 
 export {
   record,
