@@ -1,6 +1,6 @@
 {
   "name": "@rrweb/all",
-  "version": "2.32.0-dev.2",
+  "version": "2.32.0-dev.3",
   "publishConfig": {
     "access": "public"
   },
@@ -56,9 +56,9 @@
     "vitest": "^1.4.0"
   },
   "dependencies": {
-    "@sentry-internal/rrweb": "2.32.0-dev.2",
-    "@sentry-internal/rrweb-packer": "2.32.0-dev.2",
-    "@sentry-internal/rrweb-types": "2.32.0-dev.2"
+    "@sentry-internal/rrweb": "2.32.0-dev.3",
+    "@sentry-internal/rrweb-packer": "2.32.0-dev.3",
+    "@sentry-internal/rrweb-types": "2.32.0-dev.3"
   },
   "browserslist": [
     "supports es6-class"

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.32.0-dev.3
+
+### Various fixes & improvements
+
+- duh move export (#234) by @billyvg
+- es2020 as target (#234) by @billyvg
+- release: 2.32.0-dev.2 (#234) by @billyvg
+- need build:tarball for packer package (#234) by @billyvg
+
 ## 2.32.0-dev.2
 
 ### Various fixes & improvements

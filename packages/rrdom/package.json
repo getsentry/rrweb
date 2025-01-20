@@ -1,6 +1,6 @@
 {
   "name": "@sentry-internal/rrdom",
-  "version": "2.32.0-dev.2",
+  "version": "2.32.0-dev.3",
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/rrdom#readme",
   "license": "MIT",
   "type": "module",
@@ -42,7 +42,7 @@
     "url": "https://github.com/rrweb-io/rrweb/issues"
   },
   "devDependencies": {
-    "@sentry-internal/rrweb-types": "2.32.0-dev.2",
+    "@sentry-internal/rrweb-types": "2.32.0-dev.3",
     "@types/puppeteer": "^5.4.4",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
@@ -53,6 +53,6 @@
     "vite-plugin-dts": "^3.8.1"
   },
   "dependencies": {
-    "@sentry-internal/rrweb-snapshot": "2.32.0-dev.2"
+    "@sentry-internal/rrweb-snapshot": "2.32.0-dev.3"
   }
 }
