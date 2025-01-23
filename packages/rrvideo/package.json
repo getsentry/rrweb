@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrvideo",
+  "name": "rrvideo",
   "version": "2.31.0",
   "description": "transform rrweb session into video",
   "main": "build/index.js",
@@ -7,16 +7,16 @@
     "rrvideo": "build/cli.js"
   },
   "files": [
-    "build"
+    "build",
+    "package.json"
   ],
   "types": "build/index.d.ts",
   "scripts": {
     "install": "playwright install",
     "build": "tsc",
-    "build:tarball": "npm pack",
     "test": "jest",
     "check-types": "tsc -noEmit",
-    "prepare": "yarn build"
+    "prepack": "yarn build"
   },
   "author": "yanzhen@smartx.com",
   "license": "MIT",

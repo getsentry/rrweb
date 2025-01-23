@@ -7,7 +7,6 @@ import type {
   DataURLOptions,
   MaskAttributeFn,
 } from '@sentry-internal/rrweb-snapshot';
-import type { PackFn, UnpackFn } from './packer/base';
 import type { IframeManagerInterface } from './record/iframe-manager';
 import type { ShadowDomManagerInterface } from './record/shadow-dom-manager';
 import type { Replayer } from './replay';
@@ -42,6 +41,8 @@ import type {
   styleDeclarationCallback,
   styleSheetRuleCallback,
   viewportResizeCallback,
+  PackFn,
+  UnpackFn,
 } from '@sentry-internal/rrweb-types';
 import type ProcessedNodeManager from './record/processed-node-manager';
 
@@ -191,6 +192,7 @@ export type ReplayPlugin = {
   ) => void;
   getMirror?: (mirrors: { nodeMirror: Mirror }) => void;
 };
+export type { Replayer } from './replay';
 export type playerConfig = {
   speed: number;
   maxSpeed: number;

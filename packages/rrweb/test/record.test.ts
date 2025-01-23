@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type * as puppeteer from 'puppeteer';
+import { vi } from 'vitest';
 import 'construct-style-sheets-polyfill';
 import type { recordOptions } from '../src/types';
 import {
@@ -47,7 +48,7 @@ const setup = function (this: ISuite, content: string): ISuite {
       devtools: true,
     });
 
-    const bundlePath = path.resolve(__dirname, '../dist/rrweb.js');
+    const bundlePath = path.resolve(__dirname, '../dist/rrweb.umd.cjs');
     ctx.code = fs.readFileSync(bundlePath, 'utf8');
   });
 
@@ -56,6 +57,7 @@ const setup = function (this: ISuite, content: string): ISuite {
     await ctx.page.goto('about:blank');
     await ctx.page.setContent(content);
     await ctx.page.evaluate(ctx.code);
+
     ctx.events = [];
     await ctx.page.exposeFunction('emit', (e: eventWithTime) => {
       if (e.type === EventType.DomContentLoaded || e.type === EventType.Load) {
@@ -79,7 +81,7 @@ const setup = function (this: ISuite, content: string): ISuite {
 };
 
 describe('record', function (this: ISuite) {
-  jest.setTimeout(10_000);
+  vi.setConfig({ testTimeout: 10_000 });
 
   const ctx: ISuite = setup.call(
     this,
@@ -539,53 +541,55 @@ describe('record', function (this: ISuite) {
 
   it('captures adopted stylesheets in nested shadow doms and iframes', async () => {
     await ctx.page.evaluate(() => {
-      document.body.innerHTML = `
+      return new Promise((resolve) => {
+        document.body.innerHTML = `
         <div id="shadow-host-1">entry</div>
       `;
 
-      let shadowHost = document.querySelector('div')!;
-      shadowHost!.attachShadow({ mode: 'open' });
-      let iframeDocument: Document;
-      const NestedDepth = 4;
-      // construct nested shadow doms and iframe elements
-      for (let i = 1; i <= NestedDepth; i++) {
-        const shadowRoot = shadowHost.shadowRoot!;
-        const iframeElement = document.createElement('iframe');
-        shadowRoot.appendChild(iframeElement);
-        iframeElement.id = `iframe-${i}`;
-        iframeDocument = iframeElement.contentDocument!;
-        shadowHost = iframeDocument.createElement('div');
-        shadowHost.id = `shadow-host-${i + 1}`;
-        iframeDocument.body.append(shadowHost);
+        let shadowHost = document.querySelector('div')!;
         shadowHost!.attachShadow({ mode: 'open' });
-      }
+        let iframeDocument: Document;
+        const NestedDepth = 4;
+        // construct nested shadow doms and iframe elements
+        for (let i = 1; i <= NestedDepth; i++) {
+          const shadowRoot = shadowHost.shadowRoot!;
+          const iframeElement = document.createElement('iframe');
+          shadowRoot.appendChild(iframeElement);
+          iframeElement.id = `iframe-${i}`;
+          iframeDocument = iframeElement.contentDocument!;
+          shadowHost = iframeDocument.createElement('div');
+          shadowHost.id = `shadow-host-${i + 1}`;
+          iframeDocument.body.append(shadowHost);
+          shadowHost!.attachShadow({ mode: 'open' });
+        }
 
-      const iframeWin = iframeDocument!.defaultView!;
-      const sheet1 = new iframeWin.CSSStyleSheet();
-      sheet1.replaceSync!('h1 {color: blue;}');
-      iframeDocument!.adoptedStyleSheets = [sheet1];
-      const sheet2 = new iframeWin.CSSStyleSheet();
-      sheet2.replaceSync!('div {font-size: large;}');
-      shadowHost.shadowRoot!.adoptedStyleSheets = [sheet2];
+        const iframeWin = iframeDocument!.defaultView!;
+        const sheet1 = new iframeWin.CSSStyleSheet();
+        sheet1.replaceSync!('h1 {color: blue;}');
+        iframeDocument!.adoptedStyleSheets = [sheet1];
+        const sheet2 = new iframeWin.CSSStyleSheet();
+        sheet2.replaceSync!('div {font-size: large;}');
+        shadowHost.shadowRoot!.adoptedStyleSheets = [sheet2];
 
-      const { rrweb, emit } = window as unknown as IWindow;
-      rrweb.record({
-        emit,
+        const { rrweb, emit } = window as unknown as IWindow;
+        rrweb.record({
+          emit,
+        });
+
+        setTimeout(() => {
+          sheet1.insertRule!('div { display: inline ; }', 1);
+          sheet2.replaceSync!('h1 { font-size: large; }');
+        }, 100);
+
+        setTimeout(() => {
+          const sheet3 = new iframeWin.CSSStyleSheet();
+          sheet3.replaceSync!('span {background-color: red;}');
+          iframeDocument!.adoptedStyleSheets = [sheet3, sheet2];
+          shadowHost.shadowRoot!.adoptedStyleSheets = [sheet1, sheet3];
+          resolve(true);
+        }, 150);
       });
-
-      setTimeout(() => {
-        sheet1.insertRule!('div { display: inline ; }', 1);
-        sheet2.replaceSync!('h1 { font-size: large; }');
-      }, 100);
-
-      setTimeout(() => {
-        const sheet3 = new iframeWin.CSSStyleSheet();
-        sheet3.replaceSync!('span {background-color: red;}');
-        iframeDocument!.adoptedStyleSheets = [sheet3, sheet2];
-        shadowHost.shadowRoot!.adoptedStyleSheets = [sheet1, sheet3];
-      }, 150);
     });
-    await ctx.page.waitForTimeout(200);
     assertSnapshot(ctx.events);
   });
 
@@ -1025,7 +1029,7 @@ describe('record', function (this: ISuite) {
 });
 
 describe('record iframes', function (this: ISuite) {
-  jest.setTimeout(10_000);
+  vi.setConfig({ testTimeout: 10_000 });
 
   const ctx: ISuite = setup.call(
     this,

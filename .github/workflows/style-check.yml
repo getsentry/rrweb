@@ -8,7 +8,7 @@ jobs:
     name: ESLint Check and Report Upload
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.head_ref }}
@@ -28,7 +28,7 @@ jobs:
         # Continue to the next step even if this fails
         continue-on-error: true
       - name: Upload ESLint Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: eslint_report.json
           path: eslint_report.json
@@ -93,3 +93,4 @@ jobs:
         with:
           commit_message: Apply formatting changes
           branch: ${{ github.head_ref }}
+          file_pattern: ':!packages/rrweb-player/.svelte-kit/ambient.d.ts'

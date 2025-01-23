@@ -1,19 +1,42 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/master",
-  "pipeline": {
-    "prepare": {
-      "dependsOn": ["^prepare"],
-      "outputs": ["lib/**", "es/**", "dist/**", "typings/**"]
+  // These root workspace files are reused in workspaces and may affect their build output
+  "globalDependencies": [
+    ".eslintrc.js",
+    ".prettierrc",
+    "lerna.json",
+    "vite.config.defaults.ts",
+    "tsconfig.json"
+  ],
+  "tasks": {
+    "prepack": {
+      "dependsOn": ["^prepack"],
+      "outputs": [
+        "lib/**",
+        "es/**",
+        "dist/**",
+        "typings/**",
+        ".svelte-kit/**",
+        "types/**"
+      ]
     },
-    "test": {},
+    "test": {
+      "dependsOn": ["^prepack"],
+      "passThroughEnv": ["PUPPETEER_HEADLESS"]
+    },
     "test:watch": {
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": ["PUPPETEER_HEADLESS"]
     },
-    "test:update": {},
+    "test:update": {
+      "dependsOn": ["^prepack"],
+      "passThroughEnv": ["PUPPETEER_HEADLESS"]
+    },
     "dev": {
-      "dependsOn": ["^prepare"],
-      "persistent": true
+      // "dependsOn": ["^prepack"],
+      "persistent": true,
+      "cache": false,
+      "passThroughEnv": ["CLEAR_DIST_DIR"]
     },
     "lint": {},
     "typings": {},

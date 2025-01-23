@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`record integration tests can configure onMutation 1`] = `
+exports[`record integration tests > can configure onMutation 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -149,7 +149,7 @@ exports[`record integration tests can configure onMutation 1`] = `
 ]"
 `;
 
-exports[`record integration tests can correctly serialize a shader and multiple webgl contexts 1`] = `
+exports[`record integration tests > can correctly serialize a shader and multiple webgl contexts 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -563,7 +563,7 @@ exports[`record integration tests can correctly serialize a shader and multiple 
 ]"
 `;
 
-exports[`record integration tests can freeze mutations 1`] = `
+exports[`record integration tests > can freeze mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -743,7 +743,7 @@ exports[`record integration tests can freeze mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests can mask attribute on mutation 1`] = `
+exports[`record integration tests > can mask attribute on mutation 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -907,7 +907,7 @@ exports[`record integration tests can mask attribute on mutation 1`] = `
 ]"
 `;
 
-exports[`record integration tests can mask character data mutations 1`] = `
+exports[`record integration tests > can mask character data mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -1110,7 +1110,7 @@ exports[`record integration tests can mask character data mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record attribute mutation 1`] = `
+exports[`record integration tests > can record attribute mutation 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -1281,7 +1281,7 @@ exports[`record integration tests can record attribute mutation 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record character data mutations 1`] = `
+exports[`record integration tests > can record character data mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -1459,7 +1459,7 @@ exports[`record integration tests can record character data mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record childList mutations 1`] = `
+exports[`record integration tests > can record childList mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -1635,7 +1635,7 @@ exports[`record integration tests can record childList mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record clicks 1`] = `
+exports[`record integration tests > can record clicks 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -1922,7 +1922,7 @@ exports[`record integration tests can record clicks 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record form interactions 1`] = `
+exports[`record integration tests > can record form interactions 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -2928,7 +2928,7 @@ exports[`record integration tests can record form interactions 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record node mutations 1`] = `
+exports[`record integration tests > can record node mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -3903,7 +3903,7 @@ exports[`record integration tests can record node mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests can record style changes compactly and preserve css var() functions 1`] = `
+exports[`record integration tests > can record style changes compactly and preserve css var() functions 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -4129,7 +4129,7 @@ exports[`record integration tests can record style changes compactly and preserv
 ]"
 `;
 
-exports[`record integration tests can selectively unmask parts of the page 1`] = `
+exports[`record integration tests > can selectively unmask parts of the page 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -4490,7 +4490,7 @@ exports[`record integration tests can selectively unmask parts of the page 1`] =
 ]"
 `;
 
-exports[`record integration tests can use maskInputOptions to configure which type of inputs should be masked 1`] = `
+exports[`record integration tests > can use maskInputOptions to configure which type of inputs should be masked 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -5600,7 +5600,7 @@ exports[`record integration tests can use maskInputOptions to configure which ty
 ]"
 `;
 
-exports[`record integration tests can use maskTextSelector to configure which inputs should be masked 1`] = `
+exports[`record integration tests > can use maskTextSelector to configure which inputs should be masked 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -6496,7 +6496,7 @@ exports[`record integration tests can use maskTextSelector to configure which in
 ]"
 `;
 
-exports[`record integration tests canvas should record canvas within iframe 1`] = `
+exports[`record integration tests > canvas > should record canvas within iframe 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -6808,7 +6808,7 @@ exports[`record integration tests canvas should record canvas within iframe 1`] 
 ]"
 `;
 
-exports[`record integration tests canvas should record canvas within shadow dom 1`] = `
+exports[`record integration tests > canvas > should record canvas within shadow dom 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -7013,7 +7013,7 @@ exports[`record integration tests canvas should record canvas within shadow dom 
 ]"
 `;
 
-exports[`record integration tests canvas should record canvas within shadow dom with sampling 1`] = `
+exports[`record integration tests > canvas > should record canvas within shadow dom with sampling 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -7234,7 +7234,7 @@ exports[`record integration tests canvas should record canvas within shadow dom 
 ]"
 `;
 
-exports[`record integration tests handles null attribute values 1`] = `
+exports[`record integration tests > handles null attribute values 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -7425,7 +7425,7 @@ exports[`record integration tests handles null attribute values 1`] = `
 ]"
 `;
 
-exports[`record integration tests mutations should work when blocked class is unblocked 1`] = `
+exports[`record integration tests > mutations should work when blocked class is unblocked 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -8470,187 +8470,7 @@ exports[`record integration tests mutations should work when blocked class is un
 ]"
 `;
 
-exports[`record integration tests should handle recursive console messages 1`] = `
-"[
-  {
-    \\"type\\": 0,
-    \\"data\\": {}
-  },
-  {
-    \\"type\\": 1,
-    \\"data\\": {}
-  },
-  {
-    \\"type\\": 4,
-    \\"data\\": {
-      \\"href\\": \\"about:blank\\",
-      \\"width\\": 1920,
-      \\"height\\": 1080
-    }
-  },
-  {
-    \\"type\\": 2,
-    \\"data\\": {
-      \\"node\\": {
-        \\"type\\": 0,
-        \\"childNodes\\": [
-          {
-            \\"type\\": 1,
-            \\"name\\": \\"html\\",
-            \\"publicId\\": \\"\\",
-            \\"systemId\\": \\"\\",
-            \\"id\\": 2
-          },
-          {
-            \\"type\\": 2,
-            \\"tagName\\": \\"html\\",
-            \\"attributes\\": {
-              \\"lang\\": \\"en\\"
-            },
-            \\"childNodes\\": [
-              {
-                \\"type\\": 2,
-                \\"tagName\\": \\"head\\",
-                \\"attributes\\": {},
-                \\"childNodes\\": [
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 5
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"charset\\": \\"UTF-8\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 6
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 7
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"name\\": \\"viewport\\",
-                      \\"content\\": \\"width=device-width, initial-scale=1.0\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 8
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 9
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"http-equiv\\": \\"X-UA-Compatible\\",
-                      \\"content\\": \\"ie=edge\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 10
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 11
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"title\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [
-                      {
-                        \\"type\\": 3,
-                        \\"textContent\\": \\"Log record\\",
-                        \\"id\\": 13
-                      }
-                    ],
-                    \\"id\\": 12
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n  \\",
-                    \\"id\\": 14
-                  }
-                ],
-                \\"id\\": 4
-              },
-              {
-                \\"type\\": 3,
-                \\"textContent\\": \\"\\\\n  \\",
-                \\"id\\": 15
-              },
-              {
-                \\"type\\": 2,
-                \\"tagName\\": \\"body\\",
-                \\"attributes\\": {},
-                \\"childNodes\\": [
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 17
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"script\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [
-                      {
-                        \\"type\\": 3,
-                        \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 19
-                      }
-                    ],
-                    \\"id\\": 18
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 20
-                  }
-                ],
-                \\"id\\": 16
-              }
-            ],
-            \\"id\\": 3
-          }
-        ],
-        \\"id\\": 1
-      },
-      \\"initialOffset\\": {
-        \\"left\\": 0,
-        \\"top\\": 0
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"log\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:20:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"Proxied object:\\\\\\"\\",
-          \\"\\\\\\"[object Object]\\\\\\"\\"
-        ]
-      }
-    }
-  }
-]"
-`;
-
-exports[`record integration tests should mask attribute via function call 1`] = `
+exports[`record integration tests > should mask attribute via function call 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -9396,7 +9216,7 @@ exports[`record integration tests should mask attribute via function call 1`] = 
 ]"
 `;
 
-exports[`record integration tests should mask inputs via function call 1`] = `
+exports[`record integration tests > should mask inputs via function call 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -9417,7 +9237,7 @@ exports[`record integration tests should mask inputs via function call 1`] = `
 ]"
 `;
 
-exports[`record integration tests should mask only inputs 1`] = `
+exports[`record integration tests > should mask only inputs 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -9753,7 +9573,7 @@ exports[`record integration tests should mask only inputs 1`] = `
 ]"
 `;
 
-exports[`record integration tests should mask password value attribute with maskInputOptions 1`] = `
+exports[`record integration tests > should mask password value attribute with maskInputOptions 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -10200,7 +10020,7 @@ exports[`record integration tests should mask password value attribute with mask
 ]"
 `;
 
-exports[`record integration tests should mask texts 1`] = `
+exports[`record integration tests > should mask texts 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -10536,7 +10356,7 @@ exports[`record integration tests should mask texts 1`] = `
 ]"
 `;
 
-exports[`record integration tests should mask texts using maskAllText 1`] = `
+exports[`record integration tests > should mask texts using maskAllText 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -10872,7 +10692,7 @@ exports[`record integration tests should mask texts using maskAllText 1`] = `
 ]"
 `;
 
-exports[`record integration tests should mask texts using maskTextFn 1`] = `
+exports[`record integration tests > should mask texts using maskTextFn 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -11208,7 +11028,7 @@ exports[`record integration tests should mask texts using maskTextFn 1`] = `
 ]"
 `;
 
-exports[`record integration tests should nest record iframe 1`] = `
+exports[`record integration tests > should nest record iframe 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -11967,7 +11787,7 @@ exports[`record integration tests should nest record iframe 1`] = `
 ]"
 `;
 
-exports[`record integration tests should not mask inputs when maskAllText:true and maskAllInputs:false 1`] = `
+exports[`record integration tests > should not mask inputs when maskAllText:true and maskAllInputs:false 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -12669,7 +12489,7 @@ exports[`record integration tests should not mask inputs when maskAllText:true a
 ]"
 `;
 
-exports[`record integration tests should not record blocked elements and its child nodes 1`] = `
+exports[`record integration tests > should not record blocked elements and its child nodes 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -12849,7 +12669,7 @@ exports[`record integration tests should not record blocked elements and its chi
 ]"
 `;
 
-exports[`record integration tests should not record blocked elements dynamically added 1`] = `
+exports[`record integration tests > should not record blocked elements dynamically added 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -13070,7 +12890,7 @@ exports[`record integration tests should not record blocked elements dynamically
 ]"
 `;
 
-exports[`record integration tests should not record input events on ignored elements 1`] = `
+exports[`record integration tests > should not record input events on ignored elements 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -13481,7 +13301,7 @@ exports[`record integration tests should not record input events on ignored elem
 ]"
 `;
 
-exports[`record integration tests should not record input values for inputs we enforce 1`] = `
+exports[`record integration tests > should not record input values for inputs we enforce 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -14131,7 +13951,7 @@ exports[`record integration tests should not record input values for inputs we e
 ]"
 `;
 
-exports[`record integration tests should not record input values if dynamically added and maskAllInputs is true 1`] = `
+exports[`record integration tests > should not record input values if dynamically added and maskAllInputs is true 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -14306,6 +14126,7 @@ exports[`record integration tests should not record input values if dynamically 
             \\"type\\": 2,
             \\"tagName\\": \\"input\\",
             \\"attributes\\": {
+              \\"size\\": \\"50\\",
               \\"id\\": \\"input\\",
               \\"value\\": \\"**********************\\"
             },
@@ -14363,7 +14184,7 @@ exports[`record integration tests should not record input values if dynamically 
 ]"
 `;
 
-exports[`record integration tests should not record input values if dynamically added, maskAllInputs is false, and mask selector is used 1`] = `
+exports[`record integration tests > should not record input values if dynamically added, maskAllInputs is false, and mask selector is used 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -14596,7 +14417,7 @@ exports[`record integration tests should not record input values if dynamically 
 ]"
 `;
 
-exports[`record integration tests should not record input values if maskAllInputs is enabled 1`] = `
+exports[`record integration tests > should not record input values if maskAllInputs is enabled 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -15689,7 +15510,7 @@ exports[`record integration tests should not record input values if maskAllInput
 ]"
 `;
 
-exports[`record integration tests should not record textarea values if dynamically added and maskAllInputs is true 1`] = `
+exports[`record integration tests > should not record textarea values if dynamically added and maskAllInputs is true 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -15932,7 +15753,7 @@ exports[`record integration tests should not record textarea values if dynamical
 ]"
 `;
 
-exports[`record integration tests should record DOM node movement 1 1`] = `
+exports[`record integration tests > should record DOM node movement 1 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -16199,7 +16020,7 @@ exports[`record integration tests should record DOM node movement 1 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record DOM node movement 2 1`] = `
+exports[`record integration tests > should record DOM node movement 2 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -16477,7 +16298,7 @@ exports[`record integration tests should record DOM node movement 2 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record after DOMContentLoaded event 1`] = `
+exports[`record integration tests > should record after DOMContentLoaded event 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -16560,7 +16381,7 @@ exports[`record integration tests should record after DOMContentLoaded event 1`]
 ]"
 `;
 
-exports[`record integration tests should record canvas mutations 1`] = `
+exports[`record integration tests > should record canvas mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -16779,513 +16600,7 @@ exports[`record integration tests should record canvas mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record console messages 1`] = `
-"[
-  {
-    \\"type\\": 0,
-    \\"data\\": {}
-  },
-  {
-    \\"type\\": 1,
-    \\"data\\": {}
-  },
-  {
-    \\"type\\": 4,
-    \\"data\\": {
-      \\"href\\": \\"about:blank\\",
-      \\"width\\": 1920,
-      \\"height\\": 1080
-    }
-  },
-  {
-    \\"type\\": 2,
-    \\"data\\": {
-      \\"node\\": {
-        \\"type\\": 0,
-        \\"childNodes\\": [
-          {
-            \\"type\\": 1,
-            \\"name\\": \\"html\\",
-            \\"publicId\\": \\"\\",
-            \\"systemId\\": \\"\\",
-            \\"id\\": 2
-          },
-          {
-            \\"type\\": 2,
-            \\"tagName\\": \\"html\\",
-            \\"attributes\\": {
-              \\"lang\\": \\"en\\"
-            },
-            \\"childNodes\\": [
-              {
-                \\"type\\": 2,
-                \\"tagName\\": \\"head\\",
-                \\"attributes\\": {},
-                \\"childNodes\\": [
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 5
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"charset\\": \\"UTF-8\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 6
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 7
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"name\\": \\"viewport\\",
-                      \\"content\\": \\"width=device-width, initial-scale=1.0\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 8
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 9
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"meta\\",
-                    \\"attributes\\": {
-                      \\"http-equiv\\": \\"X-UA-Compatible\\",
-                      \\"content\\": \\"ie=edge\\"
-                    },
-                    \\"childNodes\\": [],
-                    \\"id\\": 10
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 11
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"title\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [
-                      {
-                        \\"type\\": 3,
-                        \\"textContent\\": \\"Log record\\",
-                        \\"id\\": 13
-                      }
-                    ],
-                    \\"id\\": 12
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n  \\",
-                    \\"id\\": 14
-                  }
-                ],
-                \\"id\\": 4
-              },
-              {
-                \\"type\\": 3,
-                \\"textContent\\": \\"\\\\n  \\",
-                \\"id\\": 15
-              },
-              {
-                \\"type\\": 2,
-                \\"tagName\\": \\"body\\",
-                \\"attributes\\": {},
-                \\"childNodes\\": [
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\",
-                    \\"id\\": 17
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"script\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [
-                      {
-                        \\"type\\": 3,
-                        \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
-                        \\"id\\": 19
-                      }
-                    ],
-                    \\"id\\": 18
-                  },
-                  {
-                    \\"type\\": 3,
-                    \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
-                    \\"id\\": 20
-                  }
-                ],
-                \\"id\\": 16
-              }
-            ],
-            \\"id\\": 3
-          }
-        ],
-        \\"id\\": 1
-      },
-      \\"initialOffset\\": {
-        \\"left\\": 0,
-        \\"top\\": 0
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"assert\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:2:21\\"
-        ],
-        \\"payload\\": [
-          \\"true\\",
-          \\"\\\\\\"assert\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"count\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:3:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"count\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"countReset\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:4:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"count\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"debug\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:5:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"debug\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"dir\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:6:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"dir\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"dirxml\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:7:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"dirxml\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"group\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:8:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"groupCollapsed\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:9:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"info\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:10:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"info\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"log\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:11:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"log\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"table\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:12:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"table\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"time\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:13:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"timeEnd\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:14:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"timeLog\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:15:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"trace\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:16:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"trace\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"warn\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:17:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"warn\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"clear\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:18:21\\"
-        ],
-        \\"payload\\": []
-      }
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"log\\",
-        \\"trace\\": [
-          \\"__puppeteer_evaluation_script__:19:21\\"
-        ],
-        \\"payload\\": [
-          \\"\\\\\\"TypeError: a message\\\\\\\\n    at __puppeteer_evaluation_script__:19:25\\\\\\\\nEnd of stack for Error object\\\\\\"\\"
-        ]
-      }
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 0,
-      \\"texts\\": [],
-      \\"attributes\\": [],
-      \\"removes\\": [],
-      \\"adds\\": [
-        {
-          \\"parentId\\": 16,
-          \\"nextId\\": null,
-          \\"node\\": {
-            \\"type\\": 2,
-            \\"tagName\\": \\"iframe\\",
-            \\"attributes\\": {},
-            \\"childNodes\\": [],
-            \\"id\\": 21
-          }
-        }
-      ]
-    }
-  },
-  {
-    \\"type\\": 3,
-    \\"data\\": {
-      \\"source\\": 0,
-      \\"adds\\": [
-        {
-          \\"parentId\\": 21,
-          \\"nextId\\": null,
-          \\"node\\": {
-            \\"type\\": 0,
-            \\"childNodes\\": [
-              {
-                \\"type\\": 2,
-                \\"tagName\\": \\"html\\",
-                \\"attributes\\": {},
-                \\"childNodes\\": [
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"head\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [],
-                    \\"rootId\\": 22,
-                    \\"id\\": 24
-                  },
-                  {
-                    \\"type\\": 2,
-                    \\"tagName\\": \\"body\\",
-                    \\"attributes\\": {},
-                    \\"childNodes\\": [],
-                    \\"rootId\\": 22,
-                    \\"id\\": 25
-                  }
-                ],
-                \\"rootId\\": 22,
-                \\"id\\": 23
-              }
-            ],
-            \\"compatMode\\": \\"BackCompat\\",
-            \\"id\\": 22
-          }
-        }
-      ],
-      \\"removes\\": [],
-      \\"texts\\": [],
-      \\"attributes\\": [],
-      \\"isAttachIframe\\": true
-    }
-  },
-  {
-    \\"type\\": 6,
-    \\"data\\": {
-      \\"plugin\\": \\"rrweb/console@1\\",
-      \\"payload\\": {
-        \\"level\\": \\"log\\",
-        \\"trace\\": [],
-        \\"payload\\": [
-          \\"\\\\\\"from iframe\\\\\\"\\"
-        ]
-      }
-    }
-  }
-]"
-`;
-
-exports[`record integration tests should record dynamic CSS changes 1`] = `
+exports[`record integration tests > should record dynamic CSS changes 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -17682,7 +16997,7 @@ exports[`record integration tests should record dynamic CSS changes 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record images inside iframe with blob url 1`] = `
+exports[`record integration tests > should record images inside iframe with blob url 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -18041,7 +17356,7 @@ exports[`record integration tests should record images inside iframe with blob u
 ]"
 `;
 
-exports[`record integration tests should record images inside iframe with blob url after iframe was reloaded 1`] = `
+exports[`record integration tests > should record images inside iframe with blob url after iframe was reloaded 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -18475,7 +17790,7 @@ exports[`record integration tests should record images inside iframe with blob u
 ]"
 `;
 
-exports[`record integration tests should record images with blob url 1`] = `
+exports[`record integration tests > should record images with blob url 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -18682,7 +17997,7 @@ exports[`record integration tests should record images with blob url 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record input userTriggered values if userTriggeredOnInput is enabled 1`] = `
+exports[`record integration tests > should record input userTriggered values if userTriggeredOnInput is enabled 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -19806,7 +19121,7 @@ exports[`record integration tests should record input userTriggered values if us
 ]"
 `;
 
-exports[`record integration tests should record input values if dynamically added and maskAllInputs is false 1`] = `
+exports[`record integration tests > should record input values if dynamically added and maskAllInputs is false 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -20038,7 +19353,7 @@ exports[`record integration tests should record input values if dynamically adde
 ]"
 `;
 
-exports[`record integration tests should record input values if dynamically added, maskAllInputs is true, and unmask selector is used 1`] = `
+exports[`record integration tests > should record input values if dynamically added, maskAllInputs is true, and unmask selector is used 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -20271,7 +19586,7 @@ exports[`record integration tests should record input values if dynamically adde
 ]"
 `;
 
-exports[`record integration tests should record moved shadow DOM 1`] = `
+exports[`record integration tests > should record moved shadow DOM 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -20440,7 +19755,7 @@ exports[`record integration tests should record moved shadow DOM 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record moved shadow DOM 2 1`] = `
+exports[`record integration tests > should record moved shadow DOM 2 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -20623,7 +19938,7 @@ exports[`record integration tests should record moved shadow DOM 2 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record mutations in iframes across pages 1`] = `
+exports[`record integration tests > should record mutations in iframes across pages 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -20932,7 +20247,7 @@ exports[`record integration tests should record mutations in iframes across page
 ]"
 `;
 
-exports[`record integration tests should record nested iframes and shadow doms 1`] = `
+exports[`record integration tests > should record nested iframes and shadow doms 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -21279,7 +20594,7 @@ exports[`record integration tests should record nested iframes and shadow doms 1
 ]"
 `;
 
-exports[`record integration tests should record shadow DOM 1`] = `
+exports[`record integration tests > should record shadow DOM 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -21729,7 +21044,7 @@ exports[`record integration tests should record shadow DOM 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record shadow DOM 2 1`] = `
+exports[`record integration tests > should record shadow DOM 2 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -21847,7 +21162,7 @@ exports[`record integration tests should record shadow DOM 2 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record shadow DOM 3 1`] = `
+exports[`record integration tests > should record shadow DOM 3 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -21965,7 +21280,7 @@ exports[`record integration tests should record shadow DOM 3 1`] = `
 ]"
 `;
 
-exports[`record integration tests should record shadow doms polyfilled by shadydom 1`] = `
+exports[`record integration tests > should record shadow doms polyfilled by shadydom 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -22211,7 +21526,7 @@ exports[`record integration tests should record shadow doms polyfilled by shadyd
 ]"
 `;
 
-exports[`record integration tests should record shadow doms polyfilled by synthetic-shadow 1`] = `
+exports[`record integration tests > should record shadow doms polyfilled by synthetic-shadow 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -22485,7 +21800,7 @@ exports[`record integration tests should record shadow doms polyfilled by synthe
 ]"
 `;
 
-exports[`record integration tests should record textarea values if dynamically added and maskAllInputs is false 1`] = `
+exports[`record integration tests > should record textarea values if dynamically added and maskAllInputs is false 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -22728,7 +22043,7 @@ exports[`record integration tests should record textarea values if dynamically a
 ]"
 `;
 
-exports[`record integration tests should record unblocked elements that are also blocked more generically 1`] = `
+exports[`record integration tests > should record unblocked elements that are also blocked more generically 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -23146,7 +22461,7 @@ exports[`record integration tests should record unblocked elements that are also
 ]"
 `;
 
-exports[`record integration tests should record webgl canvas mutations 1`] = `
+exports[`record integration tests > should record webgl canvas mutations 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -23361,7 +22676,7 @@ exports[`record integration tests should record webgl canvas mutations 1`] = `
 ]"
 `;
 
-exports[`record integration tests should unmask texts using maskTextFn 1`] = `
+exports[`record integration tests > should unmask texts using maskTextFn 1`] = `
 "[
   {
     \\"type\\": 0,
@@ -23697,7 +23012,7 @@ exports[`record integration tests should unmask texts using maskTextFn 1`] = `
 ]"
 `;
 
-exports[`record integration tests will serialize node before record 1`] = `
+exports[`record integration tests > will serialize node before record 1`] = `
 "[
   {
     \\"type\\": 0,
