@@ -58,7 +58,9 @@
     "dist",
     "package.json"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/record/clean-array-from.ts"
+  ],
   "author": "yanzhen@smartx.com",
   "license": "MIT",
   "bugs": {
