@@ -108,6 +108,14 @@ export class IframeManager implements IframeManagerInterface {
       attributes: [],
       isAttachIframe: true,
     });
+
+    // Receive messages (events) coming from cross-origin iframes that are nested in this same-origin iframe.
+    if (this.recordCrossOriginIframes)
+      iframeEl.contentWindow?.addEventListener(
+        'message',
+        this.handleMessage.bind(this),
+      );
+
     this.loadListener?.(iframeEl);
 
     const iframeDoc = getIFrameContentDocument(iframeEl);
