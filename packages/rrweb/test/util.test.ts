@@ -7,6 +7,7 @@ import {
   inDom,
   shadowHostInDom,
   getShadowHost,
+  splitStyleAttributes,
 } from '../src/utils';
 
 describe('Utilities for other modules', () => {
@@ -141,6 +142,19 @@ describe('Utilities for other modules', () => {
       expect(getRootShadowHost(a.childNodes[0])).toBe(a.childNodes[0]);
       expect(shadowHostInDom(a.childNodes[0])).toBeTruthy();
       expect(inDom(a.childNodes[0])).toBeTruthy();
+    });
+
+    it('should split styles attributes', () => {
+      const styleAttribute =
+        'background-color: peachpuff; padding: 20px; margin-top: 0;';
+
+      const splitStyles = splitStyleAttributes(styleAttribute);
+
+      expect(splitStyles).toEqual([
+        { property: 'backgroundColor', value: 'peachpuff' },
+        { property: 'padding', value: '20px' },
+        { property: 'marginTop', value: '0' },
+      ]);
     });
   });
 });
