@@ -320,6 +320,54 @@ describe('record webgl', function (this: ISuite) {
     });
   });
 
+  describe('record canvas with low fps', function (this: ISuite) {
+    vi.setConfig({ testTimeout: 10_000 });
+
+    const maxFPS = 5;
+
+    const ctx: ISuite = setup.call(
+      this,
+      `
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <canvas id="canvas"></canvas>
+        </body>
+      </html>
+    `,
+      maxFPS,
+    );
+
+    it('should record snapshots at 5 fps', async () => {
+      await ctx.page.evaluate(() => {
+        const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+        const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true })!;
+        // Set the clear color to darkish green.
+        gl.clearColor(0.0, 0.5, 0.0, 1.0);
+        // Clear the context with the newly set color. This is
+        // the function call that actually does the drawing.
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      });
+
+      await ctx.page.waitForTimeout(100); // give it some time buffer
+
+      await ctx.page.evaluate(() => {
+        const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+        const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true })!;
+        // Set the clear color to darkish blue.
+        gl.clearColor(0.0, 0.0, 0.5, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      });
+
+      await ctx.page.waitForTimeout(200);
+
+      await waitForRAF(ctx.page);
+
+      // should yield a frame for only first change because it's only 5 fps
+      assertSnapshot(stripBase64(ctx.events));
+    });
+  });
+
   describe('record canvas within iframe', function (this: ISuite) {
     vi.setConfig({ testTimeout: 10_000 });
 
