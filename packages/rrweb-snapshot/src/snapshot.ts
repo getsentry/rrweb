@@ -1,35 +1,35 @@
 import {
+  DataURLOptions,
+  ICanvas,
+  KeepIframeSrcFn,
+  MaskAttributeFn,
+  MaskInputFn,
+  MaskInputOptions,
+  MaskTextFn,
+  NodeType,
+  SlimDOMOptions,
+  attributes,
+  serializedElementNodeWithId,
   serializedNode,
   serializedNodeWithId,
-  NodeType,
-  attributes,
-  MaskInputOptions,
-  SlimDOMOptions,
-  DataURLOptions,
-  MaskTextFn,
-  MaskInputFn,
-  KeepIframeSrcFn,
-  ICanvas,
-  serializedElementNodeWithId,
-  MaskAttributeFn,
 } from './types';
 import {
   Mirror,
-  is2DCanvasBlank,
-  isElement,
-  isShadowRoot,
-  maskInputValue,
-  isNativeShadowDom,
-  stringifyStylesheet,
+  clearTimeout,
+  extractFileExtension,
+  getIframeContentDocument,
   getInputType,
   getInputValue,
-  toLowerCase,
-  extractFileExtension,
-  toUpperCase,
-  shouldMaskInput,
+  is2DCanvasBlank,
+  isElement,
+  isNativeShadowDom,
+  isShadowRoot,
+  maskInputValue,
   setTimeout,
-  clearTimeout,
-  getIframeContentDocument,
+  shouldMaskInput,
+  stringifyStylesheet,
+  toLowerCase,
+  toUpperCase,
 } from './utils';
 
 let _id = 1;
@@ -1375,7 +1375,13 @@ export function serializeNodeWithId(
 
   if (
     serializedNode.type === NodeType.Element &&
-    serializedNode.tagName === 'iframe'
+    serializedNode.tagName === 'iframe' &&
+    !_isBlockedElement(
+      n as HTMLIFrameElement,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+    )
   ) {
     onceIframeLoaded(
       n as HTMLIFrameElement,
