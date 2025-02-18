@@ -107,6 +107,8 @@ export class CanvasManager implements CanvasManagerInterface {
   private snapshotInProgressMap: Map<number, boolean> = new Map();
   private worker: Worker | null = null;
 
+  private lastSnapshotTime = 0;
+
   public reset() {
     this.pendingCanvasMutations.clear();
     this.restoreHandlers.forEach((handler) => {
@@ -394,7 +396,6 @@ export class CanvasManager implements CanvasManagerInterface {
     canvasElement?: HTMLCanvasElement,
   ) {
     const timeBetweenSnapshots = 1000 / fps;
-    let lastSnapshotTime = 0;
     let rafId: number;
 
     const getCanvas = (
@@ -438,13 +439,13 @@ export class CanvasManager implements CanvasManagerInterface {
         return;
       }
       if (
-        lastSnapshotTime &&
-        timestamp - lastSnapshotTime < timeBetweenSnapshots
+        this.lastSnapshotTime &&
+        timestamp - this.lastSnapshotTime < timeBetweenSnapshots
       ) {
         rafId = onRequestAnimationFrame(takeCanvasSnapshots);
         return;
       }
-      lastSnapshotTime = timestamp;
+      this.lastSnapshotTime = timestamp;
 
       getCanvas(canvasElement).forEach((canvas: HTMLCanvasElement) => {
         if (!this.mirror.hasNode(canvas)) {
