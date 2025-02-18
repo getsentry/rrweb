@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.32.0
+
+### Various fixes & improvements
+
+- fix: lastSnapshotTime is always 0 when using manual snapshots (#239) by @c298lee
+- fix: some nested cross-origin iframes can't be recorded (#237) by @billyvg
+- ci: fix `download-artifact` deprecation, upgrade eslint-annotate-action (#238) by @billyvg
+- ref: tweaks to tasks to get builds/pkg names working for Sentry (#234) by @billyvg
+- Chore: Fix yarn dev (#1501) by @billyvg
+- Chore: Ignore generated files from .svelte-kit for prettier & make video tests more stable (#1500) by @billyvg
+- Chore: Migrate build to vite (#1033) by @billyvg
+- fix: inserted styles lost when moving elements (#233) by @billyvg
+- test(rrweb): Re-enable skipped test (#229) by @billyvg
+
 ## 2.31.0
 
 ### Various fixes & improvements
