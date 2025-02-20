@@ -360,6 +360,12 @@ function buildNode(
           : n.textContent,
       );
     case NodeType.CDATA:
+      // `createCDATASection` only works for XML documents (not HTML)
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/createCDATASection#notes
+      if (!(doc instanceof XMLDocument)) {
+        return null;
+      }
+
       return doc.createCDATASection(n.textContent);
     case NodeType.Comment:
       return doc.createComment(n.textContent);
