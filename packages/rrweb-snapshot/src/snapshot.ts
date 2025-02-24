@@ -1375,7 +1375,13 @@ export function serializeNodeWithId(
 
   if (
     serializedNode.type === NodeType.Element &&
-    serializedNode.tagName === 'iframe'
+    serializedNode.tagName === 'iframe' &&
+    !_isBlockedElement(
+      n as HTMLIFrameElement,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+    )
   ) {
     onceIframeLoaded(
       n as HTMLIFrameElement,
