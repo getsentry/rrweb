@@ -431,6 +431,7 @@ export class CanvasManager implements CanvasManagerInterface {
         }
 
         if (_document) {
+          // This is not included in the `try` block above in case `searchCanvas()` throws
           searchCanvas(_document);
         }
       }
