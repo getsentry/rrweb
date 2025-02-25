@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.33.0
+
+### Various fixes & improvements
+
+- fix(snapshot): Do not create CDATA node on HTMLDocument (#241) by @billyvg
+- fix(snapshot): Do not attempt to load iframe at all if it is blocked (#240) by @billyvg
+
 ## 2.32.0
 
 ### Various fixes & improvements
