@@ -419,8 +419,20 @@ export class CanvasManager implements CanvasManagerInterface {
 
       for (const item of this.windows) {
         const window = item.deref();
-        if (window) {
-          searchCanvas(window.document);
+        let _document: Document | false | undefined;
+
+        try {
+          _document = window && window.document;
+        } catch {
+          // Accesing `window.document` can throw a security error:
+          // "Failed to read a named property 'document' from 'Window': An
+          // attempt was made to break through the security policy of the user
+          // agent."
+        }
+
+        if (_document) {
+          // This is not included in the `try` block above in case `searchCanvas()` throws
+          searchCanvas(_document);
         }
       }
 
