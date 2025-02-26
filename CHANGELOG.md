@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.34.0
+
+### Various fixes & improvements
+
+- fix(record): Catch exceptions when accessing `window.document` (#242) by @billyvg
+
 ## 2.33.0
 
 ### Various fixes & improvements
