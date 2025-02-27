@@ -1,6 +1,6 @@
 {
   "name": "rrdom-nodejs",
-  "version": "2.33.0",
+  "version": "2.34.0",
   "scripts": {
     "dev": "vite build --watch",
     "build": "tsc -noEmit && vite build",
@@ -52,8 +52,8 @@
     "vitest": "^1.4.0"
   },
   "dependencies": {
-    "@sentry-internal/rrdom": "2.33.0",
-    "@sentry-internal/rrweb-snapshot": "2.33.0",
+    "@sentry-internal/rrdom": "2.34.0",
+    "@sentry-internal/rrweb-snapshot": "2.34.0",
     "cssom": "^0.5.0",
     "cssstyle": "^2.3.0",
     "nwsapi": "2.2.0"
