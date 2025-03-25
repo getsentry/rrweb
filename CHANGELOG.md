@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.35.0
+
+### Various fixes & improvements
+
+- fix(utils): Safely access `node.nodeType` (#243) by @chargome
+
 ## 2.34.0
 
 ### Various fixes & improvements
