@@ -1346,7 +1346,8 @@ export function serializeNodeWithId(
       stylesheetLoadTimeout,
       keepIframeSrcFn,
     };
-    for (const childN of Array.from(n.childNodes)) {
+    const childNodes = n.childNodes ? Array.from(n.childNodes) : [];
+    for (const childN of childNodes) {
       const serializedChildNode = serializeNodeWithId(childN, bypassOptions);
       if (serializedChildNode) {
         serializedNode.childNodes.push(serializedChildNode);

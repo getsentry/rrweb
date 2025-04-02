@@ -829,7 +829,9 @@ export default class MutationBuffer {
         false,
       )
     ) {
-      n.childNodes.forEach((childN) => this.genAdds(childN));
+      if (n.childNodes) {
+        n.childNodes.forEach((childN) => this.genAdds(childN));
+      }
       if (hasShadowRoot(n)) {
         n.shadowRoot.childNodes.forEach((childN) => {
           this.processedNodeManager.add(childN, this);
@@ -848,7 +850,9 @@ export default class MutationBuffer {
  */
 function deepDelete(addsSet: Set<Node>, n: Node) {
   addsSet.delete(n);
-  n.childNodes.forEach((childN) => deepDelete(addsSet, childN));
+  if (n.childNodes) {
+    n.childNodes.forEach((childN) => deepDelete(addsSet, childN));
+  }
 }
 
 function isParentRemoved(
