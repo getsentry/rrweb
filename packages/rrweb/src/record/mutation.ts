@@ -850,9 +850,7 @@ export default class MutationBuffer {
  */
 function deepDelete(addsSet: Set<Node>, n: Node) {
   addsSet.delete(n);
-  if (n.childNodes) {
-    n.childNodes.forEach((childN) => deepDelete(addsSet, childN));
-  }
+  n.childNodes?.forEach((childN) => deepDelete(addsSet, childN));
 }
 
 function isParentRemoved(
