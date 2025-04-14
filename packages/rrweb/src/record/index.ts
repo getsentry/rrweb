@@ -3,6 +3,7 @@ import {
   MaskInputOptions,
   SlimDOMOptions,
   createMirror,
+  type Mirror,
 } from '@sentry-internal/rrweb-snapshot';
 import { initObservers, mutationBuffers } from './observer';
 import {
@@ -52,6 +53,8 @@ import {
   registerErrorHandler,
   unregisterErrorHandler,
 } from './error-handler';
+import './clean-array-from';
+
 export type { CanvasManagerConstructorOptions } from './observers/canvas/canvas-manager';
 
 declare global {
@@ -67,21 +70,6 @@ let _wrappedEmit:
   | ((e: eventWithTime, isCheckout?: boolean) => void);
 let _takeFullSnapshot: undefined | ((isCheckout?: boolean) => void);
 
-// Multiple tools (i.e. MooTools, Prototype.js) override Array.from and drop support for the 2nd parameter
-// Try to pull a clean implementation from a newly created iframe
-try {
-  if (Array.from([1], (x) => x * 2)[0] !== 2) {
-    const cleanFrame = document.createElement('iframe');
-    document.body.appendChild(cleanFrame);
-    // eslint-disable-next-line @typescript-eslint/unbound-method -- Array.from is static and doesn't rely on binding
-    Array.from = cleanFrame.contentWindow?.Array.from || Array.from;
-    document.body.removeChild(cleanFrame);
-  }
-} catch (err) {
-  console.debug('Unable to override Array.from', err);
-}
-
-const mirror = createMirror();
 function record<T = eventWithTime>(
   options: recordOptions<T> = {},
 ): listenerHandler | undefined {
@@ -129,6 +117,7 @@ function record<T = eventWithTime>(
   } = options;
 
   registerErrorHandler(errorHandler);
+  const mirror = createMirror();
 
   const inEmittingFrame = recordCrossOriginIframes
     ? window.parent === window
@@ -721,8 +710,12 @@ export function takeFullSnapshot(isCheckout?: boolean) {
 // record.freezePage is removed because Sentry Session Replay does not use it
 
 // For backwards compatibility - we can eventually remove this when we migrated to using the exported `mirror` & `takeFullSnapshot`
-record.mirror = mirror;
+// record.mirror = mirror;
 record.takeFullSnapshot = takeFullSnapshot;
+
+namespace record {
+  export var mirror: Mirror;
+}
 
 export default record;
 
