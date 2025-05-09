@@ -1,5 +1,19 @@
 # rrweb-snapshot
 
+## 2.0.0-alpha.19
+
+### Patch Changes
+
+- [`a9cdd15`](https://github.com/rrweb-io/rrweb/commit/a9cdd1537ca43d26d485694cbbcf2ac7a5fc9fa3) Thanks [@guntherjh](https://github.com/guntherjh)! - Handle exceptions thrown from postcss when calling adaptCssForReplay
+
+- [`96eaf8e`](https://github.com/rrweb-io/rrweb/commit/96eaf8e95c0d5f13c0966bf9ef11be3adff04860) Thanks [@eoghanmurray](https://github.com/eoghanmurray)! - Improve performance of splitCssText for <style> elements with large css content - see #1603
+
+- [`8f3b6b4`](https://github.com/rrweb-io/rrweb/commit/8f3b6b4625a6c200857fcd49fb1857d946412000) Thanks [@eoghanmurray](https://github.com/eoghanmurray)! - Improve performance of splitCssText for <style> elements with large css content - see #1603
+
+- [`8769390`](https://github.com/rrweb-io/rrweb/commit/8769390d9e246f8b7d66dc271a6107ad010d1aa2) Thanks [@eoghanmurray](https://github.com/eoghanmurray)! - #1575 Fix that postcss could fall over when trying to process css content split arbitrarily
+
+- [`76ff527`](https://github.com/rrweb-io/rrweb/commit/76ff527c15eb97cc3cbb5abfa40003493e73f4a8) Thanks [@billyvg](https://github.com/billyvg)! - Change to ignore all link[rel="modulepreload"] instead of including only those with `as="script"`
+
 ## 2.0.0-alpha.18
 
 ### Major Changes

@@ -1,5 +1,12 @@
 # rrdom
 
+## 2.0.0-alpha.19
+
+### Patch Changes
+
+- Updated dependencies [[`a9cdd15`](https://github.com/rrweb-io/rrweb/commit/a9cdd1537ca43d26d485694cbbcf2ac7a5fc9fa3), [`96eaf8e`](https://github.com/rrweb-io/rrweb/commit/96eaf8e95c0d5f13c0966bf9ef11be3adff04860), [`8f3b6b4`](https://github.com/rrweb-io/rrweb/commit/8f3b6b4625a6c200857fcd49fb1857d946412000), [`8769390`](https://github.com/rrweb-io/rrweb/commit/8769390d9e246f8b7d66dc271a6107ad010d1aa2), [`76ff527`](https://github.com/rrweb-io/rrweb/commit/76ff527c15eb97cc3cbb5abfa40003493e73f4a8)]:
+  - rrweb-snapshot@2.0.0-alpha.19
+
 ## 2.0.0-alpha.18
 
 ### Patch Changes
