@@ -1,5 +1,11 @@
 # @rrweb/utils
 
+## 2.0.0-alpha.19
+
+### Patch Changes
+
+- [`825b397`](https://github.com/rrweb-io/rrweb/commit/825b39735d69c688685852c056a124dbef1d694f) Thanks [@pauldambra](https://github.com/pauldambra)! - Move patch function into @rrweb/utils to improve bundling
+
 ## 2.0.0-alpha.18
 
 ## 2.0.0-alpha.17

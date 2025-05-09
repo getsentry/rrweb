@@ -1,5 +1,15 @@
 # @rrweb/rrweb-plugin-console-record
 
+## 2.0.0-alpha.19
+
+### Patch Changes
+
+- [`825b397`](https://github.com/rrweb-io/rrweb/commit/825b39735d69c688685852c056a124dbef1d694f) Thanks [@pauldambra](https://github.com/pauldambra)! - Move patch function into @rrweb/utils to improve bundling
+
+- Updated dependencies [[`96eaf8e`](https://github.com/rrweb-io/rrweb/commit/96eaf8e95c0d5f13c0966bf9ef11be3adff04860), [`8f3b6b4`](https://github.com/rrweb-io/rrweb/commit/8f3b6b4625a6c200857fcd49fb1857d946412000), [`8769390`](https://github.com/rrweb-io/rrweb/commit/8769390d9e246f8b7d66dc271a6107ad010d1aa2), [`825b397`](https://github.com/rrweb-io/rrweb/commit/825b39735d69c688685852c056a124dbef1d694f), [`e1cad1d`](https://github.com/rrweb-io/rrweb/commit/e1cad1d2394b5d1320ba5af635288a28b6d9593a), [`76ff527`](https://github.com/rrweb-io/rrweb/commit/76ff527c15eb97cc3cbb5abfa40003493e73f4a8), [`2d17d5a`](https://github.com/rrweb-io/rrweb/commit/2d17d5ac257a611c997bc34b63a7c1dd155e3c93)]:
+  - rrweb@2.0.0-alpha.19
+  - @rrweb/utils@2.0.0-alpha.19
+
 ## 2.0.0-alpha.18
 
 ### Patch Changes
