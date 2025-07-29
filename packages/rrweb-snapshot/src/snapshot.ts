@@ -1437,16 +1437,28 @@ export function serializeNodeWithId(
     !(n as HTMLImageElement).complete &&
     serializedNode.needBlock
   ) {
+    const image = n as HTMLImageElement;
     const updateImageDimensions = () => {
-      const image = n as HTMLImageElement;
-      onBlockedImageLoad?.(
-        image,
-        serializedNode,
-        image.getBoundingClientRect(),
-      );
+      // Check if the element is still in the DOM and not already complete
+      if (image.isConnected && !image.complete && onBlockedImageLoad) {
+        try {
+          const rect = image.getBoundingClientRect();
+          // Only proceed if we have valid dimensions
+          if (rect.width > 0 && rect.height > 0) {
+            onBlockedImageLoad(image, serializedNode, rect);
+          }
+        } catch (error) {
+          // Silently handle errors from getBoundingClientRect
+          console.warn('Failed to get image dimensions:', error);
+        }
+      }
       image.removeEventListener('load', updateImageDimensions);
     };
-    n.addEventListener('load', updateImageDimensions);
+
+    // Only add listener if element is still in DOM
+    if (image.isConnected) {
+      image.addEventListener('load', updateImageDimensions);
+    }
   }
 
   // <link rel=stylesheet href=...>
