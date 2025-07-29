@@ -669,7 +669,8 @@ describe('image loading', () => {
     });
 
     expect(serializedNode?.type).toEqual(NodeType.Element);
-    if (serializedNode?.type === NodeType.Element) { // for typescript
+    if (serializedNode?.type === NodeType.Element) {
+      // for typescript
       expect(serializedNode?.attributes.rr_width).toBe('0px');
       expect(serializedNode?.attributes.rr_height).toBe('0px');
     }
@@ -694,7 +695,7 @@ describe('image loading', () => {
     expect(onBlockedImageLoad).toHaveBeenCalledWith(
       img,
       serializedNode,
-      mockRect
+      mockRect,
     );
   });
 
@@ -754,14 +755,16 @@ describe('image loading', () => {
       newlyAddedElement: false,
     });
 
-    expect(serializedNode).toEqual(expect.objectContaining({
-      type: 2,
-      tagName: 'img',
-      attributes: {
-        src: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=',
-      },
-      id: 1,
-    }))
+    expect(serializedNode).toEqual(
+      expect.objectContaining({
+        type: 2,
+        tagName: 'img',
+        attributes: {
+          src: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=',
+        },
+        id: 1,
+      }),
+    );
 
     // Simulate the image load event
     const loadEvent = new window.Event('load');
@@ -839,15 +842,17 @@ describe('image loading', () => {
     });
 
     console.log(serializedNode);
-    expect(serializedNode).toEqual(expect.objectContaining({
-      type: 2,
-      tagName: 'img',
-      attributes: {
-        class: 'rr-block',
-        rr_width: '100px',
-        rr_height: '150px',
-      },
-    }))
+    expect(serializedNode).toEqual(
+      expect.objectContaining({
+        type: 2,
+        tagName: 'img',
+        attributes: {
+          class: 'rr-block',
+          rr_width: '100px',
+          rr_height: '150px',
+        },
+      }),
+    );
 
     // Simulate the image load event
     const loadEvent = new window.Event('load');

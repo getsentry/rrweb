@@ -375,7 +375,7 @@ export default class MutationBuffer {
         onStylesheetLoad: (link, childSn) => {
           this.stylesheetManager.attachLinkElement(link, childSn);
         },
-        onBlockedImageLoad: (_imageEl, serializedNode, {width, height}) => {
+        onBlockedImageLoad: (_imageEl, serializedNode, { width, height }) => {
           this.mutationCb({
             adds: [],
             removes: [],
@@ -389,9 +389,9 @@ export default class MutationBuffer {
                     height: `${height}px`,
                   },
                 },
-              }
-            ]
-          })
+              },
+            ],
+          });
         },
       });
       if (sn) {

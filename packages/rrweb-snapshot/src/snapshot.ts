@@ -1431,14 +1431,22 @@ export function serializeNodeWithId(
     );
   }
 
-  if (serializedNode.type === NodeType.Element && serializedNode.tagName === 'img' && !(n as HTMLImageElement).complete && 
-  serializedNode.needBlock) {
-      const updateImageDimensions = () => {
-        const image = n as HTMLImageElement;
-        onBlockedImageLoad?.(image, serializedNode, image.getBoundingClientRect());
-        image.removeEventListener('load', updateImageDimensions);
-      };
-      n.addEventListener('load', updateImageDimensions);
+  if (
+    serializedNode.type === NodeType.Element &&
+    serializedNode.tagName === 'img' &&
+    !(n as HTMLImageElement).complete &&
+    serializedNode.needBlock
+  ) {
+    const updateImageDimensions = () => {
+      const image = n as HTMLImageElement;
+      onBlockedImageLoad?.(
+        image,
+        serializedNode,
+        image.getBoundingClientRect(),
+      );
+      image.removeEventListener('load', updateImageDimensions);
+    };
+    n.addEventListener('load', updateImageDimensions);
   }
 
   // <link rel=stylesheet href=...>
