@@ -11,7 +11,7 @@ import {
   needMaskingText,
 } from '../src/snapshot';
 import snapshot from '../src/snapshot';
-import { serializedNodeWithId } from '../src/types';
+import { serializedNodeWithId, NodeType } from '../src/types';
 import { Mirror } from '../src/utils';
 
 describe('absolute url to stylesheet', () => {
@@ -602,5 +602,258 @@ describe('jsdom snapshot', () => {
     expect(sn).toMatchObject({
       type: 0,
     });
+  });
+});
+
+describe('image loading', () => {
+  const render = (html: string): Document => {
+    document.write(html);
+    return document;
+  };
+
+  it('should trigger onBlockedImageLoad callback when blocked image loads', async () => {
+    const doc = render(`
+      <!DOCTYPE html>
+      <html>
+        <head></head>
+        <body>
+          <div>
+            <img src="data:image/gif;base64," class="rr-block" />
+          </div>
+        </body>
+      </html>
+    `);
+
+    // const doc = dom.window.document;
+    const mirror = new Mirror();
+    const onBlockedImageLoad = vi.fn();
+
+    // Mock the image to simulate incomplete loading
+    const img = doc.querySelector('img') as HTMLImageElement;
+    Object.defineProperty(img, 'complete', {
+      value: false,
+      writable: true,
+    });
+
+    // Serialize the node with the onBlockedImageLoad callback
+    const serializedNode = serializeNodeWithId(img, {
+      doc,
+      mirror,
+      blockClass: 'rr-block',
+      blockSelector: null,
+      unblockSelector: null,
+      maskAllText: false,
+      maskTextClass: 'rr-mask',
+      unmaskTextClass: null,
+      maskTextSelector: null,
+      unmaskTextSelector: null,
+      skipChild: false,
+      inlineStylesheet: true,
+      maskInputOptions: {},
+      maskAttributeFn: undefined,
+      maskTextFn: undefined,
+      maskInputFn: undefined,
+      slimDOMOptions: {},
+      dataURLOptions: {},
+      inlineImages: false,
+      recordCanvas: false,
+      preserveWhiteSpace: true,
+      onSerialize: undefined,
+      onIframeLoad: undefined,
+      iframeLoadTimeout: 5000,
+      onBlockedImageLoad,
+      onStylesheetLoad: undefined,
+      stylesheetLoadTimeout: 5000,
+      keepIframeSrcFn: () => false,
+      newlyAddedElement: false,
+    });
+
+    expect(serializedNode?.type).toEqual(NodeType.Element);
+    if (serializedNode?.type === NodeType.Element) { // for typescript
+      expect(serializedNode?.attributes.rr_width).toBe('0px');
+      expect(serializedNode?.attributes.rr_height).toBe('0px');
+    }
+
+    // Mock getBoundingClientRect to return specific dimensions
+    const mockRect = {
+      width: 100,
+      height: 150,
+      top: 0,
+      left: 0,
+      bottom: 150,
+      right: 100,
+    };
+    img.getBoundingClientRect = vi.fn().mockReturnValue(mockRect);
+
+    // Simulate the image load event
+    const loadEvent = new window.Event('load');
+    img.dispatchEvent(loadEvent);
+
+    // Verify that onBlockedImageLoad was called with correct parameters
+    expect(onBlockedImageLoad).toHaveBeenCalledTimes(1);
+    expect(onBlockedImageLoad).toHaveBeenCalledWith(
+      img,
+      serializedNode,
+      mockRect
+    );
+  });
+
+  it('should not trigger onBlockedImageLoad for non-blocked images', async () => {
+    const doc = render(`
+      <!DOCTYPE html>
+      <html>
+        <head></head>
+        <body>
+          <div>
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
+          </div>
+        </body>
+      </html>
+    `);
+
+    const mirror = new Mirror();
+    const onBlockedImageLoad = vi.fn();
+
+    // Mock the image to simulate incomplete loading
+    const img = doc.querySelector('img') as HTMLImageElement;
+    Object.defineProperty(img, 'complete', {
+      value: false,
+      writable: true,
+    });
+
+    // Serialize the node with the onBlockedImageLoad callback
+    const serializedNode = serializeNodeWithId(img, {
+      doc,
+      mirror,
+      blockClass: 'rr-block',
+      blockSelector: null,
+      unblockSelector: null,
+      maskAllText: false,
+      maskTextClass: 'rr-mask',
+      unmaskTextClass: null,
+      maskTextSelector: null,
+      unmaskTextSelector: null,
+      skipChild: false,
+      inlineStylesheet: true,
+      maskInputOptions: {},
+      maskAttributeFn: undefined,
+      maskTextFn: undefined,
+      maskInputFn: undefined,
+      slimDOMOptions: {},
+      dataURLOptions: {},
+      inlineImages: false,
+      recordCanvas: false,
+      preserveWhiteSpace: true,
+      onSerialize: undefined,
+      onIframeLoad: undefined,
+      iframeLoadTimeout: 5000,
+      onBlockedImageLoad,
+      onStylesheetLoad: undefined,
+      stylesheetLoadTimeout: 5000,
+      keepIframeSrcFn: () => false,
+      newlyAddedElement: false,
+    });
+
+    expect(serializedNode).toEqual(expect.objectContaining({
+      type: 2,
+      tagName: 'img',
+      attributes: {
+        src: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=',
+      },
+      id: 1,
+    }))
+
+    // Simulate the image load event
+    const loadEvent = new window.Event('load');
+    img.dispatchEvent(loadEvent);
+
+    // Verify that onBlockedImageLoad was called with correct parameters
+    expect(onBlockedImageLoad).not.toHaveBeenCalled();
+  });
+
+  it.only('should not trigger onBlockedImageLoad for already complete images', async () => {
+    const doc = render(`
+      <!DOCTYPE html>
+      <html>
+        <head></head>
+        <body>
+          <div>
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="rr-block" />
+          </div>
+        </body>
+      </html>
+    `);
+
+    const mirror = new Mirror();
+    const onBlockedImageLoad = vi.fn();
+
+    // Mock the image to simulate already complete loading
+    const img = doc.querySelector('img') as HTMLImageElement;
+    Object.defineProperty(img, 'complete', {
+      value: true,
+      writable: true,
+    });
+
+    // Mock getBoundingClientRect to return specific dimensions
+    const mockRect = {
+      width: 100,
+      height: 150,
+      top: 0,
+      left: 0,
+      bottom: 150,
+      right: 100,
+    };
+    img.getBoundingClientRect = vi.fn().mockReturnValue(mockRect);
+
+    // Serialize the node with the onBlockedImageLoad callback
+    const serializedNode = serializeNodeWithId(img, {
+      doc,
+      mirror,
+      blockClass: 'rr-block',
+      blockSelector: null,
+      unblockSelector: null,
+      maskAllText: false,
+      maskTextClass: 'rr-mask',
+      unmaskTextClass: null,
+      maskTextSelector: null,
+      unmaskTextSelector: null,
+      skipChild: false,
+      inlineStylesheet: true,
+      maskInputOptions: {},
+      maskAttributeFn: undefined,
+      maskTextFn: undefined,
+      maskInputFn: undefined,
+      slimDOMOptions: {},
+      dataURLOptions: {},
+      inlineImages: false,
+      recordCanvas: false,
+      preserveWhiteSpace: true,
+      onSerialize: undefined,
+      onIframeLoad: undefined,
+      iframeLoadTimeout: 5000,
+      onBlockedImageLoad,
+      onStylesheetLoad: undefined,
+      stylesheetLoadTimeout: 5000,
+      keepIframeSrcFn: () => false,
+      newlyAddedElement: false,
+    });
+
+    console.log(serializedNode);
+    expect(serializedNode).toEqual(expect.objectContaining({
+      type: 2,
+      tagName: 'img',
+      attributes: {
+        class: 'rr-block',
+        rr_width: '100px',
+        rr_height: '150px',
+      },
+    }))
+
+    // Simulate the image load event
+    const loadEvent = new window.Event('load');
+    img.dispatchEvent(loadEvent);
+
+    // Verify that onBlockedImageLoad was not called since the image was already complete
+    expect(onBlockedImageLoad).not.toHaveBeenCalled();
   });
 });

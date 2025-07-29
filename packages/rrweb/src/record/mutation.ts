@@ -375,6 +375,24 @@ export default class MutationBuffer {
         onStylesheetLoad: (link, childSn) => {
           this.stylesheetManager.attachLinkElement(link, childSn);
         },
+        onBlockedImageLoad: (_imageEl, serializedNode, {width, height}) => {
+          this.mutationCb({
+            adds: [],
+            removes: [],
+            texts: [],
+            attributes: [
+              {
+                id: serializedNode.id,
+                attributes: {
+                  style: {
+                    width: `${width}px`,
+                    height: `${height}px`,
+                  },
+                },
+              }
+            ]
+          })
+        },
       });
       if (sn) {
         adds.push({

@@ -470,6 +470,24 @@ function record<T = eventWithTime>(
       onStylesheetLoad: (linkEl, childSn) => {
         stylesheetManager.attachLinkElement(linkEl, childSn);
       },
+      onBlockedImageLoad: (_imageEl, serializedNode, {width, height}) => {
+        wrappedMutationEmit({
+          adds: [],
+          removes: [],
+          texts: [],
+          attributes: [
+            {
+              id: serializedNode.id,
+              attributes: {
+                style: {
+                  width: `${width}px`,
+                  height: `${height}px`,
+                },
+              },
+            },
+          ]
+        })
+      },
       keepIframeSrcFn,
     });
 
