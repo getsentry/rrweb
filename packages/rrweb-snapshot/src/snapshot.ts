@@ -1449,7 +1449,6 @@ export function serializeNodeWithId(
           }
         } catch (error) {
           // Silently handle errors from getBoundingClientRect
-          console.warn('Failed to get image dimensions:', error);
         }
       }
       image.removeEventListener('load', updateImageDimensions);
