@@ -1555,6 +1555,7 @@ function snapshot(
     onBlockedImageLoad?: (
       imageEl: HTMLImageElement,
       node: serializedElementNodeWithId,
+      rect: DOMRect,
     ) => unknown;
     onStylesheetLoad?: (
       linkNode: HTMLLinkElement,
