@@ -624,7 +624,6 @@ describe('image loading', () => {
       </html>
     `);
 
-    // const doc = dom.window.document;
     const mirror = new Mirror();
     const onBlockedImageLoad = vi.fn();
 
