@@ -34,24 +34,6 @@ type SnapshotOptions = {
   skipRequestAnimationFrame?: boolean;
 };
 
-function preserveWebGLContext(canvas: HTMLCanvasElement): void {
-  const context = canvas.getContext((canvas as ICanvas).__context) as
-    | WebGLRenderingContext
-    | WebGL2RenderingContext
-    | null;
-
-  if (context?.getContextAttributes()?.preserveDrawingBuffer === false) {
-    // Hack to load canvas back into memory so `createImageBitmap` can grab it's contents.
-    // Context: https://twitter.com/Juice10/status/1499775271758704643
-    // Preferably we set `preserveDrawingBuffer` to true, but that's not always possible,
-    // especially when canvas is loaded before rrweb.
-    // This hack can wipe the background color of the canvas in the (unlikely) event that
-    // the canvas background was changed but clear was not called directly afterwards.
-    // Example of this hack having negative side effect: https://visgl.github.io/react-map-gl/examples/layers
-    context.clear(context.COLOR_BUFFER_BIT);
-  }
-}
-
 export interface CanvasManagerInterface {
   reset(): void;
   freeze(): void;
@@ -256,6 +238,7 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   public snapshot(canvasElement?: HTMLCanvasElement, options?: SnapshotOptions): void {
+    console.log('snapshot');
     if (options?.skipRequestAnimationFrame) {
       this.takeSnapshot(performance.now(), true, canvasElement);
       return;
@@ -498,7 +481,21 @@ export class CanvasManager implements CanvasManagerInterface {
         !isManualSnapshot &&
         ['webgl', 'webgl2'].includes((canvas as ICanvas).__context)
       ) {
-        preserveWebGLContext(canvas);
+        const context = canvas.getContext((canvas as ICanvas).__context) as
+          | WebGLRenderingContext
+          | WebGL2RenderingContext
+          | null;
+
+        if (context?.getContextAttributes()?.preserveDrawingBuffer === false) {
+          // Hack to load canvas back into memory so `createImageBitmap` can grab it's contents.
+          // Context: https://twitter.com/Juice10/status/1499775271758704643
+          // Preferably we set `preserveDrawingBuffer` to true, but that's not always possible,
+          // especially when canvas is loaded before rrweb.
+          // This hack can wipe the background color of the canvas in the (unlikely) event that
+          // the canvas background was changed but clear was not called directly afterwards.
+          // Example of this hack having negative side effect: https://visgl.github.io/react-map-gl/examples/layers
+          context.clear(context.COLOR_BUFFER_BIT);
+        }
       }
 
       createImageBitmap(canvas)
