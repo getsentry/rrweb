@@ -508,6 +508,7 @@ export class CanvasManager implements CanvasManagerInterface {
         })
         .catch((error) => {
           callbackWrapper(() => {
+            this.snapshotInProgressMap.delete(id);
             throw error;
           })();
         });
