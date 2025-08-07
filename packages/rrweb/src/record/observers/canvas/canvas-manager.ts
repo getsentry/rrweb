@@ -128,63 +128,6 @@ export class CanvasManager implements CanvasManagerInterface {
 
   private lastSnapshotTime = 0;
 
-  /**
-   * Returns all `canvas` elements that are not blocked by the given selectors. Searches all windows and shadow roots.
-   */
-  private getCanvasElements(
-    blockClass?: blockClass,
-    blockSelector?: string | null,
-    unblockSelector?: string | null,
-  ): HTMLCanvasElement[] {
-    const matchedCanvas: HTMLCanvasElement[] = [];
-
-    const searchCanvas = (root: Document | ShadowRoot) => {
-      root.querySelectorAll('canvas').forEach((canvas) => {
-        if (
-          !isBlocked(
-            canvas,
-            blockClass || 'rr-block',
-            blockSelector || null,
-            unblockSelector || null,
-            true,
-          )
-        ) {
-          matchedCanvas.push(canvas);
-        }
-      });
-    };
-
-    // Search in all windows
-    for (const item of this.windows) {
-      const window = item.deref();
-      let _document: Document | false | undefined;
-
-      try {
-        _document = window && window.document;
-      } catch {
-        // Accessing `window.document` can throw a security error:
-        // "Failed to read a named property 'document' from 'Window': An
-        // attempt was made to break through the security policy of the user
-        // agent."
-      }
-
-      if (_document) {
-        // This is not included in the `try` block above in case `searchCanvas()` throws
-        searchCanvas(_document);
-      }
-    }
-
-    // Search in shadow roots
-    for (const item of this.shadowDoms) {
-      const shadowRoot = item.deref();
-      if (shadowRoot) {
-        searchCanvas(shadowRoot);
-      }
-    }
-
-    return matchedCanvas;
-  }
-
   public reset() {
     this.pendingCanvasMutations.clear();
     this.restoreHandlers.forEach((handler) => {
@@ -253,7 +196,7 @@ export class CanvasManager implements CanvasManagerInterface {
         this.startPendingCanvasMutationFlusher();
       }
       if (recordCanvas && typeof sampling === 'number') {
-        this.initCanvasFPSObserver(false);
+        this.initCanvasFPSObserver();
       }
     })();
   }
@@ -378,11 +321,16 @@ export class CanvasManager implements CanvasManagerInterface {
     }
   };
 
-  private initCanvasFPSObserver(isManualSnapshot = false) {
+  private initCanvasFPSObserver() {
     let rafId: number;
 
+    if (!this.windows.length && !this.shadowDoms.size) {
+      // If these are empty, then we won't be able to find any canvases to snapshot, so nothing to do here.
+      return;
+    }
+
     const rafCallback = (timestamp: DOMHighResTimeStamp) => {
-      this.takeSnapshot(timestamp, isManualSnapshot);
+      this.takeSnapshot(timestamp, false);
       rafId = onRequestAnimationFrame(rafCallback);
     };
 
@@ -433,6 +381,63 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   /**
+   * Returns all `canvas` elements that are not blocked by the given selectors. Searches all windows and shadow roots.
+   */
+  private getCanvasElements(
+    blockClass?: blockClass,
+    blockSelector?: string | null,
+    unblockSelector?: string | null,
+  ): HTMLCanvasElement[] {
+    const matchedCanvas: HTMLCanvasElement[] = [];
+
+    const searchCanvas = (root: Document | ShadowRoot) => {
+      root.querySelectorAll('canvas').forEach((canvas) => {
+        if (
+          !isBlocked(
+            canvas,
+            blockClass || 'rr-block',
+            blockSelector || null,
+            unblockSelector || null,
+            true,
+          )
+        ) {
+          matchedCanvas.push(canvas);
+        }
+      });
+    };
+
+    // Search in all windows
+    for (const item of this.windows) {
+      const window = item.deref();
+      let _document: Document | false | undefined;
+
+      try {
+        _document = window && window.document;
+      } catch {
+        // Accessing `window.document` can throw a security error:
+        // "Failed to read a named property 'document' from 'Window': An
+        // attempt was made to break through the security policy of the user
+        // agent."
+      }
+
+      if (_document) {
+        // This is not included in the `try` block above in case `searchCanvas()` throws
+        searchCanvas(_document);
+      }
+    }
+
+    // Search in shadow roots
+    for (const item of this.shadowDoms) {
+      const shadowRoot = item.deref();
+      if (shadowRoot) {
+        searchCanvas(shadowRoot);
+      }
+    }
+
+    return matchedCanvas;
+  }
+
+  /**
    * Takes a snapshot of the provided canvas element, or will search all windows/shadow roots for canvases. Will self-throttle based on `options.sampling`.
    *
    * @returns `true` if the snapshot was taken, `false` if it was throttled.
@@ -469,7 +474,7 @@ export class CanvasManager implements CanvasManagerInterface {
     canvases.forEach((canvas) => {
       const id = this.mirror.getId(canvas);
 
-      // Check is canvas is valid and not already being processed
+      // Check if canvas is valid and not already being processed
       if (
         !this.mirror.hasNode(canvas) ||
         !canvas.width ||
