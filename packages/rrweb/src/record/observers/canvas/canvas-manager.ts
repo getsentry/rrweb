@@ -30,6 +30,9 @@ type pendingCanvasMutationsMap = Map<
   canvasMutationWithType[]
 >;
 type MaxCanvasSize = [number, number];
+type SnapshotOptions = {
+  skipRequestAnimationFrame?: boolean;
+};
 
 function preserveWebGLContext(canvas: HTMLCanvasElement): void {
   const context = canvas.getContext((canvas as ICanvas).__context) as
@@ -55,7 +58,7 @@ export interface CanvasManagerInterface {
   unfreeze(): void;
   lock(): void;
   unlock(): void;
-  snapshot(canvasElement?: HTMLCanvasElement): void;
+  snapshot(canvasElement?: HTMLCanvasElement, options?: SnapshotOptions): void;
   addWindow(win: IWindow): void;
   addShadowRoot(shadowRoot: ShadowRoot): void;
   resetShadowRoots(): void;
@@ -252,8 +255,12 @@ export class CanvasManager implements CanvasManagerInterface {
     this.shadowDoms = new Set();
   }
 
-  public snapshot(canvasElement?: HTMLCanvasElement): void {
-    this.takeSnapshot(performance.now(), true, canvasElement);
+  public snapshot(canvasElement?: HTMLCanvasElement, options?: SnapshotOptions): void {
+    if (options?.skipRequestAnimationFrame) {
+      this.takeSnapshot(performance.now(), true, canvasElement);
+      return;
+    }
+    onRequestAnimationFrame((timestamp) => this.takeSnapshot(timestamp, true, canvasElement));
   }
 
   private initFPSWorker(): Worker {
