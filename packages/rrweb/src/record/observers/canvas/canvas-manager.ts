@@ -155,10 +155,10 @@ export class CanvasManager implements CanvasManagerInterface {
       recordCanvas,
       errorHandler,
     } = options;
+    options.sampling = sampling;
     this.mutationCb = options.mutationCb;
     this.mirror = options.mirror;
     this.options = options;
-    this.options.sampling = sampling;
 
     if (errorHandler) {
       registerErrorHandler(errorHandler);
@@ -375,29 +375,22 @@ export class CanvasManager implements CanvasManagerInterface {
    * Returns all `canvas` elements that are not blocked by the given selectors. Searches all windows and shadow roots.
    */
   private getCanvasElements(
-    blockClass?: blockClass,
-    blockSelector?: string | null,
-    unblockSelector?: string | null,
+    blockClass: blockClass,
+    blockSelector: string | null,
+    unblockSelector: string | null,
   ): HTMLCanvasElement[] {
     const matchedCanvas: HTMLCanvasElement[] = [];
 
     const searchCanvas = (root: Document | ShadowRoot) => {
       root.querySelectorAll('canvas').forEach((canvas) => {
         if (
-          !isBlocked(
-            canvas,
-            blockClass || 'rr-block',
-            blockSelector || null,
-            unblockSelector || null,
-            true,
-          )
+          !isBlocked(canvas, blockClass, blockSelector, unblockSelector, true)
         ) {
           matchedCanvas.push(canvas);
         }
       });
     };
 
-    // Search in all windows
     for (const item of this.windows) {
       const window = item.deref();
       let _document: Document | false | undefined;
