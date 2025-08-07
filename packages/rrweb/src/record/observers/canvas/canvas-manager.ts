@@ -309,10 +309,7 @@ export class CanvasManager implements CanvasManagerInterface {
       this.pendingCanvasMutations.set(target, []);
     }
 
-    const mutations = this.pendingCanvasMutations.get(target);
-    if (mutations) {
-      mutations.push(mutation);
-    }
+    this.pendingCanvasMutations.get(target)!.push(mutation);
   };
 
   private initCanvasFPSObserver() {
