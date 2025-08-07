@@ -237,12 +237,17 @@ export class CanvasManager implements CanvasManagerInterface {
     this.shadowDoms = new Set();
   }
 
-  public snapshot(canvasElement?: HTMLCanvasElement, options?: SnapshotOptions): void {
+  public snapshot(
+    canvasElement?: HTMLCanvasElement,
+    options?: SnapshotOptions,
+  ): void {
     if (options?.skipRequestAnimationFrame) {
       this.takeSnapshot(performance.now(), true, canvasElement);
       return;
     }
-    onRequestAnimationFrame((timestamp) => this.takeSnapshot(timestamp, true, canvasElement));
+    onRequestAnimationFrame((timestamp) =>
+      this.takeSnapshot(timestamp, true, canvasElement),
+    );
   }
 
   private initFPSWorker(): Worker {
