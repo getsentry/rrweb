@@ -238,7 +238,6 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   public snapshot(canvasElement?: HTMLCanvasElement, options?: SnapshotOptions): void {
-    console.log('snapshot');
     if (options?.skipRequestAnimationFrame) {
       this.takeSnapshot(performance.now(), true, canvasElement);
       return;
