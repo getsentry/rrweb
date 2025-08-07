@@ -65,7 +65,8 @@ worker.onmessage = async function (e) {
       maxCanvasSize,
     );
     const offscreen = new OffscreenCanvas(targetWidth, targetHeight);
-    const ctx = offscreen.getContext('bitmaprenderer')!;
+    const ctx = offscreen.getContext('bitmaprenderer');
+
     const resizedBitmap =
       targetWidth === width && targetHeight === height
         ? bitmap
@@ -77,7 +78,7 @@ worker.onmessage = async function (e) {
             resizeQuality: 'low',
           });
 
-    ctx.transferFromImageBitmap(resizedBitmap);
+    ctx?.transferFromImageBitmap(resizedBitmap);
     bitmap.close();
 
     const blob = await offscreen.convertToBlob(dataURLOptions); // takes a while
