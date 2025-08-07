@@ -442,8 +442,14 @@ export class CanvasManager implements CanvasManagerInterface {
     isManualSnapshot: boolean,
     canvasElement?: HTMLCanvasElement,
   ) {
-    const { sampling, blockClass, blockSelector, unblockSelector, dataURLOptions, maxCanvasSize } =
-      this.options;
+    const {
+      sampling,
+      blockClass,
+      blockSelector,
+      unblockSelector,
+      dataURLOptions,
+      maxCanvasSize,
+    } = this.options;
     const fps = sampling === 'all' ? 2 : sampling || 2;
     const timeBetweenSnapshots = 1000 / fps;
     const shouldThrottle =
