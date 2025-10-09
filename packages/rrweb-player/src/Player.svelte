@@ -194,23 +194,6 @@
   });
 </script>
 
-<div class="rr-player" bind:this={player} style={playerStyle}>
-  <div class="rr-player__frame" bind:this={frame} {style} />
-  {#if replayer}
-    <Controller
-      bind:this={controller}
-      {replayer}
-      {showController}
-      {autoPlay}
-      {speedOption}
-      {skipInactive}
-      {tags}
-      {inactiveColor}
-      on:fullscreen={() => toggleFullscreen()}
-    />
-  {/if}
-</div>
-
 <style global>
   @import '@sentry-internal/rrweb/dist/style.css';
 
