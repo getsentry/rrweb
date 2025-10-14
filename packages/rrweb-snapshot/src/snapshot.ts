@@ -101,14 +101,17 @@ export function filterCSSPropertiesFromInlineStyle(
       }
 
       const propertyName = property.slice(0, colonIndex).trim();
-      
+
       // If this property is not in the ignore set, keep it
       if (!ignoredProperties.has(propertyName)) {
         filteredProperties.push(property);
       }
     }
 
-    return filteredProperties.join('; ') + (filteredProperties.length > 0 && cssText.endsWith(';') ? ';' : '');
+    return (
+      filteredProperties.join('; ') +
+      (filteredProperties.length > 0 && cssText.endsWith(';') ? ';' : '')
+    );
   } catch (error) {
     console.warn('Error filtering CSS properties:', error);
     return cssText;
@@ -303,7 +306,10 @@ export function transformAttribute(
   } else if (name === 'style') {
     let processedStyle = absoluteToStylesheet(value, getHref(doc));
     if (ignoreCSSAttributes && ignoreCSSAttributes.size > 0) {
-      processedStyle = filterCSSPropertiesFromInlineStyle(processedStyle, ignoreCSSAttributes);
+      processedStyle = filterCSSPropertiesFromInlineStyle(
+        processedStyle,
+        ignoreCSSAttributes,
+      );
     }
     return processedStyle;
   } else if (tagName === 'object' && name === 'data') {
