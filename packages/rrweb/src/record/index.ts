@@ -128,7 +128,6 @@ function record<T = eventWithTime>(
     getCanvasManager,
   } = options;
 
-
   registerErrorHandler(errorHandler);
 
   const inEmittingFrame = recordCrossOriginIframes
