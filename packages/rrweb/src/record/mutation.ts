@@ -199,6 +199,7 @@ export default class MutationBuffer {
   private shadowDomManager: observerParam['shadowDomManager'];
   private canvasManager: observerParam['canvasManager'];
   private processedNodeManager: observerParam['processedNodeManager'];
+  private ignoreCSSAttributes: observerParam['ignoreCSSAttributes'];
   private unattachedDoc: HTMLDocument;
 
   public init(options: MutationBufferParam) {
@@ -230,6 +231,7 @@ export default class MutationBuffer {
         'shadowDomManager',
         'canvasManager',
         'processedNodeManager',
+        'ignoreCSSAttributes',
       ] as const
     ).forEach((key) => {
       // just a type trick, the runtime result is correct
@@ -393,6 +395,7 @@ export default class MutationBuffer {
             ],
           });
         },
+        ignoreCSSAttributes: this.ignoreCSSAttributes,
       });
       if (sn) {
         adds.push({

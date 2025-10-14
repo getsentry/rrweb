@@ -76,6 +76,45 @@ const URL_IN_CSS_REF = /url\((?:(')([^']*)'|(")(.*?)"|([^)]*))\)/gm;
 const URL_PROTOCOL_MATCH = /^(?:[a-z+]+:)?\/\//i;
 const URL_WWW_MATCH = /^www\..*/i;
 const DATA_URI = /^(data:)([^,]*),(.*)/i;
+export function filterCSSPropertiesFromInlineStyle(
+  cssText: string,
+  ignoredProperties: Set<string>,
+): string {
+  if (!cssText || ignoredProperties.size === 0) {
+    return cssText;
+  }
+
+  try {
+    // Split CSS by semicolons to get individual property-value pairs
+    const properties = cssText.split(';');
+    const filteredProperties = [];
+
+    for (let property of properties) {
+      property = property.trim();
+      if (!property) continue;
+
+      const colonIndex = property.indexOf(':');
+      if (colonIndex === -1) {
+        // Invalid property, keep it as is
+        filteredProperties.push(property);
+        continue;
+      }
+
+      const propertyName = property.slice(0, colonIndex).trim();
+      
+      // If this property is not in the ignore set, keep it
+      if (!ignoredProperties.has(propertyName)) {
+        filteredProperties.push(property);
+      }
+    }
+
+    return filteredProperties.join('; ') + (filteredProperties.length > 0 && cssText.endsWith(';') ? ';' : '');
+  } catch (error) {
+    console.warn('Error filtering CSS properties:', error);
+    return cssText;
+  }
+}
+
 export function absoluteToStylesheet(
   cssText: string | null,
   href: string,
@@ -238,6 +277,7 @@ export function transformAttribute(
   value: string | null,
   element: HTMLElement,
   maskAttributeFn: MaskAttributeFn | undefined,
+  ignoreCSSAttributes?: Set<string>,
 ): string | null {
   if (!value) {
     return value;
@@ -261,7 +301,11 @@ export function transformAttribute(
   } else if (name === 'srcset') {
     return getAbsoluteSrcsetString(doc, value);
   } else if (name === 'style') {
-    return absoluteToStylesheet(value, getHref(doc));
+    let processedStyle = absoluteToStylesheet(value, getHref(doc));
+    if (ignoreCSSAttributes && ignoreCSSAttributes.size > 0) {
+      processedStyle = filterCSSPropertiesFromInlineStyle(processedStyle, ignoreCSSAttributes);
+    }
+    return processedStyle;
   } else if (tagName === 'object' && name === 'data') {
     return absoluteToDoc(doc, value);
   }
@@ -570,6 +614,7 @@ function serializeNode(
      * `newlyAddedElement: true` skips scrollTop and scrollLeft check
      */
     newlyAddedElement?: boolean;
+    ignoreCSSAttributes?: Set<string>;
   },
 ): serializedNode | false {
   const {
@@ -593,6 +638,7 @@ function serializeNode(
     recordCanvas,
     keepIframeSrcFn,
     newlyAddedElement = false,
+    ignoreCSSAttributes,
   } = options;
   // Only record root id when document object is not the base document
   const rootId = getRootId(doc, mirror);
@@ -639,6 +685,7 @@ function serializeNode(
         unmaskTextClass,
         maskTextSelector,
         unmaskTextSelector,
+        ignoreCSSAttributes,
       });
     case n.TEXT_NODE:
       return serializeTextNode(n as Text, {
@@ -809,6 +856,7 @@ function serializeElementNode(
     unmaskTextClass: string | RegExp | null;
     maskTextSelector: string | null;
     unmaskTextSelector: string | null;
+    ignoreCSSAttributes?: Set<string>;
   },
 ): serializedNode | false {
   const {
@@ -830,6 +878,7 @@ function serializeElementNode(
     unmaskTextClass,
     maskTextSelector,
     unmaskTextSelector,
+    ignoreCSSAttributes,
   } = options;
   const needBlock = _isBlockedElement(
     n,
@@ -852,6 +901,7 @@ function serializeElementNode(
         attr.value,
         n,
         maskAttributeFn,
+        ignoreCSSAttributes,
       );
     }
   }
@@ -1213,6 +1263,7 @@ export function serializeNodeWithId(
       node: serializedElementNodeWithId,
     ) => unknown;
     stylesheetLoadTimeout?: number;
+    ignoreCSSAttributes?: Set<string>;
   },
 ): serializedNodeWithId | null {
   const {
@@ -1244,6 +1295,7 @@ export function serializeNodeWithId(
     stylesheetLoadTimeout = 5000,
     keepIframeSrcFn = () => false,
     newlyAddedElement = false,
+    ignoreCSSAttributes,
   } = options;
   let { preserveWhiteSpace = true } = options;
   const _serializedNode = serializeNode(n, {
@@ -1267,6 +1319,7 @@ export function serializeNodeWithId(
     recordCanvas,
     keepIframeSrcFn,
     newlyAddedElement,
+    ignoreCSSAttributes,
   });
   if (!_serializedNode) {
     // TODO: dev only
@@ -1350,6 +1403,7 @@ export function serializeNodeWithId(
       onStylesheetLoad,
       stylesheetLoadTimeout,
       keepIframeSrcFn,
+      ignoreCSSAttributes,
     };
     const childNodes = n.childNodes ? Array.from(n.childNodes) : [];
     for (const childN of childNodes) {
@@ -1417,6 +1471,7 @@ export function serializeNodeWithId(
             onStylesheetLoad,
             stylesheetLoadTimeout,
             keepIframeSrcFn,
+            ignoreCSSAttributes,
           });
 
           if (serializedIframeNode) {
@@ -1502,6 +1557,7 @@ export function serializeNodeWithId(
             onStylesheetLoad,
             stylesheetLoadTimeout,
             keepIframeSrcFn,
+            ignoreCSSAttributes,
           });
 
           if (serializedLinkNode) {
@@ -1563,6 +1619,7 @@ function snapshot(
     ) => unknown;
     stylesheetLoadTimeout?: number;
     keepIframeSrcFn?: KeepIframeSrcFn;
+    ignoreCSSAttributes?: Set<string>;
   },
 ): serializedNodeWithId | null {
   const {
@@ -1592,6 +1649,7 @@ function snapshot(
     onStylesheetLoad,
     stylesheetLoadTimeout,
     keepIframeSrcFn = () => false,
+    ignoreCSSAttributes = new Set([]),
   } = options || {};
   const maskInputOptions: MaskInputOptions =
     maskAllInputs === true
@@ -1663,6 +1721,7 @@ function snapshot(
     stylesheetLoadTimeout,
     keepIframeSrcFn,
     newlyAddedElement: false,
+    ignoreCSSAttributes,
   });
 }
 

@@ -128,6 +128,7 @@ function record<T = eventWithTime>(
     getCanvasManager,
   } = options;
 
+
   registerErrorHandler(errorHandler);
 
   const inEmittingFrame = recordCrossOriginIframes
@@ -404,6 +405,7 @@ function record<T = eventWithTime>(
             canvasManager,
             keepIframeSrcFn,
             processedNodeManager,
+            ignoreCSSAttributes,
           },
           mirror,
         });
@@ -489,6 +491,7 @@ function record<T = eventWithTime>(
         });
       },
       keepIframeSrcFn,
+      ignoreCSSAttributes,
     });
 
     if (!node) {

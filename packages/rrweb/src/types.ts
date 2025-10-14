@@ -178,6 +178,7 @@ export type MutationBufferParam = Pick<
   | 'shadowDomManager'
   | 'canvasManager'
   | 'processedNodeManager'
+  | 'ignoreCSSAttributes'
 >;
 
 export type ReplayPlugin = {

@@ -839,6 +839,45 @@ describe('record', function (this: ISuite) {
     assertSnapshot(ctx.events);
   });
 
+  it('ignoreCSSAttributes works on inline styles for snapshots and mutations', async () => {
+    await ctx.page.evaluate(() => {
+      const { record } = (window as unknown as IWindow).rrweb;
+
+      const div = document.createElement('div');
+      div.setAttribute('style', 'color: #f00; margin: 1px');
+      div.innerText = 'Button';
+      document.body.appendChild(div);
+
+      const styleElement = document.createElement('style');
+      document.head.appendChild(styleElement);
+
+      record({
+        emit: (window as unknown as IWindow).emit,
+        ignoreCSSAttributes: new Set(['color']),
+      });
+    });
+    await ctx.page.waitForTimeout(50);
+    assertSnapshot(ctx.events);
+
+    await ctx.page.evaluate(() => {
+      const div = document.createElement('div');
+      div.setAttribute('style', 'color:#0f0;padding:3px 6px;');
+      document.body.appendChild(div);
+    });
+
+    await ctx.page.waitForTimeout(50);
+    const mutations = ctx.events.filter(
+      (e) =>
+        e.type === EventType.IncrementalSnapshot &&
+        e.data.source === IncrementalSource.Mutation,
+    );
+
+    // @ts-expect-error data is unknown
+    expect(mutations[0].data.adds[0].node.attributes).toEqual({
+      style: 'padding:3px 6px;',
+    });
+  });
+
   describe('loading stylesheets', () => {
     let server: Server;
     let serverURL: string;
