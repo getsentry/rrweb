@@ -1951,10 +1951,15 @@ export class Replayer {
                   // for safe
                 }
               }
-              (target as Element | RRElement).setAttribute(
-                attributeName,
-                value,
-              );
+              // Not sure yet how this is happening during recording, but this
+              // prevents calling `setAttribute` on Text nodes (which does not
+              // have `setAttribute` method).
+              if (target.nodeType !== 3) {
+                (target as Element | RRElement).setAttribute(
+                  attributeName,
+                  value,
+                );
+              }
             } catch (error) {
               this.warn(
                 'An error occurred may due to the checkout feature.',
