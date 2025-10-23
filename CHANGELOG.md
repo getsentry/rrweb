@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.40.0
+
+### Various fixes & improvements
+
+- fix(rrweb): Do not call setAttribute on TEXT nodes  (#253) by @billyvg
+- feat(replay): catch rejections from `play()` (#254) by @billyvg
+
 ## 2.39.0
 
 ### Various fixes & improvements
