@@ -1462,7 +1462,7 @@ export class Replayer {
             // unexpeted behavior
             const maybePlayPromise = mediaEl.play();
 
-            if (typeof maybePlayPromise?.then === 'function') {
+            if (typeof maybePlayPromise?.catch === 'function') {
               maybePlayPromise.catch((err) => {
                 // ignore rejections from play() as they are not useful and
                 // quite noisy. some examples:

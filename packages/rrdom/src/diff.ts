@@ -241,22 +241,26 @@ function diffAfterUpdatingChildren(
           const oldMediaElement = oldTree as HTMLMediaElement;
           const newMediaRRElement = newRRElement as unknown as RRMediaElement;
           if (newMediaRRElement.paused !== undefined) {
-            newMediaRRElement.paused
-              ? void oldMediaElement.pause()
-              : void oldMediaElement.play().catch((e) => {
-                  console.warn(e);
-                  // ignore rejections from play() as they are not useful and
-                  // quite noisy. some examples:
-                  // AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22
-                  // AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
-                  // AbortError: The play() request was interrupted by a call to pause().
-                  // NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
-                  // AbortError: The play() request was interrupted because the media was removed from the document.
-                  // AbortError: The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
-                  // NotAllowedError: play() failed because the user didn't interact with the document first.
-                  // NotAllowedError: play() can only be initiated by a user gesture.
-                  // AbortError: The play() request was interrupted by end of playback. https://goo.gl/LdLk22
-                });
+            const maybePromise = newMediaRRElement.paused
+              ? oldMediaElement.pause()
+              : oldMediaElement.play();
+
+            if (typeof maybePromise?.catch === 'function') {
+              maybePromise.catch((e) => {
+                console.warn(e);
+                // ignore rejections from play() as they are not useful and
+                // quite noisy. some examples:
+                // AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22
+                // AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
+                // AbortError: The play() request was interrupted by a call to pause().
+                // NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
+                // AbortError: The play() request was interrupted because the media was removed from the document.
+                // AbortError: The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
+                // NotAllowedError: play() failed because the user didn't interact with the document first.
+                // NotAllowedError: play() can only be initiated by a user gesture.
+                // AbortError: The play() request was interrupted by end of playback. https://goo.gl/LdLk22
+              });
+            }
           }
           if (newMediaRRElement.muted !== undefined)
             oldMediaElement.muted = newMediaRRElement.muted;
