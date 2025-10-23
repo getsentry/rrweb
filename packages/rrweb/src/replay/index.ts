@@ -1460,7 +1460,24 @@ export class Replayer {
             // i.e. media will evntualy start to play when data is loaded
             // 'canplay' event fires even when currentTime attribute changes which may lead to
             // unexpeted behavior
-            void mediaEl.play();
+            const maybePlayPromise = mediaEl.play();
+
+            if (typeof maybePlayPromise?.then === 'function') {
+              maybePlayPromise.catch((err) => {
+                // ignore rejections from play() as they are not useful and
+                // quite noisy. some examples:
+                // AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22
+                // AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
+                // AbortError: The play() request was interrupted by a call to pause().
+                // NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
+                // AbortError: The play() request was interrupted because the media was removed from the document.
+                // AbortError: The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
+                // NotAllowedError: play() failed because the user didn't interact with the document first.
+                // NotAllowedError: play() can only be initiated by a user gesture.
+                // AbortError: The play() request was interrupted by end of playback. https://goo.gl/LdLk22
+                console.warn(err);
+              });
+            }
           }
           if (d.type === MediaInteractions.RateChange) {
             mediaEl.playbackRate = d.playbackRate;
