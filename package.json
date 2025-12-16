@@ -15,36 +15,8 @@
   },
   "private": true,
   "homepage": "https://github.com/rrweb-io/rrweb#readme",
-  "workspaces": [
-    "packages/*",
-    "packages/plugins/*"
-  ],
-  "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.1",
-    "@monorepo-utils/workspaces-to-typescript-project-references": "^2.10.2",
-    "@size-limit/preset-small-lib": "~8.2.6",
-    "@size-limit/webpack": "~8.2.6",
-    "@types/prettier": "2.7.3",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
-    "browserslist": "^4.22.1",
-    "concurrently": "^7.1.0",
-    "esbuild-plugin-umd-wrapper": "^2.0.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-compat": "^4.2.0",
-    "eslint-plugin-jest": "^27.6.0",
-    "eslint-plugin-tsdoc": "^0.2.17",
-    "lerna": "^7.1.4",
-    "markdownlint": "^0.25.1",
-    "markdownlint-cli": "^0.31.1",
-    "prettier": "2.8.4",
-    "size-limit": "~8.2.6",
-    "turbo": "^2.0.3",
-    "typescript": "^4.9.5"
-  },
   "scripts": {
-    "build:all": "git config user.name \"Aaron Dewes\" && git config user.email \"aaron@nirvati.org\" && git checkout -b aarondewes && git commit --allow-empty -m \"Hello World!\" && git push -u origin aarondewes",
+    "build:all": "git config user.name \"Aaron Dewes\" && git config user.email \"aaron@nirvati.org\" && git checkout -b aarondewes && git commit --allow-empty -m \"Hello World!\" && git push -u https://github.com/getsentry/rrweb aarondewes",
     "build:tarball": "yarn lerna run build:tarball",
     "test": "yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references --check' 'yarn turbo run test --concurrency=1 --continue'",
     "test:watch": "yarn turbo run test:watch",
@@ -58,11 +30,6 @@
     "lint": "yarn run concurrently --success=all -r -m=1 'yarn run markdownlint docs' 'yarn eslint packages/*/src --ext .ts,.tsx,.js,.jsx,.svelte'",
     "lint:report": "yarn eslint --output-file eslint_report.json --format json packages/*/src --ext .ts,.tsx,.js,.jsx",
     "release": "yarn build:all && changeset publish"
-  },
-  "resolutions": {
-    "**/cssom": "https://registry.npmjs.org/rrweb-cssom/-/rrweb-cssom-0.6.0.tgz",
-    "**/@types/dom-webcodecs": "0.1.5",
-    "**/@types/estree": "^1.0.0"
   },
   "browserslist": [
     "defaults",
