@@ -13,3 +13,4 @@ targets:
     includeNames: /^sentry-.*.tgz$/
   - name: npm
     includeNames: /^sentry-.*.tgz$/
+
