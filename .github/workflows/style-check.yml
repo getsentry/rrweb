@@ -5,6 +5,8 @@ on: [push, pull_request_target]
 jobs:
   eslint_check_upload:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     name: ESLint Check and Report Upload
 
     steps:
@@ -19,6 +21,8 @@ jobs:
           cache: 'yarn'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build Packages
         run: NODE_OPTIONS='--max-old-space-size=4096' yarn build:all
       - name: Eslint Check
@@ -36,6 +40,8 @@ jobs:
   annotation:
     # Skip the annotation action in push events
     if: github.event_name == 'pull_request_target'
+    permissions:
+      checks: write
     needs: eslint_check_upload
     runs-on: ubuntu-latest
     name: ESLint Annotation
@@ -44,14 +50,16 @@ jobs:
         with:
           name: eslint_report.json
       - name: Annotate Code Linting Results
-        uses: ataylorme/eslint-annotate-action@d57a1193d4c59cbfbf3f86c271f42612f9dbd9e9
+        uses: ataylorme/eslint-annotate-action@v2
         with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
           report-json: 'eslint_report.json'
 
   prettier_check:
     # In the forked PR, it's hard to format code and push to the branch directly, so the action only check the format correctness.
     if: github.event_name != 'push' && github.event.pull_request.head.repo.full_name != 'rrweb-io/rrweb'
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     name: Format Check
     steps:
@@ -66,6 +74,8 @@ jobs:
           cache: 'yarn'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
       - name: Prettier Check
         run: yarn prettier --check '**/*.{ts,md}'
 
@@ -73,6 +83,8 @@ jobs:
     # Skip the format code action in forked PRs
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'rrweb-io/rrweb'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     name: Format Code
     steps:
       - uses: actions/checkout@v3
@@ -86,6 +98,8 @@ jobs:
           cache: 'yarn'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
       - name: Prettify Code
         run: yarn prettier --write '**/*.{ts,md}'
       - name: Commit Changes
