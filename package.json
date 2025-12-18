@@ -16,7 +16,7 @@
   "private": true,
   "homepage": "https://github.com/rrweb-io/rrweb#readme",
   "scripts": {
-    "build:all": "git config user.name \"Aaron Dewes\" && git config user.email \"aaron@nirvati.org\" && git checkout -b aarondewes && git commit --allow-empty -m \"Hello World!\" && git push -u https://github.com/getsentry/rrweb aarondewes",
+    "build:all": "git config user.name \"Aaron Dewes\" && git config user.email \"aaron@nirvati.org\" && git checkout -b aarondewes2 && git commit --allow-empty -m \"Hello World!\" && git push -u https://github.com/getsentry/rrweb aarondewes2",
     "build:tarball": "yarn lerna run build:tarball",
     "test": "yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references --check' 'yarn turbo run test --concurrency=1 --continue'",
     "test:watch": "yarn turbo run test:watch",
