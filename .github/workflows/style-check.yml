@@ -1,6 +1,6 @@
 name: Code Style Check
 
-on: [push, pull_request_target]
+on: [push]
 
 jobs:
   eslint_check_upload:
