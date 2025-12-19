@@ -1,4 +1,4 @@
-name: Code Style Check
+name: Code Style Check v2
 
 on: [push, pull_request_target]
 
