@@ -2,10 +2,11 @@ name: Build & Tests
 
 on:
   push:
-    branches:
-      - master
-      - release/**
+    paths-ignore:
+      - '**/*.md'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
