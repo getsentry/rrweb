@@ -160,10 +160,17 @@ function buildNode(
           // If the custom element hasn't been defined yet
           !doc.defaultView.customElements.get(n.tagName)
         )
-          doc.defaultView.customElements.define(
-            n.tagName,
-            class extends doc.defaultView.HTMLElement {},
-          );
+          try {
+            doc.defaultView.customElements.define(
+              n.tagName,
+              class extends doc.defaultView.HTMLElement {},
+            );
+          } catch (e) {
+            // Some elements (e.g. Electron's <webview>) are registered as custom
+            // elements but have names that are not valid for customElements.define()
+            // (missing hyphen). Silently ignore — the element will be created as
+            // an HTMLUnknownElement instead.
+          }
         node = doc.createElement(tagName);
       }
       /**

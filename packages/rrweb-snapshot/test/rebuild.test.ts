@@ -189,6 +189,53 @@ describe('rebuild', function () {
     });
   });
 
+  describe('isCustom elements', function () {
+    it('should not throw when rebuilding custom element without hyphen (e.g. webview)', function () {
+      // Elements like Electron's <webview> are registered as custom elements
+      // but their names don't contain a hyphen, which makes them invalid for
+      // customElements.define(). We should handle this gracefully via try/catch.
+      expect(() => {
+        buildNodeWithSN(
+          {
+            id: 1,
+            tagName: 'webview',
+            type: NodeType.Element,
+            attributes: {},
+            childNodes: [],
+            isCustom: true,
+          },
+          {
+            doc: document,
+            mirror,
+            hackCss: false,
+            cache,
+          },
+        );
+      }).not.toThrow();
+    });
+
+    it('should define a custom element with a valid hyphenated name', function () {
+      const node = buildNodeWithSN(
+        {
+          id: 1,
+          tagName: 'my-component',
+          type: NodeType.Element,
+          attributes: {},
+          childNodes: [],
+          isCustom: true,
+        },
+        {
+          doc: document,
+          mirror,
+          hackCss: false,
+          cache,
+        },
+      ) as HTMLElement;
+      expect(node).toBeTruthy();
+      expect(node.tagName.toLowerCase()).toBe('my-component');
+    });
+  });
+
   // sentry: skipped because we've removed `adaptCssForReplay` for now
   // it('should not incorrectly interpret escaped quotes', () => {
   //   // the ':hover' in the below is a decoy which is not part of the selector,
