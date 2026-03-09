@@ -166,6 +166,7 @@ function buildNode(
               class extends doc.defaultView.HTMLElement {},
             );
           } catch (e) {
+            console.warn('Cannot define custom element', e);
             // Some elements (e.g. Electron's <webview>) are registered as custom
             // elements but have names that are not valid for customElements.define()
             // (missing hyphen). Silently ignore — the element will be created as
