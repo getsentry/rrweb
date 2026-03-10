@@ -4,8 +4,8 @@ set -eux
 # Move to the project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd $SCRIPT_DIR/..
-OLD_VERSION="${1}"
-NEW_VERSION="${2}"
+OLD_VERSION=${CRAFT_OLD_VERSION}
+NEW_VERSION=${CRAFT_NEW_VERSION}
 
 # Do not tag and commit changes made by "npm version"
 export npm_config_git_tag_version=false
