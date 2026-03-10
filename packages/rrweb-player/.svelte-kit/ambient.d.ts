@@ -46,6 +46,7 @@ declare module '$env/static/private' {
 	export const npm_package_scripts_generate_version: string;
 	export const npm_package_dependencies__types_cookie: string;
 	export const npm_config_bin_links: string;
+	export const USE_BAZEL_FALLBACK_VERSION: string;
 	export const RUNNER_ENVIRONMENT: string;
 	export const GITHUB_ENV: string;
 	export const PIPX_HOME: string;
@@ -88,6 +89,7 @@ declare module '$env/static/private' {
 	export const npm_package_files_5: string;
 	export const npm_package_dependencies_tiny_glob: string;
 	export const SYSTEMD_EXEC_PID: string;
+	export const ACTIONS_ORCHESTRATION_ID: string;
 	export const npm_package_scripts_postinstall: string;
 	export const npm_package_files_6: string;
 	export const npm_package_keywords_0: string;
@@ -126,6 +128,7 @@ declare module '$env/static/private' {
 	export const npm_package_scripts_lint: string;
 	export const npm_config_registry: string;
 	export const ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE: string;
+	export const GOROOT_1_25_X64: string;
 	export const GITHUB_RUN_ID: string;
 	export const GITHUB_REF_TYPE: string;
 	export const BOOTSTRAP_HASKELL_NONINTERACTIVE: string;
@@ -233,6 +236,7 @@ declare module '$env/static/private' {
 	export const npm_config_ignore_optional: string;
 	export const ANDROID_NDK: string;
 	export const SGX_AESM_ADDR: string;
+	export const PSModulePath: string;
 	export const CHROME_BIN: string;
 	export const SELENIUM_JAR_PATH: string;
 	export const MEMORY_PRESSURE_WRITE: string;
@@ -293,6 +297,7 @@ declare module '$env/dynamic/private' {
 		npm_package_scripts_generate_version: string;
 		npm_package_dependencies__types_cookie: string;
 		npm_config_bin_links: string;
+		USE_BAZEL_FALLBACK_VERSION: string;
 		RUNNER_ENVIRONMENT: string;
 		GITHUB_ENV: string;
 		PIPX_HOME: string;
@@ -335,6 +340,7 @@ declare module '$env/dynamic/private' {
 		npm_package_files_5: string;
 		npm_package_dependencies_tiny_glob: string;
 		SYSTEMD_EXEC_PID: string;
+		ACTIONS_ORCHESTRATION_ID: string;
 		npm_package_scripts_postinstall: string;
 		npm_package_files_6: string;
 		npm_package_keywords_0: string;
@@ -373,6 +379,7 @@ declare module '$env/dynamic/private' {
 		npm_package_scripts_lint: string;
 		npm_config_registry: string;
 		ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE: string;
+		GOROOT_1_25_X64: string;
 		GITHUB_RUN_ID: string;
 		GITHUB_REF_TYPE: string;
 		BOOTSTRAP_HASKELL_NONINTERACTIVE: string;
@@ -480,6 +487,7 @@ declare module '$env/dynamic/private' {
 		npm_config_ignore_optional: string;
 		ANDROID_NDK: string;
 		SGX_AESM_ADDR: string;
+		PSModulePath: string;
 		CHROME_BIN: string;
 		SELENIUM_JAR_PATH: string;
 		MEMORY_PRESSURE_WRITE: string;

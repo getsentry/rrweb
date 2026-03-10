@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.40.1-alpha.0
+
+### New Features ✨
+
+- (replay) Catch rejections from `play()` by @billyvg in [#254](https://github.com/getsentry/rrweb/pull/254)
+- Upgrade playwright to 1.56.1 by @billyvg in [#255](https://github.com/getsentry/rrweb/pull/255)
+
+### Bug Fixes 🐛
+
+- (rrweb) Do not call setAttribute on TEXT nodes by @billyvg in [#253](https://github.com/getsentry/rrweb/pull/253)
+- Ignore customElements.define exceptions so that it does not break replays by @billyvg in [#267](https://github.com/getsentry/rrweb/pull/267)
+- Update style-check workflow to use latest version from upstream by @AaronDewes in [#259](https://github.com/getsentry/rrweb/pull/259)
+
+### Other
+
+- use different env vars by @billyvg in [#268](https://github.com/getsentry/rrweb/pull/268)
+
 ## 2.39.0
 
 ### Various fixes & improvements
