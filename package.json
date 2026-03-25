@@ -35,7 +35,6 @@
     "eslint-plugin-compat": "^4.2.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-tsdoc": "^0.2.17",
-    "lerna": "^7.1.4",
     "markdownlint": "^0.25.1",
     "markdownlint-cli": "^0.31.1",
     "prettier": "2.8.4",
@@ -45,7 +44,7 @@
   },
   "scripts": {
     "build:all": "NODE_OPTIONS='--max-old-space-size=4096' yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references' 'yarn turbo run prepack'",
-    "build:tarball": "yarn lerna run build:tarball",
+    "build:tarball": "yarn turbo run build:tarball",
     "test": "yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references --check' 'yarn turbo run test --concurrency=1 --continue'",
     "test:watch": "yarn turbo run test:watch",
     "test:update": "yarn turbo run test:update",

@@ -4,7 +4,6 @@
   "globalDependencies": [
     ".eslintrc.js",
     ".prettierrc",
-    "lerna.json",
     "vite.config.defaults.ts",
     "tsconfig.json"
   ],
@@ -37,6 +36,9 @@
       "persistent": true,
       "cache": false,
       "passThroughEnv": ["CLEAR_DIST_DIR"]
+    },
+    "build:tarball": {
+      "dependsOn": ["prepack"]
     },
     "lint": {},
     "typings": {},
