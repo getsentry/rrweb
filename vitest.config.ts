@@ -9,5 +9,10 @@ export default {
       escapeString: true,
       printBasicPrototype: true,
     },
+    // Vitest 2 defaults to worker threads, but Puppeteer browser instances
+    // don't clean up reliably in threads, causing CI hangs. Use forks
+    // (child processes) which match vitest 1 behavior.
+    pool: 'forks',
+    teardownTimeout: 5000,
   },
 };

@@ -48,9 +48,9 @@
     "@sentry-internal/rrweb": "2.41.0",
     "puppeteer": "^20.9.0",
     "typescript": "^4.7.3",
-    "vite": "^5.2.8",
-    "vite-plugin-dts": "^3.8.1",
-    "vitest": "^1.4.0"
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^2.1.9"
   },
   "peerDependencies": {
     "@sentry-internal/rrweb": "^2.0.0-alpha.14"

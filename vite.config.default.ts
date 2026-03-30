@@ -118,6 +118,9 @@ export default function (
         entry,
         name,
         fileName,
+        // Vite 6 changed CSS output filename from 'style.css' to package-name-based.
+        // Preserve 'style.css' for backward compatibility with consumers.
+        cssFileName: 'style',
         // TODO: turn on `umd` for rrweb when https://github.com/schummar/vite/tree/feature/libMultiEntryUMD gets merged
         // More info: https://github.com/vitejs/vite/pull/7047#issuecomment-1288080855
         // formats: ['es', 'umd', 'cjs'],

@@ -55,8 +55,8 @@
   ],
   "devDependencies": {
     "downlevel-dts": "https://github.com/getsentry/downlevel-dts",
-    "vite": "^5.2.8",
-    "vite-plugin-dts": "^3.8.1"
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
     "@sentry-internal/rrweb-snapshot": "2.41.0",
