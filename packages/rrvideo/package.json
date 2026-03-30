@@ -7,7 +7,8 @@
     "watch": "tsc -w",
     "dev": "ts-node src/cli.ts",
     "test": "jest --forceExit",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "prepack": "yarn build"
   },
   "bin": {
     "rrvideo": "./build/cli.js"
