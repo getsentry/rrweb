@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --network-timeout 300000
@@ -62,6 +63,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --network-timeout 300000

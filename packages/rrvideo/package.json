@@ -14,9 +14,10 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@open-tech-world/cli-progress-bar": "^2.0.2",
+    "@sentry-internal/rrweb-player": "2.41.0",
     "@sentry-internal/rrweb-types": "2.41.0",
     "fs-extra": "^10.0.1",
-    "inquirer": "^8.2.0",
     "minimist": "^1.2.6",
     "playwright": "^1.22.2"
   },
