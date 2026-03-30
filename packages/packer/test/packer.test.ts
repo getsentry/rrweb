@@ -30,7 +30,7 @@ describe('unpack', () => {
   it('stop on unknown data format', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(() => unpack('[""]')).toThrow('');
+    expect(() => unpack('[""]')).toThrow();
 
     expect(consoleSpy).toHaveBeenCalled();
     vi.resetAllMocks();

@@ -39,3 +39,6 @@ dist-ts3.8
 # for vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# rrvideo temp output
+__rrvideo__temp__
