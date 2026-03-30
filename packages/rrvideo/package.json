@@ -2,6 +2,12 @@
   "name": "rrvideo",
   "version": "2.41.0",
   "description": "A tool for generating a video from a rrweb session",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
