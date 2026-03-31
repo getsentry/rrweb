@@ -35,9 +35,9 @@ describe('rrweb-plugin-console-record', () => {
     server = await createServer({
       preview: { port: 3000 },
       mode: 'test',
-      // hmr calls `console.debug('[vite] connected')` and messes up our snapshots
-      // so we disable it
-      server: { hmr: false },
+      // Disable WebSocket server so Vite client doesn't log
+      // `console.debug('[vite] connected')` and mess up our snapshots
+      server: { hmr: false, ws: false },
     });
     await server.listen();
     serverUrl = server.resolvedUrls!.local[0];
