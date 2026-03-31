@@ -19,9 +19,23 @@ export async function launchPuppeteer(
   });
 }
 
+/**
+ * Filter out console events originating from Vite's injected client script.
+ * Vite 6 logs messages like "[vite] connected" or "[vite] failed to connect"
+ * that pollute our snapshots.
+ */
+function filterViteClientEvents(snapshots: eventWithTime[]): eventWithTime[] {
+  return snapshots.filter((event) => {
+    if (event.type !== 6) return true;
+    const trace = (event.data as any)?.payload?.trace;
+    if (!Array.isArray(trace)) return true;
+    return !trace.some((t: string) => t.includes('@vite/client'));
+  });
+}
+
 export function assertSnapshot(snapshots: eventWithTime[]) {
   expect(snapshots).toBeDefined();
-  expect(stringifySnapshots(snapshots)).toMatchSnapshot();
+  expect(stringifySnapshots(filterViteClientEvents(snapshots))).toMatchSnapshot();
 }
 
 describe('rrweb-plugin-console-record', () => {
@@ -35,9 +49,7 @@ describe('rrweb-plugin-console-record', () => {
     server = await createServer({
       preview: { port: 3000 },
       mode: 'test',
-      // Disable WebSocket server so Vite client doesn't log
-      // `console.debug('[vite] connected')` and mess up our snapshots
-      server: { hmr: false, ws: false },
+      server: { hmr: false },
     });
     await server.listen();
     serverUrl = server.resolvedUrls!.local[0];
