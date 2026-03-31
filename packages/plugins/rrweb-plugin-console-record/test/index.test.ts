@@ -35,7 +35,9 @@ function filterViteClientEvents(snapshots: eventWithTime[]): eventWithTime[] {
 
 export function assertSnapshot(snapshots: eventWithTime[]) {
   expect(snapshots).toBeDefined();
-  expect(stringifySnapshots(filterViteClientEvents(snapshots))).toMatchSnapshot();
+  expect(
+    stringifySnapshots(filterViteClientEvents(snapshots)),
+  ).toMatchSnapshot();
 }
 
 describe('rrweb-plugin-console-record', () => {
