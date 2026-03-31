@@ -4,6 +4,7 @@ import {
   SlimDOMOptions,
   createMirror,
 } from '@sentry-internal/rrweb-snapshot';
+import { getIFrameContentWindow } from '@sentry-internal/rrdom';
 import { initObservers, mutationBuffers } from './observer';
 import {
   on,
@@ -463,8 +464,9 @@ function record<T = eventWithTime>(
       },
       onIframeLoad: (iframe, childSn) => {
         iframeManager.attachIframe(iframe, childSn);
-        if (iframe.contentWindow) {
-          canvasManager.addWindow(iframe.contentWindow as IWindow);
+        const contentWindow = getIFrameContentWindow(iframe);
+        if (contentWindow) {
+          canvasManager.addWindow(contentWindow as IWindow);
         }
         shadowDomManager.observeAttachShadow(iframe);
       },

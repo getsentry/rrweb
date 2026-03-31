@@ -3,7 +3,12 @@
  */
 import { describe, it, test, expect } from 'vitest';
 import { NodeType, serializedNode } from '../src/types';
-import { extractFileExtension, isNodeMetaEqual } from '../src/utils';
+import {
+  extractFileExtension,
+  isNodeMetaEqual,
+  getIFrameContentDocument,
+  getIFrameContentWindow,
+} from '../src/utils';
 import type { serializedNodeWithId } from '@sentry-internal/rrweb-snapshot';
 
 describe('utils', () => {
@@ -197,6 +202,58 @@ describe('utils', () => {
       const path = 'https://example.com/scripts/app.min.js?version=1.0';
       const extension = extractFileExtension(path);
       expect(extension).toBe('js');
+    });
+  });
+
+  describe('getIFrameContentDocument', () => {
+    it('should return contentDocument for same-origin iframe', () => {
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      const doc = getIFrameContentDocument(iframe);
+      expect(doc).toBe(iframe.contentDocument);
+      document.body.removeChild(iframe);
+    });
+
+    it('should return undefined when accessing contentDocument throws', () => {
+      const iframe = {
+        get contentDocument(): Document {
+          throw new DOMException('Blocked', 'SecurityError');
+        },
+      } as HTMLIFrameElement;
+      const doc = getIFrameContentDocument(iframe);
+      expect(doc).toBeUndefined();
+    });
+
+    it('should return undefined for undefined input', () => {
+      const doc = getIFrameContentDocument(undefined);
+      expect(doc).toBeUndefined();
+    });
+  });
+
+  describe('getIFrameContentWindow', () => {
+    it('should return contentWindow for same-origin iframe', () => {
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      const win = getIFrameContentWindow(iframe);
+      expect(win).toBe(iframe.contentWindow);
+      document.body.removeChild(iframe);
+    });
+
+    it('should return undefined when accessing contentWindow throws', () => {
+      // Simulate iOS 18.5 Safari WebView behavior where accessing
+      // contentWindow on cross-origin iframes throws SecurityError
+      const iframe = {
+        get contentWindow(): Window {
+          throw new DOMException('Blocked', 'SecurityError');
+        },
+      } as HTMLIFrameElement;
+      const win = getIFrameContentWindow(iframe);
+      expect(win).toBeUndefined();
+    });
+
+    it('should return undefined for undefined input', () => {
+      const win = getIFrameContentWindow(undefined);
+      expect(win).toBeUndefined();
     });
   });
 });

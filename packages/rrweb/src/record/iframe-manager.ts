@@ -12,7 +12,10 @@ import type {
   mutationCallBack,
 } from '@sentry-internal/rrweb-types';
 import type { StylesheetManager } from './stylesheet-manager';
-import { getIFrameContentDocument } from '@sentry-internal/rrdom';
+import {
+  getIFrameContentDocument,
+  getIFrameContentWindow,
+} from '@sentry-internal/rrdom';
 
 export interface IframeManagerInterface {
   crossOriginIframeMirror: CrossOriginIframeMirror;
@@ -83,8 +86,8 @@ export class IframeManager implements IframeManagerInterface {
 
   public addIframe(iframeEl: HTMLIFrameElement) {
     this.iframes.set(iframeEl, true);
-    if (iframeEl.contentWindow)
-      this.crossOriginIframeMap.set(iframeEl.contentWindow, iframeEl);
+    const contentWindow = getIFrameContentWindow(iframeEl);
+    if (contentWindow) this.crossOriginIframeMap.set(contentWindow, iframeEl);
   }
 
   public addLoadListener(cb: (iframeEl: HTMLIFrameElement) => unknown) {
@@ -110,11 +113,12 @@ export class IframeManager implements IframeManagerInterface {
     });
 
     // Receive messages (events) coming from cross-origin iframes that are nested in this same-origin iframe.
-    if (this.recordCrossOriginIframes)
-      iframeEl.contentWindow?.addEventListener(
+    if (this.recordCrossOriginIframes) {
+      getIFrameContentWindow(iframeEl)?.addEventListener(
         'message',
         this.handleMessage.bind(this),
       );
+    }
 
     this.loadListener?.(iframeEl);
 

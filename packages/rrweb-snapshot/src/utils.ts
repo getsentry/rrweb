@@ -496,10 +496,23 @@ export function clearTimeout(
  * Get the content document of an iframe.
  * Catching errors is necessary because some older browsers block access to the content document of a sandboxed iframe.
  */
-export function getIframeContentDocument(iframe?: HTMLIFrameElement) {
+export function getIFrameContentDocument(iframe?: HTMLIFrameElement) {
   try {
     return (iframe as HTMLIFrameElement).contentDocument;
-  } catch (e) {
+  } catch {
+    // noop
+  }
+}
+
+/**
+ * Get the content window of an iframe.
+ * Catching errors is necessary because iOS 18.5 Safari WebView throws SecurityError
+ * when accessing contentWindow on cross-origin iframes (instead of returning null).
+ */
+export function getIFrameContentWindow(iframe?: HTMLIFrameElement) {
+  try {
+    return (iframe as HTMLIFrameElement).contentWindow;
+  } catch {
     // noop
   }
 }

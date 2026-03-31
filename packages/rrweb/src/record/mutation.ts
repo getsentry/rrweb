@@ -35,7 +35,10 @@ import {
   getShadowHost,
   closestElementOfNode,
 } from '../utils';
-import { getIFrameContentDocument } from '@sentry-internal/rrdom';
+import {
+  getIFrameContentDocument,
+  getIFrameContentWindow,
+} from '@sentry-internal/rrdom';
 
 type DoubleLinkedListNode = {
   previous: DoubleLinkedListNode | null;
@@ -369,8 +372,9 @@ export default class MutationBuffer {
           }
 
           this.iframeManager.attachIframe(iframe, childSn);
-          if (iframe.contentWindow) {
-            this.canvasManager.addWindow(iframe.contentWindow as IWindow);
+          const contentWindow = getIFrameContentWindow(iframe);
+          if (contentWindow) {
+            this.canvasManager.addWindow(contentWindow as IWindow);
           }
           this.shadowDomManager.observeAttachShadow(iframe);
         },
