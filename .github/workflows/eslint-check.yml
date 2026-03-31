@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: lts/*
+          node-version: '20'
           cache: 'yarn'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
@@ -81,7 +81,7 @@ jobs:
           name: pr-sizes
       - uses: actions/setup-node@v3
         with:
-          node-version: lts/*
+          node-version: '20'
           cache: 'yarn'
       - name: Install base dependencies
         run: yarn install --frozen-lockfile
