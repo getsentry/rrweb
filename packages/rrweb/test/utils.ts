@@ -294,9 +294,7 @@ function parseMhtml(mhtml: string): { filename: string; content: string }[] {
     if (headerEnd === -1) continue;
     const separatorMatch = part.slice(headerEnd).match(/^(\r?\n\r?\n)/);
     const headers = part.substring(0, headerEnd);
-    const body = part.substring(
-      headerEnd + (separatorMatch?.[1].length || 4),
-    );
+    const body = part.substring(headerEnd + (separatorMatch?.[1].length || 4));
     const locationMatch = headers.match(/Content-Location:\s*(.+)/i);
     const filename = locationMatch ? locationMatch[1].trim() : '';
     const isQuotedPrintable =
