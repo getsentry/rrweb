@@ -11,7 +11,6 @@ import {
 } from '@sentry-internal/rrweb-types';
 import type { recordOptions } from '../src/types';
 import * as puppeteer from 'puppeteer';
-import { format } from 'prettier';
 import * as path from 'path';
 import * as http from 'http';
 import * as url from 'url';
@@ -259,37 +258,84 @@ function stripBlobURLsFromAttributes(node: {
   }
 }
 
-function stringifyDomSnapshot(mhtml: string): string {
-  const { Parser } = require('fast-mhtml');
-  const resources: string[] = [];
-  const p = new Parser({
-    rewriteFn: (filename: string): string => {
-      const index = resources.indexOf(filename);
-      const prefix = /^\w+/.exec(filename);
-      if (index !== -1) {
-        return `file-${prefix}-${index}`;
-      } else {
-        return `file-${prefix}-${resources.push(filename) - 1}`;
-      }
-    },
-  });
-  const result = p
-    .parse(mhtml) // parse file
-    .rewrite() // rewrite all links
-    .spit(); // return all contents
+function decodeQuotedPrintable(str: string): string {
+  // First remove soft line breaks, then decode bytes and reassemble as UTF-8
+  const withoutSoftBreaks = str.replace(/=\r?\n/g, '');
+  const bytes: number[] = [];
+  let i = 0;
+  while (i < withoutSoftBreaks.length) {
+    if (
+      withoutSoftBreaks[i] === '=' &&
+      i + 2 < withoutSoftBreaks.length &&
+      /[0-9A-Fa-f]{2}/.test(withoutSoftBreaks.substring(i + 1, i + 3))
+    ) {
+      bytes.push(parseInt(withoutSoftBreaks.substring(i + 1, i + 3), 16));
+      i += 3;
+    } else {
+      bytes.push(withoutSoftBreaks.charCodeAt(i));
+      i += 1;
+    }
+  }
+  return new TextDecoder('utf-8').decode(new Uint8Array(bytes));
+}
 
-  const newResult: { filename: string; content: string }[] = result.map(
-    (asset: { filename: string; content: string }) => {
-      const { filename, content } = asset;
-      let res: string | undefined;
-      if (filename.includes('frame')) {
-        res = format(content, {
-          parser: 'html',
-        });
+function parseMhtml(mhtml: string): { filename: string; content: string }[] {
+  const boundaryMatch = mhtml.match(/boundary="?([^"\r\n]+)"?/);
+  if (!boundaryMatch) return [{ filename: '', content: mhtml }];
+  const boundary = `--${boundaryMatch[1]}`;
+
+  const parts = mhtml.split(boundary).slice(1); // skip preamble
+  const assets: { filename: string; content: string }[] = [];
+
+  for (const part of parts) {
+    if (part.trim() === '--' || part.trim() === '') continue;
+    // Split headers from body (double newline, handling both \r\n and \n)
+    const headerEnd = part.search(/\r?\n\r?\n/);
+    if (headerEnd === -1) continue;
+    const separatorMatch = part.slice(headerEnd).match(/^(\r?\n\r?\n)/);
+    const headers = part.substring(0, headerEnd);
+    const body = part.substring(
+      headerEnd + (separatorMatch?.[1].length || 4),
+    );
+    const locationMatch = headers.match(/Content-Location:\s*(.+)/i);
+    const filename = locationMatch ? locationMatch[1].trim() : '';
+    const isQuotedPrintable =
+      /Content-Transfer-Encoding:\s*quoted-printable/i.test(headers);
+    const content = (
+      isQuotedPrintable ? decodeQuotedPrintable(body) : body
+    ).trim();
+    assets.push({ filename, content });
+  }
+  return assets;
+}
+
+function stringifyDomSnapshot(mhtml: string): string {
+  const resources: string[] = [];
+  const rewriteFilename = (filename: string): string => {
+    const index = resources.indexOf(filename);
+    const prefix = /^\w+/.exec(filename)?.[0] || 'frame';
+    if (index !== -1) {
+      return `file-${prefix}-${index}`;
+    } else {
+      return `file-${prefix}-${resources.push(filename) - 1}`;
+    }
+  };
+
+  const assets = parseMhtml(mhtml);
+  const newResult = assets.map((asset) => {
+    const filename = rewriteFilename(asset.filename);
+    let content = asset.content;
+    // Rewrite references to other parts in the content
+    for (const other of assets) {
+      if (other.filename && content.includes(other.filename)) {
+        content = content
+          .split(other.filename)
+          .join(rewriteFilename(other.filename));
       }
-      return { filename, content: res || content };
-    },
-  );
+    }
+    return { filename, content };
+  });
+
   return newResult.map((asset) => Object.values(asset).join('\n')).join('\n\n');
 }
 

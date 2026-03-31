@@ -75,7 +75,6 @@
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^5.2.0",
     "downlevel-dts": "https://github.com/getsentry/downlevel-dts",
-    "fast-mhtml": "^1.1.9",
     "identity-obj-proxy": "^3.0.0",
     "ignore-styles": "^5.0.1",
     "inquirer": "^9.0.0",
