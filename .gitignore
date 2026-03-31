@@ -40,5 +40,10 @@ dist-ts3.8
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# compiled vitest/vite configs
+vitest.config.js
+vitest.config.d.ts
+vitest.config.js.map
+
 # rrvideo temp output
 __rrvideo__temp__
