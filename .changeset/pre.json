@@ -8,8 +8,7 @@
     "rrweb-player": "1.0.0-alpha.4",
     "rrweb-snapshot": "2.0.0-alpha.4",
     "@rrweb/types": "2.0.0-alpha.4",
-    "@rrweb/web-extension": "2.0.0-alpha.4",
-    "rrvideo": "2.0.0-alpha.6"
+    "@rrweb/web-extension": "2.0.0-alpha.4"
   },
   "changesets": [
     "attribute-text-reductions",
@@ -56,7 +55,6 @@
     "khaki-dots-bathe",
     "large-ants-prove",
     "lazy-squids-draw",
-    "lazy-toes-confess",
     "lemon-lamps-switch",
     "light-fireants-exercise",
     "little-radios-thank",
@@ -110,7 +108,6 @@
     "tiny-buckets-love",
     "tiny-candles-whisper",
     "tiny-chairs-build",
-    "tricky-panthers-guess",
     "twenty-goats-kneel",
     "twenty-lies-switch",
     "twenty-planets-repeat",

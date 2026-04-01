@@ -46,14 +46,6 @@ When rrweb's Replayer and the rrweb-player UI do not fit your need, you can cust
 
 [link](./customize-replayer.md)
 
-### Convert To Video
-
-The event data recorded by rrweb is a performant, easy to compress, text-based format. And the replay is also pixel perfect.
-
-But if you really need to convert it into a video format, there are some tools that can do this work.
-
-[link](./export-to-video.md)
-
 ### Optimize The Storage Size
 
 In some Apps, rrweb may record an unexpected amount of data. This part will help to find a suitable way to optimize the storage.

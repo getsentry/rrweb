@@ -20,7 +20,6 @@ body:
         - rrdom
         - rrweb-player
         - web-extension
-        - rrvideo
         - Other (specify below)
     validations:
       required: true

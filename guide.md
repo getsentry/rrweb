@@ -48,7 +48,6 @@ Besides the `rrweb` and `@rrweb/record` packages, rrweb also provides other pack
 - [@rrweb/packer](packages/packer): A package for packing and unpacking rrweb data.
 - [@rrweb/types](packages/types): Contains types shared across rrweb packages.
 - [web-extension](packages/web-extension): A web extension for rrweb.
-- [rrvideo](packages/rrvideo): A package for handling video operations in rrweb.
 - [@rrweb/rrweb-plugin-console-record](packages/plugins/rrweb-plugin-console-record): A plugin for recording console logs.
 - [@rrweb/rrweb-plugin-console-replay](packages/plugins/rrweb-plugin-console-replay): A plugin for replaying console logs.
 - [@rrweb/rrweb-plugin-sequential-id-record](packages/plugins/rrweb-plugin-sequential-id-record): A plugin for recording sequential IDs.
