@@ -768,6 +768,10 @@ export const polyfillWebGLGlobals = () => {
   global.WebGL2RenderingContext = WebGL2RenderingContext as any;
 };
 
+export function waitForTimeout(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function waitForRAF(
   pageOrFrame: puppeteer.Page | puppeteer.Frame,
 ) {

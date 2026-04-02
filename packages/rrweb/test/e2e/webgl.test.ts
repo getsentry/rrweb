@@ -7,6 +7,7 @@ import {
   getServerURL,
   replaceLast,
   waitForRAF,
+  waitForTimeout,
   generateRecordSnippet,
   ISuite,
 } from '../utils';
@@ -126,7 +127,7 @@ describe('e2e webgl', () => {
     );
 
     await waitForRAF(page);
-    await page.waitForTimeout(100);
+    await waitForTimeout(100);
     const snapshots: eventWithTime[] = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];

@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 import type { Page } from 'puppeteer';
 import type { eventWithTime } from '@sentry-internal/rrweb-types';
 import type { recordOptions } from '../../src/types';
-import { startServer, launchPuppeteer, ISuite, getServerURL } from '../utils';
+import { startServer, launchPuppeteer, ISuite, getServerURL, waitForTimeout } from '../utils';
 
 const suites: Array<
   {
@@ -207,7 +207,7 @@ describe('benchmark: mutation observer', () => {
       });
       await loadPage();
       await getDuration();
-      await page.waitForTimeout(1000);
+      await waitForTimeout(1000);
       await page.tracing.stop();
       await client.send('Emulation.setCPUThrottlingRate', { rate: 1 });
 

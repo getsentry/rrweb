@@ -8,6 +8,7 @@ import {
   getServerURL,
   launchPuppeteer,
   waitForRAF,
+  waitForTimeout,
   waitForIFrameLoad,
   replaceLast,
   generateRecordSnippet,
@@ -898,7 +899,7 @@ describe('record integration tests', function (this: ISuite) {
         recordCanvas: true,
       }),
     );
-    await page.waitForTimeout(50);
+    await waitForTimeout(50);
     const snapshots = (await page.evaluate(
       'window.snapshots',
     )) as eventWithTime[];
@@ -1027,7 +1028,7 @@ describe('record integration tests', function (this: ISuite) {
       const frameId = await waitForIFrameLoad(page, '#iframe-canvas');
       await frameId.waitForFunction('window.canvasMutationApplied');
       await waitForRAF(page);
-      await page.waitForTimeout(1000 / maxFPS);
+      await waitForTimeout(1000 / maxFPS);
 
       const snapshots = (await page.evaluate(
         'window.snapshots',
@@ -1090,7 +1091,7 @@ describe('record integration tests', function (this: ISuite) {
       await page.waitForFunction('window.canvasMutationApplied');
       await waitForRAF(page);
 
-      await page.waitForTimeout(50);
+      await waitForTimeout(50);
 
       const snapshots = (await page.evaluate(
         'window.snapshots',
@@ -1133,7 +1134,7 @@ describe('record integration tests', function (this: ISuite) {
       getHtml.call(this, 'frame-image-blob-url.html', { inlineImages: true }),
     );
     await page.waitForResponse(`${serverURL}/html/assets/robot.png`);
-    await page.waitForTimeout(50); // wait for image to get added
+    await waitForTimeout(50); // wait for image to get added
     await waitForRAF(page); // wait for image to be captured
 
     const snapshots = (await page.evaluate(
@@ -1155,7 +1156,7 @@ describe('record integration tests', function (this: ISuite) {
       iframe.setAttribute('src', '/html/image-blob-url.html');
     });
     await page.waitForResponse(`${serverURL}/html/assets/robot.png`); // wait for image to get loaded
-    await page.waitForTimeout(50); // wait for image to get added
+    await waitForTimeout(50); // wait for image to get added
     await waitForRAF(page); // wait for image to be captured
 
     const snapshots = (await page.evaluate(
@@ -1206,7 +1207,7 @@ describe('record integration tests', function (this: ISuite) {
             'nested shadow dom';
         });
     });
-    await page.waitForTimeout(50);
+    await waitForTimeout(50);
 
     const snapshots = (await page.evaluate(
       'window.snapshots',
