@@ -184,7 +184,7 @@ describe('benchmark: mutation observer', () => {
       fs.mkdirSync(tempDirectory, { recursive: true });
       const profilePath = path.resolve(tempDirectory, profileFilename);
 
-      const client = await page.target().createCDPSession();
+      const client = await page.createCDPSession();
       await client.send('Emulation.setCPUThrottlingRate', { rate: 6 });
 
       await page.tracing.start({
