@@ -104,11 +104,6 @@ const setup = function (
 
   beforeEach(async () => {
     ctx.page = await ctx.browser.newPage();
-    await ctx.page.goto('about:blank');
-    await ctx.page.setContent(
-      content.replace(/\{SERVER_URL\}/g, ctx.serverURL),
-    );
-    // await ctx.page.evaluate(ctx.code);
     ctx.events = [];
     await ctx.page.exposeFunction('emit', (e: eventWithTime) => {
       if (e.type === EventType.DomContentLoaded || e.type === EventType.Load) {
@@ -118,6 +113,12 @@ const setup = function (
     });
 
     ctx.page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+    await ctx.page.goto(ctx.serverBURL);
+    await ctx.page.setContent(
+      content.replace(/\{SERVER_URL\}/g, ctx.serverURL),
+      { waitUntil: 'load' },
+    );
+    // await ctx.page.evaluate(ctx.code);
     await injectRecordScript(ctx.page.mainFrame(), options);
   });
 
@@ -232,6 +233,7 @@ describe('cross origin iframes', function (this: ISuite) {
 
     it('should map input events correctly', async () => {
       const frame = ctx.page.mainFrame().childFrames()[0];
+      await frame.waitForSelector('input[type="text"]');
       await frame.type('input[type="text"]', 'test');
       await frame.click('input[type="radio"]');
       await frame.click('input[type="checkbox"]');
@@ -319,6 +321,7 @@ describe('cross origin iframes', function (this: ISuite) {
 
     it('should record DOM text changes', async () => {
       const frame = ctx.page.mainFrame().childFrames()[0];
+      await frame.waitForSelector('b');
       await frame.evaluate(() => {
         const b = document.querySelector('b')!;
         b.childNodes[0].textContent = 'replaced text';
@@ -498,6 +501,7 @@ describe('cross origin iframes', function (this: ISuite) {
 
     it('should emit contents of iframe once', async () => {
       const frame = ctx.page.mainFrame().childFrames()[0];
+      await frame.waitForSelector('audio');
       await frame.evaluate(() => {
         const el = document.querySelector('audio')!;
         el.play();
@@ -556,8 +560,11 @@ describe('cross origin iframes', function (this: ISuite) {
       }, iframe2URL);
 
       // Wait for iframe2 to load
-      await ctx.page.waitForFrame(iframe2URL);
-      const iframe2 = frame.childFrames()[0];
+      const iframe2 = await ctx.page.waitForFrame(
+        (f) => f.url() === iframe2URL,
+      );
+      // Wait for iframe2's DOM to be ready
+      await iframe2.waitForSelector('body');
       // Record iframe2
       await injectRecordScript(iframe2);
 

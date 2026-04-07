@@ -71,21 +71,10 @@ exports[`RRDocument for browser environment > create a RRDocument from a html do
     -15 BODY 
       -16 RRText text=\\"\\\\n    \\"
       -17 DIV 
-        -18 SHADOWROOT 
-          -19 RRText text=\\"\\\\n        \\"
-          -20 SPAN 
-            -21 RRText text=\\" shadow dom one \\"
-          -22 RRText text=\\"\\\\n        \\"
-          -23 DIV 
-            -24 SHADOWROOT 
-              -25 RRText text=\\"\\\\n            \\"
-              -26 SPAN 
-                -27 RRText text=\\" shadow dom two \\"
-              -28 RRText text=\\"\\\\n          \\"
-            -29 RRText text=\\"\\\\n          \\\\n        \\"
-          -30 RRText text=\\"\\\\n      \\"
-        -31 RRText text=\\"\\\\n      \\\\n    \\"
-      -32 RRText text=\\"\\\\n  \\\\n\\\\n\\"
+        -18 RRText text=\\"\\\\n      \\"
+        -19 TEMPLATE shadowroot=\\"open\\" 
+        -20 RRText text=\\"\\\\n    \\"
+      -21 RRText text=\\"\\\\n  \\\\n\\\\n\\"
 "
 `;
 

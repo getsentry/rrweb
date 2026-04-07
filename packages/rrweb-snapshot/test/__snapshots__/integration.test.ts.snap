@@ -368,7 +368,7 @@ exports[`integration tests > [html file]: iframe-inner.html 1`] = `
 `;
 
 exports[`integration tests > [html file]: invalid-attribute.html 1`] = `
-"<html foo=\\"bar\\"><head></head><body>
+"<html foo=\\"bar\\" ''=\\"\\"><head></head><body>
 </body></html>"
 `;
 

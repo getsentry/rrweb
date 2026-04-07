@@ -237,7 +237,7 @@ iframe.contentDocument.querySelector('center').clientHeight
   it('correctly saves cross-origin images offline', async () => {
     const page: puppeteer.Page = await browser.newPage();
 
-    await page.goto('about:blank', {
+    await page.goto(serverURL, {
       waitUntil: 'load',
     });
     await page.setContent(

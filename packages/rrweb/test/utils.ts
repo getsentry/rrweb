@@ -214,7 +214,7 @@ export function stringifySnapshots(
           if (pluginPayload?.trace.length) {
             pluginPayload.trace = pluginPayload.trace.map((trace) => {
               return trace.replace(
-                /^pptr:evaluate;.*?:(\d+:\d+)/,
+                /^pptr[:;].*?:(\d+:\d+)/,
                 '__puppeteer_evaluation_script__:$1',
               );
             });
@@ -222,7 +222,7 @@ export function stringifySnapshots(
           if (pluginPayload?.payload.length) {
             pluginPayload.payload = pluginPayload.payload.map((payload) => {
               return payload.replace(
-                /pptr:evaluate;.*?:(\d+:\d+)/g,
+                /pptr[:;].*?:(\d+:\d+)/g,
                 '__puppeteer_evaluation_script__:$1',
               );
             });
