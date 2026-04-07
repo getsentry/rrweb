@@ -481,7 +481,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                       },
                                       {
                                         \\"type\\": 5,
-                                        \\"textContent\\": \\"?lit$070916266$\\",
+                                        \\"textContent\\": \\"?lit$967781960$\\",
                                         \\"rootId\\": 11,
                                         \\"id\\": 63
                                       },
@@ -520,7 +520,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                       },
                                       {
                                         \\"type\\": 5,
-                                        \\"textContent\\": \\"?lit$070916266$\\",
+                                        \\"textContent\\": \\"?lit$967781960$\\",
                                         \\"rootId\\": 11,
                                         \\"id\\": 69
                                       },
@@ -539,7 +539,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                         \\"childNodes\\": [
                                           {
                                             \\"type\\": 5,
-                                            \\"textContent\\": \\"?lit$070916266$\\",
+                                            \\"textContent\\": \\"?lit$967781960$\\",
                                             \\"rootId\\": 11,
                                             \\"id\\": 72
                                           },
@@ -561,7 +561,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                       },
                                       {
                                         \\"type\\": 5,
-                                        \\"textContent\\": \\"?lit$070916266$\\",
+                                        \\"textContent\\": \\"?lit$967781960$\\",
                                         \\"rootId\\": 11,
                                         \\"id\\": 75
                                       },
@@ -621,7 +621,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                       },
                                       {
                                         \\"type\\": 5,
-                                        \\"textContent\\": \\"?lit$070916266$\\",
+                                        \\"textContent\\": \\"?lit$967781960$\\",
                                         \\"rootId\\": 11,
                                         \\"id\\": 83
                                       },
@@ -633,7 +633,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                       },
                                       {
                                         \\"type\\": 5,
-                                        \\"textContent\\": \\"?lit$070916266$\\",
+                                        \\"textContent\\": \\"?lit$967781960$\\",
                                         \\"rootId\\": 11,
                                         \\"id\\": 85
                                       },
@@ -655,7 +655,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                   },
                                   {
                                     \\"type\\": 5,
-                                    \\"textContent\\": \\"?lit$070916266$\\",
+                                    \\"textContent\\": \\"?lit$967781960$\\",
                                     \\"rootId\\": 11,
                                     \\"id\\": 88
                                   },
@@ -677,7 +677,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                               },
                               {
                                 \\"type\\": 5,
-                                \\"textContent\\": \\"?lit$070916266$\\",
+                                \\"textContent\\": \\"?lit$967781960$\\",
                                 \\"rootId\\": 11,
                                 \\"id\\": 91
                               },
@@ -702,7 +702,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                                   },
                                   {
                                     \\"type\\": 5,
-                                    \\"textContent\\": \\"?lit$070916266$\\",
+                                    \\"textContent\\": \\"?lit$967781960$\\",
                                     \\"rootId\\": 11,
                                     \\"id\\": 95
                                   },
@@ -740,7 +740,7 @@ exports[`cross origin iframes & packer > blank.html > should support packFn opti
                           },
                           {
                             \\"type\\": 5,
-                            \\"textContent\\": \\"?lit$070916266$\\",
+                            \\"textContent\\": \\"?lit$967781960$\\",
                             \\"rootId\\": 11,
                             \\"id\\": 100
                           },
