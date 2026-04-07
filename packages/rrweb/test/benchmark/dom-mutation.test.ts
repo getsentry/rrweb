@@ -4,7 +4,13 @@ import { vi } from 'vitest';
 import type { Page } from 'puppeteer';
 import type { eventWithTime } from '@sentry-internal/rrweb-types';
 import type { recordOptions } from '../../src/types';
-import { startServer, launchPuppeteer, ISuite, getServerURL, waitForTimeout } from '../utils';
+import {
+  startServer,
+  launchPuppeteer,
+  ISuite,
+  getServerURL,
+  waitForTimeout,
+} from '../utils';
 
 const suites: Array<
   {
