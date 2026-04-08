@@ -232,7 +232,7 @@ function stringifySnapshots(snapshots: eventWithTime[]): string {
     )
     .replace(
       // Chrome's neterror page font-family varies by platform
-      /font-family: [^"]+?; font-size/g,
+      /font-family: .+?; font-size/g,
       'font-family: system-ui, sans-serif; font-size',
     );
 }
