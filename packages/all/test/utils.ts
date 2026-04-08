@@ -218,20 +218,23 @@ function stringifySnapshots(snapshots: eventWithTime[]): string {
       }),
     null,
     2,
-  ).replace(
-    // servers might get run on a random port,
-    // so we need to normalize the port number
-    /http:\/\/localhost:\d+/g,
-    'http://localhost:3030',
-  ).replace(
-    // Chrome's neterror page uses Lit templates with random IDs per build
-    /\?lit\$\d+\$/g,
-    '?lit$NORMALIZED$',
-  ).replace(
-    // Chrome's neterror page font-family varies by platform
-    /font-family: [^"]+?; font-size/g,
-    'font-family: system-ui, sans-serif; font-size',
-  );
+  )
+    .replace(
+      // servers might get run on a random port,
+      // so we need to normalize the port number
+      /http:\/\/localhost:\d+/g,
+      'http://localhost:3030',
+    )
+    .replace(
+      // Chrome's neterror page uses Lit templates with random IDs per build
+      /\?lit\$\d+\$/g,
+      '?lit$NORMALIZED$',
+    )
+    .replace(
+      // Chrome's neterror page font-family varies by platform
+      /font-family: [^"]+?; font-size/g,
+      'font-family: system-ui, sans-serif; font-size',
+    );
 }
 
 function stripBlobURLsFromAttributes(node: {
