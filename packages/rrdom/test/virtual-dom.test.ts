@@ -286,6 +286,20 @@ describe('RRDocument for browser environment', () => {
 
     it('can build from a html containing nested shadow doms', async () => {
       await page.setContent(getHtml('shadow-dom.html'));
+      // Chrome v24+ no longer auto-parses declarative shadow DOM via setContent(),
+      // so we manually attach shadow roots from <template shadowroot> elements.
+      await page.evaluate(`
+        (function attachDeclarativeShadowRoots(root) {
+          root.querySelectorAll('template[shadowroot]').forEach(template => {
+            const mode = template.getAttribute('shadowroot');
+            const parent = template.parentNode;
+            const shadowRoot = parent.attachShadow({ mode });
+            shadowRoot.appendChild(template.content);
+            template.remove();
+            attachDeclarativeShadowRoots(shadowRoot);
+          });
+        })(document);
+      `);
       const result = await page.evaluate(`
         const doc = new rrdom.RRDocument();
         rrdom.buildFromDom(document, undefined, doc);

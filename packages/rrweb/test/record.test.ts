@@ -146,6 +146,16 @@ describe('record', function (this: ISuite) {
     );
     expect(metaEvents.length).toEqual(4);
     expect(fullSnapshotEvents.length).toEqual(4);
+
+    // Verify checkouts are distributed throughout the stream, not clustered.
+    const fullSnapshotIndices = ctx.events
+      .map((event: eventWithTime, index: number) =>
+        event.type === EventType.FullSnapshot ? index : -1,
+      )
+      .filter((index: number) => index !== -1);
+    expect(fullSnapshotIndices.some((idx: number) => idx > 10)).toBe(true);
+    expect(fullSnapshotIndices.some((idx: number) => idx > 20)).toBe(true);
+    expect(fullSnapshotIndices.some((idx: number) => idx > 30)).toBe(true);
   });
 
   it('can checkout full snapshot by time', async () => {
