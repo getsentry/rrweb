@@ -627,6 +627,15 @@ interface CacheableImplementations {
 
 const cachedImplementations: Partial<CacheableImplementations> = {};
 
+function isNativeFunction(func: unknown): boolean {
+  return (
+    typeof func === 'function' &&
+    /^function\s+\w+\(\)\s+\{\s+\[native code\]\s+\}$/.test(
+      func.toString(),
+    )
+  );
+}
+
 function getImplementation<T extends keyof CacheableImplementations>(
   name: T,
 ): CacheableImplementations[T] {
@@ -635,8 +644,18 @@ function getImplementation<T extends keyof CacheableImplementations>(
     return cached;
   }
 
+  const impl = window[name] as CacheableImplementations[T];
+
+  // Fast path to avoid DOM I/O — matches the approach used in
+  // @sentry-internal/browser-utils getNativeImplementation.
+  if (isNativeFunction(impl)) {
+    return (cachedImplementations[name] = impl.bind(
+      window,
+    ) as CacheableImplementations[T]);
+  }
+
+  let sandboxImpl = impl;
   const document = window.document;
-  let impl = window[name] as CacheableImplementations[T];
   if (document && typeof document.createElement === 'function') {
     try {
       const sandbox = document.createElement('iframe');
@@ -644,7 +663,7 @@ function getImplementation<T extends keyof CacheableImplementations>(
       document.head.appendChild(sandbox);
       const contentWindow = sandbox.contentWindow;
       if (contentWindow && contentWindow[name]) {
-        impl =
+        sandboxImpl =
           // eslint-disable-next-line @typescript-eslint/unbound-method
           contentWindow[name] as CacheableImplementations[T];
       }
@@ -654,7 +673,7 @@ function getImplementation<T extends keyof CacheableImplementations>(
     }
   }
 
-  return (cachedImplementations[name] = impl.bind(
+  return (cachedImplementations[name] = sandboxImpl.bind(
     window,
   ) as CacheableImplementations[T]);
 }
