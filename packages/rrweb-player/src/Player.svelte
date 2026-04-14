@@ -121,7 +121,7 @@
   function handleUiEvent(event: string, detail: { payload: unknown }) {
     if (uiEventListeners[event]) {
       for (const handler of uiEventListeners[event]) {
-        handler(detail.payload);
+        handler(detail);
       }
     }
   }
