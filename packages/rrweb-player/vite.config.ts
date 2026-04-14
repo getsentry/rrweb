@@ -60,8 +60,5 @@ function viteSvelteDts(): Plugin {
 }
 
 export default config(path.resolve(__dirname, 'src/main.ts'), 'rrwebPlayer', {
-  plugins: [
-    viteSvelteDts(),
-    svelte(),
-  ],
+  plugins: [viteSvelteDts(), svelte()],
 });
