@@ -62,10 +62,10 @@
   } | null = null;
 
   let meta = $state<playerMetaData>(replayer.getMetaData());
-  let percentage = $derived.by(() => {
-    const percent = Math.min(1, currentTime / meta.totalTime);
-    onuiupdateprogress?.({ payload: percent });
-    return `${100 * percent}%`;
+  let progressPercent = $derived(Math.min(1, currentTime / meta.totalTime));
+  let percentage = $derived(`${100 * progressPercent}%`);
+  $effect(() => {
+    onuiupdateprogress?.({ payload: progressPercent });
   });
 
   type CustomEvent = {
