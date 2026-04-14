@@ -3,7 +3,6 @@ import glob from 'fast-glob';
 import { Plugin } from 'vite';
 import config from '../../vite.config.default';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import sveltePreprocess from 'svelte-preprocess';
 import { emitDts, EmitDtsConfig } from 'svelte2tsx';
 import { createRequire } from 'node:module';
 import { copyFileSync } from 'node:fs';
@@ -63,8 +62,6 @@ function viteSvelteDts(): Plugin {
 export default config(path.resolve(__dirname, 'src/main.ts'), 'rrwebPlayer', {
   plugins: [
     viteSvelteDts(),
-    svelte({
-      preprocess: [sveltePreprocess({ typescript: true })],
-    }),
+    svelte(),
   ],
 });

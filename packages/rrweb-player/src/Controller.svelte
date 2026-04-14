@@ -9,34 +9,49 @@
   import {
     onMount,
     onDestroy,
-    createEventDispatcher,
-    afterUpdate,
   } from 'svelte';
   import { formatTime, getInactivePeriods } from './utils';
   import Switch from './components/Switch.svelte';
 
-  const dispatch = createEventDispatcher();
+  let {
+    replayer,
+    showController,
+    autoPlay,
+    skipInactive = $bindable(),
+    speedOption,
+    speed = $bindable(speedOption.length ? speedOption[0] : 1),
+    tags = {},
+    inactiveColor,
+    onfullscreen,
+    onuiupdatecurrenttime,
+    onuiupdateprogress,
+    onuiupdateplayerstate,
+  }: {
+    replayer: Replayer;
+    showController: boolean;
+    autoPlay: boolean;
+    skipInactive: boolean;
+    speedOption: number[];
+    speed?: number;
+    tags?: Record<string, string>;
+    inactiveColor: string;
+    onfullscreen?: () => void;
+    onuiupdatecurrenttime?: (payload: { payload: number }) => void;
+    onuiupdateprogress?: (payload: { payload: number }) => void;
+    onuiupdateplayerstate?: (payload: { payload: string }) => void;
+  } = $props();
 
-  export let replayer: Replayer;
-  export let showController: boolean;
-  export let autoPlay: boolean;
-  export let skipInactive: boolean;
-  export let speedOption: number[];
-  export let speed = speedOption.length ? speedOption[0] : 1;
-  export let tags: Record<string, string> = {};
-  export let inactiveColor: string;
-
-  let currentTime = 0;
-  $: {
-    dispatch('ui-update-current-time', { payload: currentTime });
-  }
+  let currentTime = $state(0);
+  $effect(() => {
+    onuiupdatecurrenttime?.({ payload: currentTime });
+  });
   let timer: number | null = null;
-  let playerState: 'playing' | 'paused' | 'live';
-  $: {
-    dispatch('ui-update-player-state', { payload: playerState });
-  }
-  let speedState: 'normal' | 'skipping';
-  let progress: HTMLElement;
+  let playerState = $state<'playing' | 'paused' | 'live'>('paused');
+  $effect(() => {
+    onuiupdateplayerstate?.({ payload: playerState });
+  });
+  let speedState = $state<'normal' | 'skipping'>('normal');
+  let progress = $state<HTMLElement>() as HTMLElement;
   let finished: boolean;
 
   let pauseAt: number | false = false;
@@ -46,14 +61,13 @@
     end: number;
   } | null = null;
 
-  let meta: playerMetaData;
-  $: meta = replayer.getMetaData();
-  let percentage: string;
-  $: {
+  let meta = $state<playerMetaData>(replayer.getMetaData());
+  let percentage = $derived.by(() => {
     const percent = Math.min(1, currentTime / meta.totalTime);
-    percentage = `${100 * percent}%`;
-    dispatch('ui-update-progress', { payload: percent });
-  }
+    onuiupdateprogress?.({ payload: percent });
+    return `${100 * percent}%`;
+  });
+
   type CustomEvent = {
     name: string;
     background: string;
@@ -74,8 +88,7 @@
     return eventPosition.toFixed(2);
   }
 
-  let customEvents: CustomEvent[];
-  $: customEvents = (() => {
+  let customEvents: CustomEvent[] = $derived.by(() => {
     const { context } = replayer.service.state;
     const totalEvents = context.events.length;
     const start = context.events[0].timestamp;
@@ -99,15 +112,14 @@
     });
 
     return customEvents;
-  })();
+  });
 
   let inactivePeriods: {
     name: string;
     background: string;
     position: string;
     width: string;
-  }[];
-  $: inactivePeriods = (() => {
+  }[] = $derived.by(() => {
     try {
       const { context } = replayer.service.state;
       const totalEvents = context.events.length;
@@ -136,7 +148,7 @@
       // For safety concern, if there is any error, the main function won't be affected.
       return [];
     }
-  })();
+  });
 
   const loopTimer = () => {
     stopTimer();
@@ -253,7 +265,7 @@
     goto(timeOffset);
   };
 
-  const handleProgressKeydown = (event: KeyboardEvent) => { 
+  const handleProgressKeydown = (event: KeyboardEvent) => {
     if (speedState === 'skipping') {
       return;
     }
@@ -287,14 +299,14 @@
   };
 
   onMount(() => {
-    playerState = replayer.service.state.value;
-    speedState = replayer.speedService.state.value;
+    playerState = replayer.service.state.value as typeof playerState;
+    speedState = replayer.speedService.state.value as typeof speedState;
     replayer.on(
       'state-change',
       (states) => {
         const { player, speed } = states as { player?: PlayerMachineState; speed?: SpeedMachineState };
         if (player?.value && playerState !== player.value) {
-          playerState = player.value;
+          playerState = player.value as typeof playerState;
           switch (playerState) {
             case 'playing':
               loopTimer();
@@ -307,7 +319,7 @@
           }
         }
         if (speed?.value && speedState !== speed.value) {
-          speedState = speed.value;
+          speedState = speed.value as typeof speedState;
         }
       },
     );
@@ -324,7 +336,7 @@
     }
   });
 
-  afterUpdate(() => {
+  $effect(() => {
     if (skipInactive !== replayer.config.skipInactive) {
       replayer.setConfig({ skipInactive });
     }
@@ -437,19 +449,24 @@
         class="rr-progress"
         class:disabled={speedState === 'skipping'}
         bind:this={progress}
-        on:click={handleProgressClick}
-        on:keydown={handleProgressKeydown}
+        onclick={handleProgressClick}
+        onkeydown={handleProgressKeydown}
+        role="slider"
+        tabindex="0"
+        aria-valuenow={currentTime}
+        aria-valuemin={0}
+        aria-valuemax={meta.totalTime}
       >
         <div
           class="rr-progress__step"
           style="width: {percentage}"
-        />
+        ></div>
         {#each inactivePeriods as period}
           <div
             title={period.name}
             style="width: {period.width};height: 4px;position: absolute;background: {period.background};left:
             {period.position};"
-          />
+          ></div>
         {/each}
         {#each customEvents as event}
           <div
@@ -457,15 +474,15 @@
             style="width: 10px;height: 5px;position: absolute;top:
             2px;transform: translate(-50%, -50%);background: {event.background};left:
             {event.position};"
-          />
+          ></div>
         {/each}
 
-        <div class="rr-progress__handler" style="left: {percentage}" />
+        <div class="rr-progress__handler" style="left: {percentage}"></div>
       </div>
       <span class="rr-timeline__time">{formatTime(meta.totalTime)}</span>
     </div>
     <div class="rr-controller__btns">
-      <button on:click={toggle}>
+      <button onclick={toggle}>
         {#if playerState === 'playing'}
           <svg
             class="icon"
@@ -513,7 +530,7 @@
       {#each speedOption as s}
         <button
           class:active={s === speed && speedState !== 'skipping'}
-          on:click={() => setSpeed(s)}
+          onclick={() => setSpeed(s)}
           disabled={speedState === 'skipping'}
         >
           {s}x
@@ -525,7 +542,7 @@
         disabled={speedState === 'skipping'}
         label="skip inactive"
       />
-      <button on:click={() => dispatch('fullscreen')}>
+      <button aria-label="fullscreen" onclick={() => onfullscreen?.()}>
         <svg
           class="icon"
           viewBox="0 0 1024 1024"

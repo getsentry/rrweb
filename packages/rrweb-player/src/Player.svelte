@@ -13,21 +13,36 @@
   } from './utils';
   import Controller from './Controller.svelte';
   import type { RRwebPlayerOptions, RRwebPlayerExpose } from './types';
-    
-  export let width: NonNullable<RRwebPlayerOptions['props']['width']>  = 1024;
-  export let height: NonNullable<RRwebPlayerOptions['props']['height']> = 576;
-  export let maxScale: NonNullable<RRwebPlayerOptions['props']['maxScale']> = 1;
-  export let events: RRwebPlayerOptions['props']['events'];
-  export let skipInactive: NonNullable<RRwebPlayerOptions['props']['skipInactive']> = true;
-  export let autoPlay: NonNullable<RRwebPlayerOptions['props']['autoPlay']> = true;
-  export let speedOption: NonNullable<RRwebPlayerOptions['props']['speedOption']> = [1, 2, 4, 8];
-  export let speed: NonNullable<RRwebPlayerOptions['props']['speed']> = 1;
-  export let showController: NonNullable<RRwebPlayerOptions['props']['showController']> = true;
-  export let tags: NonNullable<RRwebPlayerOptions['props']['tags']> = {};
-  // color of inactive periods indicator
-  export let inactiveColor: NonNullable<RRwebPlayerOptions['props']['inactiveColor']> = '#D4D4D4';
 
-  let replayer: Replayer;
+  let {
+    width = $bindable(1024),
+    height = $bindable(576),
+    maxScale = 1,
+    events,
+    skipInactive = true,
+    autoPlay = true,
+    speedOption = [1, 2, 4, 8],
+    speed = 1,
+    showController = true,
+    tags = {},
+    inactiveColor = '#D4D4D4',
+    ...restProps
+  }: {
+    width?: number;
+    height?: number;
+    maxScale?: number;
+    events: RRwebPlayerOptions['props']['events'];
+    skipInactive?: boolean;
+    autoPlay?: boolean;
+    speedOption?: number[];
+    speed?: number;
+    showController?: boolean;
+    tags?: Record<string, string>;
+    inactiveColor?: string;
+    [key: string]: unknown;
+  } = $props();
+
+  let replayer = $state<Replayer>() as Replayer;
 
   export const getMirror = () => replayer.getMirror();
 
@@ -37,22 +52,24 @@
   let fullscreenListener: undefined | (() => void);
   let _width: number = width;
   let _height: number = height;
-  let controller: {
+  let controller = $state<{
+    toggle: () => void;
+    setSpeed: (speed: number) => void;
+    toggleSkipInactive: () => void;
+  } & Controller>() as {
     toggle: () => void;
     setSpeed: (speed: number) => void;
     toggleSkipInactive: () => void;
   } & Controller;
 
-  let style: string;
-  $: style = inlineCss({
+  let style = $derived(inlineCss({
     width: `${width}px`,
     height: `${height}px`,
-  });
-  let playerStyle: string;
-  $: playerStyle = inlineCss({
+  }));
+  let playerStyle = $derived(inlineCss({
     width: `${width}px`,
     height: `${height + (showController ? controllerHeight : 0)}px`,
-  });
+  }));
 
   const updateScale = (
     el: HTMLElement,
@@ -79,6 +96,10 @@
     }
   };
 
+  // Event listeners registered via addEventListener
+  type EventCallback = (detail: unknown) => unknown;
+  let uiEventListeners: Record<string, EventCallback[]> = {};
+
   export const addEventListener: RRwebPlayerExpose['addEventListener'] = (
     event: string,
     handler: (detail: unknown) => unknown,
@@ -88,11 +109,22 @@
       case 'ui-update-current-time':
       case 'ui-update-progress':
       case 'ui-update-player-state':
-        controller.$on(event, ({ detail }) => handler(detail));
+        if (!uiEventListeners[event]) {
+          uiEventListeners[event] = [];
+        }
+        uiEventListeners[event].push(handler);
       default:
         break;
     }
   };
+
+  function handleUiEvent(event: string, detail: { payload: unknown }) {
+    if (uiEventListeners[event]) {
+      for (const handler of uiEventListeners[event]) {
+        handler(detail.payload);
+      }
+    }
+  }
 
   export const addEvent: RRwebPlayerExpose['addEvent'] = (event: eventWithTime) => {
     replayer.addEvent(event);
@@ -155,7 +187,7 @@
       speed,
       root: frame,
       unpackFn: unpack,
-      ...$$props,
+      ...restProps,
     });
 
     replayer.on('resize', (dimension) => {
@@ -194,36 +226,38 @@
   });
 </script>
 
-<style global>
-  @import '@sentry-internal/rrweb/dist/style.css';
+<style>
+  :global {
+    @import '@sentry-internal/rrweb/dist/style.css';
 
-  .rr-player {
-    position: relative;
-    background: white;
-    float: left;
-    border-radius: 5px;
-    box-shadow: 0 24px 48px rgba(17, 16, 62, 0.12);
-  }
+    .rr-player {
+      position: relative;
+      background: white;
+      float: left;
+      border-radius: 5px;
+      box-shadow: 0 24px 48px rgba(17, 16, 62, 0.12);
+    }
 
-  .rr-player__frame {
-    overflow: hidden;
-  }
+    .rr-player__frame {
+      overflow: hidden;
+    }
 
-  .replayer-wrapper {
-    float: left;
-    clear: both;
-    transform-origin: top left;
-    left: 50%;
-    top: 50%;
-  }
+    .replayer-wrapper {
+      float: left;
+      clear: both;
+      transform-origin: top left;
+      left: 50%;
+      top: 50%;
+    }
 
-  .replayer-wrapper > iframe {
-    border: none;
+    .replayer-wrapper > iframe {
+      border: none;
+    }
   }
 </style>
 
 <div class="rr-player" bind:this={player} style={playerStyle}>
-  <div class="rr-player__frame" bind:this={frame} {style} />
+  <div class="rr-player__frame" bind:this={frame} {style}></div>
   {#if replayer}
     <Controller
       bind:this={controller}
@@ -231,10 +265,13 @@
       {showController}
       {autoPlay}
       {speedOption}
-      {skipInactive}
+      bind:skipInactive={skipInactive}
       {tags}
       {inactiveColor}
-      on:fullscreen={() => toggleFullscreen()}
+      onfullscreen={() => toggleFullscreen()}
+      onuiupdatecurrenttime={(detail) => handleUiEvent('ui-update-current-time', detail)}
+      onuiupdateprogress={(detail) => handleUiEvent('ui-update-progress', detail)}
+      onuiupdateplayerstate={(detail) => handleUiEvent('ui-update-player-state', detail)}
     />
   {/if}
 </div>

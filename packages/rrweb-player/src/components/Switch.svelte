@@ -1,13 +1,15 @@
 <script lang="ts">
-  export let disabled: boolean;
-  export let checked: boolean;
-  export let id: string;
-  export let label: string;
+  let { disabled, checked = $bindable(), id, label }: {
+    disabled: boolean;
+    checked: boolean;
+    id: string;
+    label: string;
+  } = $props();
 </script>
 
 <div class="switch" class:disabled>
   <input type="checkbox" {id} bind:checked {disabled} />
-  <label for={id} />
+  <label for={id}></label>
   <span class="label">{label}</span>
 </div>
 

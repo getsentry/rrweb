@@ -72,5 +72,8 @@
   "volta": {
     "node": "20.20.2",
     "yarn": "1.22.22"
+  },
+  "dependencies": {
+    "vite": "^6.4.2"
   }
 }
