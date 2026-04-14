@@ -55,7 +55,7 @@
   ],
   "devDependencies": {
     "downlevel-dts": "https://github.com/getsentry/downlevel-dts",
-    "vite": "^6.4.1",
+    "vite": "^6.4.2",
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
