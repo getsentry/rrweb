@@ -185,6 +185,7 @@
 
     replayer = new Replayer(events, {
       speed,
+      skipInactive,
       root: frame,
       unpackFn: unpack,
       ...restProps,
