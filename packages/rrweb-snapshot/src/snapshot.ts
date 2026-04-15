@@ -576,7 +576,9 @@ function onceStylesheetLoaded(
   try {
     styleSheetLoaded = link.sheet;
   } catch (error) {
-    return;
+    // CORS stylesheets throw SecurityError when accessing .sheet
+    // before they're loaded — fall through to attach load listener
+    styleSheetLoaded = null;
   }
 
   if (styleSheetLoaded) return;
