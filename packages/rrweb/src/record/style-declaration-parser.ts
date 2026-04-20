@@ -2,9 +2,9 @@
  * This class is used to parse a style declaration into a CSSStyleDeclaration object.
  * It uses an unattached doc unless `CSSStyleSheet.prototype.replaceSync` is available which can be used to bypass CSP violations.
  * https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/replaceSync
- * 
+ *
  * This builds on https://github.com/getsentry/rrweb/pull/211#issuecomment-2284551183 which exhausted the other available options.
- * 
+ *
  * Note: This means some browsers (older than 23 March 2023) will use the unattached doc and may experience CSP violations,
  * but newer browsers will use the replaceSync method and will not experience CSP violations.
  */
