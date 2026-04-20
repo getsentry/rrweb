@@ -888,6 +888,43 @@ describe('record', function (this: ISuite) {
     });
   });
 
+  it('handles style mutations when unchanged values contain separators inside quoted strings', async () => {
+    await ctx.page.evaluate(() => {
+      const { record } = (window as unknown as IWindow).rrweb;
+
+      const div = document.createElement('div');
+      div.id = 'quoted-style-values';
+      div.setAttribute('style', '--message:"Hello: World;"; color:red;');
+      document.body.appendChild(div);
+
+      record({
+        emit: (window as unknown as IWindow).emit,
+      });
+    });
+
+    await waitForTimeout(50);
+    ctx.events = [];
+
+    await ctx.page.evaluate(() => {
+      const div = document.getElementById('quoted-style-values');
+      div?.setAttribute('style', '--message:"Hello: World;"; color:blue;');
+    });
+
+    await waitForTimeout(50);
+
+    const mutations = ctx.events.filter(
+      (e) =>
+        e.type === EventType.IncrementalSnapshot &&
+        e.data.source === IncrementalSource.Mutation,
+    );
+
+    expect(mutations).toHaveLength(1);
+    // @ts-expect-error data is unknown
+    expect(mutations[0].data.attributes[0].attributes.style).toEqual({
+      color: 'blue',
+    });
+  });
+
   describe('loading stylesheets', () => {
     let server: Server;
     let serverURL: string;

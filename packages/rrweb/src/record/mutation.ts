@@ -35,6 +35,8 @@ import {
   getShadowHost,
   closestElementOfNode,
 } from '../utils';
+import { StyleDeclarationParser } from './style-declaration-parser';
+
 import {
   getIFrameContentDocument,
   getIFrameContentWindow,
@@ -203,7 +205,7 @@ export default class MutationBuffer {
   private canvasManager: observerParam['canvasManager'];
   private processedNodeManager: observerParam['processedNodeManager'];
   private ignoreCSSAttributes: observerParam['ignoreCSSAttributes'];
-  private unattachedDoc: HTMLDocument;
+  private styleDeclarationParser!: StyleDeclarationParser;
 
   public init(options: MutationBufferParam) {
     (
@@ -240,6 +242,8 @@ export default class MutationBuffer {
       // just a type trick, the runtime result is correct
       this[key] = options[key] as never;
     });
+
+    this.styleDeclarationParser = new StyleDeclarationParser(this.doc);
   }
 
   public freeze() {
@@ -697,26 +701,15 @@ export default class MutationBuffer {
             this.maskAttributeFn,
           );
           if (attributeName === 'style') {
-            if (!this.unattachedDoc) {
-              try {
-                // avoid upsetting original document from a Content Security point of view
-                this.unattachedDoc =
-                  document.implementation.createHTMLDocument();
-              } catch (e) {
-                // fallback to more direct method
-                this.unattachedDoc = this.doc;
-              }
-            }
-            const old = this.unattachedDoc.createElement('span');
-            if (m.oldValue) {
-              old.setAttribute('style', m.oldValue);
-            }
+            const oldStyle = m.oldValue
+              ? this.styleDeclarationParser.parse(m.oldValue)
+              : null;
             for (const pname of Array.from(target.style)) {
               const newValue = target.style.getPropertyValue(pname);
               const newPriority = target.style.getPropertyPriority(pname);
               if (
-                newValue !== old.style.getPropertyValue(pname) ||
-                newPriority !== old.style.getPropertyPriority(pname)
+                newValue !== (oldStyle?.getPropertyValue(pname) || '') ||
+                newPriority !== (oldStyle?.getPropertyPriority(pname) || '')
               ) {
                 if (newPriority === '') {
                   item.styleDiff[pname] = newValue;
@@ -728,10 +721,12 @@ export default class MutationBuffer {
                 item._unchangedStyles[pname] = [newValue, newPriority];
               }
             }
-            for (const pname of Array.from(old.style)) {
-              if (target.style.getPropertyValue(pname) === '') {
-                // "if not set, returns the empty string"
-                item.styleDiff[pname] = false; // delete
+            if (oldStyle) {
+              for (const pname of Array.from(oldStyle)) {
+                if (target.style.getPropertyValue(pname) === '') {
+                  // "if not set, returns the empty string"
+                  item.styleDiff[pname] = false; // delete
+                }
               }
             }
           }
