@@ -10,7 +10,6 @@
  */
 export class StyleDeclarationParser {
   private unattachedDoc: Document | null = null;
-  private sheet: CSSStyleSheet | null = null;
 
   public constructor(private readonly doc: Document) {}
 
@@ -32,12 +31,10 @@ export class StyleDeclarationParser {
     }
 
     try {
-      if (!this.sheet) {
-        this.sheet = new CSSStyleSheet();
-      }
-      this.sheet.replaceSync(`x { ${styleText} }`);
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync(`x { ${styleText} }`);
 
-      const rule = this.sheet.cssRules[0];
+      const rule = sheet.cssRules[0];
       if (!rule || rule.type !== CSSRule.STYLE_RULE) {
         return null;
       }
