@@ -439,10 +439,9 @@ export function parse(css: string, options: ParserOptions = {}) {
       return;
     }
 
-    /* @fix Remove all comments from selectors
-     * http://ostermiller.org/findcomment.html */
+    /* @fix Remove all comments from selectors */
     const splitSelectors = trim(m[0])
-      .replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*\/+/g, '')
+      .replace(/\/\*[\s\S]*?\*\/+/g, '')
       .replace(/"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/g, (m) => {
         return m.replace(/,/g, '\u200C');
       })

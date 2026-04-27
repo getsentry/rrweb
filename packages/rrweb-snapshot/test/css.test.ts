@@ -97,6 +97,27 @@ describe('css parser', () => {
     expect(decl.parent).toEqual(rule);
   });
 
+  it('should strip comments from selectors', () => {
+    const cases: Array<[string, string[]]> = [
+      ['.foo /* comment */, .bar { color: red; }', ['.foo', '.bar']],
+      ['a /* x */ b, c /* y */ d { color: red; }', ['a  b', 'c  d']],
+      ['.x /* trailing */ { color: red; }', ['.x']],
+    ];
+    for (const [css, expected] of cases) {
+      const rules = parse(css).stylesheet!.rules.filter(
+        (r): r is Rule => r.type === 'rule',
+      );
+      expect(rules[0].selectors?.map((s) => s.trim())).toEqual(expected);
+    }
+  });
+
+  it('should not catastrophically backtrack on unterminated selector comments', () => {
+    const evil = '/*' + '\n*'.repeat(40);
+    const start = Date.now();
+    expect(() => parse(`${evil} { color: red; }`, { silent: true })).not.toThrow();
+    expect(Date.now() - start).toBeLessThan(500);
+  });
+
   // TODO(sentry): our parser can't handle this atm
   it.skip('parses { and } in attribute selectors correctly', () => {
     const result = parse('foo[someAttr~="{someId}"] { color: red; }');

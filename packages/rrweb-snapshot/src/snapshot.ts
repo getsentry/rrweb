@@ -1345,7 +1345,7 @@ export function serializeNodeWithId(
     (!preserveWhiteSpace &&
       _serializedNode.type === NodeType.Text &&
       !_serializedNode.isStyle &&
-      !_serializedNode.textContent.replace(/^\s+|\s+$/gm, '').length)
+      !_serializedNode.textContent.trim().length)
   ) {
     id = IGNORED_NODE;
   } else {
