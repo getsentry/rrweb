@@ -114,7 +114,9 @@ describe('css parser', () => {
   it('should not catastrophically backtrack on unterminated selector comments', () => {
     const evil = '/*' + '\n*'.repeat(40);
     const start = Date.now();
-    expect(() => parse(`${evil} { color: red; }`, { silent: true })).not.toThrow();
+    expect(() =>
+      parse(`${evil} { color: red; }`, { silent: true }),
+    ).not.toThrow();
     expect(Date.now() - start).toBeLessThan(500);
   });
 
