@@ -14,6 +14,8 @@ jobs:
   job_test:
     name: Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -53,6 +55,8 @@ jobs:
     needs: job_test
     name: Upload Artifacts
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     # Build artifacts are only needed for releasing workflow.
     if: startsWith(github.ref, 'refs/heads/release/')
     steps:
