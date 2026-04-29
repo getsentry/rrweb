@@ -976,9 +976,7 @@ describe('record integration tests', function (this: ISuite) {
   it('should record programmatically created same-origin iframe and its mutations', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto(`${serverURL}/html`);
-    await page.setContent(
-      getHtml.call(this, 'programmatic-iframe.html'),
-    );
+    await page.setContent(getHtml.call(this, 'programmatic-iframe.html'));
 
     // Wait for recording to start
     await waitForRAF(page);
@@ -997,7 +995,9 @@ describe('record integration tests', function (this: ISuite) {
 
     // Make a mutation inside the iframe
     await page.evaluate(() => {
-      const iframeDoc = document.querySelector('#dynamic-iframe')! as HTMLIFrameElement;
+      const iframeDoc = document.querySelector(
+        '#dynamic-iframe',
+      )! as HTMLIFrameElement;
       const doc = iframeDoc.contentDocument!;
       const div = doc.createElement('div');
       div.id = 'injected-content';
@@ -1016,7 +1016,9 @@ describe('record integration tests', function (this: ISuite) {
         s.type === EventType.IncrementalSnapshot &&
         s.data.source === IncrementalSource.Mutation &&
         s.data.adds?.some(
-          (add: { node: { tagName?: string; attributes?: Record<string, string> } }) =>
+          (add: {
+            node: { tagName?: string; attributes?: Record<string, string> };
+          }) =>
             add.node.tagName === 'iframe' &&
             add.node.attributes?.id === 'dynamic-iframe',
         ),
@@ -1038,7 +1040,9 @@ describe('record integration tests', function (this: ISuite) {
         s.type === EventType.IncrementalSnapshot &&
         s.data.source === IncrementalSource.Mutation &&
         s.data.adds?.some(
-          (add: { node: { tagName?: string; attributes?: Record<string, string> } }) =>
+          (add: {
+            node: { tagName?: string; attributes?: Record<string, string> };
+          }) =>
             add.node.tagName === 'div' &&
             add.node.attributes?.id === 'injected-content',
         ),
