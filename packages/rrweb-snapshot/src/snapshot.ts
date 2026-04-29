@@ -562,8 +562,21 @@ function onceIframeLoaded(
 
     return iframeEl.addEventListener('load', listener); // keep listing for future loads
   }
-  // use default listener
-  iframeEl.addEventListener('load', listener);
+  // iframe is at about:blank but has a src that will trigger navigation;
+  // wait for the load event with a timeout fallback
+  const timer = setTimeout(() => {
+    if (!fired) {
+      listener();
+      fired = true;
+    }
+  }, iframeLoadTimeout);
+  iframeEl.addEventListener('load', () => {
+    clearTimeout(timer);
+    if (!fired) {
+      fired = true;
+      listener();
+    }
+  });
 }
 
 function onceStylesheetLoaded(

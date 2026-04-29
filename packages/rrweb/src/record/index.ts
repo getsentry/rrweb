@@ -4,7 +4,10 @@ import {
   SlimDOMOptions,
   createMirror,
 } from '@sentry-internal/rrweb-snapshot';
-import { getIFrameContentWindow } from '@sentry-internal/rrdom';
+import {
+  getIFrameContentDocument,
+  getIFrameContentWindow,
+} from '@sentry-internal/rrdom';
 import { initObservers, mutationBuffers } from './observer';
 import {
   on,
@@ -663,7 +666,10 @@ function record<T = eventWithTime>(
 
     iframeManager.addLoadListener((iframeEl) => {
       try {
-        handlers.push(observe(iframeEl.contentDocument!));
+        const iframeDoc = getIFrameContentDocument(iframeEl);
+        if (iframeDoc) {
+          handlers.push(observe(iframeDoc));
+        }
       } catch (error) {
         // TODO: handle internal error
         console.warn(error);

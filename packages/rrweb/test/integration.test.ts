@@ -973,6 +973,79 @@ describe('record integration tests', function (this: ISuite) {
     assertSnapshot(snapshots);
   });
 
+  it('should record programmatically created same-origin iframe and its mutations', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto(`${serverURL}/html`);
+    await page.setContent(
+      getHtml.call(this, 'programmatic-iframe.html'),
+    );
+
+    // Wait for recording to start
+    await waitForRAF(page);
+
+    // Programmatically create a same-origin iframe with src
+    await page.evaluate((serverURL) => {
+      const iframe = document.createElement('iframe');
+      iframe.id = 'dynamic-iframe';
+      iframe.src = `${serverURL}/html/frame1.html`;
+      document.body.appendChild(iframe);
+    }, serverURL);
+
+    // Wait for the iframe to load
+    await waitForIFrameLoad(page, '#dynamic-iframe');
+    await waitForRAF(page);
+
+    // Make a mutation inside the iframe
+    await page.evaluate(() => {
+      const iframeDoc = document.querySelector('#dynamic-iframe')! as HTMLIFrameElement;
+      const doc = iframeDoc.contentDocument!;
+      const div = doc.createElement('div');
+      div.id = 'injected-content';
+      div.textContent = 'dynamically added';
+      doc.body.appendChild(div);
+    });
+    await waitForRAF(page);
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+
+    // Verify the iframe was recorded
+    const iframeAdded = snapshots.some(
+      (s) =>
+        s.type === EventType.IncrementalSnapshot &&
+        s.data.source === IncrementalSource.Mutation &&
+        s.data.adds?.some(
+          (add: { node: { tagName?: string; attributes?: Record<string, string> } }) =>
+            add.node.tagName === 'iframe' &&
+            add.node.attributes?.id === 'dynamic-iframe',
+        ),
+    );
+    expect(iframeAdded).toBe(true);
+
+    // Verify the iframe content was attached (isAttachIframe mutation)
+    const iframeContentAttached = snapshots.some(
+      (s) =>
+        s.type === EventType.IncrementalSnapshot &&
+        s.data.source === IncrementalSource.Mutation &&
+        s.data.isAttachIframe === true,
+    );
+    expect(iframeContentAttached).toBe(true);
+
+    // Verify the mutation inside the iframe was captured
+    const innerMutation = snapshots.some(
+      (s) =>
+        s.type === EventType.IncrementalSnapshot &&
+        s.data.source === IncrementalSource.Mutation &&
+        s.data.adds?.some(
+          (add: { node: { tagName?: string; attributes?: Record<string, string> } }) =>
+            add.node.tagName === 'div' &&
+            add.node.attributes?.id === 'injected-content',
+        ),
+    );
+    expect(innerMutation).toBe(true);
+  });
+
   describe('canvas', function (this: ISuite) {
     vi.setConfig({ testTimeout: 10_000 });
     it('should record canvas within iframe', async () => {

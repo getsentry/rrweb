@@ -1025,14 +1025,21 @@ export class Replayer {
       iframeEl as HTMLIFrameElement,
     );
 
+    if (!iframeContentDoc) {
+      this.warn(
+        'Cannot access iframe content document for mutation',
+        mutation.node,
+      );
+      return;
+    }
+
     const collected: AppendedIframe[] = [];
     const afterAppend = (builtNode: Node, id: number) => {
       this.collectIframeAndAttachDocument(collected, builtNode);
       const sn = (mirror as TMirror).getMeta(builtNode as unknown as TNode);
       if (
         sn?.type === NodeType.Element &&
-        sn?.tagName.toUpperCase() === 'HTML' &&
-        iframeContentDoc
+        sn?.tagName.toUpperCase() === 'HTML'
       ) {
         const { documentElement, head } = iframeContentDoc;
         this.insertStyleRules(
