@@ -38,6 +38,9 @@
     "<3.9": {
       "dist/rrweb.d.ts": [
         "dist/ts3.8/rrweb.d.ts"
+      ],
+      "dist/canvas-manager.d.ts": [
+        "dist/ts3.8/canvas-manager.d.ts"
       ]
     }
   },
@@ -50,6 +53,16 @@
       "require": {
         "types": "./dist/rrweb.d.cts",
         "default": "./dist/rrweb.cjs"
+      }
+    },
+    "./canvas-manager": {
+      "import": {
+        "types": "./dist/canvas-manager.d.ts",
+        "default": "./dist/canvas-manager.js"
+      },
+      "require": {
+        "types": "./dist/canvas-manager.d.cts",
+        "default": "./dist/canvas-manager.cjs"
       }
     },
     "./dist/style.css": "./dist/style.css"
