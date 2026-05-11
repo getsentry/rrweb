@@ -36,11 +36,19 @@
   "typings": "dist/rrweb.d.ts",
   "typesVersions": {
     "<3.9": {
+      "canvas-manager": [
+        "dist/ts3.8/canvas-manager.d.ts"
+      ],
       "dist/rrweb.d.ts": [
         "dist/ts3.8/rrweb.d.ts"
       ],
       "dist/canvas-manager.d.ts": [
         "dist/ts3.8/canvas-manager.d.ts"
+      ]
+    },
+    "*": {
+      "canvas-manager": [
+        "dist/canvas-manager.d.ts"
       ]
     }
   },
