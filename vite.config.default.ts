@@ -3,7 +3,7 @@ import dts from 'vite-plugin-dts';
 import { copyFileSync } from 'node:fs';
 import { defineConfig, LibraryOptions, LibraryFormats, Plugin } from 'vite';
 import glob from 'fast-glob';
-import { build, Format } from 'esbuild';
+import { build, Format, Platform } from 'esbuild';
 import { resolve } from 'path';
 import { umdWrapper } from 'esbuild-plugin-umd-wrapper';
 
@@ -12,9 +12,13 @@ const emptyOutDir = process.env.CLEAR_DIST_DIR !== 'false';
 function minifyAndUMDPlugin({
   name,
   outDir,
+  platform,
+  umdNames,
 }: {
   name: LibraryOptions['name'];
   outDir: string;
+  platform: Platform;
+  umdNames: Record<string, LibraryOptions['name']>;
 }): Plugin {
   return {
     name: 'minify-plugin',
@@ -33,6 +37,7 @@ function minifyAndUMDPlugin({
             /(\.cjs|\.css)(\.map)?$/,
             '',
           );
+          const libraryName = umdNames[baseFileName] || name;
           const outputFilePath = resolve(outputOptions.dir!, baseFileName);
           // console.log(outputFilePath, 'minifying', file.fileName);
           if (isCSS) {
@@ -45,20 +50,22 @@ function minifyAndUMDPlugin({
             });
           } else {
             await buildFile({
-              name,
+              name: libraryName,
               input: inputFilePath,
               output: `${outputFilePath}.umd.cjs`,
               minify: false,
               isCss: false,
               outDir,
+              platform,
             });
             await buildFile({
-              name,
+              name: libraryName,
               input: inputFilePath,
               output: `${outputFilePath}.umd.min.cjs`,
               minify: true,
               isCss: false,
               outDir,
+              platform,
             });
           }
         }
@@ -74,6 +81,7 @@ async function buildFile({
   minify,
   isCss,
   outDir,
+  platform,
 }: {
   name?: LibraryOptions['name'];
   input: string;
@@ -81,13 +89,16 @@ async function buildFile({
   outDir: string;
   minify: boolean;
   isCss: boolean;
+  platform: Platform;
 }) {
   await build({
     entryPoints: [input],
     outfile: output,
+    bundle: !isCss,
     minify,
     sourcemap: true,
     format: isCss ? undefined : ('umd' as Format),
+    platform: isCss ? undefined : platform,
     target: isCss ? undefined : 'es2020',
     treeShaking: !isCss,
     plugins: [
@@ -104,9 +115,21 @@ async function buildFile({
 export default function (
   entry: LibraryOptions['entry'],
   name: LibraryOptions['name'],
-  options?: { outputDir?: string; fileName?: string; plugins?: Plugin[] },
+  options?: {
+    outputDir?: string;
+    fileName?: string;
+    plugins?: Plugin[];
+    umdPlatform?: Platform;
+    umdNames?: Record<string, LibraryOptions['name']>;
+  },
 ) {
-  const { fileName, outputDir: outDir = 'dist', plugins = [] } = options || {};
+  const {
+    fileName,
+    outputDir: outDir = 'dist',
+    plugins = [],
+    umdPlatform = 'browser',
+    umdNames = {},
+  } = options || {};
 
   let formats: LibraryFormats[] = ['es', 'cjs'];
 
@@ -159,7 +182,12 @@ export default function (
           });
         },
       }),
-      minifyAndUMDPlugin({ name, outDir }),
+      minifyAndUMDPlugin({
+        name,
+        outDir,
+        platform: umdPlatform,
+        umdNames,
+      }),
       ...plugins,
     ],
   }));
