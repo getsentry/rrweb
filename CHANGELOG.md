@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.43.0
+
+### New Features ✨
+
+- (rrweb) Expose canvas manager subpath by @logaretm in [#294](https://github.com/getsentry/rrweb/pull/294)
+
 ## 2.42.0
 
 ### Breaking Changes 🛠
