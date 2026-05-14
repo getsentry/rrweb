@@ -9,7 +9,7 @@
     "@typescript-eslint/parser": "^7.0.0",
     "eslint-plugin-svelte": "^2.37.0",
     "prettier-plugin-svelte": "^3.1.2",
-    "svelte": "^5.0.0",
+    "svelte": "^5.55.7",
     "svelte-check": "^4.0.0",
     "svelte2tsx": "^0.7.6",
     "tslib": "^2.0.0",
