@@ -10,10 +10,7 @@ import type {
   textMutation,
 } from '@sentry/rrweb-types';
 import type { IMirror, Mirror } from '@sentry/rrweb-snapshot';
-import {
-  createMatchPredicate,
-  distanceToMatch,
-} from '@sentry/rrweb-snapshot';
+import { createMatchPredicate, distanceToMatch } from '@sentry/rrweb-snapshot';
 import { isShadowRoot, IGNORED_NODE } from '@sentry/rrweb-snapshot';
 import type { RRNode, RRIFrameElement } from '@sentry/rrdom';
 

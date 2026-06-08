@@ -1,7 +1,4 @@
-import type {
-  elementNode,
-  serializedNodeWithId,
-} from '@sentry/rrweb-snapshot';
+import type { elementNode, serializedNodeWithId } from '@sentry/rrweb-snapshot';
 import { stringifyRule } from '@sentry/rrweb-snapshot';
 import type {
   adoptedStyleSheetCallback,

@@ -1,8 +1,4 @@
-import type {
-  ICanvas,
-  Mirror,
-  DataURLOptions,
-} from '@sentry/rrweb-snapshot';
+import type { ICanvas, Mirror, DataURLOptions } from '@sentry/rrweb-snapshot';
 import type {
   blockClass,
   canvasManagerMutationCallback,
