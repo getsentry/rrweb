@@ -1,6 +1,6 @@
 {
   "name": "@sentry/rrweb-packer",
-  "version": "2.43.0",
+  "version": "2.43.2",
   "publishConfig": {
     "access": "public"
   },
@@ -78,7 +78,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@sentry/rrweb-types": "2.43.0",
+    "@sentry/rrweb-types": "2.43.2",
     "fflate": "^0.4.4"
   },
   "browserslist": [
