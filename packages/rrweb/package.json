@@ -86,6 +86,9 @@
     "url": "https://github.com/rrweb-io/rrweb/issues"
   },
   "homepage": "https://github.com/rrweb-io/rrweb#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@sentry/rrweb-worker": "2.43.0",
     "@types/dom-mediacapture-transform": "0.1.4",

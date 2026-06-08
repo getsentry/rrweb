@@ -41,6 +41,9 @@
   "bugs": {
     "url": "https://github.com/rrweb-io/rrweb/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@sentry/rrweb-types": "2.43.0",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
