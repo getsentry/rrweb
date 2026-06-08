@@ -15,7 +15,7 @@ From this monorepo, Sentry maintains and publishes the following NPM packages:
 - `@sentry/rrweb-player` (corresponds to the [original `rrweb-player` package](https://www.npmjs.com/package/rrweb-player))
 - `@sentry/rrweb-snapshot` (corresponds to the [original `rrweb-snapshot` package](https://www.npmjs.com/package/rrweb-snapshot))
 - `@sentry/rrweb-types` (corresponds to the [original `@rrweb/types` package](https://www.npmjs.com/package/@rrweb/types))
-- `@sentry-internal/rrweb-worker` (new package)
+- `@sentry/rrweb-worker` (new package)
 
 ## Major changes from upstream branch
 

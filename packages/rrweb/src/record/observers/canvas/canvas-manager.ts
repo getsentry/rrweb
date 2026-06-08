@@ -15,7 +15,7 @@ import { CanvasContext } from '@sentry/rrweb-types';
 import initCanvas2DMutationObserver from './2d';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';
-import { getImageBitmapDataUrlWorkerURL } from '@sentry-internal/rrweb-worker';
+import { getImageBitmapDataUrlWorkerURL } from '@sentry/rrweb-worker';
 import { callbackWrapper, registerErrorHandler } from '../../error-handler';
 import type { ErrorHandler } from '../../../types';
 

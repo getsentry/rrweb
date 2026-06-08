@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrweb-worker",
+  "name": "@sentry/rrweb-worker",
   "version": "2.43.0",
   "description": "Worker for rrweb",
   "main": "dist/rrweb-worker/index.js",
