@@ -1,9 +1,9 @@
-import type { ICanvas } from '@sentry-internal/rrweb-snapshot';
+import type { ICanvas } from '@sentry/rrweb-snapshot';
 import type {
   blockClass,
   IWindow,
   listenerHandler,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import { isBlocked, patch } from '../../../utils';
 
 function getNormalizedContextName(contextType: string) {

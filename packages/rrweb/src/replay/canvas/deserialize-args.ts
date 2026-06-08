@@ -3,7 +3,7 @@ import type { Replayer } from '../';
 import type {
   CanvasArg,
   SerializedCanvasArg,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 
 // TODO: add ability to wipe this list
 type GLVarMap = Map<string, any[]>;

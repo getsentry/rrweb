@@ -2,7 +2,7 @@ import type {
   ICanvas,
   Mirror,
   DataURLOptions,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-snapshot';
 import type {
   blockClass,
   canvasManagerMutationCallback,
@@ -13,9 +13,9 @@ import type {
   listenerHandler,
   CanvasArg,
   ImageBitmapDataURLWorkerResponse,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import { isBlocked, onRequestAnimationFrame } from '../../../utils';
-import { CanvasContext } from '@sentry-internal/rrweb-types';
+import { CanvasContext } from '@sentry/rrweb-types';
 import initCanvas2DMutationObserver from './2d';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';

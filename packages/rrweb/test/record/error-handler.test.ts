@@ -7,7 +7,7 @@ import {
   listenerHandler,
   eventWithTime,
   EventType,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import { launchPuppeteer, waitForTimeout } from '../utils';
 import {
   callbackWrapper,

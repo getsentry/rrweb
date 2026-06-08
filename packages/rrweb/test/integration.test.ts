@@ -22,8 +22,8 @@ import {
   RecordPlugin,
   IncrementalSource,
   CanvasContext,
-} from '@sentry-internal/rrweb-types';
-import { visitSnapshot, NodeType } from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-types';
+import { visitSnapshot, NodeType } from '@sentry/rrweb-snapshot';
 
 describe('record integration tests', function (this: ISuite) {
   vi.setConfig({ testTimeout: 10_000 });

@@ -1,5 +1,5 @@
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
-import { record } from '@sentry-internal/rrweb';
+import type { eventWithTime } from '@sentry/rrweb-types';
+import { record } from '@sentry/rrweb';
 import { getRecordConsolePlugin } from '../../src/index';
 
 window.Date.now = () => new Date(Date.UTC(2018, 10, 15, 8)).valueOf();

@@ -3,8 +3,8 @@
  */
 import { vi } from 'vitest';
 import * as replayModule from '../src/replay';
-import { EventType } from '@sentry-internal/rrweb-types';
-import type { eventWithTime } from '@sentry-internal/rrweb-types';
+import { EventType } from '@sentry/rrweb-types';
+import type { eventWithTime } from '@sentry/rrweb-types';
 
 describe('Replayer Reevaluate Fast Forward', () => {
   let replayer: replayModule.Replayer;

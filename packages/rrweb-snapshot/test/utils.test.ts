@@ -9,7 +9,7 @@ import {
   getIFrameContentDocument,
   getIFrameContentWindow,
 } from '../src/utils';
-import type { serializedNodeWithId } from '@sentry-internal/rrweb-snapshot';
+import type { serializedNodeWithId } from '@sentry/rrweb-snapshot';
 
 describe('utils', () => {
   describe('isNodeMetaEqual()', () => {

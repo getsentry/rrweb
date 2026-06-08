@@ -6,11 +6,11 @@ import type {
   MaskTextFn,
   DataURLOptions,
   MaskAttributeFn,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-snapshot';
 import type { IframeManagerInterface } from './record/iframe-manager';
 import type { ShadowDomManagerInterface } from './record/shadow-dom-manager';
 import type { Replayer } from './replay';
-import type { RRNode } from '@sentry-internal/rrdom';
+import type { RRNode } from '@sentry/rrdom';
 import type {
   CanvasManagerConstructorOptions,
   CanvasManagerInterface,
@@ -43,7 +43,7 @@ import type {
   viewportResizeCallback,
   PackFn,
   UnpackFn,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import type ProcessedNodeManager from './record/processed-node-manager';
 
 export type recordOptions<T> = {

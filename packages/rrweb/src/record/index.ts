@@ -3,8 +3,8 @@ import {
   MaskInputOptions,
   SlimDOMOptions,
   createMirror,
-} from '@sentry-internal/rrweb-snapshot';
-import { getIFrameContentWindow } from '@sentry-internal/rrdom';
+} from '@sentry/rrweb-snapshot';
+import { getIFrameContentWindow } from '@sentry/rrdom';
 import { initObservers, mutationBuffers } from './observer';
 import {
   on,
@@ -29,7 +29,7 @@ import {
   canvasMutationParam,
   adoptedStyleSheetParam,
   IWindow,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
 import {
   IframeManager,

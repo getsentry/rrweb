@@ -11,7 +11,7 @@ import {
   IncrementalSource,
   EventType,
   eventWithTime,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 
 let replayer: Replayer;
 
