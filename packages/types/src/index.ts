@@ -3,7 +3,7 @@ import type {
   Mirror,
   INode,
   DataURLOptions,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-snapshot';
 
 export enum EventType {
   DomContentLoaded,

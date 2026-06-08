@@ -1,7 +1,4 @@
-import {
-  IncrementalSource,
-  MouseInteractions,
-} from '@sentry-internal/rrweb-types';
+import { IncrementalSource, MouseInteractions } from '@sentry/rrweb-types';
 import type { eventWithTime } from '../../../types/src';
 
 const events: eventWithTime[] = [

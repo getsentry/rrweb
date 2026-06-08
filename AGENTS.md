@@ -1,6 +1,6 @@
 # Agent Instructions — rrweb (Sentry fork)
 
-Published as `@sentry-internal/*`. Main branch: `sentry-v2`.
+Published as `@sentry/*`. Main branch: `sentry-v2`.
 
 ## Package Manager
 

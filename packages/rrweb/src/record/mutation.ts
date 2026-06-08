@@ -12,7 +12,7 @@ import {
   toLowerCase,
   getInputValue,
   shouldMaskInput,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-snapshot';
 import type { observerParam, MutationBufferParam } from '../types';
 import type {
   mutationRecord,
@@ -22,7 +22,7 @@ import type {
   addedNodeMutation,
   Optional,
   IWindow,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import {
   isBlocked,
   isAncestorRemoved,
@@ -40,7 +40,7 @@ import { StyleDeclarationParser } from './style-declaration-parser';
 import {
   getIFrameContentDocument,
   getIFrameContentWindow,
-} from '@sentry-internal/rrdom';
+} from '@sentry/rrdom';
 
 type DoubleLinkedListNode = {
   previous: DoubleLinkedListNode | null;

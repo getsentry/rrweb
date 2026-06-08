@@ -1,5 +1,5 @@
 {
-  "name": "@sentry-internal/rrweb-worker",
+  "name": "@sentry/rrweb-worker",
   "version": "2.43.0",
   "description": "Worker for rrweb",
   "main": "dist/rrweb-worker/index.js",
@@ -27,8 +27,8 @@
     "url": "https://github.com/getsentry/rrweb/issues"
   },
   "dependencies": {
-    "@sentry-internal/rrweb-snapshot": "2.43.0",
-    "@sentry-internal/rrweb-types": "2.43.0"
+    "@sentry/rrweb-snapshot": "2.43.0",
+    "@sentry/rrweb-types": "2.43.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",

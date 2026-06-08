@@ -15,7 +15,7 @@ export {
   IncrementalSource,
   MouseInteractions,
   ReplayerEvents,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 
 export type {
   canvasMutationParam,
@@ -24,7 +24,7 @@ export type {
   fullSnapshotEvent,
   incrementalSnapshotEvent,
   inputData,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 
 export type { recordOptions, ReplayPlugin } from './types';
 export { deserializeArg } from './replay/canvas/deserialize-args';

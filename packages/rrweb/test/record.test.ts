@@ -11,7 +11,7 @@ import {
   IncrementalSource,
   styleSheetRuleData,
   selectionData,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import {
   assertSnapshot,
   getServerURL,

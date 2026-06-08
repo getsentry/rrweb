@@ -1,8 +1,5 @@
 import type { Replayer } from '../';
-import {
-  CanvasContext,
-  canvasMutationCommand,
-} from '@sentry-internal/rrweb-types';
+import { CanvasContext, canvasMutationCommand } from '@sentry/rrweb-types';
 import { deserializeArg, variableListFor } from './deserialize-args';
 
 function getContext(

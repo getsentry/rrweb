@@ -3,11 +3,7 @@ import * as path from 'path';
 import type * as puppeteer from 'puppeteer';
 import { vi } from 'vitest';
 import type { recordOptions } from '../../src/types';
-import {
-  listenerHandler,
-  eventWithTime,
-  EventType,
-} from '@sentry-internal/rrweb-types';
+import { listenerHandler, eventWithTime, EventType } from '@sentry/rrweb-types';
 import { launchPuppeteer, waitForTimeout } from '../utils';
 import {
   callbackWrapper,

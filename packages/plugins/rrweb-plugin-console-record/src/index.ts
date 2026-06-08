@@ -2,8 +2,8 @@ import type {
   listenerHandler,
   RecordPlugin,
   IWindow,
-} from '@sentry-internal/rrweb-types';
-import { utils } from '@sentry-internal/rrweb';
+} from '@sentry/rrweb-types';
+import { utils } from '@sentry/rrweb';
 import { ErrorStackParser, StackFrame } from './error-stack-parser';
 import { stringify } from './stringify';
 

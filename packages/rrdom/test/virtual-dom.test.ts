@@ -17,7 +17,7 @@ import {
   NodeType,
   NodeType as RRNodeType,
   textNode,
-} from '@sentry-internal/rrweb-snapshot';
+} from '@sentry/rrweb-snapshot';
 import {
   buildFromDom,
   buildFromNode,

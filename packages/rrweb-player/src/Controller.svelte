@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { EventType } from '@sentry-internal/rrweb';
-  import type { playerMetaData } from '@sentry-internal/rrweb-types';
+  import { EventType } from '@sentry/rrweb';
+  import type { playerMetaData } from '@sentry/rrweb-types';
   import type {
     Replayer,
     PlayerMachineState,
     SpeedMachineState,
-  } from '@sentry-internal/rrweb';
+  } from '@sentry/rrweb';
   import {
     onMount,
     onDestroy,

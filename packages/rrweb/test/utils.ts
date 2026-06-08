@@ -1,4 +1,4 @@
-import { NodeType } from '@sentry-internal/rrweb-snapshot';
+import { NodeType } from '@sentry/rrweb-snapshot';
 import {
   EventType,
   IncrementalSource,
@@ -8,7 +8,7 @@ import {
   Optional,
   mouseInteractionData,
   pluginEvent,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import type { recordOptions } from '../src/types';
 import * as puppeteer from 'puppeteer';
 import * as path from 'path';
@@ -337,21 +337,26 @@ function stringifyDomSnapshot(mhtml: string): string {
   return newResult.map((asset) => Object.values(asset).join('\n')).join('\n\n');
 }
 
-export async function assertSnapshot(
+export function assertSnapshot(
   snapshotsOrPage: eventWithTime[] | puppeteer.Page,
   options: { includeScroll: boolean } = { includeScroll: false },
-) {
+): void | Promise<void> {
   let snapshots: eventWithTime[];
   if (!Array.isArray(snapshotsOrPage)) {
-    // make sure page has finished executing js
-    await waitForRAF(snapshotsOrPage);
-    await snapshotsOrPage.waitForFunction(
-      'window.snapshots && window.snapshots.length > 0',
-    );
+    return (async () => {
+      // make sure page has finished executing js
+      await waitForRAF(snapshotsOrPage);
+      await snapshotsOrPage.waitForFunction(
+        'window.snapshots && window.snapshots.length > 0',
+      );
 
-    snapshots = (await snapshotsOrPage.evaluate(
-      'window.snapshots',
-    )) as eventWithTime[];
+      snapshots = (await snapshotsOrPage.evaluate(
+        'window.snapshots',
+      )) as eventWithTime[];
+
+      expect(snapshots).toBeDefined();
+      expect(stringifySnapshots(snapshots, options)).toMatchSnapshot();
+    })();
   } else {
     snapshots = snapshotsOrPage;
   }

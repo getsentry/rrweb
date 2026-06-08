@@ -51,8 +51,8 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@sentry-internal/rrdom": "2.43.0",
-    "@sentry-internal/rrweb-snapshot": "2.43.0",
+    "@sentry/rrdom": "2.43.0",
+    "@sentry/rrweb-snapshot": "2.43.0",
     "cssom": "^0.5.0",
     "cssstyle": "^2.3.0",
     "nwsapi": "2.2.0"

@@ -1,4 +1,4 @@
-import { NodeType } from '@sentry-internal/rrweb-snapshot';
+import { NodeType } from '@sentry/rrweb-snapshot';
 import { expect } from 'vitest';
 import {
   EventType,
@@ -8,7 +8,7 @@ import {
   mouseInteractionData,
   event,
   pluginEvent,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 import * as puppeteer from 'puppeteer';
 import * as path from 'path';
 import * as http from 'http';

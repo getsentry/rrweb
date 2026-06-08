@@ -1,9 +1,9 @@
 import { encode } from 'base64-arraybuffer';
-import type { DataURLOptions } from '@sentry-internal/rrweb-snapshot';
+import type { DataURLOptions } from '@sentry/rrweb-snapshot';
 import type {
   ImageBitmapDataURLWorkerParams,
   ImageBitmapDataURLWorkerResponse,
-} from '@sentry-internal/rrweb-types';
+} from '@sentry/rrweb-types';
 
 import { getScaledDimensions } from './getScaledDimensions';
 

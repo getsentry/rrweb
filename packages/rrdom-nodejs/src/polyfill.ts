@@ -1,4 +1,4 @@
-import { BaseRRNode } from '@sentry-internal/rrdom';
+import { BaseRRNode } from '@sentry/rrdom';
 import { RRDocument } from './document-nodejs';
 
 /**
