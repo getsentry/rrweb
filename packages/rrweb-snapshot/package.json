@@ -1,6 +1,6 @@
 {
   "name": "@sentry/rrweb-snapshot",
-  "version": "2.43.0",
+  "version": "2.43.1",
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.43.1
+
+### Internal Changes 🔧
+
+- Rename Sentry rrweb packages by @logaretm in [#301](https://github.com/getsentry/rrweb/pull/301)
+
 ## 2.43.0
 
 ### New Features ✨
