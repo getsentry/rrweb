@@ -1,4 +1,4 @@
-import type { ICanvas, Mirror, DataURLOptions } from '@sentry/rrweb-snapshot';
+import type { Mirror, DataURLOptions } from '@sentry/rrweb-snapshot';
 import type {
   blockClass,
   canvasManagerMutationCallback,
@@ -238,11 +238,11 @@ export class CanvasManager implements CanvasManagerInterface {
     options?: SnapshotOptions,
   ): void {
     if (options?.skipRequestAnimationFrame) {
-      this.takeSnapshot(performance.now(), true, canvasElement);
+      this.takeSnapshot(performance.now(), canvasElement);
       return;
     }
     onRequestAnimationFrame((timestamp) =>
-      this.takeSnapshot(timestamp, true, canvasElement),
+      this.takeSnapshot(timestamp, canvasElement),
     );
   }
 
@@ -317,7 +317,7 @@ export class CanvasManager implements CanvasManagerInterface {
     }
 
     const rafCallback = (timestamp: DOMHighResTimeStamp) => {
-      this.takeSnapshot(timestamp, false);
+      this.takeSnapshot(timestamp);
       rafId = onRequestAnimationFrame(rafCallback);
     };
 
@@ -424,7 +424,6 @@ export class CanvasManager implements CanvasManagerInterface {
    */
   private takeSnapshot(
     timestamp: DOMHighResTimeStamp,
-    isManualSnapshot: boolean,
     canvasElement?: HTMLCanvasElement,
   ) {
     const {
@@ -466,27 +465,14 @@ export class CanvasManager implements CanvasManagerInterface {
 
       this.snapshotInProgressMap.set(id, true);
 
-      // Handle WebGL context preservation
-      if (
-        !isManualSnapshot &&
-        ['webgl', 'webgl2'].includes((canvas as ICanvas).__context)
-      ) {
-        const context = canvas.getContext((canvas as ICanvas).__context) as
-          | WebGLRenderingContext
-          | WebGL2RenderingContext
-          | null;
-
-        if (context?.getContextAttributes()?.preserveDrawingBuffer === false) {
-          // Hack to load canvas back into memory so `createImageBitmap` can grab it's contents.
-          // Context: https://twitter.com/Juice10/status/1499775271758704643
-          // Preferably we set `preserveDrawingBuffer` to true, but that's not always possible,
-          // especially when canvas is loaded before rrweb.
-          // This hack can wipe the background color of the canvas in the (unlikely) event that
-          // the canvas background was changed but clear was not called directly afterwards.
-          // Example of this hack having negative side effect: https://visgl.github.io/react-map-gl/examples/layers
-          context.clear(context.COLOR_BUFFER_BIT);
-        }
-      }
+      // Note: we intentionally do NOT clear the WebGL color buffer here to force
+      // the drawing buffer back into memory. Doing so wipes the application's own
+      // live canvas on every snapshot, which for on-demand-rendered canvases
+      // (maps, 3D viewers, charts) causes visible blinking. Buffer preservation
+      // is handled by forcing `preserveDrawingBuffer: true` in the getContext
+      // patch; when that is not possible, a blank snapshot is preferable to
+      // corrupting the host application's rendering.
+      // See: https://github.com/getsentry/sentry-javascript/issues/20178
 
       createImageBitmap(canvas)
         .then((bitmap) => {
