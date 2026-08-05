@@ -2,13 +2,14 @@
  * @vitest-environment jsdom
  */
 import { JSDOM } from 'jsdom';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
   transformAttribute,
   _isBlockedElement,
   needMaskingText,
+  cleanupSnapshot,
 } from '../src/snapshot';
 import snapshot from '../src/snapshot';
 import { serializedNodeWithId, NodeType } from '../src/types';
@@ -611,6 +612,12 @@ describe('image loading', () => {
     return document;
   };
 
+  // Node ids come from a module-level counter, so reset it to keep the ids
+  // asserted below independent of how many nodes earlier tests serialized.
+  beforeEach(() => {
+    cleanupSnapshot();
+  });
+
   it('should trigger onBlockedImageLoad callback when blocked image loads', async () => {
     const doc = render(`
       <!DOCTYPE html>
@@ -773,7 +780,7 @@ describe('image loading', () => {
     expect(onBlockedImageLoad).not.toHaveBeenCalled();
   });
 
-  it.only('should not trigger onBlockedImageLoad for already complete images', async () => {
+  it('should not trigger onBlockedImageLoad for already complete images', async () => {
     const doc = render(`
       <!DOCTYPE html>
       <html>
