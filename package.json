@@ -64,7 +64,8 @@
     "**/@types/dom-webcodecs": "0.1.5",
     "**/@types/estree": "^1.0.0",
     "**/vite": "^6.4.2",
-    "**/tmp": "0.2.5"
+    "**/tmp": "0.2.5",
+    "**/shell-quote": "^1.10.0"
   },
   "browserslist": [
     "defaults",
