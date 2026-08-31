@@ -1,6 +1,6 @@
 ---
-'rrweb-snapshot': patch
-'rrweb': patch
+"rrweb-snapshot": patch
+"rrweb": patch
 ---
 
 Fix masking and blocking not propagating from a shadow host into its shadow root
