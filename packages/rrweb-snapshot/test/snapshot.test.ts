@@ -551,6 +551,141 @@ describe('needMaskingText', () => {
     ).toEqual(false);
   });
 
+  describe('shadow DOM', () => {
+    const renderShadowHost = (
+      hostHtml: string,
+      shadowHtml: string,
+    ): ShadowRoot => {
+      const host = render(hostHtml);
+      const shadowRoot = host.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = shadowHtml;
+      return shadowRoot;
+    };
+
+    it('should mask if the masking selector is matched on the shadow host', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<span>Lorem ipsum</span>`,
+      );
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          '.foo',
+          'unmaskmask',
+          null,
+          false,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should mask if the masking class is matched on the shadow host', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo maskmask'></div>`,
+        `<p><span>Lorem ipsum</span></p>`,
+      );
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          null,
+          'unmaskmask',
+          null,
+          false,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should mask if the masking selector is matched on an ancestor of the shadow host', () => {
+      const el = render(`<div class='foo'><div class='host'></div></div>`);
+      const shadowRoot = el
+        .querySelector('.host')!
+        .attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = `<span>Lorem ipsum</span>`;
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          '.foo',
+          'unmaskmask',
+          null,
+          false,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should mask if the masking selector is matched on an outer shadow host', () => {
+      const outerShadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<div class='inner-host'></div>`,
+      );
+      const innerShadowRoot = outerShadowRoot
+        .querySelector('.inner-host')!
+        .attachShadow({ mode: 'open' });
+      innerShadowRoot.innerHTML = `<span>Lorem ipsum</span>`;
+      expect(
+        needMaskingText(
+          innerShadowRoot.querySelector('span')!,
+          'maskmask',
+          '.foo',
+          'unmaskmask',
+          null,
+          false,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should not mask if the unmasking selector is matched inside the shadow root', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<div class='bar'><span>Lorem ipsum</span></div>`,
+      );
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          '.foo',
+          'unmaskmask',
+          '.bar',
+          false,
+        ),
+      ).toEqual(false);
+    });
+
+    it('should not mask if the unmasking selector is matched on the shadow host', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<span>Lorem ipsum</span>`,
+      );
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          null,
+          'unmaskmask',
+          '.foo',
+          true,
+        ),
+      ).toEqual(false);
+    });
+
+    it('should not cross a closed shadow root', () => {
+      const host = render(`<div class='foo'></div>`);
+      const shadowRoot = host.attachShadow({ mode: 'closed' });
+      shadowRoot.innerHTML = `<span>Lorem ipsum</span>`;
+      expect(
+        needMaskingText(
+          shadowRoot.querySelector('span')!,
+          'maskmask',
+          '.foo',
+          'unmaskmask',
+          null,
+          false,
+        ),
+      ).toEqual(false);
+    });
+  });
+
   describe('enforced masking', () => {
     it.each([
       'current-password',

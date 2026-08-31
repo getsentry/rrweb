@@ -3,6 +3,7 @@
  */
 import {
   getRootShadowHost,
+  isBlocked,
   StyleSheetMirror,
   inDom,
   shadowHostInDom,
@@ -141,6 +142,98 @@ describe('Utilities for other modules', () => {
       expect(getRootShadowHost(a.childNodes[0])).toBe(a.childNodes[0]);
       expect(shadowHostInDom(a.childNodes[0])).toBeTruthy();
       expect(inDom(a.childNodes[0])).toBeTruthy();
+    });
+  });
+  describe('isBlocked', () => {
+    const renderShadowHost = (
+      hostHtml: string,
+      shadowHtml: string,
+    ): ShadowRoot => {
+      document.body.innerHTML = hostHtml;
+      const host = document.body.querySelector('div')!;
+      const shadowRoot = host.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = shadowHtml;
+      return shadowRoot;
+    };
+
+    it('should block a node whose shadow host matches the block selector', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<p><span>Lorem ipsum</span></p>`,
+      );
+      expect(
+        isBlocked(
+          shadowRoot.querySelector('span')!,
+          'blockblock',
+          '.foo',
+          null,
+          true,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should block a node whose shadow host matches the block class', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo blockblock'></div>`,
+        `<span>Lorem ipsum</span>`,
+      );
+      expect(
+        isBlocked(
+          shadowRoot.querySelector('span')!,
+          'blockblock',
+          null,
+          null,
+          true,
+        ),
+      ).toEqual(true);
+    });
+
+    it('should not block a node whose shadow host does not match', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<span>Lorem ipsum</span>`,
+      );
+      expect(
+        isBlocked(
+          shadowRoot.querySelector('span')!,
+          'blockblock',
+          '.bar',
+          null,
+          true,
+        ),
+      ).toEqual(false);
+    });
+
+    it('should not block a node unblocked inside the shadow root of a blocked host', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<div class='bar'><span>Lorem ipsum</span></div>`,
+      );
+      expect(
+        isBlocked(
+          shadowRoot.querySelector('span')!,
+          'blockblock',
+          '.foo',
+          '.bar',
+          true,
+        ),
+      ).toEqual(false);
+    });
+
+    it('should not check ancestors when checkAncestors is false', () => {
+      const shadowRoot = renderShadowHost(
+        `<div class='foo'></div>`,
+        `<span>Lorem ipsum</span>`,
+      );
+      expect(
+        isBlocked(
+          shadowRoot.querySelector('span')!,
+          'blockblock',
+          '.foo',
+          null,
+          false,
+        ),
+      ).toEqual(false);
     });
   });
 });
