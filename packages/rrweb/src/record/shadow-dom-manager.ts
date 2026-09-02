@@ -129,14 +129,22 @@ export class ShadowDomManager implements ShadowDomManagerInterface {
     const iframeDoc = getIFrameContentDocument(iframeElement);
     const iframeWindow = getIFrameContentWindow(iframeElement);
     if (!iframeDoc || !iframeWindow) return;
-    this.patchAttachShadow(
-      (
+
+    // For a cross-origin iframe, `contentWindow` is a truthy-restricted proxy.
+    // Reading `Element` off it throws SecurityError (or yields undefined).
+    let iframeElementConstructor: { prototype: Element } | undefined;
+    try {
+      iframeElementConstructor = (
         iframeWindow as Window & {
-          Element: { prototype: Element };
+          Element?: { prototype: Element };
         }
-      ).Element,
-      iframeDoc,
-    );
+      ).Element;
+    } catch (e) {
+      return;
+    }
+    if (!iframeElementConstructor) return;
+
+    this.patchAttachShadow(iframeElementConstructor, iframeDoc);
   }
 
   /**
