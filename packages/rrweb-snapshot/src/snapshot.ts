@@ -402,6 +402,12 @@ export function distanceToMatch(
   distance = 0,
 ): number {
   if (!node) return -1;
+  // Masking and blocking configured on a shadow host has to apply to that host's
+  // shadow content, so step from a shadow root onto its host rather than stopping
+  // at the boundary.
+  if (isShadowRoot(node)) {
+    return distanceToMatch(node.host, matchPredicate, limit, distance + 1);
+  }
   if (node.nodeType !== node.ELEMENT_NODE) return -1;
   if (distance > limit) return -1;
   if (matchPredicate(node)) return distance;
