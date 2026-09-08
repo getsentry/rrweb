@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.44.0
+
+### Bug Fixes 🐛
+
+- (deps) Refresh lockfile to patch postcss path traversal by @andreiborza in [#311](https://github.com/getsentry/rrweb/pull/311)
+- (masking) Propagate masking and blocking from a shadow host into its shadow root by @logaretm in [#319](https://github.com/getsentry/rrweb/pull/319)
+- (rrweb) Guard cross-origin `Element` read in ShadowDomManager.obs… by @s1gr1d in [#322](https://github.com/getsentry/rrweb/pull/322)
+- Don't clear live WebGL buffer during canvas snapshots by @andreiborza in [#307](https://github.com/getsentry/rrweb/pull/307)
+
+### Internal Changes 🔧
+
+#### Deps
+
+- Bump ws from 8.20.0 to 8.21.2 by @dependabot in [#314](https://github.com/getsentry/rrweb/pull/314)
+- Bump form-data from 4.0.5 to 4.0.6 by @dependabot in [#304](https://github.com/getsentry/rrweb/pull/304)
+- Bump linkify-it from 5.0.0 to 5.0.2 by @dependabot in [#309](https://github.com/getsentry/rrweb/pull/309)
+- Bump @babel/core from 7.26.0 to 7.29.7 by @dependabot in [#305](https://github.com/getsentry/rrweb/pull/305)
+- Bump fast-uri from 3.0.3 to 3.1.5 by @dependabot in [#312](https://github.com/getsentry/rrweb/pull/312)
+
+#### Deps Dev
+
+- Bump vite from 6.4.2 to 6.4.3 by @dependabot in [#306](https://github.com/getsentry/rrweb/pull/306)
+- Bump vitest from 3.2.4 to 3.2.6 by @dependabot in [#302](https://github.com/getsentry/rrweb/pull/302)
+
+#### Dev Deps
+
+- Bump turbo to 2.10.8 and unmask the tests it hid by @Lms24 in [#317](https://github.com/getsentry/rrweb/pull/317)
+- Patch 12 Dependabot advisories in build tooling by @Lms24 in [#316](https://github.com/getsentry/rrweb/pull/316)
+- Pin `shell-quote` to `^1.10.0` to patch op injection by @Lms24 in [#315](https://github.com/getsentry/rrweb/pull/315)
+- Bump `brace-expansion` to `1.1.18` by @Lms24 in [#313](https://github.com/getsentry/rrweb/pull/313)
+
 ## 2.43.2
 
 ### Internal Changes 🔧

@@ -1,6 +1,6 @@
 {
   "name": "@rrweb/all",
-  "version": "2.43.2",
+  "version": "2.44.0",
   "publishConfig": {
     "access": "public"
   },
@@ -56,9 +56,9 @@
     "vitest": "^3.2.6"
   },
   "dependencies": {
-    "@sentry/rrweb": "2.43.2",
-    "@sentry/rrweb-packer": "2.43.2",
-    "@sentry/rrweb-types": "2.43.2"
+    "@sentry/rrweb": "2.44.0",
+    "@sentry/rrweb-packer": "2.44.0",
+    "@sentry/rrweb-types": "2.44.0"
   },
   "browserslist": [
     "supports es6-class"
