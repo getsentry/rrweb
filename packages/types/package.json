@@ -1,6 +1,6 @@
 {
   "name": "@sentry/rrweb-types",
-  "version": "2.43.2",
+  "version": "2.44.0",
   "publishConfig": {
     "access": "public"
   },
@@ -59,7 +59,7 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
-    "@sentry/rrweb-snapshot": "2.43.2",
+    "@sentry/rrweb-snapshot": "2.44.0",
     "@types/css-font-loading-module": "0.0.7"
   },
   "browserslist": [

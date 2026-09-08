@@ -1,6 +1,6 @@
 {
   "name": "@sentry/rrweb",
-  "version": "2.43.2",
+  "version": "2.44.0",
   "description": "record and replay the web",
   "scripts": {
     "retest": "vitest run --exclude test/benchmark",
@@ -90,7 +90,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@sentry/rrweb-worker": "2.43.2",
+    "@sentry/rrweb-worker": "2.44.0",
     "@types/dom-mediacapture-transform": "0.1.4",
     "@types/inquirer": "^8.2.1",
     "@types/jest-image-snapshot": "^6.1.0",
@@ -112,9 +112,9 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
-    "@sentry/rrdom": "2.43.2",
-    "@sentry/rrweb-snapshot": "2.43.2",
-    "@sentry/rrweb-types": "2.43.2",
+    "@sentry/rrdom": "2.44.0",
+    "@sentry/rrweb-snapshot": "2.44.0",
+    "@sentry/rrweb-types": "2.44.0",
     "@types/css-font-loading-module": "0.0.7",
     "@xstate/fsm": "^1.4.0",
     "base64-arraybuffer": "^1.0.1",
