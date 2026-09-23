@@ -211,7 +211,7 @@ function record<T = eventWithTime>(
 
   polyfill();
 
-  let lastFullSnapshotEvent: eventWithTime;
+  let lastFullSnapshotTimestamp = 0;
   let incrementalSnapshotCount = 0;
 
   const eventProcessor = (e: eventWithTime): T => {
@@ -258,7 +258,7 @@ function record<T = eventWithTime>(
     }
 
     if (e.type === EventType.FullSnapshot) {
-      lastFullSnapshotEvent = e;
+      lastFullSnapshotTimestamp = e.timestamp;
       incrementalSnapshotCount = 0;
     } else if (e.type === EventType.IncrementalSnapshot) {
       // attach iframe should be considered as full snapshot
@@ -274,8 +274,8 @@ function record<T = eventWithTime>(
         checkoutEveryNth && incrementalSnapshotCount >= checkoutEveryNth;
       const exceedTime =
         checkoutEveryNms &&
-        lastFullSnapshotEvent &&
-        e.timestamp - lastFullSnapshotEvent.timestamp > checkoutEveryNms;
+        lastFullSnapshotTimestamp &&
+        e.timestamp - lastFullSnapshotTimestamp > checkoutEveryNms;
       if (exceedCount || exceedTime) {
         takeFullSnapshot(true);
       }
@@ -432,81 +432,99 @@ function record<T = eventWithTime>(
     shadowDomManager.init();
 
     mutationBuffers.forEach((buf) => buf.lock()); // don't allow any mirror modifications during snapshotting
-    const node = snapshot(document, {
-      mirror,
-      blockClass,
-      blockSelector,
-      unblockSelector,
-      maskAllText,
-      maskTextClass,
-      unmaskTextClass,
-      maskTextSelector,
-      unmaskTextSelector,
-      inlineStylesheet,
-      maskAllInputs: maskInputOptions,
-      maskAttributeFn,
-      maskInputFn,
-      maskTextFn,
-      slimDOM: slimDOMOptions,
-      dataURLOptions,
-      recordCanvas,
-      inlineImages,
-      onSerialize: (n) => {
-        if (isSerializedIframe(n, mirror)) {
-          iframeManager.addIframe(n as HTMLIFrameElement);
-        }
-        if (isSerializedStylesheet(n, mirror)) {
-          stylesheetManager.trackLinkElement(n as HTMLLinkElement);
-        }
-        if (hasShadowRoot(n)) {
-          shadowDomManager.addShadowRoot(n.shadowRoot, document);
-        }
-      },
-      onIframeLoad: (iframe, childSn) => {
-        iframeManager.attachIframe(iframe, childSn);
-        const contentWindow = getIFrameContentWindow(iframe);
-        if (contentWindow) {
-          canvasManager.addWindow(contentWindow as IWindow);
-        }
-        shadowDomManager.observeAttachShadow(iframe);
-      },
-      onStylesheetLoad: (linkEl, childSn) => {
-        stylesheetManager.attachLinkElement(linkEl, childSn);
-      },
-      onBlockedImageLoad: (_imageEl, serializedNode, { width, height }) => {
-        wrappedMutationEmit({
-          adds: [],
-          removes: [],
-          texts: [],
-          attributes: [
-            {
-              id: serializedNode.id,
-              attributes: {
-                style: {
-                  width: `${width}px`,
-                  height: `${height}px`,
+    let snapshotEmitted = false;
+    try {
+      const node = snapshot(document, {
+        mirror,
+        blockClass,
+        blockSelector,
+        unblockSelector,
+        maskAllText,
+        maskTextClass,
+        unmaskTextClass,
+        maskTextSelector,
+        unmaskTextSelector,
+        inlineStylesheet,
+        maskAllInputs: maskInputOptions,
+        maskAttributeFn,
+        maskInputFn,
+        maskTextFn,
+        slimDOM: slimDOMOptions,
+        dataURLOptions,
+        recordCanvas,
+        inlineImages,
+        onSerialize: (n) => {
+          if (isSerializedIframe(n, mirror)) {
+            iframeManager.addIframe(n as HTMLIFrameElement);
+          }
+          if (isSerializedStylesheet(n, mirror)) {
+            stylesheetManager.trackLinkElement(n as HTMLLinkElement);
+          }
+          if (hasShadowRoot(n)) {
+            shadowDomManager.addShadowRoot(n.shadowRoot, document);
+          }
+        },
+        onIframeLoad: (iframe, childSn) => {
+          iframeManager.attachIframe(iframe, childSn);
+          const contentWindow = getIFrameContentWindow(iframe);
+          if (contentWindow) {
+            canvasManager.addWindow(contentWindow as IWindow);
+          }
+          shadowDomManager.observeAttachShadow(iframe);
+        },
+        onStylesheetLoad: (linkEl, childSn) => {
+          stylesheetManager.attachLinkElement(linkEl, childSn);
+        },
+        onBlockedImageLoad: (_imageEl, serializedNode, { width, height }) => {
+          wrappedMutationEmit({
+            adds: [],
+            removes: [],
+            texts: [],
+            attributes: [
+              {
+                id: serializedNode.id,
+                attributes: {
+                  style: {
+                    width: `${width}px`,
+                    height: `${height}px`,
+                  },
                 },
               },
-            },
-          ],
-        });
-      },
-      keepIframeSrcFn,
-      ignoreCSSAttributes,
-    });
+            ],
+          });
+        },
+        keepIframeSrcFn,
+        ignoreCSSAttributes,
+      });
 
-    if (!node) {
-      return console.warn('Failed to snapshot the document');
+      if (!node) {
+        return console.warn('Failed to snapshot the document');
+      }
+
+      wrappedEmit({
+        type: EventType.FullSnapshot,
+        data: {
+          node,
+          initialOffset: getWindowScroll(window),
+        },
+      });
+      snapshotEmitted = true;
+    } finally {
+      if (!snapshotEmitted) {
+        // The consumer never got this snapshot, so the buffered
+        // mutations describe a document it cannot resolve. Drop
+        // them instead of replaying them onto unknown node ids.
+        mutationBuffers.forEach((buf) => buf.discardPending());
+        // Restart the checkout clock. Otherwise every later event
+        // reads a stale last-snapshot time and retries at once.
+        lastFullSnapshotTimestamp = nowTimestamp();
+        incrementalSnapshotCount = 0;
+      }
+      // generate & emit any mutations that happened during
+      // snapshotting, as can now apply against the newly built
+      // mirror
+      mutationBuffers.forEach((buf) => buf.unlock());
     }
-
-    wrappedEmit({
-      type: EventType.FullSnapshot,
-      data: {
-        node,
-        initialOffset: getWindowScroll(window),
-      },
-    });
-    mutationBuffers.forEach((buf) => buf.unlock()); // generate & emit any mutations that happened during snapshotting, as can now apply against the newly built mirror
 
     // Some old browsers don't support adoptedStyleSheets.
     if (document.adoptedStyleSheets && document.adoptedStyleSheets.length > 0)

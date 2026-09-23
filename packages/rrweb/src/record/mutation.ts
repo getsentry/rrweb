@@ -277,6 +277,27 @@ export default class MutationBuffer {
     this.canvasManager.reset();
   }
 
+  /**
+   * Drop every buffered mutation without emitting it.
+   *
+   * Used when a full snapshot fails. The buffer then describes changes
+   * against a document that the consumer never received, so the
+   * mutations reference node ids it cannot resolve.
+   */
+  public discardPending() {
+    while (this.mapRemoves.length) {
+      this.mirror.removeNodeFromMap(this.mapRemoves.shift()!);
+    }
+    this.texts = [];
+    this.attributes = [];
+    this.attributeMap = new WeakMap<Node, attributeCursor>();
+    this.removes = [];
+    this.addedSet = new Set<Node>();
+    this.movedSet = new Set<Node>();
+    this.droppedSet = new Set<Node>();
+    this.movedMap = {};
+  }
+
   public processMutations = (mutations: mutationRecord[]) => {
     mutations.forEach(this.processMutation); // adds mutations to the buffer
     this.emit(); // clears buffer if not locked/frozen
