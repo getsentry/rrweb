@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@sentry/rrweb-types": "2.44.0",
-    "fflate": "^0.4.4"
+    "fflate": "^0.4.9"
   },
   "browserslist": [
     "supports es6-class"
