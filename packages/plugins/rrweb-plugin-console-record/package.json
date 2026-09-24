@@ -50,7 +50,7 @@
     "typescript": "^4.7.3",
     "vite": "^6.4.3",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.6"
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "@sentry/rrweb": "2.44.0"
