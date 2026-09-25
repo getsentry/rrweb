@@ -66,8 +66,10 @@
     "**/vite": "^6.4.2",
     "**/tmp": "0.2.7",
     "**/shell-quote": "^1.10.0",
-    "markdownlint-cli/js-yaml": "^4.3.1",
-    "markdownlint-cli/markdown-it": "^14.3.0"
+    "markdownlint-cli/js-yaml": "^4.3.2",
+    "markdownlint-cli/markdown-it": "^14.3.0",
+    "markdownlint-cli/smol-toml": "~1.7.1",
+    "**/firefox-profile": "4.7.1"
   },
   "browserslist": [
     "defaults",
