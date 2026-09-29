@@ -10,6 +10,8 @@ import {
   waitForTimeout,
   generateRecordSnippet,
   ISuite,
+  hideMouseAnimation,
+  fakeGoto,
 } from '../utils';
 import type { recordOptions } from '../../src/types';
 import type { eventWithTime } from '@sentry/rrweb-types';
@@ -58,29 +60,6 @@ describe('e2e webgl', () => {
     </body>
     `,
     );
-  };
-
-  const fakeGoto = async (p: puppeteer.Page, url: string) => {
-    const intercept = async (request: puppeteer.HTTPRequest) => {
-      await request.respond({
-        status: 200,
-        contentType: 'text/html',
-        body: ' ', // non-empty string or page will load indefinitely
-      });
-    };
-    await p.setRequestInterception(true);
-    p.on('request', intercept);
-    await p.goto(url);
-    p.off('request', intercept);
-    await p.setRequestInterception(false);
-  };
-
-  const hideMouseAnimation = async (p: puppeteer.Page) => {
-    await p.addStyleTag({
-      content: `.replayer-mouse-tail{display: none !important;}
-                html, body { margin: 0; padding: 0; }
-                iframe { border: none; }`,
-    });
   };
 
   it('will record and replay a webgl square', async () => {
