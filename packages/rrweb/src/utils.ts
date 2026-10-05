@@ -632,8 +632,12 @@ function getImplementation<T extends keyof CacheableImplementations>(
     return cached;
   }
 
+  type AnyFn = (...args: unknown[]) => unknown;
+
+  const windowImpl = (window[name] as AnyFn).bind(window);
+  let impl = windowImpl;
+
   const document = window.document;
-  let impl = window[name] as CacheableImplementations[T];
   if (document && typeof document.createElement === 'function') {
     try {
       const sandbox = document.createElement('iframe');
@@ -641,9 +645,20 @@ function getImplementation<T extends keyof CacheableImplementations>(
       document.head.appendChild(sandbox);
       const contentWindow = sandbox.contentWindow;
       if (contentWindow && contentWindow[name]) {
-        impl =
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          contentWindow[name] as CacheableImplementations[T];
+        const sandboxImpl = (contentWindow[name] as AnyFn).bind(window);
+
+        // The implementation taken from the (since removed) sandbox iframe can throw when called,
+        // e.g. Firefox sometimes throws `NS_ERROR_NOT_INITIALIZED`. In that case, fall back to
+        // (and cache) the window's own implementation.
+        impl = (...args) => {
+          try {
+            return sandboxImpl(...args);
+          } catch {
+            cachedImplementations[name] =
+              windowImpl as CacheableImplementations[T];
+            return windowImpl(...args);
+          }
+        };
       }
       document.head.removeChild(sandbox);
     } catch (e) {
@@ -651,50 +666,23 @@ function getImplementation<T extends keyof CacheableImplementations>(
     }
   }
 
-  return (cachedImplementations[name] = impl.bind(
-    window,
-  ) as CacheableImplementations[T]);
-}
-
-/**
- * The implementation taken from the (since removed) sandbox iframe can throw when called,
- * e.g. Firefox sometimes throws `NS_ERROR_NOT_INITIALIZED`. In that case, fall back to
- * (and cache) the window's own implementation.
- */
-function getFallbackImplementation<T extends keyof CacheableImplementations>(
-  name: T,
-): CacheableImplementations[T] {
-  return (cachedImplementations[name] = window[name].bind(
-    window,
-  ) as CacheableImplementations[T]);
+  return (cachedImplementations[name] = impl as CacheableImplementations[T]);
 }
 
 export function onRequestAnimationFrame(
   ...rest: Parameters<typeof requestAnimationFrame>
 ): ReturnType<typeof requestAnimationFrame> {
-  try {
-    return getImplementation('requestAnimationFrame')(...rest);
-  } catch {
-    return getFallbackImplementation('requestAnimationFrame')(...rest);
-  }
+  return getImplementation('requestAnimationFrame')(...rest);
 }
 
 export function setTimeout(
   ...rest: Parameters<typeof window.setTimeout>
 ): ReturnType<typeof window.setTimeout> {
-  try {
-    return getImplementation('setTimeout')(...rest);
-  } catch {
-    return getFallbackImplementation('setTimeout')(...rest);
-  }
+  return getImplementation('setTimeout')(...rest);
 }
 
 export function clearTimeout(
   ...rest: Parameters<typeof window.clearTimeout>
 ): ReturnType<typeof window.clearTimeout> {
-  try {
-    return getImplementation('clearTimeout')(...rest);
-  } catch {
-    return getFallbackImplementation('clearTimeout')(...rest);
-  }
+  return getImplementation('clearTimeout')(...rest);
 }
