@@ -454,8 +454,12 @@ function getImplementation<T extends keyof CacheableImplementations>(
     return cached;
   }
 
+  type AnyFn = (...args: unknown[]) => unknown;
+
+  const windowImpl = (window[name] as AnyFn).bind(window);
+  let impl = windowImpl;
+
   const document = window.document;
-  let impl = window[name] as CacheableImplementations[T];
   if (document && typeof document.createElement === 'function') {
     try {
       const sandbox = document.createElement('iframe');
@@ -463,9 +467,20 @@ function getImplementation<T extends keyof CacheableImplementations>(
       document.head.appendChild(sandbox);
       const contentWindow = sandbox.contentWindow;
       if (contentWindow && contentWindow[name]) {
-        impl =
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          contentWindow[name] as CacheableImplementations[T];
+        const sandboxImpl = (contentWindow[name] as AnyFn).bind(window);
+
+        // The implementation taken from the (since removed) sandbox iframe can throw when called,
+        // e.g. Firefox sometimes throws `NS_ERROR_NOT_INITIALIZED`. In that case, fall back to
+        // (and cache) the window's own implementation.
+        impl = (...args) => {
+          try {
+            return sandboxImpl(...args);
+          } catch {
+            cachedImplementations[name] =
+              windowImpl as CacheableImplementations[T];
+            return windowImpl(...args);
+          }
+        };
       }
       document.head.removeChild(sandbox);
     } catch (e) {
@@ -473,9 +488,7 @@ function getImplementation<T extends keyof CacheableImplementations>(
     }
   }
 
-  return (cachedImplementations[name] = impl.bind(
-    window,
-  ) as CacheableImplementations[T]);
+  return (cachedImplementations[name] = impl as CacheableImplementations[T]);
 }
 
 export function onRequestAnimationFrame(
