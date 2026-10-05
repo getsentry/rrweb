@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, it, test, expect } from 'vitest';
+import { afterEach, describe, it, test, expect, vi } from 'vitest';
 import { NodeType, serializedNode } from '../src/types';
 import {
   extractFileExtension,
@@ -255,5 +255,36 @@ describe('utils', () => {
       const win = getIFrameContentWindow(undefined);
       expect(win).toBeUndefined();
     });
+  });
+});
+
+describe('setTimeout()', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.resetModules();
+  });
+
+  it('falls back to window.setTimeout if the sandbox iframe implementation throws', async () => {
+    const windowSetTimeout = vi.spyOn(window, 'setTimeout');
+    const sandboxSetTimeout = vi.fn(() => {
+      const error = new Error('');
+      error.name = 'NS_ERROR_NOT_INITIALIZED';
+      throw error;
+    });
+    vi.spyOn(document, 'createElement').mockReturnValue({
+      contentWindow: { setTimeout: sandboxSetTimeout },
+    } as unknown as HTMLElement);
+    vi.spyOn(document.head, 'appendChild').mockImplementation((node) => node);
+    vi.spyOn(document.head, 'removeChild').mockImplementation((node) => node);
+
+    const { setTimeout } = await import('../src/utils');
+    const callback = vi.fn();
+
+    expect(() => setTimeout(callback, 0)).not.toThrow();
+    setTimeout(callback, 0);
+
+    expect(sandboxSetTimeout).toHaveBeenCalledTimes(1);
+    expect(windowSetTimeout).toHaveBeenCalledTimes(2);
+    await vi.waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
   });
 });

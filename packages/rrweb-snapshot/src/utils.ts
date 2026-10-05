@@ -478,22 +478,47 @@ function getImplementation<T extends keyof CacheableImplementations>(
   ) as CacheableImplementations[T]);
 }
 
+/**
+ * The implementation taken from the (since removed) sandbox iframe can throw when called,
+ * e.g. Firefox sometimes throws `NS_ERROR_NOT_INITIALIZED`. In that case, fall back to
+ * (and cache) the window's own implementation.
+ */
+function getFallbackImplementation<T extends keyof CacheableImplementations>(
+  name: T,
+): CacheableImplementations[T] {
+  return (cachedImplementations[name] = window[name].bind(
+    window,
+  ) as CacheableImplementations[T]);
+}
+
 export function onRequestAnimationFrame(
   ...rest: Parameters<typeof requestAnimationFrame>
 ): ReturnType<typeof requestAnimationFrame> {
-  return getImplementation('requestAnimationFrame')(...rest);
+  try {
+    return getImplementation('requestAnimationFrame')(...rest);
+  } catch {
+    return getFallbackImplementation('requestAnimationFrame')(...rest);
+  }
 }
 
 export function setTimeout(
   ...rest: Parameters<typeof window.setTimeout>
 ): ReturnType<typeof window.setTimeout> {
-  return getImplementation('setTimeout')(...rest);
+  try {
+    return getImplementation('setTimeout')(...rest);
+  } catch {
+    return getFallbackImplementation('setTimeout')(...rest);
+  }
 }
 
 export function clearTimeout(
   ...rest: Parameters<typeof window.clearTimeout>
 ): ReturnType<typeof window.clearTimeout> {
-  return getImplementation('clearTimeout')(...rest);
+  try {
+    return getImplementation('clearTimeout')(...rest);
+  } catch {
+    return getFallbackImplementation('clearTimeout')(...rest);
+  }
 }
 
 /**
