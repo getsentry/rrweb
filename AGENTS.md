@@ -39,7 +39,6 @@ Run from package directory (`cd packages/<pkg>`):
 ## Key Conventions
 
 - ES modules (`"type": "module"`), dual CJS/ESM via Vite
-- Add changesets for user-facing changes: `yarn changeset`
 - Style: `.eslintrc.js` + `.prettierrc` (don't duplicate rules here)
 
 ## Commit Attribution
