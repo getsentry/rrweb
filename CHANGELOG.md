@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.44.1
+
+### Bug Fixes 🐛
+
+- (rrweb) Fall back to window timers if sandbox iframe implementation throws by @Lms24 in [#334](https://github.com/getsentry/rrweb/pull/334)
+- (snapshot) Release removed shadow trees from the mirror by @andreiborza in [#331](https://github.com/getsentry/rrweb/pull/331)
+
+### Internal Changes 🔧
+
+- (deps) Patch 22 Dependabot advisories via in-range bumps by @Lms24 in [#333](https://github.com/getsentry/rrweb/pull/333)
+- (repo) Remove CLAUDE.md symlink and changeset instruction by @Lms24 in [#335](https://github.com/getsentry/rrweb/pull/335)
+
 ## 2.44.0
 
 ### Bug Fixes 🐛
