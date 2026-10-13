@@ -416,7 +416,9 @@ export default class MutationBuffer {
     };
 
     while (this.mapRemoves.length) {
-      this.mirror.removeNodeFromMap(this.mapRemoves.shift()!);
+      const removedNode = this.mapRemoves.shift()!;
+      this.mirror.removeNodeFromMap(removedNode);
+      this.shadowDomManager.removeShadowRootsFor(removedNode);
     }
 
     for (const n of this.movedSet) {

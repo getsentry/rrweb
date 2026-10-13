@@ -5,7 +5,11 @@ import {
   createMirror,
 } from '@sentry/rrweb-snapshot';
 import { getIFrameContentWindow } from '@sentry/rrdom';
-import { initObservers, mutationBuffers } from './observer';
+import {
+  initObservers,
+  mutationBuffers,
+  forEachMutationBuffer,
+} from './observer';
 import {
   on,
   getWindowWidth,
@@ -243,7 +247,7 @@ function record<T = eventWithTime>(
     ) {
       // we've got a user initiated event so first we need to apply
       // all DOM changes that have been buffering during paused state
-      mutationBuffers.forEach((buf) => buf.unfreeze());
+      forEachMutationBuffer((buf) => buf.unfreeze());
     }
 
     if (inEmittingFrame) {
@@ -433,7 +437,7 @@ function record<T = eventWithTime>(
 
     shadowDomManager.init();
 
-    mutationBuffers.forEach((buf) => buf.lock()); // don't allow any mirror modifications during snapshotting
+    forEachMutationBuffer((buf) => buf.lock()); // don't allow any mirror modifications during snapshotting
     let snapshotEmitted = false;
     try {
       const node = snapshot(document, {
@@ -531,7 +535,7 @@ function record<T = eventWithTime>(
       // generate & emit any mutations that happened during
       // snapshotting, as can now apply against the newly built
       // mirror
-      mutationBuffers.forEach((buf) => buf.unlock());
+      forEachMutationBuffer((buf) => buf.unlock());
     }
 
     // Some old browsers don't support adoptedStyleSheets.
@@ -755,7 +759,7 @@ export function addCustomEvent<T>(tag: string, payload: T) {
 }
 
 export function freezePage() {
-  mutationBuffers.forEach((buf) => buf.freeze());
+  forEachMutationBuffer((buf) => buf.freeze());
 }
 
 export function takeFullSnapshot(isCheckout?: boolean) {
