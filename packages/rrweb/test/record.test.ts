@@ -925,6 +925,75 @@ describe('record', function (this: ISuite) {
     });
   });
 
+  it('reuses a native stylesheet without changing previous style declarations', async () => {
+    const result = await ctx.page.evaluate(async () => {
+      const { record } = (window as unknown as IWindow).rrweb;
+      const sheets = new Set<CSSStyleSheet>();
+      const declarations: CSSStyleDeclaration[] = [];
+      const events: eventWithTime[] = [];
+      const replaceSync = CSSStyleSheet.prototype.replaceSync;
+      CSSStyleSheet.prototype.replaceSync = function (text) {
+        replaceSync.call(this, text);
+        sheets.add(this);
+        const rule = this.cssRules[0];
+        if (rule instanceof CSSStyleRule) {
+          declarations.push(rule.style);
+        }
+      };
+
+      const div = document.createElement('div');
+      const unchanged =
+        '--unchanged:abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz;';
+      div.setAttribute(
+        'style',
+        `${unchanged}color:red;margin-left:1px!important;`,
+      );
+      document.body.appendChild(div);
+      const stop = record({ emit: (event) => events.push(event) });
+
+      try {
+        div.setAttribute(
+          'style',
+          `${unchanged}color:blue;margin-left:2px!important;`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        div.setAttribute('style', `${unchanged}color:green;`);
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        return {
+          events,
+          sheetCount: sheets.size,
+          distinctDeclarations: new Set(declarations).size,
+          declarations: declarations.map((style) => ({
+            color: style.getPropertyValue('color'),
+            margin: style.getPropertyValue('margin-left'),
+            priority: style.getPropertyPriority('margin-left'),
+          })),
+        };
+      } finally {
+        stop?.();
+        CSSStyleSheet.prototype.replaceSync = replaceSync;
+      }
+    });
+
+    const styles = result.events.flatMap((event) =>
+      event.type === EventType.IncrementalSnapshot &&
+      event.data.source === IncrementalSource.Mutation
+        ? event.data.attributes.map((mutation) => mutation.attributes.style)
+        : [],
+    );
+    expect(styles).toEqual([
+      { color: 'blue', 'margin-left': ['2px', 'important'] },
+      { color: 'green', 'margin-left': false },
+    ]);
+    expect(result.sheetCount).toBe(1);
+    expect(result.distinctDeclarations).toBe(2);
+    expect(result.declarations).toEqual([
+      { color: 'red', margin: '1px', priority: 'important' },
+      { color: 'blue', margin: '2px', priority: 'important' },
+    ]);
+  });
+
   describe('loading stylesheets', () => {
     let server: Server;
     let serverURL: string;
