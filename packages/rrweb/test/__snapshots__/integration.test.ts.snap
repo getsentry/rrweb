@@ -2357,7 +2357,7 @@ exports[`record integration tests > can record form interactions 1`] = `
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -4925,7 +4925,7 @@ exports[`record integration tests > can use maskInputOptions to configure which 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -6035,7 +6035,7 @@ exports[`record integration tests > can use maskTextSelector to configure which 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"**********\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -8684,7 +8684,7 @@ exports[`record integration tests > should mask attribute via function call 1`] 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -12001,7 +12001,7 @@ exports[`record integration tests > should not mask inputs when maskAllText:true
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -12664,6 +12664,221 @@ exports[`record integration tests > should not record blocked elements dynamical
           }
         }
       ]
+    }
+  }
+]"
+`;
+
+exports[`record integration tests > should not record hidden input values if dynamically added and maskAllInputs is true 1`] = `
+"[
+  {
+    \\"type\\": 0,
+    \\"data\\": {}
+  },
+  {
+    \\"type\\": 1,
+    \\"data\\": {}
+  },
+  {
+    \\"type\\": 4,
+    \\"data\\": {
+      \\"href\\": \\"about:blank\\",
+      \\"width\\": 1920,
+      \\"height\\": 1080
+    }
+  },
+  {
+    \\"type\\": 2,
+    \\"data\\": {
+      \\"node\\": {
+        \\"type\\": 0,
+        \\"childNodes\\": [
+          {
+            \\"type\\": 1,
+            \\"name\\": \\"html\\",
+            \\"publicId\\": \\"\\",
+            \\"systemId\\": \\"\\",
+            \\"id\\": 2
+          },
+          {
+            \\"type\\": 2,
+            \\"tagName\\": \\"html\\",
+            \\"attributes\\": {
+              \\"lang\\": \\"en\\"
+            },
+            \\"childNodes\\": [
+              {
+                \\"type\\": 2,
+                \\"tagName\\": \\"head\\",
+                \\"attributes\\": {},
+                \\"childNodes\\": [
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 5
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"meta\\",
+                    \\"attributes\\": {
+                      \\"charset\\": \\"UTF-8\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 6
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 7
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"meta\\",
+                    \\"attributes\\": {
+                      \\"name\\": \\"viewport\\",
+                      \\"content\\": \\"width=device-width, initial-scale=1.0\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 8
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 9
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"title\\",
+                    \\"attributes\\": {},
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"Empty\\",
+                        \\"id\\": 11
+                      }
+                    ],
+                    \\"id\\": 10
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n  \\",
+                    \\"id\\": 12
+                  }
+                ],
+                \\"id\\": 4
+              },
+              {
+                \\"type\\": 3,
+                \\"textContent\\": \\"\\\\n  \\",
+                \\"id\\": 13
+              },
+              {
+                \\"type\\": 2,
+                \\"tagName\\": \\"body\\",
+                \\"attributes\\": {},
+                \\"childNodes\\": [
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\",
+                    \\"id\\": 15
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"div\\",
+                    \\"attributes\\": {
+                      \\"id\\": \\"one\\"
+                    },
+                    \\"childNodes\\": [],
+                    \\"id\\": 16
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n  \\\\n    \\",
+                    \\"id\\": 17
+                  },
+                  {
+                    \\"type\\": 2,
+                    \\"tagName\\": \\"script\\",
+                    \\"attributes\\": {},
+                    \\"childNodes\\": [
+                      {
+                        \\"type\\": 3,
+                        \\"textContent\\": \\"SCRIPT_PLACEHOLDER\\",
+                        \\"id\\": 19
+                      }
+                    ],
+                    \\"id\\": 18
+                  },
+                  {
+                    \\"type\\": 3,
+                    \\"textContent\\": \\"\\\\n    \\\\n    \\\\n\\\\n\\",
+                    \\"id\\": 20
+                  }
+                ],
+                \\"id\\": 14
+              }
+            ],
+            \\"id\\": 3
+          }
+        ],
+        \\"id\\": 1
+      },
+      \\"initialOffset\\": {
+        \\"left\\": 0,
+        \\"top\\": 0
+      }
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 0,
+      \\"texts\\": [],
+      \\"attributes\\": [],
+      \\"removes\\": [],
+      \\"adds\\": [
+        {
+          \\"parentId\\": 14,
+          \\"nextId\\": 16,
+          \\"node\\": {
+            \\"type\\": 2,
+            \\"tagName\\": \\"input\\",
+            \\"attributes\\": {
+              \\"type\\": \\"hidden\\",
+              \\"id\\": \\"hidden\\",
+              \\"value\\": \\"***********************\\"
+            },
+            \\"childNodes\\": [],
+            \\"id\\": 21
+          }
+        }
+      ]
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 5,
+      \\"text\\": \\"***********************\\",
+      \\"isChecked\\": false,
+      \\"id\\": 21
+    }
+  },
+  {
+    \\"type\\": 3,
+    \\"data\\": {
+      \\"source\\": 0,
+      \\"texts\\": [],
+      \\"attributes\\": [
+        {
+          \\"id\\": 21,
+          \\"attributes\\": {
+            \\"value\\": \\"*******************************\\"
+          }
+        }
+      ],
+      \\"removes\\": [],
+      \\"adds\\": []
     }
   }
 ]"
@@ -14631,7 +14846,7 @@ exports[`record integration tests > should not record input values if maskAllInp
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -18211,7 +18426,7 @@ exports[`record integration tests > should record input userTriggered values if 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
