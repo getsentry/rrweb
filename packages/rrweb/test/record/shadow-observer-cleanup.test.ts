@@ -327,4 +327,39 @@ describe('Shadow observer lifecycle (regression)', () => {
     ).bypassOptions;
     expect(stylesheetManager.adoptStyleSheets).toHaveBeenCalledTimes(1);
   });
+
+  it('releases shadow children removed in the same task as their host', async () => {
+    const { host, slot } = createDropdown(doc);
+    doc.body.appendChild(host);
+    buffer.processMutations([childListMutation(doc.body, [host])]);
+    const slotId = mirror.getId(slot);
+    expect(mirror.has(slotId)).toBe(true);
+
+    // Unmount shadow content, then the host, in one task. The light-DOM
+    // observer is older, so its callback runs before the shadow observer's.
+    host.shadowRoot!.replaceChildren();
+    host.remove();
+    buffer.processMutations([childListMutation(doc.body, [], [host])]);
+    await Promise.resolve();
+
+    expect(mirror.has(slotId)).toBe(false);
+  });
+
+  it('releases shadow removals queued while the shadow buffer is frozen', async () => {
+    const { host, slot } = createDropdown(doc);
+    doc.body.appendChild(host);
+    buffer.processMutations([childListMutation(doc.body, [host])]);
+    const slotId = mirror.getId(slot);
+
+    // The shadow buffer queues the removal but cannot emit while frozen.
+    forEachMutationBuffer((b) => b.freeze());
+    host.shadowRoot!.replaceChildren();
+    await Promise.resolve();
+    expect(mirror.has(slotId)).toBe(true);
+
+    host.remove();
+    buffer.processMutations([childListMutation(doc.body, [], [host])]);
+
+    expect(mirror.has(slotId)).toBe(false);
+  });
 });

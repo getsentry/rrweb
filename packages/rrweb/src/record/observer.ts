@@ -144,9 +144,12 @@ export function initMutationObserver(
 
 /** Disconnects an observer and drops its buffer from the registry. */
 export function removeMutationBuffer(observer: MutationObserver): void {
+  // Undelivered records can hold removals the mirror still has to drop.
+  const pending = observer.takeRecords();
   observer.disconnect();
   const buffer = observerBuffers.get(observer);
   if (buffer) {
+    buffer.release(pending);
     const index = mutationBuffers.indexOf(buffer);
     if (index !== -1) {
       mutationBuffers.splice(index, 1);
