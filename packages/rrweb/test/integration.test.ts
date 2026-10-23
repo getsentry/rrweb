@@ -22,6 +22,7 @@ import {
   RecordPlugin,
   IncrementalSource,
   CanvasContext,
+  mutationData,
 } from '@sentry/rrweb-types';
 import { visitSnapshot, NodeType } from '@sentry/rrweb-snapshot';
 
@@ -326,6 +327,71 @@ describe('record integration tests', function (this: ISuite) {
       'window.lastMutationsLength',
     );
     expect(lastMutationsLength).toBe(4000);
+  });
+
+  it('can filter mutations by returning an array from onMutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        // @ts-expect-error Need to stringify this for tests
+        onMutation: `(mutations) => mutations.filter((m) => m.target.nodeName !== 'P')`,
+      }),
+    );
+
+    await page.evaluate(() => {
+      const ul = document.querySelector('ul') as HTMLUListElement;
+      const p = document.querySelector('p') as HTMLParagraphElement;
+      for (let i = 0; i < 5; i++) {
+        ul.appendChild(document.createElement('li'));
+        p.appendChild(document.createElement('span'));
+      }
+    });
+    await waitForRAF(page);
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    const addedTagNames = snapshots
+      .filter(
+        (e) =>
+          e.type === EventType.IncrementalSnapshot &&
+          e.data.source === IncrementalSource.Mutation,
+      )
+      .flatMap((e) => (e.data as mutationData).adds)
+      .map((add) => (add.node as { tagName?: string }).tagName);
+
+    expect(addedTagNames.filter((t) => t === 'li')).toHaveLength(5);
+    expect(addedTagNames).not.toContain('span');
+  });
+
+  it('passes an isBlocked helper to onMutation', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+
+    await page.setContent(
+      getHtml.call(this, 'mutation-observer.html', {
+        blockSelector: 'p',
+        // @ts-expect-error Need to stringify this for tests
+        onMutation: `(mutations, helpers) => {
+          window.blockedMutations = (window.blockedMutations || 0) + mutations.filter((m) => helpers.isBlocked(m.target)).length;
+          return true;
+        }`,
+      }),
+    );
+
+    await page.evaluate(() => {
+      const ul = document.querySelector('ul') as HTMLUListElement;
+      const p = document.querySelector('p') as HTMLParagraphElement;
+      for (let i = 0; i < 5; i++) {
+        ul.appendChild(document.createElement('li'));
+        p.appendChild(document.createElement('span'));
+      }
+    });
+    await waitForRAF(page);
+
+    expect(await page.evaluate('window.blockedMutations')).toBe(5);
   });
 
   it('can freeze mutations', async () => {

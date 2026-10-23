@@ -23,7 +23,11 @@ import {
   nowTimestamp,
   setTimeout,
 } from '../utils';
-import type { observerParam, MutationBufferParam } from '../types';
+import type {
+  observerParam,
+  MutationBufferParam,
+  OnMutationHelpers,
+} from '../types';
 import {
   mousePosition,
   MouseInteractions,
@@ -106,16 +110,31 @@ export function initMutationObserver(
       window as unknown as Record<string, typeof MutationObserver>
     )[angularZoneSymbol];
   }
+  const { onMutation, blockClass, blockSelector, unblockSelector } = options;
+  // Created once per observer, so there is no per-batch allocation.
+  // `isBlocked` is only evaluated if `onMutation` actually calls it.
+  const onMutationHelpers: OnMutationHelpers = {
+    isBlocked: (node) =>
+      isBlocked(node, blockClass, blockSelector, unblockSelector, true),
+  };
   const observer = new (mutationObserverCtor as new (
     callback: MutationCallback,
   ) => MutationObserver)(
     callbackWrapper((mutations) => {
-      // If this callback returns `false`, we do not want to process the mutations
-      // This can be used to e.g. do a manual full snapshot when mutations become too large, or similar.
-      if (options.onMutation && options.onMutation(mutations) === false) {
-        return;
+      let toProcess = mutations;
+      if (onMutation) {
+        // `false`: skip the whole batch (e.g. to take a manual full snapshot instead).
+        // Array: only process the returned mutations (e.g. drop mutations the caller does not care about).
+        // Anything else: process the batch as usual.
+        const result = onMutation(mutations, onMutationHelpers);
+        if (result === false) {
+          return;
+        }
+        if (Array.isArray(result)) {
+          toProcess = result;
+        }
       }
-      mutationBuffer.processMutations.bind(mutationBuffer)(mutations);
+      mutationBuffer.processMutations(toProcess);
     }),
   );
   observer.observe(rootEl, {
