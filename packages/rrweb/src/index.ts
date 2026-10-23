@@ -26,7 +26,12 @@ export type {
   inputData,
 } from '@sentry/rrweb-types';
 
-export type { recordOptions, ReplayPlugin } from './types';
+export type {
+  recordOptions,
+  ReplayPlugin,
+  OnMutationCallback,
+  OnMutationHelpers,
+} from './types';
 export { deserializeArg } from './replay/canvas/deserialize-args';
 export { addCustomEvent, freezePage, takeFullSnapshot } from './record';
 export type { CanvasManagerConstructorOptions } from './record';
