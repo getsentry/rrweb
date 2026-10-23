@@ -46,6 +46,9 @@ const countMutations = (events: eventWithTime[]) =>
       e.data.source === IncrementalSource.Mutation,
   ).length;
 
+const countMetas = (events: eventWithTime[]) =>
+  events.filter((e) => e.type === EventType.Meta).length;
+
 const countFullSnapshots = (events: eventWithTime[]) =>
   events.filter((e) => e.type === EventType.FullSnapshot).length;
 
@@ -81,6 +84,7 @@ describe('snapshot failure', function (this: ISuite) {
       w.failSnapshot = false;
       w.rrweb.record({
         emit: w.emit,
+        checkoutEveryNms: 60_000,
         maskAllText: true,
         maskTextFn: (text: string) => {
           if (w.failSnapshot) {
@@ -115,6 +119,13 @@ describe('snapshot failure', function (this: ISuite) {
       }
     });
 
+  const addSpan = () =>
+    ctx.page.evaluate(() => {
+      document
+        .getElementById('in')!
+        .appendChild(document.createElement('span'));
+    });
+
   it('keeps recording mutations after a failed checkout', async () => {
     expect(countFullSnapshots(ctx.events)).toBe(1);
     expect(await failACheckout()).toBe(true);
@@ -138,5 +149,42 @@ describe('snapshot failure', function (this: ISuite) {
     await waitForTimeout(100);
 
     expect(countFullSnapshots(ctx.events)).toBe(2);
+  });
+  it('retries a failed checkout soon, not after checkoutEveryNms', async () => {
+    expect(await failACheckout()).toBe(true);
+
+    await waitForTimeout(1100);
+    await addSpan();
+    await waitForTimeout(100);
+
+    expect(countFullSnapshots(ctx.events)).toBe(2);
+  });
+
+  it('backs off when checkouts keep failing', async () => {
+    expect(await failACheckout()).toBe(true);
+    await ctx.page.evaluate(() => {
+      (window as unknown as IWindow).failSnapshot = true;
+    });
+    // initial Meta + the failed checkout above
+    expect(countMetas(ctx.events)).toBe(2);
+
+    // 1s after the first failure: retry, which fails again
+    await waitForTimeout(1100);
+    await addSpan();
+    await waitForTimeout(100);
+    expect(countMetas(ctx.events)).toBe(3);
+
+    // 1s after the second failure: the wait is now 2s, so no retry
+    await waitForTimeout(1000);
+    await addSpan();
+    await waitForTimeout(100);
+    expect(countMetas(ctx.events)).toBe(3);
+
+    // 2s after the second failure: retry
+    await waitForTimeout(1000);
+    await addSpan();
+    await waitForTimeout(100);
+    expect(countMetas(ctx.events)).toBe(4);
+    expect(countFullSnapshots(ctx.events)).toBe(1);
   });
 });

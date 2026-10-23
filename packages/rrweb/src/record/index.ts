@@ -213,6 +213,7 @@ function record<T = eventWithTime>(
 
   let lastFullSnapshotTimestamp = 0;
   let incrementalSnapshotCount = 0;
+  let failedSnapshotCount = 0;
 
   const eventProcessor = (e: eventWithTime): T => {
     for (const plugin of plugins || []) {
@@ -260,6 +261,7 @@ function record<T = eventWithTime>(
     if (e.type === EventType.FullSnapshot) {
       lastFullSnapshotTimestamp = e.timestamp;
       incrementalSnapshotCount = 0;
+      failedSnapshotCount = 0;
     } else if (e.type === EventType.IncrementalSnapshot) {
       // attach iframe should be considered as full snapshot
       if (
@@ -511,13 +513,19 @@ function record<T = eventWithTime>(
       snapshotEmitted = true;
     } finally {
       if (!snapshotEmitted) {
-        // The consumer never got this snapshot, so the buffered
-        // mutations describe a document it cannot resolve. Drop
-        // them instead of replaying them onto unknown node ids.
-        mutationBuffers.forEach((buf) => buf.discardPending());
-        // Restart the checkout clock. Otherwise every later event
-        // reads a stale last-snapshot time and retries at once.
-        lastFullSnapshotTimestamp = nowTimestamp();
+        // Retry soon, so the consumer is not left long without a
+        // full snapshot. Double the wait on each failure in a row,
+        // up to checkoutEveryNms, so a failure that repeats does
+        // not serialize the document on every event.
+        failedSnapshotCount++;
+        if (checkoutEveryNms) {
+          const retryDelay = Math.min(
+            1000 * 2 ** (failedSnapshotCount - 1),
+            checkoutEveryNms,
+          );
+          lastFullSnapshotTimestamp =
+            nowTimestamp() - checkoutEveryNms + retryDelay;
+        }
         incrementalSnapshotCount = 0;
       }
       // generate & emit any mutations that happened during
