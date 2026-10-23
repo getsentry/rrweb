@@ -56,7 +56,6 @@ import {
   ReplayerEvents,
   Handler,
   Emitter,
-  MediaInteractions,
   metaEvent,
   mutationData,
   scrollData,
@@ -94,6 +93,7 @@ import getInjectStyleRules from './styles/inject-style';
 import './styles/style.css';
 import canvasMutation from './canvas';
 import { deserializeArg } from './canvas/deserialize-args';
+import { MediaManager } from './media';
 
 const SKIP_TIME_INTERVAL = 5 * 1000;
 
@@ -188,6 +188,9 @@ export class Replayer {
 
   // Used to track StyleSheetObjects adopted on multiple document hosts.
   private styleMirror: StyleSheetMirror = new StyleSheetMirror();
+
+  // Used to track video & audio elements, and keep them in sync with general playback.
+  private mediaManager: MediaManager;
 
   private firstFullSnapshot: eventWithTime | true | null = null;
 
@@ -390,6 +393,7 @@ export class Replayer {
       this.firstFullSnapshot = null;
       this.mirror.reset();
       this.styleMirror.reset();
+      this.mediaManager.reset();
     });
 
     const timer = new Timer([], {
@@ -431,6 +435,13 @@ export class Replayer {
       this.emitter.emit(ReplayerEvents.StateChange, {
         speed: state,
       });
+    });
+    this.mediaManager = new MediaManager({
+      warn: this.warn.bind(this),
+      service: this.service,
+      speedService: this.speedService,
+      emitter: this.emitter,
+      getCurrentTime: this.getCurrentTime.bind(this),
     });
 
     // rebuild first full snapshot as the poster of the player
@@ -563,10 +574,16 @@ export class Replayer {
     };
   }
 
+  /**
+   * Get the actual time offset the player is at now compared to the first event.
+   */
   public getCurrentTime(): number {
     return this.timer.timeOffset + this.getTimeOffset();
   }
 
+  /**
+   * Get the time offset the player is at now compared to the first event, but without regard for the timer.
+   */
   public getTimeOffset(): number {
     const { baselineTime, events } = this.service.state.context;
     return baselineTime - events[0].timestamp;
@@ -635,6 +652,9 @@ export class Replayer {
    */
   public destroy() {
     this.pause();
+    this.mirror.reset();
+    this.styleMirror.reset();
+    this.mediaManager.reset();
     this.config.root.removeChild(this.wrapper);
     this.emitter.emit(ReplayerEvents.Destroy);
   }
@@ -812,9 +832,10 @@ export class Replayer {
             // Timer (requestAnimationFrame) can be faster than setTimeout(..., 1)
             this.firstFullSnapshot = true;
           }
+          this.mediaManager.reset();
+          this.styleMirror.reset();
           this.rebuildFullSnapshot(event, isSync);
           this.iframe.contentWindow?.scrollTo(event.data.initialOffset);
-          this.styleMirror.reset();
         };
         break;
       case EventType.IncrementalSnapshot:
@@ -924,6 +945,14 @@ export class Replayer {
     const collected: AppendedIframe[] = [];
     const afterAppend = (builtNode: Node, id: number) => {
       this.collectIframeAndAttachDocument(collected, builtNode);
+      if (this.mediaManager.isSupportedMediaElement(builtNode)) {
+        const { events } = this.service.state.context;
+        this.mediaManager.addMediaElements(
+          builtNode,
+          event.timestamp - events[0].timestamp,
+          this.mirror,
+        );
+      }
       for (const plugin of this.config.plugins || []) {
         if (plugin.onBuild)
           plugin.onBuild(builtNode, {
@@ -1442,52 +1471,14 @@ export class Replayer {
           return this.debugNodeNotFound(d, d.id);
         }
         const mediaEl = target as HTMLMediaElement | RRMediaElement;
-        try {
-          if (d.currentTime !== undefined) {
-            mediaEl.currentTime = d.currentTime;
-          }
-          if (d.volume !== undefined) {
-            mediaEl.volume = d.volume;
-          }
-          if (d.muted !== undefined) {
-            mediaEl.muted = d.muted;
-          }
-          if (d.type === MediaInteractions.Pause) {
-            mediaEl.pause();
-          }
-          if (d.type === MediaInteractions.Play) {
-            // remove listener for 'canplay' event because play() is async and returns a promise
-            // i.e. media will evntualy start to play when data is loaded
-            // 'canplay' event fires even when currentTime attribute changes which may lead to
-            // unexpeted behavior
-            const maybePlayPromise = mediaEl.play();
+        const { events } = this.service.state.context;
 
-            if (typeof maybePlayPromise?.catch === 'function') {
-              maybePlayPromise.catch((err) => {
-                // ignore rejections from play() as they are not useful and
-                // quite noisy. some examples:
-                // AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22
-                // AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
-                // AbortError: The play() request was interrupted by a call to pause().
-                // NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
-                // AbortError: The play() request was interrupted because the media was removed from the document.
-                // AbortError: The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
-                // NotAllowedError: play() failed because the user didn't interact with the document first.
-                // NotAllowedError: play() can only be initiated by a user gesture.
-                // AbortError: The play() request was interrupted by end of playback. https://goo.gl/LdLk22
-                console.warn(err);
-              });
-            }
-          }
-          if (d.type === MediaInteractions.RateChange) {
-            mediaEl.playbackRate = d.playbackRate;
-          }
-        } catch (error) {
-          this.warn(
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-            `Failed to replay media interactions: ${error.message || error}`,
-          );
-        }
+        this.mediaManager.mediaMutation({
+          target: mediaEl,
+          timeOffset: e.timestamp - events[0].timestamp,
+          mutation: d,
+        });
+
         break;
       }
       case IncrementalSource.StyleSheetRule:
@@ -1564,6 +1555,11 @@ export class Replayer {
     }
   }
 
+  /**
+   * Apply the mutation to the virtual dom or the real dom.
+   * @param d - The mutation data.
+   * @param isSync - Whether the mutation should be applied synchronously (while fast-forwarding).
+   */
   private applyMutation(d: mutationData, isSync: boolean) {
     // Only apply virtual dom optimization if the fast-forward process has node mutation. Because the cost of creating a virtual dom tree and executing the diff algorithm is usually higher than directly applying other kind of events.
     if (this.config.useVirtualDom && !this.usingVirtualDom && isSync) {
