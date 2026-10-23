@@ -277,6 +277,25 @@ export default class MutationBuffer {
     this.canvasManager.reset();
   }
 
+  /**
+   * Drops mirror entries for removals this buffer has not emitted yet,
+   * without emitting anything. Used when the buffer's root is torn down.
+   */
+  public release(pending: MutationRecord[]) {
+    pending.forEach((m) => {
+      if (m.type === 'childList') {
+        m.removedNodes.forEach((n) => this.mapRemoves.push(n));
+      }
+    });
+    while (this.mapRemoves.length) {
+      const removedNode = this.mapRemoves.shift()!;
+      // Moved back into the live DOM: whichever buffer saw the add owns it.
+      if (inDom(removedNode)) continue;
+      this.mirror.removeNodeFromMap(removedNode);
+      this.shadowDomManager.removeShadowRootsFor(removedNode);
+    }
+  }
+
   public processMutations = (mutations: mutationRecord[]) => {
     mutations.forEach(this.processMutation); // adds mutations to the buffer
     this.emit(); // clears buffer if not locked/frozen
@@ -416,7 +435,9 @@ export default class MutationBuffer {
     };
 
     while (this.mapRemoves.length) {
-      this.mirror.removeNodeFromMap(this.mapRemoves.shift()!);
+      const removedNode = this.mapRemoves.shift()!;
+      this.mirror.removeNodeFromMap(removedNode);
+      this.shadowDomManager.removeShadowRootsFor(removedNode);
     }
 
     for (const n of this.movedSet) {
