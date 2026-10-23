@@ -5,8 +5,18 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Mirror, snapshot } from '@sentry/rrweb-snapshot';
 import MutationBuffer from '../../src/record/mutation';
 import { ShadowDomManager } from '../../src/record/shadow-dom-manager';
-import { mutationBuffers, forEachMutationBuffer } from '../../src/record/observer';
+import {
+  mutationBuffers,
+  forEachMutationBuffer,
+} from '../../src/record/observer';
 import type { MutationBufferParam } from '../../src/types';
+
+// rrweb's sandboxed timers never fire in jsdom: queue them and flush manually.
+const pendingTimers = vi.hoisted(() => [] as (() => void)[]);
+vi.mock('../../src/utils', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/utils')>()),
+  setTimeout: (cb: () => void) => pendingTimers.push(cb),
+}));
 
 type BypassOptions = ConstructorParameters<
   typeof ShadowDomManager
@@ -101,6 +111,7 @@ describe('Shadow observer lifecycle (regression)', () => {
         stylesheetManager: {
           trackLinkElement: vi.fn(),
           attachLinkElement: vi.fn(),
+          adoptStyleSheets: vi.fn(),
         },
         canvasManager,
         processedNodeManager: {
@@ -291,5 +302,29 @@ describe('Shadow observer lifecycle (regression)', () => {
       } as unknown as MutationRecord,
     ]);
     expect(mutationCb).toHaveBeenCalled();
+  });
+
+  it('does not re-register adopted stylesheets from a stale timer', () => {
+    const { host } = createDropdown(doc);
+    Object.defineProperty(host.shadowRoot!, 'adoptedStyleSheets', {
+      configurable: true,
+      value: [{}],
+    });
+    pendingTimers.length = 0;
+
+    // Add, release and re-add before the deferred timers fire.
+    doc.body.appendChild(host);
+    buffer.processMutations([childListMutation(doc.body, [host])]);
+    host.remove();
+    buffer.processMutations([childListMutation(doc.body, [], [host])]);
+    doc.body.appendChild(host);
+    buffer.processMutations([childListMutation(doc.body, [host])]);
+    expect(pendingTimers).toHaveLength(2);
+    pendingTimers.forEach((cb) => cb());
+
+    const { stylesheetManager } = (
+      manager as unknown as { bypassOptions: BypassOptions }
+    ).bypassOptions;
+    expect(stylesheetManager.adoptStyleSheets).toHaveBeenCalledTimes(1);
   });
 });

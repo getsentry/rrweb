@@ -112,6 +112,8 @@ export class ShadowDomManager implements ShadowDomManagerInterface {
     );
     // Defer this to avoid adoptedStyleSheet events being created before the full snapshot is created or attachShadow action is recorded.
     setTimeout(() => {
+      // Skip if the root was released (and maybe re-added) in the meantime.
+      if (this.shadowRootTeardowns.get(shadowRoot) !== teardowns) return;
       if (
         shadowRoot.adoptedStyleSheets &&
         shadowRoot.adoptedStyleSheets.length > 0
@@ -120,19 +122,15 @@ export class ShadowDomManager implements ShadowDomManagerInterface {
           shadowRoot.adoptedStyleSheets,
           this.mirror.getId(shadowRoot.host),
         );
-      const restore = initAdoptedStyleSheetObserver(
-        {
-          mirror: this.mirror,
-          stylesheetManager: this.bypassOptions.stylesheetManager,
-        },
-        shadowRoot,
+      teardowns.push(
+        initAdoptedStyleSheetObserver(
+          {
+            mirror: this.mirror,
+            stylesheetManager: this.bypassOptions.stylesheetManager,
+          },
+          shadowRoot,
+        ),
       );
-      const pending = this.shadowRootTeardowns.get(shadowRoot);
-      if (pending) {
-        pending.push(restore);
-      } else {
-        restore();
-      }
     }, 0);
   }
 
@@ -153,6 +151,8 @@ export class ShadowDomManager implements ShadowDomManagerInterface {
   }
 
   public removeShadowRootsFor(node: Node) {
+    // Nothing to release: skip walking the removed subtree.
+    if (this.shadowRootTeardowns.size === 0) return;
     if (hasShadowRoot(node)) {
       const shadowRoot = node.shadowRoot;
       // Attached at emit time means moved or reinserted: keep observing.
