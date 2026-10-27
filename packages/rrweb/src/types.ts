@@ -85,14 +85,34 @@ export type recordOptions<T> = {
   mousemoveWait?: number;
   keepIframeSrcFn?: KeepIframeSrcFn;
   errorHandler?: ErrorHandler;
-  onMutation?: (mutations: MutationRecord[]) => boolean;
+  onMutation?: OnMutationCallback;
   getCanvasManager?: (
     options: CanvasManagerConstructorOptions,
   ) => CanvasManagerInterface;
 };
 
+export type OnMutationHelpers = {
+  /**
+   * Returns true if the given node is blocked (or inside a blocked element),
+   * using the same blockClass/blockSelector/unblockSelector rules as the recorder.
+   * Mutations whose target is blocked are dropped by rrweb anyway.
+   */
+  isBlocked: (node: Node | null) => boolean;
+};
+
+/**
+ * Called with every batch of DOM mutations before rrweb processes them.
+ * - Return `false` to skip processing the whole batch.
+ * - Return an array of mutations to only process those (e.g. a filtered subset).
+ * - Return `true` (or nothing) to process the batch as usual.
+ */
+export type OnMutationCallback = (
+  mutations: MutationRecord[],
+  helpers: OnMutationHelpers,
+) => boolean | MutationRecord[] | void;
+
 export type observerParam = {
-  onMutation?: (mutations: MutationRecord[]) => boolean;
+  onMutation?: OnMutationCallback;
   mutationCb: mutationCallBack;
   mousemoveCb: mousemoveCallBack;
   mouseInteractionCb: mouseInteractionCallBack;
