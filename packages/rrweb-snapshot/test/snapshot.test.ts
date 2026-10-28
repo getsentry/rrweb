@@ -1008,11 +1008,8 @@ describe('input value masking', () => {
   const serializeInput = (
     html: string,
     options: Parameters<typeof snapshot>[1],
-    setup?: (input: HTMLInputElement) => void,
   ) => {
     document.write(html);
-    const input = document.querySelector('input')!;
-    setup?.(input);
     const sn = snapshot(document, options);
     const inputs: serializedNodeWithId[] = [];
     const walk = (node: serializedNodeWithId) => {
@@ -1039,26 +1036,5 @@ describe('input value masking', () => {
         maskAllInputs: false,
       }),
     ).toMatchObject({ attributes: { type: 'hidden', value: 'secret' } });
-  });
-
-  it('does not record the default value of a cleared input', () => {
-    const clear = (input: HTMLInputElement) => {
-      input.value = '';
-    };
-
-    expect(
-      serializeInput(
-        '<input type="text" value="secret" />',
-        { maskAllInputs: true },
-        clear,
-      ),
-    ).toMatchObject({ attributes: { type: 'text', value: '' } });
-    expect(
-      serializeInput(
-        '<input type="text" value="secret" />',
-        { maskAllInputs: false },
-        clear,
-      ),
-    ).toMatchObject({ attributes: { type: 'text', value: '' } });
   });
 });

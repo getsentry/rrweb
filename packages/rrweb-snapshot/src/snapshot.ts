@@ -966,9 +966,7 @@ function serializeElementNode(
     const type = getInputType(el);
     const value = getInputValue(el, toUpperCase(tagName), type);
     const checked = (el as HTMLInputElement).checked;
-    // An empty live value must still overwrite the `value` attribute copied above,
-    // otherwise a cleared field leaks its unmasked default value.
-    if (type !== 'submit' && type !== 'button' && (value || attributes.value)) {
+    if (type !== 'submit' && type !== 'button' && value) {
       const forceMask = needMaskingText(
         el,
         maskTextClass,

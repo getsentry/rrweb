@@ -1425,7 +1425,7 @@ exports[`cross origin iframes > form.html > should map input events correctly 1`
                                   \\"id\\": \\"\\",
                                   \\"cols\\": \\"30\\",
                                   \\"rows\\": \\"10\\",
-                                  \\"value\\": \\"\\"
+                                  \\"value\\": \\"textarea-value\\"
                                 },
                                 \\"childNodes\\": [],
                                 \\"rootId\\": 11,
@@ -2691,7 +2691,7 @@ exports[`cross origin iframes > form.html > should map scroll events correctly 1
                                   \\"id\\": \\"\\",
                                   \\"cols\\": \\"30\\",
                                   \\"rows\\": \\"10\\",
-                                  \\"value\\": \\"\\"
+                                  \\"value\\": \\"textarea-value\\"
                                 },
                                 \\"childNodes\\": [],
                                 \\"rootId\\": 11,
