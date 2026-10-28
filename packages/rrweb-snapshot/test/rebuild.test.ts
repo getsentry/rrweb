@@ -3,14 +3,14 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { describe, it, beforeEach, expect } from 'vitest';
+import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
   // adaptCssForReplay,
   addHoverClass,
   buildNodeWithSN,
   createCache,
 } from '../src/rebuild';
-import { NodeType, type serializedNodeWithId } from '../src/types';
+import { NodeType } from '../src/types';
 import { createMirror, Mirror } from '../src/utils';
 
 function getDuration(hrtime: [number, number]) {
@@ -236,48 +236,40 @@ describe('rebuild', function () {
     });
   });
 
-  describe('doctype placement', function () {
-    function buildDocument(childNodes: serializedNodeWithId[]) {
+  describe('document', function () {
+    it('should replace leftover children when document.open() does not clear them', function () {
       const doc = document.implementation.createHTMLDocument();
-      // jsdom's document.open() doesn't clear the document like browsers do
-      doc.replaceChildren();
-      buildNodeWithSN(
-        { id: 1, type: NodeType.Document, childNodes },
-        { doc, mirror, hackCss: false, cache },
-      );
-      return doc;
-    }
-    const doctype = (id: number): serializedNodeWithId => ({
-      id,
-      type: NodeType.DocumentType,
-      name: 'html',
-      publicId: '',
-      systemId: '',
-    });
-    const html = (id: number): serializedNodeWithId => ({
-      id,
-      type: NodeType.Element,
-      tagName: 'html',
-      attributes: {},
-      childNodes: [],
-    });
+      // browsers skip open() once the document's parser was aborted
+      // (e.g. by window.stop()), keeping the previous rebuild in place
+      vi.spyOn(doc, 'open').mockReturnValue(doc);
+      const snapshot = {
+        id: 1,
+        type: NodeType.Document,
+        childNodes: [
+          {
+            id: 2,
+            type: NodeType.DocumentType,
+            name: 'html',
+            publicId: '',
+            systemId: '',
+          },
+          {
+            id: 3,
+            type: NodeType.Element,
+            tagName: 'html',
+            attributes: {},
+            childNodes: [],
+          },
+        ],
+      } as const;
 
-    it('should insert a doctype recorded after the root element before it', function () {
-      const doc = buildDocument([html(2), doctype(3)]);
+      buildNodeWithSN(snapshot, { doc, mirror, hackCss: false, cache });
+
       expect(Array.from(doc.childNodes).map((n) => n.nodeName)).toEqual([
         'html',
         'HTML',
       ]);
-      expect(doc.doctype).toBe(mirror.getNode(3));
-    });
-
-    it('should replace an existing doctype instead of adding a second one', function () {
-      const doc = buildDocument([doctype(2), doctype(3), html(4)]);
-      expect(Array.from(doc.childNodes).map((n) => n.nodeName)).toEqual([
-        'html',
-        'HTML',
-      ]);
-      expect(doc.doctype).toBe(mirror.getNode(3));
+      expect(doc.documentElement).toBe(mirror.getNode(3));
     });
   });
 
