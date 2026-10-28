@@ -10,7 +10,7 @@ import {
   buildNodeWithSN,
   createCache,
 } from '../src/rebuild';
-import { NodeType } from '../src/types';
+import { NodeType, type serializedNodeWithId } from '../src/types';
 import { createMirror, Mirror } from '../src/utils';
 
 function getDuration(hrtime: [number, number]) {
@@ -233,6 +233,51 @@ describe('rebuild', function () {
       ) as HTMLElement;
       expect(node).toBeTruthy();
       expect(node.tagName.toLowerCase()).toBe('my-component');
+    });
+  });
+
+  describe('doctype placement', function () {
+    function buildDocument(childNodes: serializedNodeWithId[]) {
+      const doc = document.implementation.createHTMLDocument();
+      // jsdom's document.open() doesn't clear the document like browsers do
+      doc.replaceChildren();
+      buildNodeWithSN(
+        { id: 1, type: NodeType.Document, childNodes },
+        { doc, mirror, hackCss: false, cache },
+      );
+      return doc;
+    }
+    const doctype = (id: number): serializedNodeWithId => ({
+      id,
+      type: NodeType.DocumentType,
+      name: 'html',
+      publicId: '',
+      systemId: '',
+    });
+    const html = (id: number): serializedNodeWithId => ({
+      id,
+      type: NodeType.Element,
+      tagName: 'html',
+      attributes: {},
+      childNodes: [],
+    });
+
+    it('should insert a doctype recorded after the root element before it', function () {
+      const doc = buildDocument([html(2), doctype(3)]);
+      expect(Array.from(doc.childNodes).map((n) => n.nodeName)).toEqual([
+        'html',
+        'HTML',
+      ]);
+      expect(doc.doctype).toBe(mirror.getNode(3));
+    });
+
+    it('should replace an existing doctype instead of adding a second one', function () {
+      const doc = buildDocument([doctype(2), doctype(3), html(4)]);
+      expect(Array.from(doc.childNodes).map((n) => n.nodeName)).toEqual([
+        'html',
+        'HTML',
+      ]);
+      expect(doc.doctype).toBe(mirror.getNode(3));
     });
   });
 

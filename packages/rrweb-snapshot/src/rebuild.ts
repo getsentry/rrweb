@@ -480,6 +480,21 @@ export function buildNodeWithSN(
         node.shadowRoot.appendChild(childNode);
       } else if (
         n.type === NodeType.Document &&
+        childN.type === NodeType.DocumentType
+      ) {
+        // A document allows a single doctype, placed before the root element.
+        // Snapshots can break that rule (e.g. the doctype is serialized after
+        // <html>, or a BackCompat doctype was already written above), and
+        // appendChild would throw a HierarchyRequestError and abort the rebuild.
+        if (doc.doctype) {
+          doc.replaceChild(childNode, doc.doctype);
+        } else if (doc.documentElement) {
+          doc.insertBefore(childNode, doc.documentElement);
+        } else {
+          doc.appendChild(childNode);
+        }
+      } else if (
+        n.type === NodeType.Document &&
         childN.type == NodeType.Element
       ) {
         const htmlElement = childNode as HTMLElement;
