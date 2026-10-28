@@ -926,6 +926,39 @@ describe('record integration tests', function (this: ISuite) {
     await assertSnapshot(page);
   });
 
+  it('should not record hidden input values if dynamically added and maskAllInputs is true', async () => {
+    const page: puppeteer.Page = await browser.newPage();
+    await page.goto('about:blank');
+    await page.setContent(
+      getHtml.call(this, 'empty.html', { maskAllInputs: true }),
+    );
+
+    await page.evaluate(() => {
+      const el = document.createElement('input');
+      el.type = 'hidden';
+      el.id = 'hidden';
+      el.value = 'hidden should be masked';
+
+      const nextElement = document.querySelector('#one')!;
+      nextElement.parentNode!.insertBefore(el, nextElement);
+    });
+    await waitForRAF(page);
+
+    await page.evaluate(() => {
+      document
+        .querySelector('#hidden')!
+        .setAttribute('value', 'updated hidden should be masked');
+    });
+    await waitForRAF(page);
+
+    const snapshots = (await page.evaluate(
+      'window.snapshots',
+    )) as eventWithTime[];
+    expect(JSON.stringify(snapshots)).not.toContain('should be masked');
+
+    await assertSnapshot(page);
+  });
+
   it('should record input values if dynamically added, maskAllInputs is true, and unmask selector is used', async () => {
     const page: puppeteer.Page = await browser.newPage();
     await page.goto('about:blank');

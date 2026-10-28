@@ -184,6 +184,7 @@ function record<T = eventWithTime>(
           time: true,
           url: true,
           week: true,
+          hidden: true,
           textarea: true,
           select: true,
           radio: true,

@@ -1682,6 +1682,7 @@ function snapshot(
           time: true,
           url: true,
           week: true,
+          hidden: true,
           textarea: true,
           select: true,
         }

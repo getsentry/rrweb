@@ -1003,3 +1003,38 @@ describe('image loading', () => {
     expect(onBlockedImageLoad).not.toHaveBeenCalled();
   });
 });
+
+describe('input value masking', () => {
+  const serializeInput = (
+    html: string,
+    options: Parameters<typeof snapshot>[1],
+  ) => {
+    document.write(html);
+    const sn = snapshot(document, options);
+    const inputs: serializedNodeWithId[] = [];
+    const walk = (node: serializedNodeWithId) => {
+      if (node.type === NodeType.Element && node.tagName === 'input') {
+        inputs.push(node);
+      }
+      if ('childNodes' in node) node.childNodes.forEach(walk);
+    };
+    walk(sn!);
+    return inputs[0];
+  };
+
+  it('masks hidden input values when maskAllInputs is enabled', () => {
+    expect(
+      serializeInput('<input type="hidden" value="secret" />', {
+        maskAllInputs: true,
+      }),
+    ).toMatchObject({ attributes: { type: 'hidden', value: '******' } });
+  });
+
+  it('records hidden input values when maskAllInputs is disabled', () => {
+    expect(
+      serializeInput('<input type="hidden" value="secret" />', {
+        maskAllInputs: false,
+      }),
+    ).toMatchObject({ attributes: { type: 'hidden', value: 'secret' } });
+  });
+});
