@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.45.0
+
+### New Features ✨
+
+- (rrweb) Allow onMutation to return a filtered list of mutations by @mydea with @sentry-junior in [#341](https://github.com/getsentry/rrweb/pull/341)
+
+### Bug Fixes 🐛
+
+- (record) Unlock mutation buffers when a full snapshot fails by @isaacs and @claude in [#332](https://github.com/getsentry/rrweb/pull/332)
+- (rrweb) Tear down shadow-DOM observers when hosts are removed by @salzahrani-salla, @claude and @Lms24 in [#337](https://github.com/getsentry/rrweb/pull/337)
+- (snapshot) Mask hidden inputs when maskAllInputs is enabled by @gggritso with @sentry-junior in [#340](https://github.com/getsentry/rrweb/pull/340)
+
+### Internal Changes 🔧
+
+#### Deps
+
+- Patch 10 Dependabot alerts via in-range bumps by @Lms24 and @claude in [#348](https://github.com/getsentry/rrweb/pull/348)
+- Bump fast-uri from 3.1.8 to 3.1.9 by @dependabot in [#346](https://github.com/getsentry/rrweb/pull/346)
+- Bump postcss-selector-parser from 6.1.4 to 6.1.5 by @dependabot in [#344](https://github.com/getsentry/rrweb/pull/344)
+- Bump serialize-javascript from 7.0.5 to 7.1.4 by @dependabot in [#345](https://github.com/getsentry/rrweb/pull/345)
+- Bump source-map-js from 1.2.1 to 1.2.2 by @dependabot in [#336](https://github.com/getsentry/rrweb/pull/336)
+
+#### Other
+
+- (deps-dev) Bump vite from 6.4.3 to 6.4.4 by @dependabot in [#347](https://github.com/getsentry/rrweb/pull/347)
+- (node) Bump Node to 22.23.4 by @geoffg-sentry with @sentry-junior in [#343](https://github.com/getsentry/rrweb/pull/343)
+
 ## 2.44.1
 
 ### Bug Fixes 🐛
