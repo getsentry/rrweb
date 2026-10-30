@@ -20,6 +20,7 @@ import {
   isSerializedIframe,
   isSerializedStylesheet,
   nowTimestamp,
+  callAllHandlers,
 } from '../utils';
 import type { recordOptions } from '../types';
 import {
@@ -735,10 +736,13 @@ function record<T = eventWithTime>(
       );
     }
     return () => {
-      handlers.forEach((h) => h());
-      processedNodeManager.destroy();
-      _takeFullSnapshot = undefined;
-      unregisterErrorHandler();
+      try {
+        callAllHandlers(handlers);
+      } finally {
+        processedNodeManager.destroy();
+        _takeFullSnapshot = undefined;
+        unregisterErrorHandler();
+      }
     };
   } catch (error) {
     // TODO: handle internal error

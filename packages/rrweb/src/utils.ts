@@ -686,3 +686,24 @@ export function clearTimeout(
 ): ReturnType<typeof window.clearTimeout> {
   return getImplementation('clearTimeout')(...rest);
 }
+
+/**
+ * Calls every handler, even if some of them throw, and then rethrows the
+ * first error. Used for teardown, so that one failing cleanup step does not
+ * leave the remaining observers and patches in place.
+ */
+export function callAllHandlers(handlers: (() => void)[]): void {
+  let failed = false;
+  let firstError: unknown;
+  for (const handler of handlers) {
+    try {
+      handler();
+    } catch (error) {
+      if (!failed) {
+        failed = true;
+        firstError = error;
+      }
+    }
+  }
+  if (failed) throw firstError;
+}
