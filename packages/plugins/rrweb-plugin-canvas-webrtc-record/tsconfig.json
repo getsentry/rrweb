@@ -12,7 +12,16 @@
   },
   "references": [
     {
+      "path": "../../rrdom"
+    },
+    {
       "path": "../../rrweb"
+    },
+    {
+      "path": "../../rrweb-snapshot"
+    },
+    {
+      "path": "../../types"
     }
   ]
 }
