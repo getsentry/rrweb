@@ -72,6 +72,7 @@ import {
   styleSheetRuleData,
   styleDeclarationData,
   adoptedStyleSheetData,
+  styleSheetAddRule,
   mouseInteractionData,
   mousemoveData,
 } from '@sentry/rrweb-types';
@@ -188,6 +189,9 @@ export class Replayer {
 
   // Used to track StyleSheetObjects adopted on multiple document hosts.
   private styleMirror: StyleSheetMirror = new StyleSheetMirror();
+
+  // Rules of adopted stylesheets whose host was missing, keyed by styleId.
+  private pendingAdoptedStyles = new Map<number, styleSheetAddRule[]>();
 
   private firstFullSnapshot: eventWithTime | true | null = null;
 
@@ -390,6 +394,7 @@ export class Replayer {
       this.firstFullSnapshot = null;
       this.mirror.reset();
       this.styleMirror.reset();
+      this.pendingAdoptedStyles.clear();
     });
 
     const timer = new Timer([], {
@@ -815,6 +820,7 @@ export class Replayer {
           this.rebuildFullSnapshot(event, isSync);
           this.iframe.contentWindow?.scrollTo(event.data.initialOffset);
           this.styleMirror.reset();
+          this.pendingAdoptedStyles.clear();
         };
         break;
       case EventType.IncrementalSnapshot:
@@ -2191,42 +2197,61 @@ export class Replayer {
     }
   }
 
+  private createAdoptedStyleSheet(
+    hostWindow: IWindow,
+    styleId: number,
+    rules: styleSheetAddRule[],
+  ) {
+    try {
+      const newStyleSheet = new hostWindow.CSSStyleSheet();
+      this.styleMirror.add(newStyleSheet, styleId);
+      // To reuse the code of applying stylesheet rules
+      this.applyStyleSheetRule(
+        {
+          source: IncrementalSource.StyleSheetRule,
+          adds: rules,
+        },
+        newStyleSheet,
+      );
+    } catch (e) {
+      // In case some browsers don't support constructing StyleSheet.
+    }
+  }
+
   private applyAdoptedStyleSheet(data: adoptedStyleSheetData) {
     const targetHost = this.mirror.getNode(data.id);
-    // Create StyleSheet objects which will be adopted after.
-    data.styles?.forEach((style) => {
-      let newStyleSheet: CSSStyleSheet | null = null;
-      /**
-       * Constructed StyleSheet can't share across multiple documents.
-       * The replayer has to get the correct host window to recreate a StyleSheetObject.
-       */
-      let hostWindow: IWindow | null = null;
-      // The host can be gone already (e.g. removed during a virtual DOM seek),
-      // but later events may still adopt these styleIds, so create them anyway.
-      if (!targetHost) hostWindow = this.iframe.contentWindow as IWindow | null;
-      else if (hasShadowRoot(targetHost))
-        hostWindow = targetHost.ownerDocument?.defaultView || null;
-      else if (targetHost.nodeName === '#document')
-        hostWindow = (targetHost as Document).defaultView;
+    if (!targetHost) {
+      // The host can be gone already (e.g. removed during a virtual DOM seek), but
+      // later hosts may still adopt these styleIds. We can't know their window yet,
+      // so keep the rules and create the sheets once a host adopts them.
+      data.styles?.forEach((style) =>
+        this.pendingAdoptedStyles.set(style.styleId, style.rules),
+      );
+      return;
+    }
 
-      if (!hostWindow) return;
-      try {
-        newStyleSheet = new hostWindow.CSSStyleSheet();
-        this.styleMirror.add(newStyleSheet, style.styleId);
-        // To reuse the code of applying stylesheet rules
-        this.applyStyleSheetRule(
-          {
-            source: IncrementalSource.StyleSheetRule,
-            adds: style.rules,
-          },
-          newStyleSheet,
-        );
-      } catch (e) {
-        // In case some browsers don't support constructing StyleSheet.
+    /**
+     * Constructed StyleSheet can't share across multiple documents.
+     * The replayer has to get the correct host window to recreate a StyleSheetObject.
+     */
+    let hostWindow: IWindow | null = null;
+    if (hasShadowRoot(targetHost))
+      hostWindow = targetHost.ownerDocument?.defaultView || null;
+    else if (targetHost.nodeName === '#document')
+      hostWindow = (targetHost as Document).defaultView;
+
+    if (hostWindow) {
+      // Create StyleSheet objects which will be adopted after.
+      for (const style of data.styles || [])
+        this.createAdoptedStyleSheet(hostWindow, style.styleId, style.rules);
+      for (const styleId of data.styleIds) {
+        const rules = this.pendingAdoptedStyles.get(styleId);
+        if (!rules) continue;
+        this.pendingAdoptedStyles.delete(styleId);
+        if (!this.styleMirror.getStyle(styleId))
+          this.createAdoptedStyleSheet(hostWindow, styleId, rules);
       }
-    });
-
-    if (!targetHost) return;
+    }
 
     const MAX_RETRY_TIME = 10;
     let count = 0;
