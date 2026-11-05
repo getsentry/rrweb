@@ -29,6 +29,7 @@ import StyleSheetTextMutation from './events/style-sheet-text-mutation';
 import canvasInIframe from './events/canvas-in-iframe';
 import adoptedStyleSheet from './events/adopted-style-sheet';
 import adoptedStyleSheetModification from './events/adopted-style-sheet-modification';
+import adoptedStyleSheetRemovedHost from './events/adopted-style-sheet-removed-host';
 import documentReplacementEvents from './events/document-replacement';
 import hoverInIframeShadowDom from './events/iframe-shadowdom-hover';
 import customElementDefineClass from './events/custom-element-define-class';
@@ -1066,6 +1067,28 @@ describe('replayer', function () {
     await waitForRAF(page);
     await page.evaluate('replayer.pause(600);');
     await checkCorrectness();
+  });
+
+  it('keeps adopted stylesheets on seek when their first host was removed', async () => {
+    await page.evaluate(`
+      events = ${JSON.stringify(adoptedStyleSheetRemovedHost)};
+      const { Replayer } = rrweb;
+      var replayer = new Replayer(events);
+      replayer.pause(500);
+    `);
+    await waitForRAF(page);
+    const iframe = await page.$('iframe');
+    const contentDocument = await iframe!.contentFrame()!;
+    expect(
+      await contentDocument!.evaluate(
+        () =>
+          window.getComputedStyle(
+            document
+              .querySelector('#host2')!
+              .shadowRoot!.querySelector('span')!,
+          ).color,
+      ),
+    ).toEqual('rgb(255, 0, 0)');
   });
 
   it('can replay modification events for adoptedStyleSheet', async () => {
