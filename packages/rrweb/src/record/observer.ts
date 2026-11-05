@@ -22,7 +22,7 @@ import {
   StyleSheetMirror,
   nowTimestamp,
   setTimeout,
-  callAllHandlers,
+  runAllEvenIfOneThrows,
 } from '../utils';
 import type {
   observerParam,
@@ -961,94 +961,6 @@ function initStyleSheetObserver(
   });
 }
 
-type AdoptedStyleSheetsPatch = {
-  set: (sheets: CSSStyleSheet[]) => void;
-  previousDescriptor: PropertyDescriptor | undefined;
-  onSet: ((sheets: CSSStyleSheet[]) => void) | null;
-};
-
-// Other scripts can lock `adoptedStyleSheets` (non-configurable property,
-// `Object.seal`/`freeze`) while we record. Then we can't remove our patch, so
-// we leave it as a pass-through and reuse it the next time we record.
-const adoptedStyleSheetsPatches = new WeakMap<
-  Document | ShadowRoot,
-  AdoptedStyleSheetsPatch
->();
-
-function isPatchInstalled(
-  host: Document | ShadowRoot,
-  patch: AdoptedStyleSheetsPatch,
-): boolean {
-  return (
-    Object.getOwnPropertyDescriptor(host, 'adoptedStyleSheets')?.set ===
-    patch.set
-  );
-}
-
-function installAdoptedStyleSheetsPatch(
-  host: Document | ShadowRoot,
-  originalPropertyDescriptor: PropertyDescriptor,
-): AdoptedStyleSheetsPatch | null {
-  const existingPatch = adoptedStyleSheetsPatches.get(host);
-  if (existingPatch && isPatchInstalled(host, existingPatch)) {
-    return existingPatch;
-  }
-
-  const previousDescriptor = Object.getOwnPropertyDescriptor(
-    host,
-    'adoptedStyleSheets',
-  );
-  // Someone else already locked their own property, so we can't patch it.
-  // Full snapshots still capture the adopted stylesheets.
-  if (previousDescriptor && !previousDescriptor.configurable) {
-    return null;
-  }
-
-  const patch: AdoptedStyleSheetsPatch = {
-    set(sheets: CSSStyleSheet[]) {
-      originalPropertyDescriptor.set?.call(this, sheets);
-      patch.onSet?.(sheets);
-    },
-    previousDescriptor,
-    onSet: null,
-  };
-
-  // Always configurable, even if the prototype's property isn't, so that we
-  // can remove our own property again.
-  Object.defineProperty(host, 'adoptedStyleSheets', {
-    configurable: true,
-    enumerable: originalPropertyDescriptor.enumerable,
-    get(): CSSStyleSheet[] {
-      return originalPropertyDescriptor.get?.call(this) as CSSStyleSheet[];
-    },
-    set: patch.set,
-  });
-  adoptedStyleSheetsPatches.set(host, patch);
-  return patch;
-}
-
-function removeAdoptedStyleSheetsPatch(
-  host: Document | ShadowRoot,
-  patch: AdoptedStyleSheetsPatch,
-) {
-  if (!isPatchInstalled(host, patch)) {
-    // Someone replaced our property. Leave theirs alone.
-    adoptedStyleSheetsPatches.delete(host);
-    return;
-  }
-
-  const removed = patch.previousDescriptor
-    ? Reflect.defineProperty(
-        host,
-        'adoptedStyleSheets',
-        patch.previousDescriptor,
-      )
-    : Reflect.deleteProperty(host, 'adoptedStyleSheets');
-  if (removed) {
-    adoptedStyleSheetsPatches.delete(host);
-  }
-}
-
 export function initAdoptedStyleSheetObserver(
   {
     mirror,
@@ -1056,12 +968,11 @@ export function initAdoptedStyleSheetObserver(
   }: Pick<observerParam, 'mirror' | 'stylesheetManager'>,
   host: Document | ShadowRoot,
 ): listenerHandler {
-  // host of adoptedStyleSheets is outermost document or IFrame's document,
-  // or a ShadowRoot.
-  const hostId =
-    host.nodeName === '#document'
-      ? mirror.getId(host)
-      : mirror.getId((host as ShadowRoot).host);
+  let hostId: number | null = null;
+  // host of adoptedStyleSheets is outermost document or IFrame's document
+  if (host.nodeName === '#document') hostId = mirror.getId(host);
+  // The host is a ShadowRoot.
+  else hostId = mirror.getId((host as ShadowRoot).host);
 
   const patchTarget =
     host.nodeName === '#document'
@@ -1073,34 +984,75 @@ export function initAdoptedStyleSheetObserver(
         'adoptedStyleSheets',
       )
     : undefined;
-  if (hostId === -1 || !patchTarget || !originalPropertyDescriptor)
-    return () => {
-      //
-    };
-
-  const patch = installAdoptedStyleSheetsPatch(
+  // What `host` itself defines, if anything, as opposed to what it inherits
+  // from the prototype. Usually nothing.
+  const previousDescriptor = Object.getOwnPropertyDescriptor(
     host,
-    originalPropertyDescriptor,
+    'adoptedStyleSheets',
   );
-  if (!patch)
+  if (
+    hostId === null ||
+    hostId === -1 ||
+    !patchTarget ||
+    !originalPropertyDescriptor ||
+    // Another script locked `host` itself: it put a locked property on it, or
+    // sealed or froze it. Patching would throw, so we don't. Full snapshots
+    // still capture the adopted stylesheets; we only miss changes between
+    // snapshots.
+    previousDescriptor?.configurable === false ||
+    !Object.isExtensible(host)
+  )
     return () => {
       //
     };
 
-  const onSet = (sheets: CSSStyleSheet[]) => {
-    try {
-      stylesheetManager.adoptStyleSheets(sheets, hostId);
-    } catch (e) {
-      // for safety
+  let recording = true;
+  const set = function (this: Document | ShadowRoot, sheets: CSSStyleSheet[]) {
+    originalPropertyDescriptor.set?.call(this, sheets);
+    if (recording && hostId !== null && hostId !== -1) {
+      try {
+        stylesheetManager.adoptStyleSheets(sheets, hostId);
+      } catch (e) {
+        // for safety
+      }
     }
   };
-  patch.onSet = onSet;
+
+  // Patch adoptedStyleSheets by adding an own property to `host` that shadows
+  // the prototype's.
+  //
+  // `configurable: true` is safe even when the prototype's property isn't
+  // configurable. The flag only applies to this new property on `host`, which
+  // is ours. The prototype's property isn't touched, so a lock that another
+  // script put there stays in place, and shadowing a locked prototype property
+  // with an own property is allowed. This code used to copy the prototype's
+  // flag. When the prototype was locked, that locked our own property too, and
+  // removing it on stop threw "Cannot redefine property".
+  Object.defineProperty(host, 'adoptedStyleSheets', {
+    configurable: true,
+    enumerable: originalPropertyDescriptor.enumerable,
+    get(): CSSStyleSheet[] {
+      return originalPropertyDescriptor.get?.call(this) as CSSStyleSheet[];
+    },
+    set,
+  });
 
   return callbackWrapper(() => {
-    // A newer observer on the same host owns the patch now.
-    if (patch.onSet !== onSet) return;
-    patch.onSet = null;
-    removeAdoptedStyleSheetsPatch(host, patch);
+    recording = false;
+    // Someone replaced our property after we patched it. Leave theirs alone.
+    if (
+      Object.getOwnPropertyDescriptor(host, 'adoptedStyleSheets')?.set !== set
+    )
+      return;
+    // `Reflect` returns false instead of throwing when another script locked
+    // our property while we recorded (by redefining it, or by sealing or
+    // freezing `host`). Then our property stays behind and just forwards to
+    // the browser's setter, because `recording` is false.
+    if (previousDescriptor) {
+      Reflect.defineProperty(host, 'adoptedStyleSheets', previousDescriptor);
+    } else {
+      Reflect.deleteProperty(host, 'adoptedStyleSheets');
+    }
   });
 }
 
@@ -1459,7 +1411,7 @@ export function initObservers(
   }
 
   return callbackWrapper(() => {
-    callAllHandlers([
+    runAllEvenIfOneThrows([
       () => forEachMutationBuffer((b) => b.reset()),
       () => mutationObserver?.disconnect(),
       mousemoveHandler,

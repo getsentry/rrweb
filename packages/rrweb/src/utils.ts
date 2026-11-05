@@ -692,7 +692,7 @@ export function clearTimeout(
  * first error. Used for teardown, so that one failing cleanup step does not
  * leave the remaining observers and patches in place.
  */
-export function callAllHandlers(handlers: (() => void)[]): void {
+export function runAllEvenIfOneThrows(handlers: (() => void)[]): void {
   let failed = false;
   let firstError: unknown;
   for (const handler of handlers) {

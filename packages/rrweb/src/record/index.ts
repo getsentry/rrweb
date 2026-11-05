@@ -20,7 +20,7 @@ import {
   isSerializedIframe,
   isSerializedStylesheet,
   nowTimestamp,
-  callAllHandlers,
+  runAllEvenIfOneThrows,
 } from '../utils';
 import type { recordOptions } from '../types';
 import {
@@ -737,7 +737,7 @@ function record<T = eventWithTime>(
     }
     return () => {
       try {
-        callAllHandlers(handlers);
+        runAllEvenIfOneThrows(handlers);
       } finally {
         processedNodeManager.destroy();
         _takeFullSnapshot = undefined;

@@ -34,6 +34,8 @@ type Lock =
   | 'ownPropertyBeforeRecord'
   // During recording: lock our own property on `document`.
   | 'ownPropertyDuringRecord'
+  // Before recording: `Object.seal(document)`.
+  | 'sealBeforeRecord'
   // During recording: `Object.seal(document)`.
   | 'sealDuringRecord';
 
@@ -91,6 +93,8 @@ async function recordWithLock(page: puppeteer.Page, lock: Lock) {
         );
       } else if (lock === 'ownPropertyBeforeRecord') {
         Object.defineProperty(document, 'adoptedStyleSheets', lockedDescriptor);
+      } else if (lock === 'sealBeforeRecord') {
+        Object.seal(document);
       }
 
       const events: eventWithTime[] = [];
@@ -167,7 +171,7 @@ async function recordAgain(page: puppeteer.Page) {
 }
 
 describe('adoptedStyleSheets patch when the property gets locked', () => {
-  vi.setConfig({ testTimeout: 30_000 });
+  vi.setConfig({ testTimeout: 10_000 });
 
   const ctx = setup('<!DOCTYPE html><html><body></body></html>');
 
@@ -197,7 +201,7 @@ describe('adoptedStyleSheets patch when the property gets locked', () => {
     });
   });
 
-  it('stops cleanly and reuses the patch when our property is locked during recording', async () => {
+  it('stops cleanly when our property is locked during recording', async () => {
     expect(await recordWithLock(ctx.page, 'ownPropertyDuringRecord')).toEqual({
       recordStarted: true,
       stopError: null,
@@ -207,13 +211,14 @@ describe('adoptedStyleSheets patch when the property gets locked', () => {
       ownPropertyAfterStop: true,
       sheetsApplied: true,
     });
+    // The property is still locked, so the next recording skips the patch.
     expect(await recordAgain(ctx.page)).toEqual({
       stopError: null,
-      adoptedEvents: 1,
+      adoptedEvents: 0,
     });
   });
 
-  it('stops cleanly and reuses the patch when the document is sealed during recording', async () => {
+  it('stops cleanly when the document is sealed during recording', async () => {
     expect(await recordWithLock(ctx.page, 'sealDuringRecord')).toEqual({
       recordStarted: true,
       stopError: null,
@@ -224,7 +229,7 @@ describe('adoptedStyleSheets patch when the property gets locked', () => {
     });
     expect(await recordAgain(ctx.page)).toEqual({
       stopError: null,
-      adoptedEvents: 1,
+      adoptedEvents: 0,
     });
   });
 
@@ -238,10 +243,21 @@ describe('adoptedStyleSheets patch when the property gets locked', () => {
       sheetsApplied: true,
     });
   });
+
+  it('skips the patch when the document was sealed before recording', async () => {
+    expect(await recordWithLock(ctx.page, 'sealBeforeRecord')).toEqual({
+      recordStarted: true,
+      stopError: null,
+      adoptedEventsWhileRecording: 0,
+      adoptedEventsAfterStop: 0,
+      ownPropertyAfterStop: false,
+      sheetsApplied: true,
+    });
+  });
 });
 
 describe('record teardown', () => {
-  vi.setConfig({ testTimeout: 30_000 });
+  vi.setConfig({ testTimeout: 10_000 });
 
   const ctx = setup(
     '<!DOCTYPE html><html><body><iframe></iframe></body></html>',
