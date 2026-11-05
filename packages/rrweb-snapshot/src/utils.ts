@@ -268,10 +268,10 @@ export function shouldMaskInput({
   }
   return Boolean(
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-      (type && maskInputOptions[type as keyof MaskInputOptions]) ||
-      type === 'password' ||
-      // Default to "text" option for inputs without a "type" attribute defined
-      (tagName === 'INPUT' && !type && maskInputOptions['text']),
+    (type && maskInputOptions[type as keyof MaskInputOptions]) ||
+    type === 'password' ||
+    // Default to "text" option for inputs without a "type" attribute defined
+    (tagName === 'INPUT' && !type && maskInputOptions['text']),
   );
 }
 
@@ -387,9 +387,9 @@ export function getInputType(element: HTMLElement): Lowercase<string> | null {
   return element.hasAttribute('data-rr-is-password')
     ? 'password'
     : type
-    ? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      toLowerCase(type)
-    : null;
+      ? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        toLowerCase(type)
+      : null;
 }
 
 export function getInputValue(

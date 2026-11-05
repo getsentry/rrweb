@@ -9,10 +9,7 @@
     "preserveConstEnums": true,
     "rootDir": "src",
     "outDir": "dist",
-    "lib": [
-      "webworker",
-      "scripthost"
-    ],
+    "lib": ["webworker", "scripthost"],
     "allowSyntheticDefaultImports": true,
     "declarationMap": false,
     "skipLibCheck": true,
@@ -26,11 +23,6 @@
       "path": "../types"
     }
   ],
-  "exclude": [
-    "test",
-    "scripts"
-  ],
-  "include": [
-    "src/**/*.ts"
-  ]
+  "exclude": ["test", "scripts"],
+  "include": ["src/**/*.ts"]
 }

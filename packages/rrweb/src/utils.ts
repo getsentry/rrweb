@@ -184,19 +184,19 @@ export function getWindowScroll(win: Window) {
     left: doc.scrollingElement
       ? doc.scrollingElement.scrollLeft
       : win.pageXOffset !== undefined
-      ? win.pageXOffset
-      : doc?.documentElement.scrollLeft ||
-        doc?.body?.parentElement?.scrollLeft ||
-        doc?.body?.scrollLeft ||
-        0,
+        ? win.pageXOffset
+        : doc?.documentElement.scrollLeft ||
+          doc?.body?.parentElement?.scrollLeft ||
+          doc?.body?.scrollLeft ||
+          0,
     top: doc.scrollingElement
       ? doc.scrollingElement.scrollTop
       : win.pageYOffset !== undefined
-      ? win.pageYOffset
-      : doc?.documentElement.scrollTop ||
-        doc?.body?.parentElement?.scrollTop ||
-        doc?.body?.scrollTop ||
-        0,
+        ? win.pageYOffset
+        : doc?.documentElement.scrollTop ||
+          doc?.body?.parentElement?.scrollTop ||
+          doc?.body?.scrollTop ||
+          0,
   };
 }
 
@@ -444,10 +444,10 @@ export function isSerializedStylesheet<TNode extends Node | RRNode>(
 ): boolean {
   return Boolean(
     n.nodeName === 'LINK' &&
-      n.nodeType === n.ELEMENT_NODE &&
-      (n as HTMLElement).getAttribute &&
-      (n as HTMLElement).getAttribute('rel') === 'stylesheet' &&
-      mirror.getMeta(n),
+    n.nodeType === n.ELEMENT_NODE &&
+    (n as HTMLElement).getAttribute &&
+    (n as HTMLElement).getAttribute('rel') === 'stylesheet' &&
+    mirror.getMeta(n),
   );
 }
 
@@ -517,7 +517,7 @@ export function uniqueTextMutations(mutations: textMutation[]): textMutation[] {
   const idSet = new Set<number>();
   const uniqueMutations: textMutation[] = [];
 
-  for (let i = mutations.length; i--; ) {
+  for (let i = mutations.length; i--;) {
     const mutation = mutations[i];
     if (!idSet.has(mutation.id)) {
       uniqueMutations.push(mutation);
