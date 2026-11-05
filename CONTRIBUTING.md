@@ -34,7 +34,7 @@ clear and has sufficient instructions to be able to reproduce the issue.
 - Build individual packages: `pnpm build` or `pnpm dev`
 - Test: `pnpm test` or `pnpm test:watch`
 - Lint: `pnpm lint`
-- Rewrite files with prettier: `pnpm format` or `pnpm format:head`
+- Format files with oxfmt: `pnpm format` or `pnpm format:head`
 
 ## Coding style
 
