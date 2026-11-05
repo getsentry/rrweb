@@ -14,8 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "check-types": "tsc -noEmit",
-    "prepack": "npm run build",
-    "lint": "pnpm exec eslint src/**/*.ts"
+    "prepack": "npm run build"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/all#readme",
   "bugs": {

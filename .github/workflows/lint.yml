@@ -1,15 +1,15 @@
-name: ESLint Check
+name: Lint
 
 on:
   push:
   pull_request:
 
 jobs:
-  eslint_check_upload:
+  lint:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    name: ESLint Check and Report Upload
+    name: Lint and Measure Bundle Sizes
 
     steps:
       - name: Checkout pull request head
@@ -35,17 +35,8 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build Packages
         run: NODE_OPTIONS='--max-old-space-size=4096' pnpm run build:all
-      - name: Eslint Check
-        run: pnpm exec turbo run lint
-      - name: Save Code Linting Report JSON
-        run: pnpm run lint:report
-        # Continue to the next step even if this fails
-        continue-on-error: true
-      - name: Upload ESLint Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: eslint_report.json
-          path: eslint_report.json
+      - name: Lint
+        run: pnpm run lint
       - name: Measure PR bundle sizes
         if: github.event_name == 'pull_request'
         run: node .github/scripts/measure-bundle-sizes.js pr-sizes.json
@@ -57,12 +48,12 @@ jobs:
           path: pr-sizes.json
 
   bundle_size_build:
-    # Only runs on PRs. Reuses the PR build from eslint_check_upload (via the
+    # Only runs on PRs. Reuses the PR build from lint job (via the
     # pr-sizes artifact) and only builds the base branch itself. The privileged
     # bundle-size-comment workflow then posts the PR comment without ever
     # executing fork code.
     if: github.event_name == 'pull_request'
-    needs: eslint_check_upload
+    needs: lint
     runs-on: ubuntu-latest
     permissions:
       actions: read

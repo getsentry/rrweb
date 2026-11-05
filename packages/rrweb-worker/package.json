@@ -14,8 +14,7 @@
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:update": "vitest run --update",
-    "lint": "pnpm exec eslint src"
+    "test:update": "vitest run --update"
   },
   "repository": {
     "type": "git",

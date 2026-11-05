@@ -35,8 +35,7 @@
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepack": "pnpm run build",
-    "lint": "pnpm exec eslint src/**/*.ts"
+    "prepack": "pnpm run build"
   },
   "bugs": {
     "url": "https://github.com/rrweb-io/rrweb/issues"
@@ -46,9 +45,6 @@
   },
   "devDependencies": {
     "@sentry/rrweb-types": "2.45.0",
-    "@typescript-eslint/eslint-plugin": "^5.23.0",
-    "@typescript-eslint/parser": "^5.23.0",
-    "eslint": "^8.15.0",
     "jsdom": "^25.0.0",
     "puppeteer": "^24.0.0",
     "typescript": "^4.9.0",

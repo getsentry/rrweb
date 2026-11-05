@@ -19,7 +19,6 @@
     "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
     "check-types": "tsc --noEmit",
     "prepack": "pnpm run build && pnpm run typings:downlevel",
-    "lint": "pnpm exec eslint src",
     "benchmark": "vitest run --maxConcurrency 1 --no-file-parallelism test/benchmark"
   },
   "type": "module",

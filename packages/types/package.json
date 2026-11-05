@@ -14,8 +14,7 @@
     "build:tarball": "pnpm pack",
     "check-types": "tsc --noEmit",
     "prepack": "pnpm run build && pnpm run typings:downlevel",
-    "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8",
-    "lint": "pnpm exec eslint src/**/*.ts"
+    "typings:downlevel": "downlevel-dts dist dist/ts3.8 --to ts3.8"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/types#readme",
   "bugs": {
