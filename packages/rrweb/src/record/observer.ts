@@ -22,7 +22,7 @@ import {
   StyleSheetMirror,
   nowTimestamp,
   setTimeout,
-  runAllEvenIfOneThrows,
+  runAllAndRethrowFirstError,
 } from '../utils';
 import type {
   observerParam,
@@ -986,7 +986,7 @@ export function initAdoptedStyleSheetObserver(
     : undefined;
   // What `host` itself defines, if anything, as opposed to what it inherits
   // from the prototype. Usually nothing.
-  const previousDescriptor = Object.getOwnPropertyDescriptor(
+  const previousAdoptedStyleSheetsDescriptor = Object.getOwnPropertyDescriptor(
     host,
     'adoptedStyleSheets',
   );
@@ -999,7 +999,7 @@ export function initAdoptedStyleSheetObserver(
     // sealed or froze it. Patching would throw, so we don't. Full snapshots
     // still capture the adopted stylesheets; we only miss changes between
     // snapshots.
-    previousDescriptor?.configurable === false ||
+    previousAdoptedStyleSheetsDescriptor?.configurable === false ||
     !Object.isExtensible(host)
   )
     return () => {
@@ -1007,7 +1007,12 @@ export function initAdoptedStyleSheetObserver(
     };
 
   let recording = true;
-  const set = function (this: Document | ShadowRoot, sheets: CSSStyleSheet[]) {
+  // Kept in a variable so that teardown can check whether the property on
+  // `host` is still ours: the descriptor's `set` is then this exact function.
+  const recordingSetter = function (
+    this: Document | ShadowRoot,
+    sheets: CSSStyleSheet[],
+  ) {
     originalPropertyDescriptor.set?.call(this, sheets);
     if (recording && hostId !== null && hostId !== -1) {
       try {
@@ -1021,35 +1026,42 @@ export function initAdoptedStyleSheetObserver(
   // Patch adoptedStyleSheets by adding an own property to `host` that shadows
   // the prototype's.
   //
-  // `configurable: true` is safe even when the prototype's property isn't
-  // configurable. The flag only applies to this new property on `host`, which
-  // is ours. The prototype's property isn't touched, so a lock that another
-  // script put there stays in place, and shadowing a locked prototype property
-  // with an own property is allowed. This code used to copy the prototype's
-  // flag. When the prototype was locked, that locked our own property too, and
-  // removing it on stop threw "Cannot redefine property".
+  // Always `configurable: true`, even when the prototype's property isn't, so
+  // that teardown can remove the patch. The flag only applies to this own
+  // property on `host`, which is ours. The prototype's property isn't touched,
+  // so a lock that another script put there stays in place, and shadowing a
+  // locked prototype property with an own property is allowed. Copying the
+  // prototype's flag instead would lock our own property whenever the
+  // prototype is locked, and removing it on stop would throw "Cannot redefine
+  // property".
   Object.defineProperty(host, 'adoptedStyleSheets', {
     configurable: true,
     enumerable: originalPropertyDescriptor.enumerable,
     get(): CSSStyleSheet[] {
       return originalPropertyDescriptor.get?.call(this) as CSSStyleSheet[];
     },
-    set,
+    set: recordingSetter,
   });
 
   return callbackWrapper(() => {
     recording = false;
-    // Someone replaced our property after we patched it. Leave theirs alone.
-    if (
-      Object.getOwnPropertyDescriptor(host, 'adoptedStyleSheets')?.set !== set
-    )
-      return;
-    // `Reflect` returns false instead of throwing when another script locked
-    // our property while we recorded (by redefining it, or by sealing or
-    // freezing `host`). Then our property stays behind and just forwards to
+    // Another script replaced our property after we patched it. Leave theirs
+    // alone.
+    const currentDescriptor = Object.getOwnPropertyDescriptor(
+      host,
+      'adoptedStyleSheets',
+    );
+    if (currentDescriptor?.set !== recordingSetter) return;
+    // `Reflect` returns false instead of throwing when another script has
+    // locked our property during recording (by redefining it, or by sealing or
+    // freezing `host`). Our property then stays behind and only forwards to
     // the browser's setter, because `recording` is false.
-    if (previousDescriptor) {
-      Reflect.defineProperty(host, 'adoptedStyleSheets', previousDescriptor);
+    if (previousAdoptedStyleSheetsDescriptor) {
+      Reflect.defineProperty(
+        host,
+        'adoptedStyleSheets',
+        previousAdoptedStyleSheetsDescriptor,
+      );
     } else {
       Reflect.deleteProperty(host, 'adoptedStyleSheets');
     }
@@ -1411,7 +1423,7 @@ export function initObservers(
   }
 
   return callbackWrapper(() => {
-    runAllEvenIfOneThrows([
+    runAllAndRethrowFirstError([
       () => forEachMutationBuffer((b) => b.reset()),
       () => mutationObserver?.disconnect(),
       mousemoveHandler,

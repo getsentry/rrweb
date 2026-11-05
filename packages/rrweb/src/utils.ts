@@ -688,11 +688,12 @@ export function clearTimeout(
 }
 
 /**
- * Calls every handler, even if some of them throw, and then rethrows the
- * first error. Used for teardown, so that one failing cleanup step does not
+ * Calls every handler, including the ones after a handler that throws. Once
+ * all of them have run, rethrows the first error, so the caller still sees
+ * the failure. Used for teardown, so that one failing cleanup step does not
  * leave the remaining observers and patches in place.
  */
-export function runAllEvenIfOneThrows(handlers: (() => void)[]): void {
+export function runAllAndRethrowFirstError(handlers: (() => void)[]): void {
   let failed = false;
   let firstError: unknown;
   for (const handler of handlers) {

@@ -20,7 +20,7 @@ import {
   isSerializedIframe,
   isSerializedStylesheet,
   nowTimestamp,
-  runAllEvenIfOneThrows,
+  runAllAndRethrowFirstError,
 } from '../utils';
 import type { recordOptions } from '../types';
 import {
@@ -736,13 +736,14 @@ function record<T = eventWithTime>(
       );
     }
     return () => {
-      try {
-        runAllEvenIfOneThrows(handlers);
-      } finally {
-        processedNodeManager.destroy();
-        _takeFullSnapshot = undefined;
-        unregisterErrorHandler();
-      }
+      runAllAndRethrowFirstError([
+        ...handlers,
+        () => processedNodeManager.destroy(),
+        () => {
+          _takeFullSnapshot = undefined;
+        },
+        unregisterErrorHandler,
+      ]);
     };
   } catch (error) {
     // TODO: handle internal error

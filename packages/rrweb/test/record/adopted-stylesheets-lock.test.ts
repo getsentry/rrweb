@@ -17,27 +17,62 @@ interface ISuite {
   page: puppeteer.Page;
 }
 
+interface Recording {
+  /** Stops recording. Returns the error `stop()` throws, if any. */
+  stop: () => string | null;
+  /** How many adoptedStyleSheets events were emitted after the full snapshot. */
+  adoptedEvents: () => number;
+}
+
 interface IWindow extends Window {
   rrweb: {
     record: (
       options: recordOptions<eventWithTime>,
     ) => listenerHandler | undefined;
   };
+  startRecording: () => Recording | null;
+  lockedAdoptedStyleSheetsDescriptor: () => PropertyDescriptor;
 }
 
-/** How another script on the page locks `adoptedStyleSheets`. */
-type Lock =
-  | 'none'
-  // Before recording: lock the prototype's property.
-  | 'prototype'
-  // Before recording: add a locked own property to `document`.
-  | 'ownPropertyBeforeRecord'
-  // During recording: lock our own property on `document`.
-  | 'ownPropertyDuringRecord'
-  // Before recording: `Object.seal(document)`.
-  | 'sealBeforeRecord'
-  // During recording: `Object.seal(document)`.
-  | 'sealDuringRecord';
+/** Runs in the page. Adds the helpers in `IWindow` to `window`. */
+function installHelpers(adoptedEvent: {
+  type: EventType;
+  source: IncrementalSource;
+}) {
+  const w = window as unknown as IWindow;
+
+  w.startRecording = () => {
+    const events: eventWithTime[] = [];
+    const stop = w.rrweb.record({ emit: (e) => events.push(e) });
+    if (typeof stop !== 'function') return null;
+    // Ignore the full snapshot, which includes the currently adopted sheets.
+    events.length = 0;
+    return {
+      stop: () => {
+        try {
+          stop();
+          return null;
+        } catch (e) {
+          return String(e);
+        }
+      },
+      adoptedEvents: () =>
+        events.filter(
+          (e) =>
+            e.type === adoptedEvent.type &&
+            e.data.source === adoptedEvent.source,
+        ).length,
+    };
+  };
+
+  w.lockedAdoptedStyleSheetsDescriptor = () => ({
+    ...Object.getOwnPropertyDescriptor(
+      Document.prototype,
+      'adoptedStyleSheets',
+    ),
+    configurable: false,
+  });
+}
 
 const ADOPTED_STYLESHEET_EVENT = {
   type: EventType.IncrementalSnapshot,
@@ -58,6 +93,7 @@ const setup = function (content: string): ISuite {
     await ctx.page.goto('about:blank');
     await ctx.page.setContent(content);
     await ctx.page.evaluate(ctx.code);
+    await ctx.page.evaluate(installHelpers, ADOPTED_STYLESHEET_EVENT);
   });
 
   afterEach(async () => {
@@ -71,188 +107,191 @@ const setup = function (content: string): ISuite {
   return ctx;
 };
 
-/**
- * Records, adopts a stylesheet, stops, then adopts another stylesheet, with
- * `adoptedStyleSheets` locked at the given point.
- */
-async function recordWithLock(page: puppeteer.Page, lock: Lock) {
-  return page.evaluate(
-    (lock, adoptedEvent) => {
-      const lockedDescriptor = {
-        ...Object.getOwnPropertyDescriptor(
-          Document.prototype,
-          'adoptedStyleSheets',
-        ),
-        configurable: false,
-      };
-      if (lock === 'prototype') {
-        Object.defineProperty(
-          Document.prototype,
-          'adoptedStyleSheets',
-          lockedDescriptor,
-        );
-      } else if (lock === 'ownPropertyBeforeRecord') {
-        Object.defineProperty(document, 'adoptedStyleSheets', lockedDescriptor);
-      } else if (lock === 'sealBeforeRecord') {
-        Object.seal(document);
-      }
-
-      const events: eventWithTime[] = [];
-      const { record } = (window as unknown as IWindow).rrweb;
-      const stop = record({ emit: (e) => events.push(e) });
-      const countAdopted = () =>
-        events.filter(
-          (e) =>
-            e.type === adoptedEvent.type &&
-            e.data.source === adoptedEvent.source,
-        ).length;
-
-      const sheet = new CSSStyleSheet();
-      document.adoptedStyleSheets = [sheet];
-
-      if (lock === 'ownPropertyDuringRecord') {
-        Object.defineProperty(document, 'adoptedStyleSheets', {
-          configurable: false,
-        });
-      } else if (lock === 'sealDuringRecord') {
-        Object.seal(document);
-      }
-
-      let stopError: string | null = null;
-      try {
-        stop?.();
-      } catch (e) {
-        stopError = String(e);
-      }
-      const adoptedEventsWhileRecording = countAdopted();
-
-      document.adoptedStyleSheets = [sheet, new CSSStyleSheet()];
-
-      return {
-        recordStarted: typeof stop === 'function',
-        stopError,
-        adoptedEventsWhileRecording,
-        adoptedEventsAfterStop: countAdopted() - adoptedEventsWhileRecording,
-        ownPropertyAfterStop: Object.prototype.hasOwnProperty.call(
-          document,
-          'adoptedStyleSheets',
-        ),
-        sheetsApplied: document.adoptedStyleSheets.length === 2,
-      };
-    },
-    lock,
-    ADOPTED_STYLESHEET_EVENT,
-  );
-}
-
-/** Starts another recording and checks that adopting a sheet is recorded. */
-async function recordAgain(page: puppeteer.Page) {
-  return page.evaluate((adoptedEvent) => {
-    const events: eventWithTime[] = [];
-    const { record } = (window as unknown as IWindow).rrweb;
-    const stop = record({ emit: (e) => events.push(e) });
-    // Ignore the full snapshot's events.
-    events.length = 0;
-    document.adoptedStyleSheets = [new CSSStyleSheet()];
-    let stopError: string | null = null;
-    try {
-      stop?.();
-    } catch (e) {
-      stopError = String(e);
-    }
-    return {
-      stopError,
-      adoptedEvents: events.filter(
-        (e) =>
-          e.type === adoptedEvent.type && e.data.source === adoptedEvent.source,
-      ).length,
-    };
-  }, ADOPTED_STYLESHEET_EVENT);
-}
-
 describe('adoptedStyleSheets patch when the property gets locked', () => {
   vi.setConfig({ testTimeout: 10_000 });
 
   const ctx = setup('<!DOCTYPE html><html><body></body></html>');
 
   it('removes the patch on stop when nothing is locked', async () => {
-    expect(await recordWithLock(ctx.page, 'none')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 1,
-      adoptedEventsAfterStop: 0,
-      ownPropertyAfterStop: false,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      const recording = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      const stopError = recording.stop();
+      const adoptedWhileRecording = recording.adoptedEvents();
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      return {
+        stopError,
+        adoptedWhileRecording,
+        adoptedAfterStop: recording.adoptedEvents() - adoptedWhileRecording,
+        hasOwnPropertyAfterStop: Object.prototype.hasOwnProperty.call(
+          document,
+          'adoptedStyleSheets',
+        ),
+      };
     });
+
+    expect(result.stopError).toBeNull();
+    expect(result.adoptedWhileRecording).toBe(1);
+    expect(result.adoptedAfterStop).toBe(0);
+    expect(result.hasOwnPropertyAfterStop).toBe(false);
   });
 
   it('stops cleanly when Document.prototype was locked before recording', async () => {
-    expect(await recordWithLock(ctx.page, 'prototype')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 1,
-      adoptedEventsAfterStop: 0,
-      ownPropertyAfterStop: false,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      Object.defineProperty(
+        Document.prototype,
+        'adoptedStyleSheets',
+        w.lockedAdoptedStyleSheetsDescriptor(),
+      );
+
+      const first = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      const firstStopError = first.stop();
+
+      const second = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      const secondStopError = second.stop();
+
+      return {
+        firstStopError,
+        firstAdopted: first.adoptedEvents(),
+        secondStopError,
+        secondAdopted: second.adoptedEvents(),
+        hasOwnPropertyAfterStop: Object.prototype.hasOwnProperty.call(
+          document,
+          'adoptedStyleSheets',
+        ),
+      };
     });
-    expect(await recordAgain(ctx.page)).toEqual({
-      stopError: null,
-      adoptedEvents: 1,
-    });
+
+    expect(result.firstStopError).toBeNull();
+    expect(result.firstAdopted).toBe(1);
+    expect(result.secondStopError).toBeNull();
+    expect(result.secondAdopted).toBe(1);
+    expect(result.hasOwnPropertyAfterStop).toBe(false);
   });
 
   it('stops cleanly when our property is locked during recording', async () => {
-    expect(await recordWithLock(ctx.page, 'ownPropertyDuringRecord')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 1,
-      adoptedEventsAfterStop: 0,
-      // Can't be removed, so it stays behind as a pass-through.
-      ownPropertyAfterStop: true,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      const first = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      // Keeps rrweb's getter and setter, but locks them in place.
+      Object.defineProperty(document, 'adoptedStyleSheets', {
+        configurable: false,
+      });
+      const firstStopError = first.stop();
+      const firstAdopted = first.adoptedEvents();
+
+      // rrweb's setter stays behind, but no longer records.
+      document.adoptedStyleSheets = [new CSSStyleSheet(), new CSSStyleSheet()];
+      const adoptedAfterStop = first.adoptedEvents() - firstAdopted;
+      const sheetsApplied = document.adoptedStyleSheets.length === 2;
+
+      // The property is still locked, so this recording skips the patch.
+      const second = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      const secondStopError = second.stop();
+
+      return {
+        firstStopError,
+        firstAdopted,
+        adoptedAfterStop,
+        sheetsApplied,
+        secondStopError,
+        secondAdopted: second.adoptedEvents(),
+      };
     });
-    // The property is still locked, so the next recording skips the patch.
-    expect(await recordAgain(ctx.page)).toEqual({
-      stopError: null,
-      adoptedEvents: 0,
-    });
+
+    expect(result.firstStopError).toBeNull();
+    expect(result.firstAdopted).toBe(1);
+    expect(result.adoptedAfterStop).toBe(0);
+    expect(result.sheetsApplied).toBe(true);
+    expect(result.secondStopError).toBeNull();
+    expect(result.secondAdopted).toBe(0);
   });
 
   it('stops cleanly when the document is sealed during recording', async () => {
-    expect(await recordWithLock(ctx.page, 'sealDuringRecord')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 1,
-      adoptedEventsAfterStop: 0,
-      ownPropertyAfterStop: true,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      const first = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      Object.seal(document);
+      const firstStopError = first.stop();
+      const firstAdopted = first.adoptedEvents();
+
+      document.adoptedStyleSheets = [new CSSStyleSheet(), new CSSStyleSheet()];
+      const adoptedAfterStop = first.adoptedEvents() - firstAdopted;
+      const sheetsApplied = document.adoptedStyleSheets.length === 2;
+
+      const second = w.startRecording()!;
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      const secondStopError = second.stop();
+
+      return {
+        firstStopError,
+        firstAdopted,
+        adoptedAfterStop,
+        sheetsApplied,
+        secondStopError,
+        secondAdopted: second.adoptedEvents(),
+      };
     });
-    expect(await recordAgain(ctx.page)).toEqual({
-      stopError: null,
-      adoptedEvents: 0,
-    });
+
+    expect(result.firstStopError).toBeNull();
+    expect(result.firstAdopted).toBe(1);
+    expect(result.adoptedAfterStop).toBe(0);
+    expect(result.sheetsApplied).toBe(true);
+    expect(result.secondStopError).toBeNull();
+    expect(result.secondAdopted).toBe(0);
   });
 
   it('skips the patch when the document already has a locked own property', async () => {
-    expect(await recordWithLock(ctx.page, 'ownPropertyBeforeRecord')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 0,
-      adoptedEventsAfterStop: 0,
-      ownPropertyAfterStop: true,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      Object.defineProperty(
+        document,
+        'adoptedStyleSheets',
+        w.lockedAdoptedStyleSheetsDescriptor(),
+      );
+
+      const recording = w.startRecording();
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      return {
+        started: recording !== null,
+        sheetsApplied: document.adoptedStyleSheets.length === 1,
+        stopError: recording?.stop(),
+        adopted: recording?.adoptedEvents(),
+      };
     });
+
+    expect(result.started).toBe(true);
+    expect(result.sheetsApplied).toBe(true);
+    expect(result.stopError).toBeNull();
+    expect(result.adopted).toBe(0);
   });
 
   it('skips the patch when the document was sealed before recording', async () => {
-    expect(await recordWithLock(ctx.page, 'sealBeforeRecord')).toEqual({
-      recordStarted: true,
-      stopError: null,
-      adoptedEventsWhileRecording: 0,
-      adoptedEventsAfterStop: 0,
-      ownPropertyAfterStop: false,
-      sheetsApplied: true,
+    const result = await ctx.page.evaluate(() => {
+      const w = window as unknown as IWindow;
+      Object.seal(document);
+
+      const recording = w.startRecording();
+      document.adoptedStyleSheets = [new CSSStyleSheet()];
+      return {
+        started: recording !== null,
+        sheetsApplied: document.adoptedStyleSheets.length === 1,
+        stopError: recording?.stop(),
+        adopted: recording?.adoptedEvents(),
+      };
     });
+
+    expect(result.started).toBe(true);
+    expect(result.sheetsApplied).toBe(true);
+    expect(result.stopError).toBeNull();
+    expect(result.adopted).toBe(0);
   });
 });
 
