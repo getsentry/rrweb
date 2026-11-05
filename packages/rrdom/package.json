@@ -47,7 +47,7 @@
     "@sentry/rrweb-types": "2.45.0",
     "jsdom": "^25.0.0",
     "puppeteer": "^24.0.0",
-    "typescript": "^4.9.0",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.6"

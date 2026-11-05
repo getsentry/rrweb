@@ -26,7 +26,7 @@ void (async () => {
   }
   await Browser.storage.sync.set({
     settings,
-  } as SyncData);
+  });
 
   // When tab is changed during the recording process, pause recording in the old tab and start a new one in the new tab.
   Browser.tabs.onActivated.addListener((activeInfo) => {

@@ -71,7 +71,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "typescript": "^4.7.3",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.6"

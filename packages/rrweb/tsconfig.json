@@ -3,7 +3,7 @@
   "include": ["src"],
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "target": "ES2020",
     "noImplicitAny": true,
     "strictNullChecks": true,

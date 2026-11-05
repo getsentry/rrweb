@@ -429,12 +429,9 @@ export class BaseRRElement extends BaseRRNode implements IRRElement {
   }
 
   public get classList(): ClassList {
-    return new ClassList(
-      this.attributes.class as string | undefined,
-      (newClassName) => {
-        this.attributes.class = newClassName;
-      },
-    );
+    return new ClassList(this.attributes.class, (newClassName) => {
+      this.attributes.class = newClassName;
+    });
   }
 
   public get id() {

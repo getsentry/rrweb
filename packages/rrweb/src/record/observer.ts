@@ -498,13 +498,7 @@ function initInputObserver({
       !target ||
       !tagName ||
       INPUT_TAGS.indexOf(tagName) < 0 ||
-      isBlocked(
-        target as Node,
-        blockClass,
-        blockSelector,
-        unblockSelector,
-        true,
-      )
+      isBlocked(target, blockClass, blockSelector, unblockSelector, true)
     ) {
       return;
     }
@@ -532,7 +526,7 @@ function initInputObserver({
     });
 
     const forceMask = needMaskingText(
-      target as Node,
+      target,
       maskTextClass,
       maskTextSelector,
       unmaskTextClass,
@@ -646,11 +640,6 @@ function initInputObserver({
   });
 }
 
-type GroupingCSSRule =
-  | CSSGroupingRule
-  | CSSMediaRule
-  | CSSSupportsRule
-  | CSSConditionRule;
 type GroupingCSSRuleTypes =
   | typeof CSSGroupingRule
   | typeof CSSMediaRule
@@ -670,9 +659,7 @@ function getNestedCSSRulePositions(rule: CSSRule): number[] {
       (hasNestedCSSRule('CSSConditionRule') &&
         childRule.parentRule instanceof CSSConditionRule)
     ) {
-      const rules = Array.from(
-        (childRule.parentRule as GroupingCSSRule).cssRules,
-      );
+      const rules = Array.from(childRule.parentRule.cssRules);
       const index = rules.indexOf(childRule);
       pos.unshift(index);
     } else if (childRule.parentStyleSheet) {
@@ -699,7 +686,7 @@ function getIdAndStyleId(
 } {
   let id, styleId;
   if (!sheet) return {};
-  if (sheet.ownerNode) id = mirror.getId(sheet.ownerNode as Node);
+  if (sheet.ownerNode) id = mirror.getId(sheet.ownerNode);
   else styleId = styleMirror.getId(sheet);
   return {
     styleId,
@@ -1183,7 +1170,11 @@ function initFontObserver({ fontCb, doc }: observerParam): listenerHandler {
     source: string | ArrayBufferLike,
     descriptors?: FontFaceDescriptors,
   ) {
-    const fontFace = new originalFontFace(family, source, descriptors);
+    const fontFace = new originalFontFace(
+      family,
+      source as string | BufferSource,
+      descriptors,
+    );
     fontMap.set(fontFace, {
       family,
       buffer: typeof source !== 'string',

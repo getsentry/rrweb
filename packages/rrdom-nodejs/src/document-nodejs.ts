@@ -224,10 +224,12 @@ export class RRElement extends BaseRRElement {
   }
 
   appendChild(newChild: BaseRRNode): BaseRRNode {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- the type rollup's TypeScript 5 needs it
     return super.appendChild(newChild) as BaseRRNode;
   }
 
   insertBefore(newChild: BaseRRNode, refChild: BaseRRNode | null): BaseRRNode {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- the type rollup's TypeScript 5 needs it
     return super.insertBefore(newChild, refChild) as BaseRRNode;
   }
 

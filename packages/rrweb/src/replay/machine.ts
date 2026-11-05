@@ -80,6 +80,7 @@ type PlayerAssets = {
 };
 export function createPlayerService(
   context: PlayerContext,
+  // eslint-disable-next-line @typescript-eslint/unbound-method -- the Replayer binds both in its constructor
   { getCastFn, applyEventsSynchronously, emitter }: PlayerAssets,
 ) {
   const playerMachine = createMachine<PlayerContext, PlayerEvent, PlayerState>(

@@ -2,7 +2,7 @@ import { parse } from './css';
 import {
   serializedNodeWithId,
   NodeType,
-  tagMap,
+  type tagMap,
   elementNode,
   BuildCache,
   legacyAttributes,

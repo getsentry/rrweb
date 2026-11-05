@@ -211,9 +211,7 @@ export class Mirror implements IMirror<Node> {
     this.idNodeMap.delete(id);
 
     if (n.childNodes) {
-      n.childNodes.forEach((childNode) =>
-        this.removeNodeFromMap(childNode as unknown as Node),
-      );
+      n.childNodes.forEach((childNode) => this.removeNodeFromMap(childNode));
     }
 
     if (isElement(n) && n.shadowRoot) {
