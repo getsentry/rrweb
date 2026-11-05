@@ -29,7 +29,9 @@ import StyleSheetTextMutation from './events/style-sheet-text-mutation';
 import canvasInIframe from './events/canvas-in-iframe';
 import adoptedStyleSheet from './events/adopted-style-sheet';
 import adoptedStyleSheetModification from './events/adopted-style-sheet-modification';
-import adoptedStyleSheetRemovedHost from './events/adopted-style-sheet-removed-host';
+import adoptedStyleSheetRemovedHost, {
+  inIframeEvents as adoptedStyleSheetRemovedHostInIframe,
+} from './events/adopted-style-sheet-removed-host';
 import documentReplacementEvents from './events/document-replacement';
 import hoverInIframeShadowDom from './events/iframe-shadowdom-hover';
 import customElementDefineClass from './events/custom-element-define-class';
@@ -1086,6 +1088,29 @@ describe('replayer', function () {
               .shadowRoot!.querySelector('span')!,
           ).color,
       ),
+    ).toEqual('rgb(255, 0, 0)');
+  });
+
+  it('keeps adopted stylesheets on seek when their first host in an iframe was removed', async () => {
+    await page.evaluate(`
+      events = ${JSON.stringify(adoptedStyleSheetRemovedHostInIframe)};
+      const { Replayer } = rrweb;
+      var replayer = new Replayer(events);
+      replayer.pause(500);
+    `);
+    await waitForRAF(page);
+    const iframe = await page.$('iframe');
+    const contentDocument = await iframe!.contentFrame()!;
+    expect(
+      await contentDocument!.evaluate(() => {
+        const nestedDocument =
+          document.querySelector('iframe')!.contentDocument!;
+        const span = nestedDocument
+          .querySelector('#host2')!
+          .shadowRoot!.querySelector('span')!;
+
+        return nestedDocument.defaultView!.getComputedStyle(span).color;
+      }),
     ).toEqual('rgb(255, 0, 0)');
   });
 
