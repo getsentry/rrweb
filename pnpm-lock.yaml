@@ -173,6 +173,7 @@ overrides:
   markdownlint-cli>markdown-it: ^14.3.1
   markdownlint-cli>smol-toml: ~1.9.1
   firefox-profile: 4.7.1
+  tinypool: ^2.1.2
   downlevel-dts>typescript: 5.8.0-dev.20241219
 
 importers:
@@ -4837,9 +4838,9 @@ packages:
     resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
     engines: {node: '>=12.0.0'}
 
-  tinypool@1.1.1:
-    resolution: {integrity: sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  tinypool@2.2.0:
+    resolution: {integrity: sha512-jBrmx4lYmaC9k/mgPbylxs7kBUxHtD8256up+HjLaDFfXScKJQyil+SWXSvhAtT7XHo+yTVlpB81PGmHP8oLSQ==}
+    engines: {node: ^20.0.0 || >=22.0.0}
 
   tinyrainbow@2.0.0:
     resolution: {integrity: sha512-op4nsTR47R6p0vMUUoYl/a+ljLFVtlfaXkLQmqfLR1qHma1h/ysYk4hEXZ880bf2CYgTskvTa/e196Vd5dDQXw==}
@@ -9616,7 +9617,7 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
 
-  tinypool@1.1.1: {}
+  tinypool@2.2.0: {}
 
   tinyrainbow@2.0.0: {}
 
@@ -9980,7 +9981,7 @@ snapshots:
       tinybench: 2.9.0
       tinyexec: 0.3.2
       tinyglobby: 0.2.16
-      tinypool: 1.1.1
+      tinypool: 2.2.0
       tinyrainbow: 2.0.0
       vite: 6.4.5(@types/node@18.19.68)(jiti@2.6.1)(terser@5.46.1)(yaml@2.6.1)
       vite-node: 3.2.4(@types/node@18.19.68)(jiti@2.6.1)(supports-color@8.1.1)(terser@5.46.1)(yaml@2.6.1)
@@ -10023,7 +10024,7 @@ snapshots:
       tinybench: 2.9.0
       tinyexec: 0.3.2
       tinyglobby: 0.2.16
-      tinypool: 1.1.1
+      tinypool: 2.2.0
       tinyrainbow: 2.0.0
       vite: 6.4.5(@types/node@22.20.5)(jiti@2.6.1)(terser@5.46.1)(yaml@2.6.1)
       vite-node: 3.2.4(@types/node@22.20.5)(jiti@2.6.1)(supports-color@8.1.1)(terser@5.46.1)(yaml@2.6.1)
