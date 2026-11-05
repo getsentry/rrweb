@@ -4,7 +4,7 @@ Published as `@sentry/*`. Main branch: `sentry-v2`.
 
 ## Package Manager
 
-Use **yarn** (v1): `yarn install`, `yarn build:all`, `yarn test`
+Use **pnpm** (12): `pnpm install`, `pnpm build:all`, `pnpm test`
 
 ## Monorepo Layout
 
@@ -20,19 +20,19 @@ Run from package directory (`cd packages/<pkg>`):
 
 | Task      | Command                       |
 | --------- | ----------------------------- |
-| Build     | `yarn build`                  |
-| Test      | `yarn test`                   |
-| Typecheck | `yarn check-types`            |
-| Lint      | `yarn eslint path/to/file.ts` |
+| Build     | `pnpm build`                  |
+| Test      | `pnpm test`                   |
+| Typecheck | `pnpm check-types`            |
+| Lint      | `pnpm eslint path/to/file.ts` |
 
 ### packages/rrweb E2E
 
-- `yarn test:headless` — Build + Puppeteer (headless)
-- `yarn retest` — Run without rebuilding
+- `pnpm test:headless` — Build + Puppeteer (headless)
+- `pnpm retest` — Run without rebuilding
 
 ## Build Notes
 
-- `yarn build:all` before cross-package work (Turborepo ordering)
+- `pnpm build:all` before cross-package work (Turborepo ordering)
 - Tests in `packages/rrweb` require build first (`test:headless` handles this)
 - Vitest is the test runner; E2E uses Puppeteer
 

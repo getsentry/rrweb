@@ -7,8 +7,8 @@
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "prepack": "yarn run build",
-    "lint": "yarn eslint src/**/*.ts"
+    "prepack": "pnpm run build",
+    "lint": "pnpm exec eslint src/**/*.ts"
   },
   "keywords": [
     "rrweb",

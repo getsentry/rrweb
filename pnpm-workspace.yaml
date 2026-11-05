@@ -1,0 +1,34 @@
+packages:
+  - 'packages/*'
+  - 'packages/plugins/*'
+
+# Yarn 1 did not install peer dependencies, and some packages break with the versions that pnpm would add.
+autoInstallPeers: false
+strictPeerDependencies: false
+# The packages depend on each other by exact version, not with `workspace:`.
+# This links them from the workspace instead of installing them from npm.
+linkWorkspacePackages: true
+# Lockfiles written by Dependabot or `pnpm add` would otherwise fail `pnpm dedupe --check` in CI.
+autoDedupe: true
+
+overrides:
+  cssom: npm:rrweb-cssom@0.6.0
+  '@types/dom-webcodecs': 0.1.5
+  '@types/estree': ^1.0.0
+  vite: ^6.4.2
+  tmp: 0.2.7
+  shell-quote: ^1.10.0
+  markdownlint-cli>js-yaml: ^4.3.2
+  markdownlint-cli>markdown-it: ^14.3.1
+  markdownlint-cli>smol-toml: ~1.9.1
+  firefox-profile: 4.7.1
+  # downlevel-dts asks for `typescript@next`, which now resolves to the native TypeScript 7 without a JS API.
+  # This keeps the version yarn.lock had resolved.
+  downlevel-dts>typescript: 5.8.0-dev.20241219
+
+# Dependencies whose install scripts run. pnpm 11+ fails the install on build scripts that are not listed.
+# `false` only for scripts that are not needed on supported Node versions.
+allowBuilds:
+  esbuild: true
+  puppeteer: true
+  spawn-sync: false

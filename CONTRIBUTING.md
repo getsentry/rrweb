@@ -26,14 +26,15 @@ clear and has sufficient instructions to be able to reproduce the issue.
 
 ## Run locally
 
-- Install dependencies: `yarn`
-- Build all packages: (in `/`) `yarn build:all` or `yarn dev`
-- Run recorder on a website: (in `/packages/rrweb`) `yarn repl`
-- Run a cobrowsing/mirroring session locally: (in `/packages/rrweb`) `yarn live-stream`
-- Build individual packages: `yarn build` or `yarn dev`
-- Test: `yarn test` or `yarn test:watch`
-- Lint: `yarn lint`
-- Rewrite files with prettier: `yarn format` or `yarn format:head`
+- Install [pnpm](https://pnpm.io/installation) 12 or newer. pnpm switches to the version pinned in `packageManager`, and its `node` shim runs the version in `devEngines.runtime` (set it up once with `pnpm runtime set node 22 -g`).
+- Install dependencies: `pnpm install`
+- Build all packages: (in `/`) `pnpm build:all` or `pnpm dev`
+- Run recorder on a website: (in `/packages/rrweb`) `pnpm repl`
+- Run a cobrowsing/mirroring session locally: (in `/packages/rrweb`) `pnpm live-stream`
+- Build individual packages: `pnpm build` or `pnpm dev`
+- Test: `pnpm test` or `pnpm test:watch`
+- Lint: `pnpm lint`
+- Rewrite files with prettier: `pnpm format` or `pnpm format:head`
 
 ## Coding style
 

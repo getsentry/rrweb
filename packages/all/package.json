@@ -15,7 +15,7 @@
     "test:watch": "vitest watch",
     "check-types": "tsc -noEmit",
     "prepack": "npm run build",
-    "lint": "yarn eslint src/**/*.ts"
+    "lint": "pnpm exec eslint src/**/*.ts"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/all#readme",
   "bugs": {
@@ -49,6 +49,7 @@
     "package.json"
   ],
   "devDependencies": {
+    "@sentry/rrweb-snapshot": "2.45.0",
     "puppeteer": "^24.0.0",
     "typescript": "^4.7.3",
     "vite": "^6.4.4",
