@@ -5,9 +5,7 @@
   "printWidth": 80,
   "sortPackageJson": false,
   "ignorePatterns": [
-    "packages/rrweb-player/.svelte-kit/generated/*",
-    "packages/rrweb-player/.svelte-kit/ambient.d.ts",
-    "packages/rrweb-player/.svelte-kit/non-ambient.d.ts",
+    "**/tsconfig.json",
     "packages/rrweb-player/.svelte-kit/**",
     "**/test/html/**",
     "**/test/iframe-html/**",

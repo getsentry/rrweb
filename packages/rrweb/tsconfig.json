@@ -10,7 +10,11 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "build",
-    "lib": ["es6", "dom", "es2021.WeakRef"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2021.WeakRef"
+    ],
     "rootDir": "src",
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "types": [

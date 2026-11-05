@@ -8,7 +8,9 @@
     "incremental": true,
     "resolveJsonModule": true,
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ]
     },
     "jsx": "react-jsx"
   },
