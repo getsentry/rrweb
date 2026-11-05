@@ -2190,7 +2190,6 @@ export class Replayer {
 
   private applyAdoptedStyleSheet(data: adoptedStyleSheetData) {
     const targetHost = this.mirror.getNode(data.id);
-    if (!targetHost) return;
     // Create StyleSheet objects which will be adopted after.
     data.styles?.forEach((style) => {
       let newStyleSheet: CSSStyleSheet | null = null;
@@ -2199,7 +2198,10 @@ export class Replayer {
        * The replayer has to get the correct host window to recreate a StyleSheetObject.
        */
       let hostWindow: IWindow | null = null;
-      if (hasShadowRoot(targetHost))
+      // The host can be gone already (e.g. removed during a virtual DOM seek),
+      // but later events may still adopt these styleIds, so create them anyway.
+      if (!targetHost) hostWindow = this.iframe.contentWindow as IWindow | null;
+      else if (hasShadowRoot(targetHost))
         hostWindow = targetHost.ownerDocument?.defaultView || null;
       else if (targetHost.nodeName === '#document')
         hostWindow = (targetHost as Document).defaultView;
@@ -2220,6 +2222,8 @@ export class Replayer {
         // In case some browsers don't support constructing StyleSheet.
       }
     });
+
+    if (!targetHost) return;
 
     const MAX_RETRY_TIME = 10;
     let count = 0;
