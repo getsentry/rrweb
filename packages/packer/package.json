@@ -16,7 +16,7 @@
     "test:watch": "vitest watch",
     "check-types": "tsc -noEmit",
     "prepack": "npm run build",
-    "lint": "yarn eslint src/**/*.ts"
+    "lint": "pnpm exec eslint src/**/*.ts"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/packer#readme",
   "bugs": {
