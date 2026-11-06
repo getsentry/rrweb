@@ -268,6 +268,9 @@ importers:
       vite-plugin-dts:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@22.20.5)(rollup@4.60.0)(supports-color@8.1.1)(typescript@4.9.5)(vite@6.4.5(@types/node@22.20.5)(jiti@2.6.1)(terser@5.46.1)(yaml@2.6.1))
+      vitest:
+        specifier: ^3.2.6
+        version: 3.2.6(@types/debug@4.1.13)(@types/node@22.20.5)(jiti@2.6.1)(jsdom@25.0.1(supports-color@8.1.1))(supports-color@8.1.1)(terser@5.46.1)(yaml@2.6.1)
 
   packages/all:
     dependencies:
