@@ -22,6 +22,7 @@ import {
   patch,
   nowTimestamp,
   setTimeout,
+  runAll,
 } from '../utils';
 import type {
   observerParam,
@@ -972,45 +973,97 @@ export function initAdoptedStyleSheetObserver(
         'adoptedStyleSheets',
       )
     : undefined;
+  // What `host` itself defines, if anything, as opposed to what it inherits
+  // from the prototype. Usually nothing.
+  const previousAdoptedStyleSheetsDescriptor = Object.getOwnPropertyDescriptor(
+    host,
+    'adoptedStyleSheets',
+  );
   if (
     hostId === null ||
     hostId === -1 ||
     !patchTarget ||
-    !originalPropertyDescriptor
+    !originalPropertyDescriptor ||
+    // Another script locked `host` itself: it put a locked property on it, or
+    // sealed or froze it. Patching would throw, so we don't. Full snapshots
+    // still capture the adopted stylesheets; we only miss changes between
+    // snapshots.
+    previousAdoptedStyleSheetsDescriptor?.configurable === false ||
+    !Object.isExtensible(host)
   )
     return () => {
       //
     };
 
-  // Patch adoptedStyleSheets by overriding the original one.
+  // Set to false on teardown. If the override can't be removed, it stays on
+  // `host` but stops recording.
+  let adoptedStyleSheetsOverrideIsActive = true;
+  // Kept in a variable so that teardown can check whether the property on
+  // `host` is still ours: the descriptor's `set` is then this exact function.
+  const adoptedStyleSheetsSetter = function (
+    this: Document | ShadowRoot,
+    sheets: CSSStyleSheet[],
+  ) {
+    originalPropertyDescriptor.set?.call(this, sheets);
+    if (
+      adoptedStyleSheetsOverrideIsActive &&
+      hostId !== null &&
+      hostId !== -1
+    ) {
+      try {
+        stylesheetManager.adoptStyleSheets(sheets, hostId);
+      } catch (e) {
+        // for safety
+      }
+    }
+  };
+
+  // Patch adoptedStyleSheets by defining an own property on `host`. It shadows
+  // the property inherited from `patchTarget.prototype`, which is where
+  // `originalPropertyDescriptor` comes from. If another script already put a
+  // configurable own property on `host`, ours replaces it, and teardown puts
+  // `previousAdoptedStyleSheetsDescriptor` back.
+  //
+  // Always `configurable: true`, even when `originalPropertyDescriptor` isn't,
+  // so that teardown can remove the patch. The flag only applies to our own
+  // property on `host`. The property on `patchTarget.prototype` isn't touched,
+  // so a lock that another script put there stays in place, and shadowing a
+  // locked inherited property with an own property is allowed. Copying
+  // `originalPropertyDescriptor.configurable` instead would lock our own
+  // property whenever the inherited one is locked, and removing it on stop
+  // would throw "Cannot redefine property".
   Object.defineProperty(host, 'adoptedStyleSheets', {
-    configurable: originalPropertyDescriptor.configurable,
+    configurable: true,
     enumerable: originalPropertyDescriptor.enumerable,
     get(): CSSStyleSheet[] {
       return originalPropertyDescriptor.get?.call(this) as CSSStyleSheet[];
     },
-    set(sheets: CSSStyleSheet[]) {
-      const result = originalPropertyDescriptor.set?.call(this, sheets);
-      if (hostId !== null && hostId !== -1) {
-        try {
-          stylesheetManager.adoptStyleSheets(sheets, hostId);
-        } catch (e) {
-          // for safety
-        }
-      }
-      return result;
-    },
+    set: adoptedStyleSheetsSetter,
   });
 
   return callbackWrapper(() => {
-    Object.defineProperty(host, 'adoptedStyleSheets', {
-      configurable: originalPropertyDescriptor.configurable,
-      enumerable: originalPropertyDescriptor.enumerable,
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      get: originalPropertyDescriptor.get,
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      set: originalPropertyDescriptor.set,
-    });
+    adoptedStyleSheetsOverrideIsActive = false;
+    // In case another script has replaced our property since we patched it,
+    // leave theirs alone.
+    const currentDescriptor = Object.getOwnPropertyDescriptor(
+      host,
+      'adoptedStyleSheets',
+    );
+    if (currentDescriptor?.set !== adoptedStyleSheetsSetter) return;
+    // In case the descriptor has been changed during recording to make our
+    // property non-configurable (by redefining it, or by sealing or freezing
+    // `host`), use `Reflect`, which returns false instead of throwing. Our
+    // property then stays behind and only forwards to the browser's setter,
+    // because `adoptedStyleSheetsOverrideIsActive` is false.
+    if (previousAdoptedStyleSheetsDescriptor) {
+      Reflect.defineProperty(
+        host,
+        'adoptedStyleSheets',
+        previousAdoptedStyleSheetsDescriptor,
+      );
+    } else {
+      Reflect.deleteProperty(host, 'adoptedStyleSheets');
+    }
   });
 }
 
@@ -1373,21 +1426,26 @@ export function initObservers(
   }
 
   return callbackWrapper(() => {
-    forEachMutationBuffer((b) => b.reset());
-    mutationObserver?.disconnect();
-    mousemoveHandler();
-    mouseInteractionHandler();
-    scrollHandler();
-    viewportResizeHandler();
-    inputHandler();
-    mediaInteractionHandler();
-    styleSheetObserver();
-    adoptedStyleSheetObserver();
-    styleDeclarationObserver();
-    fontObserver();
-    selectionObserver();
-    customElementObserver();
-    pluginHandlers.forEach((h) => h());
+    const errors = runAll([
+      () => forEachMutationBuffer((b) => b.reset()),
+      () => mutationObserver?.disconnect(),
+      mousemoveHandler,
+      mouseInteractionHandler,
+      scrollHandler,
+      viewportResizeHandler,
+      inputHandler,
+      mediaInteractionHandler,
+      styleSheetObserver,
+      adoptedStyleSheetObserver,
+      styleDeclarationObserver,
+      fontObserver,
+      selectionObserver,
+      customElementObserver,
+      ...pluginHandlers,
+    ]);
+    // Rethrow so the error handler and `record()`'s stop function still see
+    // the failure.
+    if (errors.length > 0) throw errors[0];
   });
 }
 
