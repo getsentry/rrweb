@@ -1,6 +1,6 @@
+import type { Mirror } from '@sentry/rrweb-snapshot';
 import {
   maskInputValue,
-  Mirror,
   getInputType,
   getInputValue,
   shouldMaskInput,
@@ -9,6 +9,7 @@ import {
   toUpperCase,
 } from '@sentry/rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
+import type { StyleSheetMirror } from '../utils';
 import {
   throttle,
   on,
@@ -19,7 +20,6 @@ import {
   isBlocked,
   legacy_isTouchEvent,
   patch,
-  StyleSheetMirror,
   nowTimestamp,
   setTimeout,
 } from '../utils';
@@ -28,19 +28,21 @@ import type {
   MutationBufferParam,
   OnMutationHelpers,
 } from '../types';
-import {
+import type {
   mousePosition,
-  MouseInteractions,
-  PointerTypes,
   listenerHandler,
   inputValue,
   hookResetter,
-  IncrementalSource,
-  MediaInteractions,
   fontParam,
   IWindow,
   SelectionRange,
   hooksParam,
+} from '@sentry/rrweb-types';
+import {
+  MouseInteractions,
+  PointerTypes,
+  IncrementalSource,
+  MediaInteractions,
 } from '@sentry/rrweb-types';
 import MutationBuffer from './mutation';
 import { callbackWrapper } from './error-handler';

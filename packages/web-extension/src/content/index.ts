@@ -1,16 +1,18 @@
 import Browser from 'webextension-polyfill';
 import { nanoid } from 'nanoid';
 import type { eventWithTime } from '@sentry/rrweb-types';
-import {
+import type {
   LocalData,
-  LocalDataKey,
-  RecorderStatus,
-  ServiceName,
   Session,
   RecordStartedMessage,
   RecordStoppedMessage,
-  MessageName,
   EmitEventMessage,
+} from '~/types';
+import {
+  LocalDataKey,
+  RecorderStatus,
+  ServiceName,
+  MessageName,
 } from '~/types';
 import Channel from '~/utils/channel';
 import { isInCrossOriginIFrame } from '~/utils';

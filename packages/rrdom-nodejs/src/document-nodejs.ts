@@ -2,6 +2,11 @@
 import { NodeType as RRNodeType } from '@sentry/rrweb-snapshot';
 import type { NWSAPI } from 'nwsapi';
 import type { CSSStyleDeclaration as CSSStyleDeclarationType } from 'cssstyle';
+import type {
+  BaseRRNode,
+  IRRDocument,
+  CSSStyleDeclaration,
+} from '@sentry/rrdom';
 import {
   BaseRRCDATASection,
   BaseRRComment,
@@ -9,11 +14,8 @@ import {
   BaseRRDocumentType,
   BaseRRElement,
   BaseRRMediaElement,
-  BaseRRNode,
   BaseRRText,
   ClassList,
-  IRRDocument,
-  CSSStyleDeclaration,
 } from '@sentry/rrdom';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const nwsapi = require('nwsapi');

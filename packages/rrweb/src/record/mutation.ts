@@ -1,3 +1,4 @@
+import type { Mirror } from '@sentry/rrweb-snapshot';
 import {
   serializeNodeWithId,
   transformAttribute,
@@ -6,7 +7,6 @@ import {
   isShadowRoot,
   needMaskingText,
   maskInputValue,
-  Mirror,
   isNativeShadowDom,
   getInputType,
   toLowerCase,

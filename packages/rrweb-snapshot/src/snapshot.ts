@@ -1,7 +1,6 @@
-import {
+import type {
   serializedNode,
   serializedNodeWithId,
-  NodeType,
   attributes,
   MaskInputOptions,
   SlimDOMOptions,
@@ -13,6 +12,7 @@ import {
   serializedElementNodeWithId,
   MaskAttributeFn,
 } from './types';
+import { NodeType } from './types';
 import {
   Mirror,
   is2DCanvasBlank,

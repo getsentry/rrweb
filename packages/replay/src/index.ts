@@ -6,4 +6,5 @@ import {
 } from '@sentry/rrweb';
 import '@sentry/rrweb/dist/style.css';
 
-export { Replayer, playerConfig, PlayerMachineState, SpeedMachineState };
+export { Replayer };
+export type { playerConfig, PlayerMachineState, SpeedMachineState };

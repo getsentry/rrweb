@@ -1,13 +1,15 @@
+import type {
+  BuildCache,
+  Mirror,
+  attributes,
+  serializedElementNodeWithId,
+} from '@sentry/rrweb-snapshot';
 import {
   rebuild,
   buildNodeWithSN,
   NodeType,
-  BuildCache,
   createCache,
-  Mirror,
   createMirror,
-  attributes,
-  serializedElementNodeWithId,
   toLowerCase,
 } from '@sentry/rrweb-snapshot';
 import {
@@ -42,21 +44,16 @@ import {
   type SpeedMachineState,
 } from './machine';
 import type { playerConfig, missingNodeMap } from '../types';
-import {
-  EventType,
-  IncrementalSource,
+import type {
   fullSnapshotEvent,
   eventWithTime,
-  MouseInteractions,
   playerMetaData,
   viewportResizeDimension,
   addedNodeMutation,
   incrementalSnapshotEvent,
   incrementalData,
-  ReplayerEvents,
   Handler,
   Emitter,
-  MediaInteractions,
   mutationData,
   scrollData,
   inputData,
@@ -74,10 +71,17 @@ import {
   mousemoveData,
 } from '@sentry/rrweb-types';
 import {
+  EventType,
+  IncrementalSource,
+  MouseInteractions,
+  ReplayerEvents,
+  MediaInteractions,
+} from '@sentry/rrweb-types';
+import type { AppendedIframe } from '../utils';
+import {
   polyfill,
   queueToResolveTrees,
   iterateResolveTree,
-  AppendedIframe,
   getBaseDimension,
   hasShadowRoot,
   isSerializedIframe,
@@ -2434,5 +2438,5 @@ export {
   type SpeedState,
   type PlayerMachineState,
   type SpeedMachineState,
-  playerConfig,
+  type playerConfig,
 };

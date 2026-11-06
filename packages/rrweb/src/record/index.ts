@@ -1,9 +1,5 @@
-import {
-  snapshot,
-  MaskInputOptions,
-  SlimDOMOptions,
-  createMirror,
-} from '@sentry/rrweb-snapshot';
+import type { MaskInputOptions, SlimDOMOptions } from '@sentry/rrweb-snapshot';
+import { snapshot, createMirror } from '@sentry/rrweb-snapshot';
 import { getIFrameContentWindow } from '@sentry/rrdom';
 import {
   initObservers,
@@ -22,11 +18,9 @@ import {
   nowTimestamp,
 } from '../utils';
 import type { recordOptions } from '../types';
-import {
-  EventType,
+import type {
   eventWithoutTime,
   eventWithTime,
-  IncrementalSource,
   listenerHandler,
   mutationCallbackParam,
   scrollCallback,
@@ -34,22 +28,17 @@ import {
   adoptedStyleSheetParam,
   IWindow,
 } from '@sentry/rrweb-types';
+import { EventType, IncrementalSource } from '@sentry/rrweb-types';
 import type { CrossOriginIframeMessageEventContent } from '../types';
-import {
-  IframeManager,
-  IframeManagerInterface,
-  IframeManagerNoop,
-} from './iframe-manager';
-import {
-  ShadowDomManager,
-  ShadowDomManagerInterface,
-  ShadowDomManagerNoop,
-} from './shadow-dom-manager';
-import {
+import type { IframeManagerInterface } from './iframe-manager';
+import { IframeManager, IframeManagerNoop } from './iframe-manager';
+import type { ShadowDomManagerInterface } from './shadow-dom-manager';
+import { ShadowDomManager, ShadowDomManagerNoop } from './shadow-dom-manager';
+import type {
   CanvasManagerConstructorOptions,
   CanvasManagerInterface,
-  CanvasManagerNoop,
 } from './observers/canvas/canvas-manager';
+import { CanvasManagerNoop } from './observers/canvas/canvas-manager';
 import { StylesheetManager } from './stylesheet-manager';
 import ProcessedNodeManager from './processed-node-manager';
 import {
