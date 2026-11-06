@@ -3,7 +3,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { describe, it, beforeEach, expect } from 'vitest';
+import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
   // adaptCssForReplay,
   addHoverClass,
@@ -233,6 +233,43 @@ describe('rebuild', function () {
       ) as HTMLElement;
       expect(node).toBeTruthy();
       expect(node.tagName.toLowerCase()).toBe('my-component');
+    });
+  });
+
+  describe('document', function () {
+    it('should replace leftover children when document.open() does not clear them', function () {
+      const doc = document.implementation.createHTMLDocument();
+      // browsers skip open() once the document's parser was aborted
+      // (e.g. by window.stop()), keeping the previous rebuild in place
+      vi.spyOn(doc, 'open').mockReturnValue(doc);
+      const snapshot = {
+        id: 1,
+        type: NodeType.Document,
+        childNodes: [
+          {
+            id: 2,
+            type: NodeType.DocumentType,
+            name: 'html',
+            publicId: '',
+            systemId: '',
+          },
+          {
+            id: 3,
+            type: NodeType.Element,
+            tagName: 'html',
+            attributes: {},
+            childNodes: [],
+          },
+        ],
+      } as const;
+
+      buildNodeWithSN(snapshot, { doc, mirror, hackCss: false, cache });
+
+      expect(Array.from(doc.childNodes).map((n) => n.nodeName)).toEqual([
+        'html',
+        'HTML',
+      ]);
+      expect(doc.documentElement).toBe(mirror.getNode(3));
     });
   });
 
