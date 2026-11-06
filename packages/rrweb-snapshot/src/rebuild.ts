@@ -430,9 +430,9 @@ export function buildNodeWithSN(
     // close before open to make sure document was closed
     doc.close();
     doc.open();
-    // open() is a no-op once the document's parser was aborted (e.g. by
-    // window.stop()), which leaves the previous rebuild in place and makes the
-    // appends below throw a HierarchyRequestError
+    // once the document's parser was aborted (e.g. by window.stop()), open()
+    // returns without throwing and without clearing the previous rebuild,
+    // which would make the appends below throw a HierarchyRequestError
     while (doc.firstChild) {
       doc.removeChild(doc.firstChild);
     }
