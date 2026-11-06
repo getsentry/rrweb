@@ -39,9 +39,8 @@ export function App() {
     void Browser.storage.local.get(LocalDataKey.recorderStatus).then((data) => {
       const localData = data as LocalData;
       if (!localData || !localData[LocalDataKey.recorderStatus]) return;
-      const { status, startTimestamp, pausedTimestamp } = localData[
-        LocalDataKey.recorderStatus
-      ];
+      const { status, startTimestamp, pausedTimestamp } =
+        localData[LocalDataKey.recorderStatus];
       setStatus(status);
       if (startTimestamp && pausedTimestamp)
         setStartTime(Date.now() - pausedTimestamp + startTimestamp || 0);

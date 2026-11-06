@@ -39,7 +39,7 @@ Run from package directory (`cd packages/<pkg>`):
 ## Key Conventions
 
 - ES modules (`"type": "module"`), dual CJS/ESM via Vite
-- Style: `.eslintrc.js` + `.prettierrc` (don't duplicate rules here)
+- Style: `.eslintrc.js` + `.oxfmtrc.json` (don't duplicate rules here)
 - No changesets: Craft generates `CHANGELOG.md` from PR titles at release
 
 ## Commit Attribution

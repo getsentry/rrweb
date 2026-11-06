@@ -3,7 +3,7 @@
   // These root workspace files are reused in workspaces and may affect their build output
   "globalDependencies": [
     ".eslintrc.js",
-    ".prettierrc",
+    ".oxfmtrc.json",
     "vite.config.defaults.ts",
     "tsconfig.json"
   ],

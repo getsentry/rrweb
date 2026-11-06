@@ -191,8 +191,8 @@ function record<T = eventWithTime>(
           checkbox: true,
         }
       : _maskInputOptions !== undefined
-      ? _maskInputOptions
-      : {};
+        ? _maskInputOptions
+        : {};
 
   const slimDOMOptions: SlimDOMOptions =
     _slimDOMOptions === true || _slimDOMOptions === 'all'
@@ -211,8 +211,8 @@ function record<T = eventWithTime>(
           headMetaDescKeywords: _slimDOMOptions === 'all',
         }
       : _slimDOMOptions
-      ? _slimDOMOptions
-      : {};
+        ? _slimDOMOptions
+        : {};
 
   polyfill();
 
