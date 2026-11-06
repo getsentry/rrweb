@@ -26,6 +26,11 @@ overrides:
   tinypool: ^2.1.2
   # get-uri (via puppeteer's proxy agent) pins basic-ftp 5, which has a high advisory (GHSA-c475-qrg2-pj4r).
   basic-ftp: ^6.2.1
+  # @devicefarmer/adbkit (via the web extension's tooling) resolves node-forge 1.4.0, which has a high advisory.
+  node-forge: ^1.4.1
+  # puppeteer 24's browser downloader uses extract-zip, which has high advisories and no patched release.
+  # @puppeteer/browsers 3 dropped it and keeps the same API, while puppeteer still pins its Chrome version.
+  '@puppeteer/browsers': ^3.2.6
   # downlevel-dts asks for `typescript@next`, which now resolves to the native TypeScript 7 without a JS API.
   # This keeps the version yarn.lock had resolved.
   downlevel-dts>typescript: 5.8.0-dev.20241219
