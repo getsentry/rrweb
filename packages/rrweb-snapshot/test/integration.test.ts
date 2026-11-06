@@ -29,6 +29,12 @@ const startServer = (defaultPort: number = 3030) =>
     };
     const s = http.createServer((req, res) => {
       const parsedUrl = url.parse(req.url!);
+      if (parsedUrl.pathname === '/no-content') {
+        // a navigation to a 204 starts but never commits a new document
+        res.statusCode = 204;
+        res.end();
+        return;
+      }
       const sanitizePath = path
         .normalize(parsedUrl.pathname!)
         .replace(/^(\.\.[\/\\])+/, '');
@@ -475,4 +481,146 @@ describe('shadow DOM integration tests', function (this: ISuite) {
     );
     assertSnapshot(snapshotResult);
   });
+});
+
+describe('rebuild after the target document parser was aborted', function (this: ISuite) {
+  vi.setConfig({ testTimeout: 30_000 });
+  let server: ISuite['server'];
+  let serverURL: ISuite['serverURL'];
+  let browser: ISuite['browser'];
+  let code: ISuite['code'];
+
+  beforeAll(async () => {
+    server = await startServer();
+    serverURL = getServerURL(server);
+    browser = await puppeteer.launch({
+      // headless: false,
+      args: ['--no-sandbox'],
+    });
+
+    code = fs.readFileSync(
+      path.resolve(__dirname, '../dist/rrweb-snapshot.umd.cjs'),
+      'utf-8',
+    );
+  });
+
+  afterAll(async () => {
+    await browser.close();
+    await server.close();
+  });
+
+  // A replayer rebuilds every full snapshot into the same iframe and relies on
+  // doc.close(); doc.open() to empty it first. Once the iframe document's
+  // parser has been aborted, browsers make open() a silent no-op, so the
+  // previous rebuild stays in place.
+  const abortParser: Record<string, (page: puppeteer.Page) => Promise<void>> = {
+    'window.stop()': async (page) => {
+      await page.evaluate(
+        `document.querySelector('iframe').contentWindow.stop();`,
+      );
+    },
+    'a link click that never commits a new document': async (page) => {
+      const point = (await page.evaluate(`(() => {
+          const iframe = document.querySelector('iframe');
+          const doc = iframe.contentDocument;
+          const link = doc.createElement('a');
+          link.href = '/no-content';
+          link.textContent = 'link';
+          link.style.cssText = 'display: block; width: 100px; height: 20px;';
+          doc.body.appendChild(link);
+          const frameRect = iframe.getBoundingClientRect();
+          const linkRect = link.getBoundingClientRect();
+          return {
+            x: frameRect.x + linkRect.x + 5,
+            y: frameRect.y + linkRect.y + 5,
+          };
+        })()`)) as { x: number; y: number };
+      await Promise.all([
+        page.waitForResponse((response) =>
+          response.url().endsWith('/no-content'),
+        ),
+        page.mouse.click(point.x, point.y),
+      ]);
+    },
+  };
+
+  for (const [trigger, abort] of Object.entries(abortParser)) {
+    it(`rebuilds cleanly after ${trigger}`, async () => {
+      const page: puppeteer.Page = await browser.newPage();
+      // console for debug
+      page.on('console', (msg) => console.log(msg.text()));
+      await page.goto(`${serverURL}/html`);
+      // same sandbox as the rrweb Replayer iframe
+      await page.setContent(
+        '<!DOCTYPE html><html><body><iframe sandbox="allow-same-origin"></iframe></body></html>',
+        { waitUntil: 'load' },
+      );
+      await page.evaluate(`${code};
+        window.rebuildWithText = (text) => {
+          const doc = document.querySelector('iframe').contentDocument;
+          rrwebSnapshot.rebuild(
+            {
+              id: 1,
+              type: 0,
+              childNodes: [
+                { id: 2, type: 1, name: 'html', publicId: '', systemId: '' },
+                {
+                  id: 3,
+                  type: 2,
+                  tagName: 'html',
+                  attributes: {},
+                  childNodes: [
+                    { id: 4, type: 2, tagName: 'head', attributes: {}, childNodes: [] },
+                    {
+                      id: 5,
+                      type: 2,
+                      tagName: 'body',
+                      attributes: {},
+                      childNodes: [{ id: 6, type: 3, textContent: text }],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              doc,
+              cache: rrwebSnapshot.createCache(),
+              mirror: rrwebSnapshot.createMirror(),
+            },
+          );
+          return [
+            ...Array.from(doc.childNodes).map((node) => node.nodeName),
+            doc.body.textContent,
+          ];
+        };
+      `);
+
+      expect(await page.evaluate(`rebuildWithText('first')`)).toEqual([
+        'html',
+        'HTML',
+        'first',
+      ]);
+
+      await abort(page);
+      await page.waitForFunction(
+        `document.querySelector('iframe').contentDocument.readyState !== 'loading'`,
+      );
+      // the scenario under test: open() no longer clears the document
+      expect(
+        await page.evaluate(`(() => {
+          const doc = document.querySelector('iframe').contentDocument;
+          doc.close();
+          doc.open();
+          return doc.childNodes.length;
+        })()`),
+      ).toBe(2);
+
+      expect(await page.evaluate(`rebuildWithText('second')`)).toEqual([
+        'html',
+        'HTML',
+        'second',
+      ]);
+      await page.close();
+    });
+  }
 });
