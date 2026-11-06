@@ -1,7 +1,6 @@
-import {
+import type {
   serializedNode,
   serializedNodeWithId,
-  NodeType,
   attributes,
   MaskInputOptions,
   SlimDOMOptions,
@@ -13,6 +12,7 @@ import {
   serializedElementNodeWithId,
   MaskAttributeFn,
 } from './types';
+import { NodeType } from './types';
 import {
   Mirror,
   is2DCanvasBlank,
@@ -767,7 +767,7 @@ function serializeTextNode(
   // The parent node may not be a html element which has a tagName attribute.
   // So just let it be undefined which is ok in this use case.
   const parentTagName = n.parentNode && (n.parentNode as HTMLElement).tagName;
-  let textContent = n.textContent;
+  let textContent: string | null = n.textContent;
   const isStyle = parentTagName === 'STYLE' ? true : undefined;
   const isScript = parentTagName === 'SCRIPT' ? true : undefined;
   const isTextarea = parentTagName === 'TEXTAREA' ? true : undefined;
@@ -1129,7 +1129,7 @@ function serializeElementNode(
     tagName,
     attributes,
     childNodes: [],
-    isSVG: isSVGElement(n as Element) || undefined,
+    isSVG: isSVGElement(n) || undefined,
     needBlock,
     rootId,
     isCustom: isCustomElement,

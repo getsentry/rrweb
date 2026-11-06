@@ -1,4 +1,4 @@
-import {
+import type {
   idNodeMap,
   MaskInputFn,
   MaskInputOptions,
@@ -6,12 +6,12 @@ import {
   IMirror,
   serializedNodeWithId,
   serializedNode,
-  NodeType,
   documentNode,
   documentTypeNode,
   textNode,
   elementNode,
 } from './types';
+import { NodeType } from './types';
 
 export function isElement(n: Node): n is Element {
   return n.nodeType === n.ELEMENT_NODE;
@@ -211,9 +211,7 @@ export class Mirror implements IMirror<Node> {
     this.idNodeMap.delete(id);
 
     if (n.childNodes) {
-      n.childNodes.forEach((childNode) =>
-        this.removeNodeFromMap(childNode as unknown as Node),
-      );
+      n.childNodes.forEach((childNode) => this.removeNodeFromMap(childNode));
     }
 
     if (isElement(n) && n.shadowRoot) {

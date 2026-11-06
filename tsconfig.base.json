@@ -7,14 +7,14 @@
     "esModuleInterop": true,
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "rootDir": "src",
     "outDir": "dist",
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "skipLibCheck": true,
     "declaration": true,
-    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": true,
     "strict": true,
     "removeComments": true,
     "noImplicitAny": true,
@@ -24,7 +24,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
 
     // needed for vite
     /**

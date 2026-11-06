@@ -1,14 +1,12 @@
 import Browser from 'webextension-polyfill';
 import type { eventWithTime } from '@sentry/rrweb-types';
 
-import {
+import type {
   LocalData,
-  LocalDataKey,
-  RecorderStatus,
   RecordStartedMessage,
   RecordStoppedMessage,
-  ServiceName,
 } from '~/types';
+import { LocalDataKey, RecorderStatus, ServiceName } from '~/types';
 import type Channel from './channel';
 import { isFirefox } from '.';
 

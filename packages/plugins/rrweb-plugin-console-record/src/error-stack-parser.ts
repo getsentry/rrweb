@@ -59,17 +59,11 @@ export const ErrorStackParser = {
       // @ts-ignore
       typeof error['opera#sourceloc'] !== 'undefined'
     ) {
-      return this.parseOpera(
-        error as {
-          stacktrace?: string;
-          message: string;
-          stack?: string;
-        },
-      );
+      return this.parseOpera(error);
     } else if (error.stack && error.stack.match(CHROME_IE_STACK_REGEXP)) {
-      return this.parseV8OrIE(error as { stack: string });
+      return this.parseV8OrIE(error);
     } else if (error.stack) {
-      return this.parseFFOrSafari(error as { stack: string });
+      return this.parseFFOrSafari(error);
     } else {
       console.warn(
         '[console-record-plugin]: Failed to parse error object:',
@@ -178,11 +172,11 @@ export const ErrorStackParser = {
       (e.message.indexOf('\n') > -1 &&
         e.message.split('\n').length > e.stacktrace.split('\n').length)
     ) {
-      return this.parseOpera9(e as { message: string });
+      return this.parseOpera9(e);
     } else if (!e.stack) {
-      return this.parseOpera10(e as { stacktrace: string });
+      return this.parseOpera10(e);
     } else {
-      return this.parseOpera11(e as { stack: string });
+      return this.parseOpera11(e);
     }
   },
   parseOpera9: function (e: { message: string }) {

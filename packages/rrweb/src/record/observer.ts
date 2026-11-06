@@ -1,6 +1,6 @@
+import type { Mirror } from '@sentry/rrweb-snapshot';
 import {
   maskInputValue,
-  Mirror,
   getInputType,
   getInputValue,
   shouldMaskInput,
@@ -9,6 +9,7 @@ import {
   toUpperCase,
 } from '@sentry/rrweb-snapshot';
 import type { FontFaceSet } from 'css-font-loading-module';
+import type { StyleSheetMirror } from '../utils';
 import {
   throttle,
   on,
@@ -19,7 +20,6 @@ import {
   isBlocked,
   legacy_isTouchEvent,
   patch,
-  StyleSheetMirror,
   nowTimestamp,
   setTimeout,
 } from '../utils';
@@ -28,19 +28,21 @@ import type {
   MutationBufferParam,
   OnMutationHelpers,
 } from '../types';
-import {
+import type {
   mousePosition,
-  MouseInteractions,
-  PointerTypes,
   listenerHandler,
   inputValue,
   hookResetter,
-  IncrementalSource,
-  MediaInteractions,
   fontParam,
   IWindow,
   SelectionRange,
   hooksParam,
+} from '@sentry/rrweb-types';
+import {
+  MouseInteractions,
+  PointerTypes,
+  IncrementalSource,
+  MediaInteractions,
 } from '@sentry/rrweb-types';
 import MutationBuffer from './mutation';
 import { callbackWrapper } from './error-handler';
@@ -498,13 +500,7 @@ function initInputObserver({
       !target ||
       !tagName ||
       INPUT_TAGS.indexOf(tagName) < 0 ||
-      isBlocked(
-        target as Node,
-        blockClass,
-        blockSelector,
-        unblockSelector,
-        true,
-      )
+      isBlocked(target, blockClass, blockSelector, unblockSelector, true)
     ) {
       return;
     }
@@ -532,7 +528,7 @@ function initInputObserver({
     });
 
     const forceMask = needMaskingText(
-      target as Node,
+      target,
       maskTextClass,
       maskTextSelector,
       unmaskTextClass,
@@ -646,11 +642,6 @@ function initInputObserver({
   });
 }
 
-type GroupingCSSRule =
-  | CSSGroupingRule
-  | CSSMediaRule
-  | CSSSupportsRule
-  | CSSConditionRule;
 type GroupingCSSRuleTypes =
   | typeof CSSGroupingRule
   | typeof CSSMediaRule
@@ -670,9 +661,7 @@ function getNestedCSSRulePositions(rule: CSSRule): number[] {
       (hasNestedCSSRule('CSSConditionRule') &&
         childRule.parentRule instanceof CSSConditionRule)
     ) {
-      const rules = Array.from(
-        (childRule.parentRule as GroupingCSSRule).cssRules,
-      );
+      const rules = Array.from(childRule.parentRule.cssRules);
       const index = rules.indexOf(childRule);
       pos.unshift(index);
     } else if (childRule.parentStyleSheet) {
@@ -699,7 +688,7 @@ function getIdAndStyleId(
 } {
   let id, styleId;
   if (!sheet) return {};
-  if (sheet.ownerNode) id = mirror.getId(sheet.ownerNode as Node);
+  if (sheet.ownerNode) id = mirror.getId(sheet.ownerNode);
   else styleId = styleMirror.getId(sheet);
   return {
     styleId,
@@ -1183,7 +1172,11 @@ function initFontObserver({ fontCb, doc }: observerParam): listenerHandler {
     source: string | ArrayBufferLike,
     descriptors?: FontFaceDescriptors,
   ) {
-    const fontFace = new originalFontFace(family, source, descriptors);
+    const fontFace = new originalFontFace(
+      family,
+      source as string | BufferSource,
+      descriptors,
+    );
     fontMap.set(fontFace, {
       family,
       buffer: typeof source !== 'string',

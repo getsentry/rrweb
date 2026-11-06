@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { BoxProps, FlexProps } from '@chakra-ui/react';
 import {
   IconButton,
   Box,
@@ -12,8 +13,6 @@ import {
   Drawer,
   DrawerContent,
   useDisclosure,
-  BoxProps,
-  FlexProps,
   Heading,
   Stack,
   Text,

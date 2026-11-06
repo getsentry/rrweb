@@ -1,9 +1,5 @@
-import {
-  actionWithDelay,
-  eventWithTime,
-  EventType,
-  IncrementalSource,
-} from '@sentry/rrweb-types';
+import type { actionWithDelay, eventWithTime } from '@sentry/rrweb-types';
+import { EventType, IncrementalSource } from '@sentry/rrweb-types';
 import { onRequestAnimationFrame } from '../utils';
 
 export class Timer {

@@ -301,7 +301,7 @@ export class IframeManager implements IframeManagerInterface {
           obj[key] as number[],
         ) as T[keyof T];
       } else {
-        (obj[key] as number) = iframeMirror.getId(iframeEl, obj[key] as number);
+        (obj[key] as number) = iframeMirror.getId(iframeEl, obj[key]);
       }
     }
 

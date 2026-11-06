@@ -1,10 +1,10 @@
 import type { Replayer } from '..';
-import {
-  CanvasContext,
+import type {
   canvasMutationCommand,
   canvasMutationData,
   canvasMutationParam,
 } from '@sentry/rrweb-types';
+import { CanvasContext } from '@sentry/rrweb-types';
 import webglMutation from './webgl';
 import canvas2DMutation from './2d';
 

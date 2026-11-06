@@ -1,13 +1,15 @@
+import type {
+  BuildCache,
+  Mirror,
+  attributes,
+  serializedElementNodeWithId,
+} from '@sentry/rrweb-snapshot';
 import {
   rebuild,
   buildNodeWithSN,
   NodeType,
-  BuildCache,
   createCache,
-  Mirror,
   createMirror,
-  attributes,
-  serializedElementNodeWithId,
   toLowerCase,
 } from '@sentry/rrweb-snapshot';
 import {
@@ -42,27 +44,20 @@ import {
   type SpeedMachineState,
 } from './machine';
 import type { playerConfig, missingNodeMap } from '../types';
-import {
-  EventType,
-  IncrementalSource,
+import type {
   fullSnapshotEvent,
   eventWithTime,
-  MouseInteractions,
   playerMetaData,
   viewportResizeDimension,
   addedNodeMutation,
   incrementalSnapshotEvent,
   incrementalData,
-  ReplayerEvents,
   Handler,
   Emitter,
-  MediaInteractions,
-  metaEvent,
   mutationData,
   scrollData,
   inputData,
   canvasMutationData,
-  styleValueWithPriority,
   mouseMovePos,
   IWindow,
   canvasMutationCommand,
@@ -76,10 +71,17 @@ import {
   mousemoveData,
 } from '@sentry/rrweb-types';
 import {
+  EventType,
+  IncrementalSource,
+  MouseInteractions,
+  ReplayerEvents,
+  MediaInteractions,
+} from '@sentry/rrweb-types';
+import type { AppendedIframe } from '../utils';
+import {
   polyfill,
   queueToResolveTrees,
   iterateResolveTree,
-  AppendedIframe,
   getBaseDimension,
   hasShadowRoot,
   isSerializedIframe,
@@ -252,7 +254,7 @@ export class Replayer {
     this.handleResize = this.handleResize.bind(this);
     this.getCastFn = this.getCastFn.bind(this);
     this.applyEventsSynchronously = this.applyEventsSynchronously.bind(this);
-    this.emitter.on(ReplayerEvents.Resize, this.handleResize as Handler);
+    this.emitter.on(ReplayerEvents.Resize, this.handleResize);
 
     this.setupDom();
 
@@ -442,7 +444,7 @@ export class Replayer {
       (e) => e.type === EventType.FullSnapshot,
     );
     if (firstMeta) {
-      const { width, height } = firstMeta.data as metaEvent['data'];
+      const { width, height } = firstMeta.data;
       setTimeout(() => {
         this.emitter.emit(ReplayerEvents.Resize, {
           width,
@@ -458,9 +460,7 @@ export class Replayer {
           return;
         }
         this.firstFullSnapshot = firstFullsnapshot;
-        this.rebuildFullSnapshot(
-          firstFullsnapshot as fullSnapshotEvent & { timestamp: number },
-        );
+        this.rebuildFullSnapshot(firstFullsnapshot);
         this.iframe.contentWindow?.scrollTo(
           (firstFullsnapshot as fullSnapshotEvent).data.initialOffset,
         );
@@ -1035,10 +1035,7 @@ export class Replayer {
         iframeContentDoc
       ) {
         const { documentElement, head } = iframeContentDoc;
-        this.insertStyleRules(
-          documentElement as HTMLElement | RRElement,
-          head as HTMLElement | RRElement,
-        );
+        this.insertStyleRules(documentElement, head);
       }
 
       // Skip the plugin onBuild callback in the virtual dom mode
@@ -1990,10 +1987,10 @@ export class Replayer {
               if (styleValues[s] === false) {
                 targetEl.style.removeProperty(s);
               } else if (styleValues[s] instanceof Array) {
-                const svp = styleValues[s] as styleValueWithPriority;
+                const svp = styleValues[s];
                 targetEl.style.setProperty(s, svp[0], svp[1]);
               } else {
-                const svs = styleValues[s] as string;
+                const svs = styleValues[s];
                 targetEl.style.setProperty(s, svs);
               }
             }
@@ -2229,7 +2226,7 @@ export class Replayer {
     const adoptStyleSheets = (targetHost: Node, styleIds: number[]) => {
       const stylesToAdopt = styleIds
         .map((styleId) => this.styleMirror.getStyle(styleId))
-        .filter((style) => style !== null) as CSSStyleSheet[];
+        .filter((style) => style !== null);
       if (hasShadowRoot(targetHost))
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         (targetHost as HTMLElement).shadowRoot!.adoptedStyleSheets =
@@ -2441,5 +2438,5 @@ export {
   type SpeedState,
   type PlayerMachineState,
   type SpeedMachineState,
-  playerConfig,
+  type playerConfig,
 };

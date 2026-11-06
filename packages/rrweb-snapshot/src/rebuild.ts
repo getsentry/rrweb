@@ -1,12 +1,11 @@
 import { parse } from './css';
-import {
+import type {
   serializedNodeWithId,
-  NodeType,
-  tagMap,
   elementNode,
   BuildCache,
   legacyAttributes,
 } from './types';
+import { NodeType, type tagMap } from './types';
 import {
   isElement,
   Mirror,
