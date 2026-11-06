@@ -1,7 +1,7 @@
 import { record } from '@sentry/rrweb';
 import type { recordOptions } from '@sentry/rrweb';
 import type { eventWithTime } from '@sentry/rrweb-types';
-import { MessageName, RecordStartedMessage } from '~/types';
+import { MessageName } from '~/types';
 import { isInCrossOriginIFrame } from '~/utils';
 
 /**
@@ -27,7 +27,7 @@ function startRecord(config: recordOptions<eventWithTime>) {
   postMessage({
     message: MessageName.RecordStarted,
     startTimestamp: Date.now(),
-  } as RecordStartedMessage);
+  });
 }
 
 const messageHandler = (

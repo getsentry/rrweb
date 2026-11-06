@@ -15,7 +15,7 @@ We actively welcome your pull requests (PRs)!
 1. Fork the repo and create your branch from `master`.
 2. If you've added code that should be tested, add tests
 3. Ensure the test suite passes or ask for help as to why tests are failing
-4. We use [changesets](https://github.com/changesets/changesets/blob/main/docs/intro-to-using-changesets.md) to enable you to easily document your PR so that it can be packaged up into the next release. A github plugin will prompt you to fill in your changeset if you haven't already done so.
+4. Don't add a changeset. The changelog is generated from PR titles at release time, so give your PR a descriptive title.
 5. If you've changed APIs, update the documentation.
 6. Make sure your code lints and typechecks.
 
@@ -26,14 +26,15 @@ clear and has sufficient instructions to be able to reproduce the issue.
 
 ## Run locally
 
-- Install dependencies: `yarn`
-- Build all packages: (in `/`) `yarn build:all` or `yarn dev`
-- Run recorder on a website: (in `/packages/rrweb`) `yarn repl`
-- Run a cobrowsing/mirroring session locally: (in `/packages/rrweb`) `yarn live-stream`
-- Build individual packages: `yarn build` or `yarn dev`
-- Test: `yarn test` or `yarn test:watch`
-- Lint: `yarn lint`
-- Rewrite files with prettier: `yarn format` or `yarn format:head`
+- Install [pnpm](https://pnpm.io/installation) 12 or newer. pnpm switches to the version pinned in `packageManager`, and its `node` shim runs the version in `devEngines.runtime` (set it up once with `pnpm runtime set node 22 -g`).
+- Install dependencies: `pnpm install`
+- Build all packages: (in `/`) `pnpm build:all` or `pnpm dev`
+- Run recorder on a website: (in `/packages/rrweb`) `pnpm repl`
+- Run a cobrowsing/mirroring session locally: (in `/packages/rrweb`) `pnpm live-stream`
+- Build individual packages: `pnpm build` or `pnpm dev`
+- Test: `pnpm test` or `pnpm test:watch`
+- Lint: `pnpm lint`
+- Format files with oxfmt: `pnpm format` or `pnpm format:head`
 
 ## Coding style
 

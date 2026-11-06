@@ -1,10 +1,10 @@
-import {
+import type {
   blockClass,
-  CanvasContext,
   canvasManagerMutationCallback,
   IWindow,
   listenerHandler,
 } from '@sentry/rrweb-types';
+import { CanvasContext } from '@sentry/rrweb-types';
 import { hookSetter, isBlocked, patch, setTimeout } from '../../../utils';
 import { serializeArgs } from './serialize-args';
 

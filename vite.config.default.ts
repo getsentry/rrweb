@@ -1,13 +1,25 @@
 /// <reference types="vite/client" />
 import dts from 'vite-plugin-dts';
 import { copyFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { defineConfig, LibraryOptions, LibraryFormats, Plugin } from 'vite';
 import glob from 'fast-glob';
 import { build, Format, Platform } from 'esbuild';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { umdWrapper } from 'esbuild-plugin-umd-wrapper';
 
 const emptyOutDir = process.env.CLEAR_DIST_DIR !== 'false';
+
+/**
+ * The JS-based TypeScript that `vite-plugin-dts` depends on (see `.pnpmfile.cjs`).
+ * Its type rollup would otherwise use the workspace's native TypeScript 7,
+ * which doesn't ship the `lib.*.d.ts` files.
+ */
+const dtsTypescriptFolder = dirname(
+  createRequire(
+    createRequire(import.meta.url).resolve('vite-plugin-dts'),
+  ).resolve('typescript/package.json'),
+);
 
 function minifyAndUMDPlugin({
   name,
@@ -170,6 +182,7 @@ export default function (
       dts({
         insertTypesEntry: true,
         rollupTypes: true,
+        rollupOptions: { typescriptCompilerFolder: dtsTypescriptFolder },
         afterBuild: (emittedFiles: Map<string, string>) => {
           // To pass publint (`npm x publint@latest`) and ensure the
           // package is supported by all consumers, we must export types that are

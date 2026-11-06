@@ -1,8 +1,5 @@
-import {
-  NodeType as RRNodeType,
-  Mirror as NodeMirror,
-  elementNode,
-} from '@sentry/rrweb-snapshot';
+import type { Mirror as NodeMirror, elementNode } from '@sentry/rrweb-snapshot';
+import { NodeType as RRNodeType } from '@sentry/rrweb-snapshot';
 import type {
   canvasMutationData,
   canvasEventWithTime,

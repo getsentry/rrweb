@@ -1,5 +1,6 @@
 import mitt from 'mitt';
-import Browser, { Runtime } from 'webextension-polyfill';
+import type { Runtime } from 'webextension-polyfill';
+import Browser from 'webextension-polyfill';
 
 export type Message = EventType | ServiceType;
 export type EventType = {

@@ -35,7 +35,7 @@ export default function Player() {
         linkEl.rel = 'stylesheet';
         document.head.appendChild(linkEl);
         playerRef.current = new Replayer({
-          target: playerElRef.current as HTMLElement,
+          target: playerElRef.current,
           props: {
             events,
             autoPlay: true,
@@ -46,6 +46,7 @@ export default function Player() {
         console.error(err);
       });
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- the player's svelte typings expose instance methods as `any`
       playerRef.current?.pause();
     };
   }, [sessionId]);

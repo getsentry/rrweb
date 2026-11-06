@@ -1,7 +1,6 @@
-import {
+import type {
   serializedNode,
   serializedNodeWithId,
-  NodeType,
   attributes,
   MaskInputOptions,
   SlimDOMOptions,
@@ -13,6 +12,7 @@ import {
   serializedElementNodeWithId,
   MaskAttributeFn,
 } from './types';
+import { NodeType } from './types';
 import {
   Mirror,
   is2DCanvasBlank,
@@ -350,7 +350,7 @@ export function _isBlockedElement(
         return true;
       }
     } else {
-      for (let eIndex = element.classList.length; eIndex--; ) {
+      for (let eIndex = element.classList.length; eIndex--;) {
         const className = element.classList[eIndex];
         if (blockClass.test(className)) {
           return true;
@@ -368,7 +368,7 @@ export function _isBlockedElement(
 }
 
 function elementClassMatchesRegex(el: HTMLElement, regex: RegExp): boolean {
-  for (let eIndex = el.classList.length; eIndex--; ) {
+  for (let eIndex = el.classList.length; eIndex--;) {
     const className = el.classList[eIndex];
     if (regex.test(className)) {
       return true;
@@ -513,8 +513,8 @@ export function needMaskingText(
         ? maskDistance <= unmaskDistance
         : true
       : unmaskDistance >= 0
-      ? false
-      : !!maskAllText;
+        ? false
+        : !!maskAllText;
   } catch (e) {
     //
   }
@@ -767,7 +767,7 @@ function serializeTextNode(
   // The parent node may not be a html element which has a tagName attribute.
   // So just let it be undefined which is ok in this use case.
   const parentTagName = n.parentNode && (n.parentNode as HTMLElement).tagName;
-  let textContent = n.textContent;
+  let textContent: string | null = n.textContent;
   const isStyle = parentTagName === 'STYLE' ? true : undefined;
   const isScript = parentTagName === 'SCRIPT' ? true : undefined;
   const isTextarea = parentTagName === 'TEXTAREA' ? true : undefined;
@@ -1057,8 +1057,7 @@ function serializeElementNode(
       } catch (err) {
         if (image.crossOrigin !== 'anonymous') {
           image.crossOrigin = 'anonymous';
-          if (image.complete && image.naturalWidth !== 0)
-            recordInlineImage(); // too early due to image reload
+          if (image.complete && image.naturalWidth !== 0) recordInlineImage(); // too early due to image reload
           else image.addEventListener('load', recordInlineImage);
           return;
         } else {
@@ -1130,7 +1129,7 @@ function serializeElementNode(
     tagName,
     attributes,
     childNodes: [],
-    isSVG: isSVGElement(n as Element) || undefined,
+    isSVG: isSVGElement(n) || undefined,
     needBlock,
     rootId,
     isCustom: isCustomElement,
@@ -1689,8 +1688,8 @@ function snapshot(
           select: true,
         }
       : maskAllInputs === false
-      ? {}
-      : maskAllInputs;
+        ? {}
+        : maskAllInputs;
   const slimDOMOptions: SlimDOMOptions =
     slimDOM === true || slimDOM === 'all'
       ? // if true: set of sensible options that should not throw away any information
@@ -1707,8 +1706,8 @@ function snapshot(
           headMetaVerification: true,
         }
       : slimDOM === false
-      ? {}
-      : slimDOM;
+        ? {}
+        : slimDOM;
   return serializeNodeWithId(n, {
     doc: n,
     mirror,

@@ -7,7 +7,6 @@ import type {
   canvasMutationWithType,
   IWindow,
   listenerHandler,
-  CanvasArg,
   ImageBitmapDataURLWorkerResponse,
 } from '@sentry/rrweb-types';
 import { isBlocked, onRequestAnimationFrame } from '../../../utils';
@@ -276,7 +275,7 @@ export class CanvasManager implements CanvasManagerInterface {
                     type,
                   },
                 ],
-              } as CanvasArg,
+              },
               0,
               0,
               // The below args are needed if we enforce a max size, we want to

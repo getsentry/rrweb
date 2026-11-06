@@ -1,4 +1,4 @@
-import {
+import type {
   idNodeMap,
   MaskInputFn,
   MaskInputOptions,
@@ -6,12 +6,12 @@ import {
   IMirror,
   serializedNodeWithId,
   serializedNode,
-  NodeType,
   documentNode,
   documentTypeNode,
   textNode,
   elementNode,
 } from './types';
+import { NodeType } from './types';
 
 export function isElement(n: Node): n is Element {
   return n.nodeType === n.ELEMENT_NODE;
@@ -211,9 +211,7 @@ export class Mirror implements IMirror<Node> {
     this.idNodeMap.delete(id);
 
     if (n.childNodes) {
-      n.childNodes.forEach((childNode) =>
-        this.removeNodeFromMap(childNode as unknown as Node),
-      );
+      n.childNodes.forEach((childNode) => this.removeNodeFromMap(childNode));
     }
 
     if (isElement(n) && n.shadowRoot) {
@@ -268,10 +266,10 @@ export function shouldMaskInput({
   }
   return Boolean(
     maskInputOptions[tagName.toLowerCase() as keyof MaskInputOptions] ||
-      (type && maskInputOptions[type as keyof MaskInputOptions]) ||
-      type === 'password' ||
-      // Default to "text" option for inputs without a "type" attribute defined
-      (tagName === 'INPUT' && !type && maskInputOptions['text']),
+    (type && maskInputOptions[type as keyof MaskInputOptions]) ||
+    type === 'password' ||
+    // Default to "text" option for inputs without a "type" attribute defined
+    (tagName === 'INPUT' && !type && maskInputOptions['text']),
   );
 }
 
@@ -387,9 +385,9 @@ export function getInputType(element: HTMLElement): Lowercase<string> | null {
   return element.hasAttribute('data-rr-is-password')
     ? 'password'
     : type
-    ? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      toLowerCase(type)
-    : null;
+      ? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        toLowerCase(type)
+      : null;
 }
 
 export function getInputValue(

@@ -7,7 +7,10 @@ cd $SCRIPT_DIR/..
 OLD_VERSION=${CRAFT_OLD_VERSION}
 NEW_VERSION=${CRAFT_NEW_VERSION}
 
-yarn install --frozen-lockfile
+pnpm install --frozen-lockfile
 
 # Bump version in all workspace packages (exact versions, no git tags or commits)
 node scripts/bump-version.js "${NEW_VERSION}"
+# pnpm-lock.yaml stores the version of each workspace dependency, so it must be updated after the bump.
+# CI defaults to a frozen lockfile, which would reject this update.
+pnpm install --lockfile-only --no-frozen-lockfile

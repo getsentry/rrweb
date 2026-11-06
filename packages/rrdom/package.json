@@ -30,13 +30,12 @@
   },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "yarn run check-types && vite build",
+    "build": "pnpm run check-types && vite build",
     "build:tarball": "npm pack",
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepack": "yarn run build",
-    "lint": "yarn eslint src/**/*.ts"
+    "prepack": "pnpm run build"
   },
   "bugs": {
     "url": "https://github.com/rrweb-io/rrweb/issues"
@@ -46,13 +45,12 @@
   },
   "devDependencies": {
     "@sentry/rrweb-types": "2.45.0",
-    "@typescript-eslint/eslint-plugin": "^5.23.0",
-    "@typescript-eslint/parser": "^5.23.0",
-    "eslint": "^8.15.0",
+    "jsdom": "^25.0.0",
     "puppeteer": "^24.0.0",
-    "typescript": "^4.9.0",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.6"
   },
   "dependencies": {
     "@sentry/rrweb-snapshot": "2.45.0"
