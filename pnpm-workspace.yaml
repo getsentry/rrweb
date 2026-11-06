@@ -31,6 +31,8 @@ overrides:
   # puppeteer 24's browser downloader uses extract-zip, which has high advisories and no patched release.
   # @puppeteer/browsers 3 dropped it and keeps the same API, while puppeteer still pins its Chrome version.
   '@puppeteer/browsers': ^3.2.6
+  # puppeteer 24's chromium-bidi resolves zod 3, which has a high advisory. It's only loaded for WebDriver BiDi, which the tests don't use.
+  zod: ^4.6.6
   # downlevel-dts asks for `typescript@next`, which now resolves to the native TypeScript 7 without a JS API.
   # This keeps the version yarn.lock had resolved.
   downlevel-dts>typescript: 5.8.0-dev.20241219
