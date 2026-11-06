@@ -1,15 +1,15 @@
-name: ESLint Check
+name: Lint
 
 on:
   push:
   pull_request:
 
 jobs:
-  eslint_check_upload:
+  lint:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    name: ESLint Check and Report Upload
+    name: Lint and Measure Bundle Sizes
 
     steps:
       - name: Checkout pull request head
@@ -21,28 +21,22 @@ jobs:
       - name: Checkout current branch
         if: github.event_name != 'pull_request'
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build Packages
-        run: NODE_OPTIONS='--max-old-space-size=4096' yarn build:all
-      - name: Eslint Check
-        run: yarn turbo run lint
-      - name: Save Code Linting Report JSON
-        run: yarn lint:report
-        # Continue to the next step even if this fails
-        continue-on-error: true
-      - name: Upload ESLint Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: eslint_report.json
-          path: eslint_report.json
+        run: NODE_OPTIONS='--max-old-space-size=4096' pnpm run build:all
+      - name: Lint
+        run: pnpm run lint
       - name: Measure PR bundle sizes
         if: github.event_name == 'pull_request'
         run: node .github/scripts/measure-bundle-sizes.js pr-sizes.json
@@ -54,12 +48,12 @@ jobs:
           path: pr-sizes.json
 
   bundle_size_build:
-    # Only runs on PRs. Reuses the PR build from eslint_check_upload (via the
+    # Only runs on PRs. Reuses the PR build from lint job (via the
     # pr-sizes artifact) and only builds the base branch itself. The privileged
     # bundle-size-comment workflow then posts the PR comment without ever
     # executing fork code.
     if: github.event_name == 'pull_request'
-    needs: eslint_check_upload
+    needs: lint
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -79,16 +73,24 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: pr-sizes
+      # The base branch can still be on yarn while a package manager change is in review.
+      - name: Detect base package manager
+        id: pm
+        run: |
+          if [ -f pnpm-lock.yaml ]; then echo "name=pnpm" >> "$GITHUB_OUTPUT"; else echo "name=yarn" >> "$GITHUB_OUTPUT"; fi
+      - name: Install pnpm
+        if: steps.pm.outputs.name == 'pnpm'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       - uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'yarn'
+          cache: ${{ steps.pm.outputs.name }}
       - name: Install base dependencies
-        run: yarn install --frozen-lockfile
+        run: ${{ steps.pm.outputs.name }} install --frozen-lockfile
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build base branch
-        run: NODE_OPTIONS='--max-old-space-size=4096' yarn build:all
+        run: NODE_OPTIONS='--max-old-space-size=4096' ${{ steps.pm.outputs.name }} run build:all
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Measure base bundle sizes

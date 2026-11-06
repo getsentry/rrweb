@@ -15,8 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "check-types": "tsc -noEmit",
-    "prepack": "npm run build",
-    "lint": "yarn eslint src/**/*.ts"
+    "prepack": "npm run build"
   },
   "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/packer#readme",
   "bugs": {
@@ -72,7 +71,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "typescript": "^4.7.3",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.6"

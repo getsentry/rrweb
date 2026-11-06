@@ -20,64 +20,60 @@
     "packages/plugins/*"
   ],
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.1",
     "@monorepo-utils/workspaces-to-typescript-project-references": "^2.10.2",
     "@size-limit/preset-small-lib": "~11.2.0",
     "@size-limit/webpack": "~11.2.0",
-    "@types/prettier": "2.7.3",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@types/dom-mediacapture-transform": "0.1.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.2",
+    "@types/offscreencanvas": "^2019.6.4",
     "browserslist": "^4.22.1",
     "concurrently": "^9.0.0",
+    "esbuild": "^0.25.0",
     "esbuild-plugin-umd-wrapper": "^2.0.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-compat": "^4.2.0",
-    "eslint-plugin-jest": "^27.6.0",
-    "eslint-plugin-tsdoc": "^0.2.17",
+    "fast-glob": "^3.2.9",
     "jsdom": "^25.0.0",
     "markdownlint": "^0.40.0",
     "markdownlint-cli": "^0.48.0",
-    "prettier": "2.8.4",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.91.0",
+    "oxlint-tsgolint": "^7.0.2006",
     "size-limit": "~11.2.0",
     "turbo": "^2.0.3",
-    "typescript": "^4.9.5"
+    "typescript": "~7.0.2",
+    "vite": "^6.4.4",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.6"
   },
   "scripts": {
-    "build:all": "NODE_OPTIONS='--max-old-space-size=4096' yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references' 'yarn turbo run prepack'",
-    "build:tarball": "yarn turbo run build:tarball",
-    "test": "yarn run concurrently --success=all -r -m=1 'yarn workspaces-to-typescript-project-references --check' 'yarn turbo run test --concurrency=1 --continue'",
-    "test:watch": "yarn turbo run test:watch",
-    "test:update": "yarn turbo run test:update",
-    "check-types": "yarn turbo run check-types --continue",
-    "format": "yarn prettier --write '**/*.{ts,md}'",
-    "format:head": "git diff --name-only HEAD^ |grep '\\.ts$\\|\\.md$' |xargs yarn prettier --write",
-    "dev": "CLEAR_DIST_DIR=false yarn turbo run dev --concurrency=17",
+    "build:all": "NODE_OPTIONS='--max-old-space-size=4096' pnpm exec concurrently --success=all -r -m=1 'pnpm exec workspaces-to-typescript-project-references' 'pnpm exec turbo run prepack'",
+    "build:tarball": "pnpm exec turbo run build:tarball",
+    "test": "pnpm exec concurrently --success=all -r -m=1 'pnpm exec workspaces-to-typescript-project-references --check' 'pnpm exec turbo run test --concurrency=1 --continue'",
+    "test:watch": "pnpm exec turbo run test:watch",
+    "test:update": "pnpm exec turbo run test:update",
+    "check-types": "pnpm exec turbo run check-types --continue",
+    "format": "oxfmt . --write",
+    "format:check": "oxfmt . --check",
+    "format:head": "files=$(git diff --name-only --diff-filter=d HEAD^); [ -z \"$files\" ] || oxfmt --no-error-on-unmatched-pattern --write $files",
+    "dev": "CLEAR_DIST_DIR=false pnpm exec turbo run dev --concurrency=17",
     "repl": "cd packages/rrweb && npm run repl",
-    "live-stream": "cd packages/rrweb && yarn live-stream",
-    "lint": "yarn run concurrently --success=all -r -m=1 'yarn run markdownlint docs' 'yarn eslint packages/*/src --ext .ts,.tsx,.js,.jsx,.svelte'",
-    "lint:report": "yarn eslint --output-file eslint_report.json --format json packages/*/src --ext .ts,.tsx,.js,.jsx",
-    "release": "yarn build:all && changeset publish"
-  },
-  "resolutions": {
-    "**/cssom": "https://registry.npmjs.org/rrweb-cssom/-/rrweb-cssom-0.6.0.tgz",
-    "**/@types/dom-webcodecs": "0.1.5",
-    "**/@types/estree": "^1.0.0",
-    "**/vite": "^6.4.2",
-    "**/tmp": "0.2.7",
-    "**/shell-quote": "^1.10.0",
-    "markdownlint-cli/js-yaml": "^4.3.2",
-    "markdownlint-cli/markdown-it": "^14.3.1",
-    "markdownlint-cli/smol-toml": "~1.9.1",
-    "**/firefox-profile": "4.7.1"
+    "live-stream": "cd packages/rrweb && pnpm run live-stream",
+    "lint": "oxlint packages/*/src packages/plugins/*/src",
+    "lint:fix": "oxlint packages/*/src packages/plugins/*/src --fix",
+    "lint:docs": "markdownlint docs",
+    "dedupe-deps:check": "pnpm dedupe --check",
+    "dedupe-deps:fix": "pnpm dedupe"
   },
   "browserslist": [
     "defaults",
     "not op_mini all"
   ],
-  "packageManager": "yarn@1.22.22",
-  "volta": {
-    "node": "22.23.4",
-    "yarn": "1.22.22"
+  "packageManager": "pnpm@12.11.2",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "22.23.4",
+      "onFail": "warn"
+    }
   }
 }

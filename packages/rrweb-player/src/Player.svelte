@@ -113,6 +113,7 @@
           uiEventListeners[event] = [];
         }
         uiEventListeners[event].push(handler);
+        break;
       default:
         break;
     }

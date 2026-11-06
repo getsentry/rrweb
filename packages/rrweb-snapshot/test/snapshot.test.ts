@@ -741,6 +741,54 @@ describe('jsdom snapshot', () => {
   });
 });
 
+describe('cleared input values', () => {
+  const serializeClearedInput = (
+    html: string,
+    options: Parameters<typeof snapshot>[1],
+  ) => {
+    document.write(html);
+    const input = document.querySelector('input')!;
+    input.value = '';
+    const mirror = new Mirror();
+    snapshot(document, { ...options, mirror });
+    return mirror.getMeta(input);
+  };
+
+  it('does not record the default value of a cleared text input', () => {
+    expect(
+      serializeClearedInput('<input type="text" value="secret" />', {
+        maskAllInputs: true,
+      }),
+    ).toMatchObject({ attributes: { type: 'text', value: '' } });
+  });
+
+  it('does not record the default value of a cleared password input', () => {
+    expect(
+      serializeClearedInput('<input type="password" value="secret" />', {
+        maskAllInputs: false,
+      }),
+    ).toMatchObject({ attributes: { type: 'password', value: '' } });
+  });
+
+  it('records the current empty value when masking is disabled', () => {
+    expect(
+      serializeClearedInput('<input type="text" value="default" />', {
+        maskAllInputs: false,
+      }),
+    ).toMatchObject({ attributes: { type: 'text', value: '' } });
+  });
+
+  it('does not record an invalid value that the browser sanitized away', () => {
+    document.write('<input type="number" value="not-a-number" />');
+    const input = document.querySelector('input')!;
+    const mirror = new Mirror();
+    snapshot(document, { maskAllInputs: true, mirror });
+    expect(mirror.getMeta(input)).toMatchObject({
+      attributes: { type: 'number', value: '' },
+    });
+  });
+});
+
 describe('image loading', () => {
   const render = (html: string): Document => {
     document.write(html);

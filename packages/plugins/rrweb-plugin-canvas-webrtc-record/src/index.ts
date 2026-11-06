@@ -143,7 +143,7 @@ export class RRWebPluginCanvasWebRTCRecord {
                 type: 'signal',
                 signal: data,
               },
-            } as CrossOriginIframeMessageEventContent,
+            },
             '*',
           );
         }
@@ -156,7 +156,7 @@ export class RRWebPluginCanvasWebRTCRecord {
               type: 'signal',
               signal: data,
             },
-          } as CrossOriginIframeMessageEventContent,
+          },
           '*',
         );
       }
@@ -213,7 +213,7 @@ export class RRWebPluginCanvasWebRTCRecord {
             type: 'i-have-canvas',
             rootId: rootId || id,
           },
-        } as CrossOriginIframeMessageEventContent,
+        },
         '*',
       );
     }
@@ -257,7 +257,7 @@ export class RRWebPluginCanvasWebRTCRecord {
             id: remoteId,
             rootId,
           },
-        } as CrossOriginIframeMessageEventContent,
+        },
         '*',
       );
     });
@@ -269,12 +269,12 @@ export class RRWebPluginCanvasWebRTCRecord {
   ): event is MessageEvent<CrossOriginIframeMessageEventContent> {
     return Boolean(
       event.data &&
-        typeof event.data === 'object' &&
-        'type' in event.data &&
-        'data' in event.data &&
-        (event.data as CrossOriginIframeMessageEventContent).type ===
-          'rrweb-canvas-webrtc' &&
-        (event.data as CrossOriginIframeMessageEventContent).data,
+      typeof event.data === 'object' &&
+      'type' in event.data &&
+      'data' in event.data &&
+      (event.data as CrossOriginIframeMessageEventContent).type ===
+        'rrweb-canvas-webrtc' &&
+      (event.data as CrossOriginIframeMessageEventContent).data,
     );
   }
 

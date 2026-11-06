@@ -10,12 +10,11 @@
   "scripts": {
     "build": "rollup --config",
     "typings": "tsc -p tsconfig.types.json",
-    "prepack": "yarn run typings && yarn run build",
+    "prepack": "pnpm run typings && pnpm run build",
     "check-types": "tsc -noEmit",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:update": "vitest run --update",
-    "lint": "yarn eslint src"
+    "test:update": "vitest run --update"
   },
   "repository": {
     "type": "git",
@@ -33,10 +32,11 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
-    "@types/css-font-loading-module": "0.0.7",
-    "rollup": "^4.28.1",
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
+    "@types/css-font-loading-module": "0.0.7",
+    "base64-arraybuffer": "^1.0.1",
+    "rollup": "^4.28.1",
     "tslib": "^2.8.0",
     "vite": "^6.4.4",
     "vitest": "^3.2.6"

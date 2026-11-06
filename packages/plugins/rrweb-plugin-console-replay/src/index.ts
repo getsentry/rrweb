@@ -1,8 +1,5 @@
-import {
-  LogLevel,
-  LogData,
-  PLUGIN_NAME,
-} from '@rrweb/rrweb-plugin-console-record';
+import type { LogLevel, LogData } from '@rrweb/rrweb-plugin-console-record';
+import { PLUGIN_NAME } from '@rrweb/rrweb-plugin-console-record';
 import type { eventWithTime } from '@sentry/rrweb-types';
 import { EventType, IncrementalSource } from '@sentry/rrweb-types';
 import type { ReplayPlugin, Replayer } from '@sentry/rrweb';

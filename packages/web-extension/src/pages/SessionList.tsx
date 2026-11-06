@@ -18,18 +18,18 @@ import {
   Input,
   Divider,
 } from '@chakra-ui/react';
+import type { SortingState, PaginationState } from '@tanstack/react-table';
 import {
   createColumnHelper,
   useReactTable,
   flexRender,
   getCoreRowModel,
-  SortingState,
   getSortedRowModel,
-  PaginationState,
 } from '@tanstack/react-table';
 import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
-import { Session, EventName } from '~/types';
+import type { Session } from '~/types';
+import { EventName } from '~/types';
 import Channel from '~/utils/channel';
 import { deleteSessions, getAllSessions } from '~/utils/storage';
 import {

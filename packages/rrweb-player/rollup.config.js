@@ -11,18 +11,19 @@ import css from 'rollup-plugin-css-only';
 // eslint-disable-next-line no-undef
 const production = !process.env.ROLLUP_WATCH;
 
-const entries = (production
-  ? [
-      { file: pkg.module, format: 'es', css: false },
-      { file: pkg.main, format: 'cjs', css: false },
-      {
-        file: pkg.unpkg,
-        format: 'iife',
-        name: 'rrwebPlayer',
-        css: 'style.css',
-      },
-    ]
-  : []
+const entries = (
+  production
+    ? [
+        { file: pkg.module, format: 'es', css: false },
+        { file: pkg.main, format: 'cjs', css: false },
+        {
+          file: pkg.unpkg,
+          format: 'iife',
+          name: 'rrwebPlayer',
+          css: 'style.css',
+        },
+      ]
+    : []
 ).concat([
   {
     file: 'public/bundle.js',

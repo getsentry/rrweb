@@ -2,6 +2,11 @@
 import { NodeType as RRNodeType } from '@sentry/rrweb-snapshot';
 import type { NWSAPI } from 'nwsapi';
 import type { CSSStyleDeclaration as CSSStyleDeclarationType } from 'cssstyle';
+import type {
+  BaseRRNode,
+  IRRDocument,
+  CSSStyleDeclaration,
+} from '@sentry/rrdom';
 import {
   BaseRRCDATASection,
   BaseRRComment,
@@ -9,11 +14,8 @@ import {
   BaseRRDocumentType,
   BaseRRElement,
   BaseRRMediaElement,
-  BaseRRNode,
   BaseRRText,
   ClassList,
-  IRRDocument,
-  CSSStyleDeclaration,
 } from '@sentry/rrdom';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const nwsapi = require('nwsapi');
@@ -224,10 +226,12 @@ export class RRElement extends BaseRRElement {
   }
 
   appendChild(newChild: BaseRRNode): BaseRRNode {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- the type rollup's TypeScript 5 needs it
     return super.appendChild(newChild) as BaseRRNode;
   }
 
   insertBefore(newChild: BaseRRNode, refChild: BaseRRNode | null): BaseRRNode {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- the type rollup's TypeScript 5 needs it
     return super.insertBefore(newChild, refChild) as BaseRRNode;
   }
 

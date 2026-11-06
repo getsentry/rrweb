@@ -8,11 +8,10 @@
     "test:watch": "vitest watch",
     "test:update": "vitest run --update",
     "dev": "vite build --watch",
-    "build": "yarn run check-types && vite build",
+    "build": "pnpm run check-types && vite build",
     "build:tarball": "npm pack",
     "check-types": "tsc --noEmit",
-    "prepack": "yarn run build && yarn run typings:downlevel",
-    "lint": "yarn eslint src"
+    "prepack": "pnpm run build && pnpm run typings:downlevel"
   },
   "type": "module",
   "repository": {
@@ -65,10 +64,10 @@
     "@types/node": "^18.15.11",
     "cross-env": "^5.2.0",
     "downlevel-dts": "https://github.com/getsentry/downlevel-dts",
+    "jsdom": "^25.0.0",
     "puppeteer": "^24.0.0",
-    "ts-node": "^7.0.1",
     "tslib": "^1.9.3",
-    "typescript": "^4.7.3",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.6"

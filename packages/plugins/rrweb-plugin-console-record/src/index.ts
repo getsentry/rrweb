@@ -4,7 +4,8 @@ import type {
   IWindow,
 } from '@sentry/rrweb-types';
 import { utils } from '@sentry/rrweb';
-import { ErrorStackParser, StackFrame } from './error-stack-parser';
+import type { StackFrame } from './error-stack-parser';
+import { ErrorStackParser } from './error-stack-parser';
 import { stringify } from './stringify';
 
 export type StringifyOptions = {

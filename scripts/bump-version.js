@@ -55,7 +55,11 @@ function bumpVersions(rootDir, newVersion) {
   for (const { pkgPath, pkg } of workspacePackages) {
     pkg.version = newVersion;
 
-    for (const depType of ['dependencies', 'devDependencies', 'peerDependencies']) {
+    for (const depType of [
+      'dependencies',
+      'devDependencies',
+      'peerDependencies',
+    ]) {
       if (!pkg[depType]) continue;
 
       for (const [dep, ver] of Object.entries(pkg[depType])) {

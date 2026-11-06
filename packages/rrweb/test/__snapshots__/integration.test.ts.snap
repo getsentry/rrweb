@@ -2357,7 +2357,7 @@ exports[`record integration tests > can record form interactions 1`] = `
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -4925,7 +4925,7 @@ exports[`record integration tests > can use maskInputOptions to configure which 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -6035,7 +6035,7 @@ exports[`record integration tests > can use maskTextSelector to configure which 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"**********\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -8684,7 +8684,7 @@ exports[`record integration tests > should mask attribute via function call 1`] 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -12001,7 +12001,7 @@ exports[`record integration tests > should not mask inputs when maskAllText:true
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -14846,7 +14846,7 @@ exports[`record integration tests > should not record input values if maskAllInp
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62
@@ -18426,7 +18426,7 @@ exports[`record integration tests > should record input userTriggered values if 
                               \\"id\\": \\"\\",
                               \\"cols\\": \\"30\\",
                               \\"rows\\": \\"10\\",
-                              \\"value\\": \\"textarea-value\\"
+                              \\"value\\": \\"\\"
                             },
                             \\"childNodes\\": [],
                             \\"id\\": 62

@@ -45,7 +45,8 @@
   "devDependencies": {
     "@rrweb/rrweb-plugin-console-record": "2.45.0",
     "@sentry/rrweb": "2.45.0",
-    "typescript": "^4.7.3",
+    "@sentry/rrweb-types": "2.45.0",
+    "typescript": "~7.0.2",
     "vite": "^6.4.4",
     "vite-plugin-dts": "^4.5.4"
   },

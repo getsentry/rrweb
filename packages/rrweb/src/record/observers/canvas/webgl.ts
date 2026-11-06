@@ -1,12 +1,12 @@
 import type { Mirror } from '@sentry/rrweb-snapshot';
-import {
+import type {
   blockClass,
-  CanvasContext,
   canvasManagerMutationCallback,
   canvasMutationWithType,
   IWindow,
   listenerHandler,
 } from '@sentry/rrweb-types';
+import { CanvasContext } from '@sentry/rrweb-types';
 import { hookSetter, isBlocked, patch } from '../../../utils';
 import { saveWebGLVar, serializeArgs } from './serialize-args';
 

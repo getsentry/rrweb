@@ -1,13 +1,14 @@
-import { createMachine, interpret, assign, StateMachine } from '@xstate/fsm';
+import type { StateMachine } from '@xstate/fsm';
+import { createMachine, interpret, assign } from '@xstate/fsm';
 import type { playerConfig } from '../types';
+import type { eventWithTime, Emitter } from '@sentry/rrweb-types';
 import {
-  eventWithTime,
   ReplayerEvents,
   EventType,
-  Emitter,
   IncrementalSource,
 } from '@sentry/rrweb-types';
-import { Timer, addDelay } from './timer';
+import type { Timer } from './timer';
+import { addDelay } from './timer';
 
 export type PlayerContext = {
   events: eventWithTime[];
@@ -80,6 +81,7 @@ type PlayerAssets = {
 };
 export function createPlayerService(
   context: PlayerContext,
+  // eslint-disable-next-line @typescript-eslint/unbound-method -- the Replayer binds both in its constructor
   { getCastFn, applyEventsSynchronously, emitter }: PlayerAssets,
 ) {
   const playerMachine = createMachine<PlayerContext, PlayerEvent, PlayerState>(
