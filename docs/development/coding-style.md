@@ -2,7 +2,7 @@
 
 These have been adapted from the style guidelines for coding in Electron.
 
-You can run `pnpm lint` to show any style issues detected by `eslint`.
+You can run `pnpm lint` to show any style issues detected by `oxlint`.
 
 ## General Code
 

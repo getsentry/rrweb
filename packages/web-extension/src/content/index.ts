@@ -1,4 +1,4 @@
-import Browser, { Storage } from 'webextension-polyfill';
+import Browser from 'webextension-polyfill';
 import { nanoid } from 'nanoid';
 import type { eventWithTime } from '@sentry/rrweb-types';
 import {

@@ -1,7 +1,0 @@
-{
-  "extends": ["../../.eslintrc.js"],
-  "rules": {
-    "prefer-template": "off",
-    "@typescript-eslint/restrict-plus-operands": "off"
-  }
-}

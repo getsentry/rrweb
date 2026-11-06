@@ -8,9 +8,7 @@ export type SyncData = {
   [SyncDataKey.settings]: Settings;
 };
 
-export type Settings = {
-  //
-};
+export type Settings = Record<string, never>;
 
 export enum LocalDataKey {
   recorderStatus = 'recorder_status',
