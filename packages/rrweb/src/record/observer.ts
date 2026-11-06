@@ -22,7 +22,7 @@ import {
   StyleSheetMirror,
   nowTimestamp,
   setTimeout,
-  runAllAndRethrowFirstError,
+  runAll,
 } from '../utils';
 import type {
   observerParam,
@@ -1006,15 +1006,21 @@ export function initAdoptedStyleSheetObserver(
       //
     };
 
-  let recording = true;
+  // Set to false on teardown. If the override can't be removed, it stays on
+  // `host` but stops recording.
+  let adoptedStyleSheetsOverrideIsActive = true;
   // Kept in a variable so that teardown can check whether the property on
   // `host` is still ours: the descriptor's `set` is then this exact function.
-  const recordingSetter = function (
+  const adoptedStyleSheetsSetter = function (
     this: Document | ShadowRoot,
     sheets: CSSStyleSheet[],
   ) {
     originalPropertyDescriptor.set?.call(this, sheets);
-    if (recording && hostId !== null && hostId !== -1) {
+    if (
+      adoptedStyleSheetsOverrideIsActive &&
+      hostId !== null &&
+      hostId !== -1
+    ) {
       try {
         stylesheetManager.adoptStyleSheets(sheets, hostId);
       } catch (e) {
@@ -1023,39 +1029,43 @@ export function initAdoptedStyleSheetObserver(
     }
   };
 
-  // Patch adoptedStyleSheets by adding an own property to `host` that shadows
-  // the prototype's.
+  // Patch adoptedStyleSheets by defining an own property on `host`. It shadows
+  // the property inherited from `patchTarget.prototype`, which is where
+  // `originalPropertyDescriptor` comes from. If another script already put a
+  // configurable own property on `host`, ours replaces it, and teardown puts
+  // `previousAdoptedStyleSheetsDescriptor` back.
   //
-  // Always `configurable: true`, even when the prototype's property isn't, so
-  // that teardown can remove the patch. The flag only applies to this own
-  // property on `host`, which is ours. The prototype's property isn't touched,
+  // Always `configurable: true`, even when `originalPropertyDescriptor` isn't,
+  // so that teardown can remove the patch. The flag only applies to our own
+  // property on `host`. The property on `patchTarget.prototype` isn't touched,
   // so a lock that another script put there stays in place, and shadowing a
-  // locked prototype property with an own property is allowed. Copying the
-  // prototype's flag instead would lock our own property whenever the
-  // prototype is locked, and removing it on stop would throw "Cannot redefine
-  // property".
+  // locked inherited property with an own property is allowed. Copying
+  // `originalPropertyDescriptor.configurable` instead would lock our own
+  // property whenever the inherited one is locked, and removing it on stop
+  // would throw "Cannot redefine property".
   Object.defineProperty(host, 'adoptedStyleSheets', {
     configurable: true,
     enumerable: originalPropertyDescriptor.enumerable,
     get(): CSSStyleSheet[] {
       return originalPropertyDescriptor.get?.call(this) as CSSStyleSheet[];
     },
-    set: recordingSetter,
+    set: adoptedStyleSheetsSetter,
   });
 
   return callbackWrapper(() => {
-    recording = false;
-    // Another script replaced our property after we patched it. Leave theirs
-    // alone.
+    adoptedStyleSheetsOverrideIsActive = false;
+    // In case another script has replaced our property since we patched it,
+    // leave theirs alone.
     const currentDescriptor = Object.getOwnPropertyDescriptor(
       host,
       'adoptedStyleSheets',
     );
-    if (currentDescriptor?.set !== recordingSetter) return;
-    // `Reflect` returns false instead of throwing when another script has
-    // locked our property during recording (by redefining it, or by sealing or
-    // freezing `host`). Our property then stays behind and only forwards to
-    // the browser's setter, because `recording` is false.
+    if (currentDescriptor?.set !== adoptedStyleSheetsSetter) return;
+    // In case the descriptor has been changed during recording to make our
+    // property non-configurable (by redefining it, or by sealing or freezing
+    // `host`), use `Reflect`, which returns false instead of throwing. Our
+    // property then stays behind and only forwards to the browser's setter,
+    // because `adoptedStyleSheetsOverrideIsActive` is false.
     if (previousAdoptedStyleSheetsDescriptor) {
       Reflect.defineProperty(
         host,
@@ -1423,7 +1433,7 @@ export function initObservers(
   }
 
   return callbackWrapper(() => {
-    runAllAndRethrowFirstError([
+    const errors = runAll([
       () => forEachMutationBuffer((b) => b.reset()),
       () => mutationObserver?.disconnect(),
       mousemoveHandler,
@@ -1440,6 +1450,9 @@ export function initObservers(
       customElementObserver,
       ...pluginHandlers,
     ]);
+    // Rethrow so the error handler and `record()`'s stop function still see
+    // the failure.
+    if (errors.length > 0) throw errors[0];
   });
 }
 

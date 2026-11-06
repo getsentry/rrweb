@@ -20,7 +20,7 @@ import {
   isSerializedIframe,
   isSerializedStylesheet,
   nowTimestamp,
-  runAllAndRethrowFirstError,
+  runAll,
 } from '../utils';
 import type { recordOptions } from '../types';
 import {
@@ -736,7 +736,7 @@ function record<T = eventWithTime>(
       );
     }
     return () => {
-      runAllAndRethrowFirstError([
+      const errors = runAll([
         ...handlers,
         () => processedNodeManager.destroy(),
         () => {
@@ -744,6 +744,8 @@ function record<T = eventWithTime>(
         },
         unregisterErrorHandler,
       ]);
+      // Rethrow so the caller still learns that stopping failed.
+      if (errors.length > 0) throw errors[0];
     };
   } catch (error) {
     // TODO: handle internal error
