@@ -104,7 +104,6 @@
     "jest-image-snapshot": "^6.2.0",
     "puppeteer": "^24.0.0",
     "simple-peer-light": "^9.10.0",
-    "ts-node": "^10.9.1",
     "tslib": "^2.3.1",
     "typescript": "~7.0.2",
     "vite": "^6.4.4",
