@@ -58,7 +58,7 @@
     "check-types": "pnpm exec turbo run check-types --continue",
     "format": "oxfmt . --write",
     "format:check": "oxfmt . --check",
-    "format:head": "git diff --name-only --diff-filter=d HEAD^ | xargs -r oxfmt --no-error-on-unmatched-pattern --write",
+    "format:head": "files=$(git diff --name-only --diff-filter=d HEAD^); [ -z \"$files\" ] || oxfmt --no-error-on-unmatched-pattern --write $files",
     "dev": "CLEAR_DIST_DIR=false pnpm exec turbo run dev --concurrency=17",
     "repl": "cd packages/rrweb && npm run repl",
     "live-stream": "cd packages/rrweb && pnpm run live-stream",
