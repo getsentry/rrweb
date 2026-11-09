@@ -160,6 +160,32 @@ const events: eventWithTime[] = [
 ];
 
 /**
+ * Builds a rule insertion on stylesheet #1, `offset` ms after the recording starts.
+ */
+function buildRuleAdd(offset: number, rule: string): eventWithTime {
+  return {
+    type: EventType.IncrementalSnapshot,
+    data: {
+      source: IncrementalSource.StyleSheetRule,
+      styleId: 1,
+      adds: [{ rule }],
+    },
+    timestamp: now + offset,
+  };
+}
+
+/**
+ * Same as the default events, but stylesheet #1 also gets a rule while host #1
+ * is attached, one after host #1 is removed, and one after host #2 is added.
+ */
+export const mutatedEvents: eventWithTime[] = [
+  ...events,
+  buildRuleAdd(270, 'span { --while-attached: 1; }'),
+  buildRuleAdd(320, 'span { --while-orphaned: 1; }'),
+  buildRuleAdd(370, 'span { --before-readopted: 1; }'),
+].sort((a, b) => a.timestamp - b.timestamp);
+
+/**
  * Same as the default events, but both hosts live inside a nested iframe.
  */
 export const inIframeEvents: eventWithTime[] = [

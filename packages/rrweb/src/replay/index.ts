@@ -192,8 +192,14 @@ export class Replayer {
   // Used to track StyleSheetObjects adopted on multiple document hosts.
   private styleMirror: StyleSheetMirror = new StyleSheetMirror();
 
-  // Rules of adopted stylesheets whose host was missing, keyed by styleId.
-  private pendingAdoptedStyles = new Map<number, styleSheetAddRule[]>();
+  // Adopted stylesheets whose host was missing, keyed by styleId.
+  private pendingAdoptedStyles = new Map<
+    number,
+    {
+      rules: styleSheetAddRule[];
+      mutations: (styleSheetRuleData | styleDeclarationData)[];
+    }
+  >();
 
   private firstFullSnapshot: eventWithTime | true | null = null;
 
@@ -343,15 +349,16 @@ export class Replayer {
           }
         }
 
-        this.constructedStyleMutations.forEach((data) => {
-          this.applyStyleSheetMutation(data);
-        });
-        this.constructedStyleMutations = [];
-
+        // Adoptions go first since they create the sheets these mutations target.
         this.adoptedStyleSheets.forEach((data) => {
           this.applyAdoptedStyleSheet(data);
         });
         this.adoptedStyleSheets = [];
+
+        this.constructedStyleMutations.forEach((data) => {
+          this.applyStyleSheetMutation(data);
+        });
+        this.constructedStyleMutations = [];
       }
 
       for (const [
@@ -2100,7 +2107,13 @@ export class Replayer {
     else if (data.id)
       styleSheet =
         (this.mirror.getNode(data.id) as HTMLStyleElement)?.sheet || null;
-    if (!styleSheet) return;
+    if (!styleSheet) {
+      if (data.styleId)
+        this.pendingAdoptedStyles.get(data.styleId)?.mutations.push(data);
+
+      return;
+    }
+
     if (data.source === IncrementalSource.StyleSheetRule)
       this.applyStyleSheetRule(data, styleSheet);
     else if (data.source === IncrementalSource.StyleDeclaration)
@@ -2222,7 +2235,10 @@ export class Replayer {
       // later hosts may still adopt these styleIds. We can't know their window yet,
       // so keep the rules and create the sheets once a host adopts them.
       data.styles?.forEach((style) =>
-        this.pendingAdoptedStyles.set(style.styleId, style.rules),
+        this.pendingAdoptedStyles.set(style.styleId, {
+          rules: style.rules,
+          mutations: [],
+        }),
       );
       return;
     }
@@ -2242,11 +2258,14 @@ export class Replayer {
       for (const style of data.styles || [])
         this.createAdoptedStyleSheet(hostWindow, style.styleId, style.rules);
       for (const styleId of data.styleIds) {
-        const rules = this.pendingAdoptedStyles.get(styleId);
-        if (!rules) continue;
+        const pending = this.pendingAdoptedStyles.get(styleId);
+        if (!pending) continue;
         this.pendingAdoptedStyles.delete(styleId);
         if (!this.styleMirror.getStyle(styleId))
-          this.createAdoptedStyleSheet(hostWindow, styleId, rules);
+          this.createAdoptedStyleSheet(hostWindow, styleId, pending.rules);
+        pending.mutations.forEach((mutation) =>
+          this.applyStyleSheetMutation(mutation),
+        );
       }
     }
 

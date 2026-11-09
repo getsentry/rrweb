@@ -31,6 +31,7 @@ import adoptedStyleSheet from './events/adopted-style-sheet';
 import adoptedStyleSheetModification from './events/adopted-style-sheet-modification';
 import adoptedStyleSheetRemovedHost, {
   inIframeEvents as adoptedStyleSheetRemovedHostInIframe,
+  mutatedEvents as adoptedStyleSheetRemovedHostMutated,
 } from './events/adopted-style-sheet-removed-host';
 import documentReplacementEvents from './events/document-replacement';
 import hoverInIframeShadowDom from './events/iframe-shadowdom-hover';
@@ -1112,6 +1113,67 @@ describe('replayer', function () {
         return nestedDocument.defaultView!.getComputedStyle(span).color;
       }),
     ).toEqual('rgb(255, 0, 0)');
+  });
+
+  describe('mutations of adopted stylesheets', () => {
+    const getCustomProperties = async (hostId: string) => {
+      const iframe = await page.$('iframe');
+      const contentDocument = await iframe!.contentFrame()!;
+
+      return contentDocument!.evaluate((hostId) => {
+        const span = document
+          .querySelector(`#${hostId}`)!
+          .shadowRoot!.querySelector('span')!;
+        const style = window.getComputedStyle(span);
+
+        return ['--while-attached', '--while-orphaned', '--before-readopted']
+          .filter((name) => style.getPropertyValue(name).trim() === '1')
+          .map((name) => name.slice(2));
+      }, hostId);
+    };
+
+    it('applies them on seek when the sheet was created in the same seek', async () => {
+      await page.evaluate(`
+        events = ${JSON.stringify(adoptedStyleSheetRemovedHostMutated)};
+        const { Replayer } = rrweb;
+        var replayer = new Replayer(events);
+        replayer.pause(290);
+      `);
+      await waitForRAF(page);
+      expect(await getCustomProperties('host1')).toEqual(['while-attached']);
+    });
+
+    it('applies them on seek when the first host was removed', async () => {
+      await page.evaluate(`
+        events = ${JSON.stringify(adoptedStyleSheetRemovedHostMutated)};
+        const { Replayer } = rrweb;
+        var replayer = new Replayer(events);
+        replayer.pause(500);
+      `);
+      await waitForRAF(page);
+      expect(await getCustomProperties('host2')).toEqual([
+        'while-attached',
+        'while-orphaned',
+        'before-readopted',
+      ]);
+    });
+
+    it('applies them when they are replayed after a seek left the sheet without a host', async () => {
+      await page.evaluate(`
+        events = ${JSON.stringify(adoptedStyleSheetRemovedHostMutated)};
+        const { Replayer } = rrweb;
+        var replayer = new Replayer(events);
+        replayer.play(340);
+      `);
+      await page.waitForFunction(
+        `replayer.iframe.contentDocument.querySelector('#host2')?.shadowRoot?.adoptedStyleSheets.length === 1`,
+      );
+      expect(await getCustomProperties('host2')).toEqual([
+        'while-attached',
+        'while-orphaned',
+        'before-readopted',
+      ]);
+    });
   });
 
   it('can replay modification events for adoptedStyleSheet', async () => {
