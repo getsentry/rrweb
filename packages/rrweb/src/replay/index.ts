@@ -67,6 +67,7 @@ import type {
   styleSheetRuleData,
   styleDeclarationData,
   adoptedStyleSheetData,
+  styleSheetAddRule,
   mouseInteractionData,
   mousemoveData,
 } from '@sentry/rrweb-types';
@@ -190,6 +191,15 @@ export class Replayer {
 
   // Used to track StyleSheetObjects adopted on multiple document hosts.
   private styleMirror: StyleSheetMirror = new StyleSheetMirror();
+
+  // Adopted stylesheets whose host was missing, keyed by styleId.
+  private pendingAdoptedStyles = new Map<
+    number,
+    {
+      rules: styleSheetAddRule[];
+      mutations: (styleSheetRuleData | styleDeclarationData)[];
+    }
+  >();
 
   private firstFullSnapshot: eventWithTime | true | null = null;
 
@@ -339,15 +349,16 @@ export class Replayer {
           }
         }
 
-        this.constructedStyleMutations.forEach((data) => {
-          this.applyStyleSheetMutation(data);
-        });
-        this.constructedStyleMutations = [];
-
+        // Adoptions go first since they create the sheets these mutations target.
         this.adoptedStyleSheets.forEach((data) => {
           this.applyAdoptedStyleSheet(data);
         });
         this.adoptedStyleSheets = [];
+
+        this.constructedStyleMutations.forEach((data) => {
+          this.applyStyleSheetMutation(data);
+        });
+        this.constructedStyleMutations = [];
       }
 
       for (const [
@@ -392,6 +403,7 @@ export class Replayer {
       this.firstFullSnapshot = null;
       this.mirror.reset();
       this.styleMirror.reset();
+      this.pendingAdoptedStyles.clear();
     });
 
     const timer = new Timer([], {
@@ -815,6 +827,7 @@ export class Replayer {
           this.rebuildFullSnapshot(event, isSync);
           this.iframe.contentWindow?.scrollTo(event.data.initialOffset);
           this.styleMirror.reset();
+          this.pendingAdoptedStyles.clear();
         };
         break;
       case EventType.IncrementalSnapshot:
@@ -2094,7 +2107,13 @@ export class Replayer {
     else if (data.id)
       styleSheet =
         (this.mirror.getNode(data.id) as HTMLStyleElement)?.sheet || null;
-    if (!styleSheet) return;
+    if (!styleSheet) {
+      if (data.styleId)
+        this.pendingAdoptedStyles.get(data.styleId)?.mutations.push(data);
+
+      return;
+    }
+
     if (data.source === IncrementalSource.StyleSheetRule)
       this.applyStyleSheetRule(data, styleSheet);
     else if (data.source === IncrementalSource.StyleDeclaration)
@@ -2188,38 +2207,67 @@ export class Replayer {
     }
   }
 
+  private createAdoptedStyleSheet(
+    hostWindow: IWindow,
+    styleId: number,
+    rules: styleSheetAddRule[],
+  ) {
+    try {
+      const newStyleSheet = new hostWindow.CSSStyleSheet();
+      this.styleMirror.add(newStyleSheet, styleId);
+      // To reuse the code of applying stylesheet rules
+      this.applyStyleSheetRule(
+        {
+          source: IncrementalSource.StyleSheetRule,
+          adds: rules,
+        },
+        newStyleSheet,
+      );
+    } catch (e) {
+      // In case some browsers don't support constructing StyleSheet.
+    }
+  }
+
   private applyAdoptedStyleSheet(data: adoptedStyleSheetData) {
     const targetHost = this.mirror.getNode(data.id);
-    if (!targetHost) return;
-    // Create StyleSheet objects which will be adopted after.
-    data.styles?.forEach((style) => {
-      let newStyleSheet: CSSStyleSheet | null = null;
-      /**
-       * Constructed StyleSheet can't share across multiple documents.
-       * The replayer has to get the correct host window to recreate a StyleSheetObject.
-       */
-      let hostWindow: IWindow | null = null;
-      if (hasShadowRoot(targetHost))
-        hostWindow = targetHost.ownerDocument?.defaultView || null;
-      else if (targetHost.nodeName === '#document')
-        hostWindow = (targetHost as Document).defaultView;
+    if (!targetHost) {
+      // The host can be gone already (e.g. removed during a virtual DOM seek), but
+      // later hosts may still adopt these styleIds. We can't know their window yet,
+      // so keep the rules and create the sheets once a host adopts them.
+      data.styles?.forEach((style) =>
+        this.pendingAdoptedStyles.set(style.styleId, {
+          rules: style.rules,
+          mutations: [],
+        }),
+      );
+      return;
+    }
 
-      if (!hostWindow) return;
-      try {
-        newStyleSheet = new hostWindow.CSSStyleSheet();
-        this.styleMirror.add(newStyleSheet, style.styleId);
-        // To reuse the code of applying stylesheet rules
-        this.applyStyleSheetRule(
-          {
-            source: IncrementalSource.StyleSheetRule,
-            adds: style.rules,
-          },
-          newStyleSheet,
+    /**
+     * Constructed StyleSheet can't share across multiple documents.
+     * The replayer has to get the correct host window to recreate a StyleSheetObject.
+     */
+    let hostWindow: IWindow | null = null;
+    if (hasShadowRoot(targetHost))
+      hostWindow = targetHost.ownerDocument?.defaultView || null;
+    else if (targetHost.nodeName === '#document')
+      hostWindow = (targetHost as Document).defaultView;
+
+    if (hostWindow) {
+      // Create StyleSheet objects which will be adopted after.
+      for (const style of data.styles || [])
+        this.createAdoptedStyleSheet(hostWindow, style.styleId, style.rules);
+      for (const styleId of data.styleIds) {
+        const pending = this.pendingAdoptedStyles.get(styleId);
+        if (!pending) continue;
+        this.pendingAdoptedStyles.delete(styleId);
+        if (!this.styleMirror.getStyle(styleId))
+          this.createAdoptedStyleSheet(hostWindow, styleId, pending.rules);
+        pending.mutations.forEach((mutation) =>
+          this.applyStyleSheetMutation(mutation),
         );
-      } catch (e) {
-        // In case some browsers don't support constructing StyleSheet.
       }
-    });
+    }
 
     const MAX_RETRY_TIME = 10;
     let count = 0;
