@@ -7,6 +7,11 @@ cd $SCRIPT_DIR/..
 OLD_VERSION=${CRAFT_OLD_VERSION}
 NEW_VERSION=${CRAFT_NEW_VERSION}
 
+# The release runner doesn't ship pnpm, so install the version pinned in package.json.
+if ! command -v pnpm >/dev/null; then
+  npm install -g "$(node -p "require('./package.json').packageManager")"
+fi
+
 pnpm install --frozen-lockfile
 
 # Bump version in all workspace packages (exact versions, no git tags or commits)
