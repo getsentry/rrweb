@@ -262,17 +262,17 @@ importers:
   packages/all:
     dependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb
       '@sentry/rrweb-packer':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../packer
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
     devDependencies:
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       puppeteer:
         specifier: ^24.0.0
@@ -293,7 +293,7 @@ importers:
   packages/packer:
     dependencies:
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
       fflate:
         specifier: ^0.4.9
@@ -315,16 +315,16 @@ importers:
   packages/plugins/rrweb-plugin-canvas-webrtc-record:
     devDependencies:
       '@sentry/rrdom':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrdom
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb-snapshot
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../types
       simple-peer-light:
         specifier: ^9.10.0
@@ -342,13 +342,13 @@ importers:
   packages/plugins/rrweb-plugin-canvas-webrtc-replay:
     devDependencies:
       '@sentry/rrdom':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrdom
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb-snapshot
       simple-peer-light:
         specifier: ^9.10.0
@@ -366,10 +366,10 @@ importers:
   packages/plugins/rrweb-plugin-console-record:
     devDependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../types
       puppeteer:
         specifier: ^24.0.0
@@ -390,13 +390,13 @@ importers:
   packages/plugins/rrweb-plugin-console-replay:
     devDependencies:
       '@rrweb/rrweb-plugin-console-record':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-plugin-console-record
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../types
       typescript:
         specifier: ~7.0.2
@@ -411,10 +411,10 @@ importers:
   packages/plugins/rrweb-plugin-sequential-id-record:
     devDependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../types
       typescript:
         specifier: ~7.0.2
@@ -429,13 +429,13 @@ importers:
   packages/plugins/rrweb-plugin-sequential-id-replay:
     devDependencies:
       '@rrweb/rrweb-plugin-sequential-id-record':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-plugin-sequential-id-record
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../../types
       typescript:
         specifier: ~7.0.2
@@ -450,10 +450,10 @@ importers:
   packages/record:
     dependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
     devDependencies:
       puppeteer:
@@ -475,10 +475,10 @@ importers:
   packages/replay:
     dependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
     devDependencies:
       puppeteer:
@@ -500,11 +500,11 @@ importers:
   packages/rrdom:
     dependencies:
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
     devDependencies:
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
       jsdom:
         specifier: ^25.0.0
@@ -528,10 +528,10 @@ importers:
   packages/rrdom-nodejs:
     dependencies:
       '@sentry/rrdom':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrdom
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       cssom:
         specifier: npm:rrweb-cssom@0.6.0
@@ -574,13 +574,13 @@ importers:
   packages/rrweb:
     dependencies:
       '@sentry/rrdom':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrdom
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
       '@types/css-font-loading-module':
         specifier: 0.0.7
@@ -599,7 +599,7 @@ importers:
         version: 3.0.1
     devDependencies:
       '@sentry/rrweb-worker':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-worker
       '@types/dom-mediacapture-transform':
         specifier: 0.1.4
@@ -662,20 +662,20 @@ importers:
   packages/rrweb-player:
     dependencies:
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb
       '@sentry/rrweb-packer':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../packer
       '@tsconfig/svelte':
         specifier: ^1.0.0
         version: 1.0.13
     devDependencies:
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
       '@sveltejs/package':
         specifier: ^2.0.0
@@ -741,10 +741,10 @@ importers:
   packages/rrweb-worker:
     dependencies:
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
     devDependencies:
       '@rollup/plugin-commonjs':
@@ -781,7 +781,7 @@ importers:
   packages/types:
     dependencies:
       '@sentry/rrweb-snapshot':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-snapshot
       '@types/css-font-loading-module':
         specifier: 0.0.7
@@ -809,10 +809,10 @@ importers:
         specifier: ^11.10.4
         version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1)(supports-color@8.1.1))(@types/react@18.3.18)(react@18.3.1)(supports-color@8.1.1)
       '@sentry/rrweb':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb
       '@sentry/rrweb-player':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../rrweb-player
       '@tanstack/react-table':
         specifier: ^8.5.22
@@ -843,7 +843,7 @@ importers:
         version: 6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@sentry/rrweb-types':
-        specifier: 2.45.0
+        specifier: 2.46.0
         version: link:../types
       '@types/react':
         specifier: ^18.0.6
