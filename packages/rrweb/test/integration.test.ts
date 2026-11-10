@@ -1204,6 +1204,29 @@ describe('record integration tests', function (this: ISuite) {
       // varies across platforms, so we skip the full snapshot assertion and
       // rely on the structural check above.
     });
+
+    it('should only snapshot sampled canvases that are shown and were drawn to', async () => {
+      const page: puppeteer.Page = await browser.newPage();
+      await page.goto(`${serverURL}/html`);
+      await page.setContent(
+        getHtml.call(this, 'canvas-sampling-static.html', {
+          recordCanvas: true,
+          sampling: {
+            canvas: 60,
+          },
+        }),
+      );
+
+      await waitForTimeout(300);
+      expect(await page.evaluate('window.bitmapSources')).toEqual(['static']);
+
+      await page.evaluate('window.redraw()');
+      await waitForTimeout(300);
+      expect(await page.evaluate('window.bitmapSources')).toEqual([
+        'static',
+        'static',
+      ]);
+    });
   });
 
   it('should record images with blob url', async () => {

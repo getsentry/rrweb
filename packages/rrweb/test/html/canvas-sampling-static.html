@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="static" width="200" height="200"></canvas>
+    <div style="display: none"><canvas id="hidden" width="200" height="200"></canvas></div>
+</body>
+<script>
+  window.bitmapSources = [];
+  const originalCreateImageBitmap = window.createImageBitmap.bind(window);
+  window.createImageBitmap = (source, ...args) => {
+    window.bitmapSources.push(source.id);
+    return originalCreateImageBitmap(source, ...args);
+  };
+
+  for (const id of ['static', 'hidden']) {
+    const ctx = document.getElementById(id).getContext('2d');
+    ctx.fillStyle = 'green';
+    ctx.fillRect(50, 50, 50, 50);
+  }
+
+  window.redraw = () => {
+    const ctx = document.getElementById('static').getContext('2d');
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0, 0, 50, 50);
+  };
+</script>
+</html>

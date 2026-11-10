@@ -12,6 +12,7 @@ import type {
 import { isBlocked, onRequestAnimationFrame } from '../../../utils';
 import { CanvasContext } from '@sentry/rrweb-types';
 import initCanvas2DMutationObserver from './2d';
+import initCanvas2DDrawObserver from './2d-draw';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';
 import { getImageBitmapDataUrlWorkerURL } from '@sentry/rrweb-worker';
@@ -107,6 +108,14 @@ export class CanvasManager implements CanvasManagerInterface {
   private worker: Worker | null = null;
 
   private lastSnapshotTime = 0;
+
+  // Only holds canvases drawn to through a patched 2D context. Others (WebGL,
+  // or drawn to before recording started) can change without us noticing, so
+  // they are always snapshotted.
+  private canvas2DState = new WeakMap<
+    HTMLCanvasElement,
+    { dirty: boolean; width: number; height: number }
+  >();
 
   public reset() {
     this.pendingCanvasMutations.clear();
@@ -215,8 +224,21 @@ export class CanvasManager implements CanvasManagerInterface {
           unblockSelector,
           true,
         );
+        const canvas2DDrawReset = initCanvas2DDrawObserver((canvas) => {
+          const state = this.canvas2DState.get(canvas);
+          if (state) {
+            state.dirty = true;
+          } else {
+            this.canvas2DState.set(canvas, {
+              dirty: true,
+              width: 0,
+              height: 0,
+            });
+          }
+        }, win);
         this.restoreHandlers.push(() => {
           canvasContextReset();
+          canvas2DDrawReset();
         });
       }
     })();
@@ -462,6 +484,32 @@ export class CanvasManager implements CanvasManagerInterface {
         return;
       }
 
+      if (!canvasElement) {
+        // Hidden canvases are not shown in the replay either; if they changed,
+        // they are picked up once they are shown again.
+        if (
+          typeof canvas.checkVisibility === 'function' &&
+          !canvas.checkVisibility()
+        ) {
+          return;
+        }
+
+        const state = this.canvas2DState.get(canvas);
+        if (state) {
+          // Resizing clears a canvas, so it counts as a change even without a draw.
+          if (
+            !state.dirty &&
+            state.width === canvas.width &&
+            state.height === canvas.height
+          ) {
+            return;
+          }
+          state.dirty = false;
+          state.width = canvas.width;
+          state.height = canvas.height;
+        }
+      }
+
       this.snapshotInProgressMap.set(id, true);
 
       // Note: we intentionally do NOT clear the WebGL color buffer here to force
@@ -490,6 +538,10 @@ export class CanvasManager implements CanvasManagerInterface {
         .catch((error) => {
           callbackWrapper(() => {
             this.snapshotInProgressMap.delete(id);
+            const state = this.canvas2DState.get(canvas);
+            if (state) {
+              state.dirty = true;
+            }
             throw error;
           })();
         });
