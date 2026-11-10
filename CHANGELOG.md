@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.46.0
+
+### Bug Fixes 🐛
+
+#### Snapshot
+
+- Clear leftover nodes when `document.open()` is skipped by @gggritso with @sentry-junior in [#350](https://github.com/getsentry/rrweb/pull/350)
+- Don't record the default value of cleared inputs by @gggritso with @sentry-junior in [#349](https://github.com/getsentry/rrweb/pull/349)
+
+#### Other
+
+- (ci) Exclude node_modules from release artifact upload by @andreiborza and @claude in [#361](https://github.com/getsentry/rrweb/pull/361)
+- (replay) Keep adopted stylesheets on seek when their first host was removed by @logaretm in [#352](https://github.com/getsentry/rrweb/pull/352)
+- (rrweb) Don't throw when tearing down a locked `adoptedStyleSheets` patch by @gggritso with @sentry-junior in [#351](https://github.com/getsentry/rrweb/pull/351)
+
+### Internal Changes 🔧
+
+- (release) Install pnpm in the craft pre-release script by @logaretm in [#362](https://github.com/getsentry/rrweb/pull/362)
+- Upgrade to TypeScript 7 by @logaretm in [#358](https://github.com/getsentry/rrweb/pull/358)
+- Replace ESLint with oxlint by @logaretm in [#357](https://github.com/getsentry/rrweb/pull/357)
+- Replace prettier with oxfmt by @logaretm in [#356](https://github.com/getsentry/rrweb/pull/356)
+- Migrate from yarn 1 to pnpm 12 by @logaretm in [#354](https://github.com/getsentry/rrweb/pull/354)
+- Remove leftover changesets setup by @logaretm in [#353](https://github.com/getsentry/rrweb/pull/353)
+
 ## 2.45.0
 
 ### New Features ✨
