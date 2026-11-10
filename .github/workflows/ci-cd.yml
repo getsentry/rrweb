@@ -93,3 +93,4 @@ jobs:
           name: ${{ github.sha }}
           path: |
             ${{ github.workspace }}/packages/**/*.tgz
+            !${{ github.workspace }}/packages/**/node_modules/**
