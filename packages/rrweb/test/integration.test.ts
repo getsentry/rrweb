@@ -1226,6 +1226,17 @@ describe('record integration tests', function (this: ISuite) {
         'static',
         'static',
       ]);
+
+      // resizing clears the canvas, even when it ends up at its old size
+      await page.evaluate('window.setStaticWidth(0)');
+      await waitForTimeout(100);
+      await page.evaluate('window.setStaticWidth(200)');
+      await waitForTimeout(300);
+      expect(await page.evaluate('window.bitmapSources')).toEqual([
+        'static',
+        'static',
+        'static',
+      ]);
     });
   });
 

@@ -474,6 +474,14 @@ export class CanvasManager implements CanvasManagerInterface {
     canvases.forEach((canvas) => {
       const id = this.mirror.getId(canvas);
 
+      // Resizing to 0 clears the canvas, which restoring the old size would otherwise hide.
+      if (!canvas.width || !canvas.height) {
+        const state = this.canvas2DState.get(canvas);
+        if (state) {
+          state.dirty = true;
+        }
+      }
+
       // Check if canvas is valid and not already being processed
       if (
         !this.mirror.hasNode(canvas) ||
