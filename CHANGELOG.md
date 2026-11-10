@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.46.0
+
+### Bug Fixes 🐛
+
+- (snapshot) Don't record the default value of cleared inputs by @gggritso with @sentry-junior in [#349](https://github.com/getsentry/rrweb/pull/349)
+
+### Internal Changes 🔧
+
+#### Release
+
+- Install pnpm in the craft pre-release script by @logaretm in [afafcf33](https://github.com/getsentry/rrweb/commit/afafcf33f49f42380f1bb61eb91f58a09cf52dad)
+- Set up pnpm before running craft by @logaretm in [006feaa9](https://github.com/getsentry/rrweb/commit/006feaa9759d659f701dfe20cc2b1d1874d18bc3)
+
+#### Other
+
+- Upgrade to TypeScript 7 by @logaretm in [#358](https://github.com/getsentry/rrweb/pull/358)
+- Replace ESLint with oxlint by @logaretm in [#357](https://github.com/getsentry/rrweb/pull/357)
+- Replace prettier with oxfmt by @logaretm in [#356](https://github.com/getsentry/rrweb/pull/356)
+- Migrate from yarn 1 to pnpm 12 by @logaretm in [#354](https://github.com/getsentry/rrweb/pull/354)
+- Remove leftover changesets setup by @logaretm in [#353](https://github.com/getsentry/rrweb/pull/353)
+
 ## 2.45.0
 
 ### New Features ✨
