@@ -1205,38 +1205,118 @@ describe('record integration tests', function (this: ISuite) {
       // rely on the structural check above.
     });
 
-    it('should only snapshot sampled canvases that are shown and were drawn to', async () => {
-      const page: puppeteer.Page = await browser.newPage();
-      await page.goto(`${serverURL}/html`);
-      await page.setContent(
-        getHtml.call(this, 'canvas-sampling-static.html', {
-          recordCanvas: true,
-          sampling: {
-            canvas: 60,
-          },
-        }),
-      );
+    describe('canvas sampling skips', () => {
+      const staticSources = (page: puppeteer.Page) =>
+        page.evaluate(`window.sourcesFor('static', 'hidden')`);
 
-      await waitForTimeout(300);
-      expect(await page.evaluate('window.bitmapSources')).toEqual(['static']);
+      const openSampledPage = async () => {
+        const page: puppeteer.Page = await browser.newPage();
+        await page.goto(`${serverURL}/html`);
+        await page.setContent(
+          getHtml.call(this, 'canvas-sampling-static.html', {
+            recordCanvas: true,
+            sampling: {
+              canvas: 60,
+            },
+          }),
+        );
+        await waitForTimeout(300);
+        return page;
+      };
 
-      await page.evaluate('window.redraw()');
-      await waitForTimeout(300);
-      expect(await page.evaluate('window.bitmapSources')).toEqual([
-        'static',
-        'static',
-      ]);
+      it('unchanged and hidden 2D canvases', async () => {
+        const page = await openSampledPage();
+        expect(await staticSources(page)).toEqual(['static']);
 
-      // resizing clears the canvas, even when it ends up at its old size
-      await page.evaluate('window.setStaticWidth(0)');
-      await waitForTimeout(100);
-      await page.evaluate('window.setStaticWidth(200)');
-      await waitForTimeout(300);
-      expect(await page.evaluate('window.bitmapSources')).toEqual([
-        'static',
-        'static',
-        'static',
-      ]);
+        await page.evaluate('window.redraw()');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual(['static', 'static']);
+      });
+
+      it('no 2D canvas that was resized without a draw', async () => {
+        const page = await openSampledPage();
+        expect(await staticSources(page)).toEqual(['static']);
+
+        // resizing clears the canvas, even when it ends up at its old size
+        await page.evaluate('window.setStaticWidth(0)');
+        await waitForTimeout(100);
+        await page.evaluate('window.setStaticWidth(200)');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual(['static', 'static']);
+
+        await page.evaluate('window.setStaticWidth(300)');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual([
+          'static',
+          'static',
+          'static',
+        ]);
+      });
+
+      it('no 2D canvas that was redrawn while hidden once it is shown', async () => {
+        const page = await openSampledPage();
+        expect(await staticSources(page)).toEqual(['static']);
+
+        // hiding and showing alone doesn't change the canvas
+        await page.evaluate('window.setStaticHidden(true)');
+        await waitForTimeout(100);
+        await page.evaluate('window.setStaticHidden(false)');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual(['static']);
+
+        await page.evaluate('window.setStaticHidden(true)');
+        await page.evaluate('window.redraw()');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual(['static']);
+
+        await page.evaluate('window.setStaticHidden(false)');
+        await waitForTimeout(300);
+        expect(await staticSources(page)).toEqual(['static', 'static']);
+      });
+
+      it('no canvas it cannot track, like WebGL', async () => {
+        const page = await openSampledPage();
+        const webglSnapshots = (await page.evaluate(
+          `window.sourcesFor('webgl').length`,
+        )) as number;
+        expect(webglSnapshots).toBeGreaterThan(2);
+      });
+
+      it('no hidden canvas on a manual snapshot', async () => {
+        const page: puppeteer.Page = await browser.newPage();
+        await page.goto(`${serverURL}/html`);
+        const html = fs.readFileSync(
+          path.resolve(__dirname, './html/canvas-sampling-static.html'),
+          'utf8',
+        );
+        await page.setContent(
+          replaceLast(
+            html,
+            '</body>',
+            `
+          <script>
+            ${code}
+            rrweb.record({
+              emit: () => {},
+              recordCanvas: true,
+              getCanvasManager: (opts) =>
+                (window.canvasManager = new rrweb.CanvasManager({
+                  ...opts,
+                  enableManualSnapshot: true,
+                })),
+            });
+          </script>
+          </body>
+          `,
+          ),
+        );
+
+        await page.evaluate(
+          'window.canvasManager.snapshot(undefined, { skipRequestAnimationFrame: true })',
+        );
+        await waitForTimeout(100);
+        expect(await staticSources(page)).toEqual(['static', 'hidden']);
+      });
     });
   });
 

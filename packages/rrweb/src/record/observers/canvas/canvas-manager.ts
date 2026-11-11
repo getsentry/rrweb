@@ -12,7 +12,7 @@ import type {
 import { isBlocked, onRequestAnimationFrame } from '../../../utils';
 import { CanvasContext } from '@sentry/rrweb-types';
 import initCanvas2DMutationObserver from './2d';
-import initCanvas2DDrawObserver from './2d-draw';
+import initCanvas2DDrawObserver, { type LastDrawnCanvas } from './2d-draw';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';
 import { getImageBitmapDataUrlWorkerURL } from '@sentry/rrweb-worker';
@@ -116,6 +116,10 @@ export class CanvasManager implements CanvasManagerInterface {
     HTMLCanvasElement,
     { dirty: boolean; width: number; height: number }
   >();
+
+  // Shared with the draw observers so repeated draws to the same canvas skip
+  // the `canvas2DState` lookup. Reset whenever a dirty flag is cleared.
+  private lastDrawnCanvas: LastDrawnCanvas = { canvas: null };
 
   public reset() {
     this.pendingCanvasMutations.clear();
@@ -224,18 +228,22 @@ export class CanvasManager implements CanvasManagerInterface {
           unblockSelector,
           true,
         );
-        const canvas2DDrawReset = initCanvas2DDrawObserver((canvas) => {
-          const state = this.canvas2DState.get(canvas);
-          if (state) {
-            state.dirty = true;
-          } else {
-            this.canvas2DState.set(canvas, {
-              dirty: true,
-              width: 0,
-              height: 0,
-            });
-          }
-        }, win);
+        const canvas2DDrawReset = initCanvas2DDrawObserver(
+          (canvas) => {
+            const state = this.canvas2DState.get(canvas);
+            if (state) {
+              state.dirty = true;
+            } else {
+              this.canvas2DState.set(canvas, {
+                dirty: true,
+                width: 0,
+                height: 0,
+              });
+            }
+          },
+          this.lastDrawnCanvas,
+          win,
+        );
         this.restoreHandlers.push(() => {
           canvasContextReset();
           canvas2DDrawReset();
@@ -338,7 +346,7 @@ export class CanvasManager implements CanvasManagerInterface {
     }
 
     const rafCallback = (timestamp: DOMHighResTimeStamp) => {
-      this.takeSnapshot(timestamp);
+      this.takeSnapshot(timestamp, undefined, true);
       rafId = onRequestAnimationFrame(rafCallback);
     };
 
@@ -441,11 +449,16 @@ export class CanvasManager implements CanvasManagerInterface {
   /**
    * Takes a snapshot of the provided canvas element, or will search all windows/shadow roots for canvases. Will self-throttle based on `options.sampling`.
    *
+   * With `skipUnchanged`, canvases that are hidden or were neither drawn to nor
+   * resized since their last snapshot are skipped. Only the sampling loop sets
+   * it: it samples again later, while a manual `snapshot()` does not.
+   *
    * @returns `true` if the snapshot was taken, `false` if it was throttled.
    */
   private takeSnapshot(
     timestamp: DOMHighResTimeStamp,
     canvasElement?: HTMLCanvasElement,
+    skipUnchanged = false,
   ) {
     const {
       sampling,
@@ -492,7 +505,7 @@ export class CanvasManager implements CanvasManagerInterface {
         return;
       }
 
-      if (!canvasElement) {
+      if (skipUnchanged) {
         // Hidden canvases are not shown in the replay either; if they changed,
         // they are picked up once they are shown again.
         if (
@@ -513,6 +526,9 @@ export class CanvasManager implements CanvasManagerInterface {
             return;
           }
           state.dirty = false;
+          if (this.lastDrawnCanvas.canvas === canvas) {
+            this.lastDrawnCanvas.canvas = null;
+          }
           state.width = canvas.width;
           state.height = canvas.height;
         }
