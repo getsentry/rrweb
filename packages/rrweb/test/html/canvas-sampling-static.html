@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="static" width="200" height="200"></canvas>
+    <div style="display: none"><canvas id="hidden" width="200" height="200"></canvas></div>
+    <canvas id="webgl" width="200" height="200"></canvas>
+</body>
+<script>
+  window.bitmapSources = [];
+  const originalCreateImageBitmap = window.createImageBitmap.bind(window);
+  window.createImageBitmap = (source, ...args) => {
+    window.bitmapSources.push(source.id);
+    return originalCreateImageBitmap(source, ...args);
+  };
+  window.sourcesFor = (...ids) =>
+    window.bitmapSources.filter((id) => ids.includes(id));
+
+  for (const id of ['static', 'hidden']) {
+    const ctx = document.getElementById(id).getContext('2d');
+    ctx.fillStyle = 'green';
+    ctx.fillRect(50, 50, 50, 50);
+  }
+
+  const gl = document.getElementById('webgl').getContext('webgl');
+  if (gl) {
+    gl.clearColor(0, 0, 1, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  }
+
+  window.redraw = () => {
+    const ctx = document.getElementById('static').getContext('2d');
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0, 0, 50, 50);
+  };
+
+  window.setStaticWidth = (width) => {
+    document.getElementById('static').width = width;
+  };
+
+  window.setStaticHidden = (hidden) => {
+    document.getElementById('static').style.display = hidden ? 'none' : '';
+  };
+</script>
+</html>
