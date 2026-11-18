@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { JSDOM } from 'jsdom';
-import { describe, it, beforeEach, expect, vi } from 'vitest';
+import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest';
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
@@ -1088,6 +1088,10 @@ describe('input value masking', () => {
 });
 
 describe('tainted canvas', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   const securityError = () =>
     new DOMException(
       'The canvas has been tainted by cross-origin data.',
@@ -1135,5 +1139,11 @@ describe('tainted canvas', () => {
       tagName: 'canvas',
     });
     expect(canvasMeta).not.toHaveProperty('attributes.rr_dataURL');
+  });
+
+  it('warns once per tainted canvas across snapshots', () => {
+    snapshotTaintedCanvas('2d');
+    snapshot(document, { mirror: new Mirror(), recordCanvas: true });
+    expect(console.warn).toHaveBeenCalledTimes(1);
   });
 });

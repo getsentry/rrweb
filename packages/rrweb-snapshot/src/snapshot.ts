@@ -846,6 +846,8 @@ function serializeTextNode(
   };
 }
 
+const warnedTaintedCanvases = new WeakSet<HTMLCanvasElement>();
+
 function serializeElementNode(
   n: HTMLElement,
   options: {
@@ -1042,7 +1044,12 @@ function serializeElementNode(
         }
       }
     } catch (err) {
-      console.warn(`Cannot record canvas pixels! Error: ${err as string}`);
+      // Snapshots re-serialize every canvas on each checkout, so a tainted
+      // canvas would otherwise log on every one.
+      if (!warnedTaintedCanvases.has(n as HTMLCanvasElement)) {
+        warnedTaintedCanvases.add(n as HTMLCanvasElement);
+        console.warn(`Cannot record canvas pixels! Error: ${err as string}`);
+      }
     }
   }
   // save image offline
