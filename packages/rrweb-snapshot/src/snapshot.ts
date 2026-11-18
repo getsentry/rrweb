@@ -1004,9 +1004,13 @@ function serializeElementNode(
   }
   // canvas image data
   if (tagName === 'canvas' && recordCanvas) {
-    // A canvas tainted by cross-origin data throws a SecurityError on
-    // getImageData and toDataURL. Skip its pixels instead of failing the
-    // whole snapshot.
+    // A canvas is "tainted" once something from another origin is drawn onto
+    // it without CORS approval, e.g. drawImage() with an <img>, <video>, or
+    // ImageBitmap that was loaded without a crossorigin attribute or served
+    // without Access-Control-Allow-Origin. Browser extensions can also inject
+    // canvases with extension-origin content. Reading a tainted canvas with
+    // getImageData() or toDataURL() throws a SecurityError. Skip this canvas's
+    // pixels instead of failing the whole snapshot.
     try {
       if ((n as ICanvas).__context === '2d') {
         // only record this on 2d canvas
