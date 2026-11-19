@@ -1,4 +1,4 @@
-import { parse } from './css';
+import { parse, type AtRule, type Comment, type Rule } from './css';
 import type {
   serializedNodeWithId,
   elementNode,
@@ -86,36 +86,71 @@ export function addHoverClass(cssText: string, cache: BuildCache): string {
     return cssText;
   }
 
-  const selectors: string[] = [];
-  ast.stylesheet.rules.forEach((rule) => {
-    if ('selectors' in rule) {
-      (rule.selectors || []).forEach((selector: string) => {
-        if (HOVER_SELECTOR.test(selector)) {
-          selectors.push(selector);
-        }
-      });
-    }
-  });
+  // Character offset of the first character of each line, used to turn the
+  // parser's line/column positions into offsets in `cssText`.
+  const lineStarts = [0];
+  for (let i = 0; i < cssText.length; i++) {
+    if (cssText[i] === '\n') lineStarts.push(i + 1);
+  }
 
-  if (selectors.length === 0) {
+  // Rewrite each rule's own selector text, so that a short selector from one
+  // rule can never match inside the selector of another rule. Rules nested in
+  // at-rules such as `@media` and `@supports` are included.
+  const edits: Array<[start: number, end: number, text: string]> = [];
+  const visit = (rules: Array<Rule | Comment | AtRule>) => {
+    for (const rule of rules) {
+      if ('rules' in rule && rule.rules) {
+        visit(rule.rules);
+        continue;
+      }
+      if (!('selectors' in rule) || !rule.selectors) continue;
+      const hoverSelectors = rule.selectors.filter((selector) =>
+        HOVER_SELECTOR.test(selector),
+      );
+      const loc = rule.position?.start;
+      if (hoverSelectors.length === 0 || !loc?.line || !loc.column) continue;
+
+      const start = lineStarts[loc.line - 1] + loc.column - 1;
+      const end = cssText.indexOf('{', start);
+      if (end === -1) continue;
+
+      const selectorMatcher = new RegExp(
+        hoverSelectors
+          .filter(
+            (selector, index) => hoverSelectors.indexOf(selector) === index,
+          )
+          .sort((a, b) => b.length - a.length)
+          .map((selector) => {
+            return escapeRegExp(selector);
+          })
+          .join('|'),
+        'g',
+      );
+      const text = cssText
+        .slice(start, end)
+        .replace(selectorMatcher, (selector) => {
+          const newSelector = selector.replace(
+            HOVER_SELECTOR_GLOBAL,
+            '$1.\\:hover',
+          );
+          return `${selector}, ${newSelector}`;
+        });
+      edits.push([start, end, text]);
+    }
+  };
+  visit(ast.stylesheet.rules);
+
+  if (edits.length === 0) {
     return cssText;
   }
 
-  const selectorMatcher = new RegExp(
-    selectors
-      .filter((selector, index) => selectors.indexOf(selector) === index)
-      .sort((a, b) => b.length - a.length)
-      .map((selector) => {
-        return escapeRegExp(selector);
-      })
-      .join('|'),
-    'g',
-  );
-
-  const result = cssText.replace(selectorMatcher, (selector) => {
-    const newSelector = selector.replace(HOVER_SELECTOR_GLOBAL, '$1.\\:hover');
-    return `${selector}, ${newSelector}`;
-  });
+  let result = '';
+  let last = 0;
+  for (const [start, end, text] of edits) {
+    result += cssText.slice(last, start) + text;
+    last = end;
+  }
+  result += cssText.slice(last);
   cache?.stylesWithHoverClass.set(cssText, result);
   return result;
 }
