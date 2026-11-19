@@ -846,6 +846,8 @@ function serializeTextNode(
   };
 }
 
+const warnedTaintedCanvases = new WeakSet<HTMLCanvasElement>();
+
 function serializeElementNode(
   n: HTMLElement,
   options: {
@@ -1004,33 +1006,49 @@ function serializeElementNode(
   }
   // canvas image data
   if (tagName === 'canvas' && recordCanvas) {
-    if ((n as ICanvas).__context === '2d') {
-      // only record this on 2d canvas
-      if (!is2DCanvasBlank(n as HTMLCanvasElement)) {
-        attributes.rr_dataURL = (n as HTMLCanvasElement).toDataURL(
+    // A canvas is "tainted" once something from another origin is drawn onto
+    // it without CORS approval, e.g. drawImage() with an <img>, <video>, or
+    // ImageBitmap that was loaded without a crossorigin attribute or served
+    // without Access-Control-Allow-Origin. Browser extensions can also inject
+    // canvases with extension-origin content. Reading a tainted canvas with
+    // getImageData() or toDataURL() throws a SecurityError. Skip this canvas's
+    // pixels instead of failing the whole snapshot.
+    try {
+      if ((n as ICanvas).__context === '2d') {
+        // only record this on 2d canvas
+        if (!is2DCanvasBlank(n as HTMLCanvasElement)) {
+          attributes.rr_dataURL = (n as HTMLCanvasElement).toDataURL(
+            dataURLOptions.type,
+            dataURLOptions.quality,
+          );
+        }
+      } else if (!('__context' in n)) {
+        // context is unknown, better not call getContext to trigger it
+        const canvasDataURL = (n as HTMLCanvasElement).toDataURL(
           dataURLOptions.type,
           dataURLOptions.quality,
         );
+
+        // create blank canvas of same dimensions
+        const blankCanvas = doc.createElement('canvas');
+        blankCanvas.width = (n as HTMLCanvasElement).width;
+        blankCanvas.height = (n as HTMLCanvasElement).height;
+        const blankCanvasDataURL = blankCanvas.toDataURL(
+          dataURLOptions.type,
+          dataURLOptions.quality,
+        );
+
+        // no need to save dataURL if it's the same as blank canvas
+        if (canvasDataURL !== blankCanvasDataURL) {
+          attributes.rr_dataURL = canvasDataURL;
+        }
       }
-    } else if (!('__context' in n)) {
-      // context is unknown, better not call getContext to trigger it
-      const canvasDataURL = (n as HTMLCanvasElement).toDataURL(
-        dataURLOptions.type,
-        dataURLOptions.quality,
-      );
-
-      // create blank canvas of same dimensions
-      const blankCanvas = doc.createElement('canvas');
-      blankCanvas.width = (n as HTMLCanvasElement).width;
-      blankCanvas.height = (n as HTMLCanvasElement).height;
-      const blankCanvasDataURL = blankCanvas.toDataURL(
-        dataURLOptions.type,
-        dataURLOptions.quality,
-      );
-
-      // no need to save dataURL if it's the same as blank canvas
-      if (canvasDataURL !== blankCanvasDataURL) {
-        attributes.rr_dataURL = canvasDataURL;
+    } catch (err) {
+      // Snapshots re-serialize every canvas on each checkout, so a tainted
+      // canvas would otherwise log on every one.
+      if (!warnedTaintedCanvases.has(n as HTMLCanvasElement)) {
+        warnedTaintedCanvases.add(n as HTMLCanvasElement);
+        console.warn(`Cannot record canvas pixels! Error: ${err as string}`);
       }
     }
   }
