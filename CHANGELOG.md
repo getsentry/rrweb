@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.46.1
+
+### Bug Fixes 🐛
+
+- (replay) Keep the full snapshot when a canvas is tainted by @gggritso with @sentry-junior in [#365](https://github.com/getsentry/rrweb/pull/365)
+- (rrweb) Skip unchanged and hidden canvases when sampling by @msonnb and @claude in [#359](https://github.com/getsentry/rrweb/pull/359)
+
 ## 2.46.0
 
 ### Bug Fixes 🐛
