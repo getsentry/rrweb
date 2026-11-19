@@ -156,6 +156,29 @@ describe('rebuild', function () {
       expect(addHoverClass(cssText, cache)).toEqual(cssText);
     });
 
+    it('can add hover class to rules nested in at-rules', () => {
+      const cssText =
+        '@media (min-width: 1px) { .a:hover { color: white } }\n@supports (display: grid) {\n  .b:hover { color: white }\n}';
+      expect(addHoverClass(cssText, cache)).toEqual(
+        '@media (min-width: 1px) { .a:hover, .a.\\:hover { color: white } }\n@supports (display: grid) {\n  .b:hover, .b.\\:hover { color: white }\n}',
+      );
+    });
+
+    it('will not match a selector inside the selector of another rule', () => {
+      const cssText =
+        'button:hover { color: white } @media (min-width: 1px) { button.header-button:hover { border-radius: 50% } }';
+      expect(addHoverClass(cssText, cache)).toEqual(
+        'button:hover, button.\\:hover { color: white } @media (min-width: 1px) { button.header-button:hover, button.header-button.\\:hover { border-radius: 50% } }',
+      );
+    });
+
+    it('will not match a selector inside a declaration value', () => {
+      const cssText = 'a:hover { color: red } .b::after { content: "a:hover" }';
+      expect(addHoverClass(cssText, cache)).toEqual(
+        'a:hover, a.\\:hover { color: red } .b::after { content: "a:hover" }',
+      );
+    });
+
     // this benchmark is unreliable when run in parallel with other tests
     it.skip('benchmark', () => {
       const cssText = fs.readFileSync(
