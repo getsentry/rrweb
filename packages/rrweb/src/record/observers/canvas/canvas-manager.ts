@@ -55,6 +55,7 @@ export interface CanvasManagerConstructorOptions {
   dataURLOptions: DataURLOptions;
   errorHandler?: ErrorHandler;
   sampling?: 'all' | number;
+  getTrustedScriptURL?: (url: string) => string;
 }
 
 export class CanvasManagerNoop implements CanvasManagerInterface {
@@ -276,7 +277,11 @@ export class CanvasManager implements CanvasManagerInterface {
   }
 
   private initFPSWorker(): Worker {
-    const worker = new Worker(getImageBitmapDataUrlWorkerURL());
+    const { getTrustedScriptURL } = this.options;
+    const workerUrl = getImageBitmapDataUrlWorkerURL();
+    const worker = new Worker(
+      getTrustedScriptURL ? getTrustedScriptURL(workerUrl) : workerUrl,
+    );
     worker.onmessage = (e) => {
       const data = e.data as ImageBitmapDataURLWorkerResponse;
       const { id } = data;
