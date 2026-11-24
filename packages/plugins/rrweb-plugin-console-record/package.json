@@ -1,6 +1,6 @@
 {
   "name": "@rrweb/rrweb-plugin-console-record",
-  "version": "2.46.1",
+  "version": "2.46.2",
   "description": "",
   "type": "module",
   "main": "./dist/rrweb-plugin-console-record.umd.cjs",
@@ -45,8 +45,8 @@
   },
   "homepage": "https://github.com/rrweb-io/rrweb#readme",
   "devDependencies": {
-    "@sentry/rrweb": "2.46.1",
-    "@sentry/rrweb-types": "2.46.1",
+    "@sentry/rrweb": "2.46.2",
+    "@sentry/rrweb-types": "2.46.2",
     "puppeteer": "^24.0.0",
     "typescript": "~7.0.2",
     "vite": "^6.4.4",
@@ -54,6 +54,6 @@
     "vitest": "^3.2.6"
   },
   "peerDependencies": {
-    "@sentry/rrweb": "2.46.1"
+    "@sentry/rrweb": "2.46.2"
   }
 }
