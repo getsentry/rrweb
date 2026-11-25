@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.47.0
+
+### New Features ✨
+
+- (rrweb) Add getTrustedScriptURL option to CanvasManager by @msonnb and @claude in [#367](https://github.com/getsentry/rrweb/pull/367)
+
 ## 2.46.2
 
 ### Bug Fixes 🐛
