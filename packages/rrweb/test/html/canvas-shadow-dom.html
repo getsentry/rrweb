@@ -22,11 +22,9 @@
   }
   moveSquare(0.2)
 
-  setTimeout(() => {
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      moveSquare(0.5)
-      window.canvasMutationApplied = true;
-    }));
-  }, 0);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    moveSquare(0.5)
+    window.canvasMutationApplied = true;
+  }));
 </script>
 </html>
