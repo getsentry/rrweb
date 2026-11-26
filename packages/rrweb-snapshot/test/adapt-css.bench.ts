@@ -11,9 +11,8 @@ const benchmarkCss = readCss('benchmark.css');
 const utilityCss = readCss('utility.css');
 const componentCss = readCss('component.css');
 
-// Just under and just over the 1MB limit above which stylesheets are skipped.
+// Just under the 1MB limit above which stylesheets are skipped.
 const largeUtilityCss = utilityCss.repeat(5);
-const oversizedUtilityCss = utilityCss.repeat(6);
 
 describe('addHoverClass: one stylesheet', () => {
   bench(`benchmark.css (${benchmarkCss.length} chars)`, () => {
@@ -26,10 +25,6 @@ describe('addHoverClass: one stylesheet', () => {
 
   bench(`utility.css x5 (${largeUtilityCss.length} chars)`, () => {
     addHoverClass(largeUtilityCss, createCache());
-  });
-
-  bench(`utility.css x6, over the 1MB limit (${oversizedUtilityCss.length} chars)`, () => {
-    addHoverClass(oversizedUtilityCss, createCache());
   });
 });
 
