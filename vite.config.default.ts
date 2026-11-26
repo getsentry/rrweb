@@ -7,6 +7,7 @@ import glob from 'fast-glob';
 import { build, Format, Platform } from 'esbuild';
 import { dirname, resolve } from 'path';
 import { umdWrapper } from 'esbuild-plugin-umd-wrapper';
+import { dropEmptyChunksPlugin } from './vite.drop-empty-chunks';
 
 const emptyOutDir = process.env.CLEAR_DIST_DIR !== 'false';
 
@@ -87,32 +88,6 @@ function minifyAndUMDPlugin({
               platform,
             });
           }
-        }
-      }
-    },
-  };
-}
-
-/**
- * Removes chunks that tree-shaking left empty, such as the `postcss` chunk of
- * a package that only records.
- */
-function dropEmptyChunksPlugin(): Plugin {
-  return {
-    name: 'drop-empty-chunks',
-    generateBundle(_, bundle) {
-      const files = Object.values(bundle);
-      for (const file of files) {
-        if (
-          file.type === 'chunk' &&
-          !file.isEntry &&
-          Object.values(file.modules).every((m) => m.renderedLength === 0) &&
-          !files.some(
-            (f) => f.type === 'chunk' && f.imports.includes(file.fileName),
-          )
-        ) {
-          delete bundle[file.fileName];
-          delete bundle[`${file.fileName}.map`];
         }
       }
     },

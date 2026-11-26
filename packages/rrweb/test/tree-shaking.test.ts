@@ -20,8 +20,6 @@ async function bundle(imports: string): Promise<string> {
   return result.outputFiles[0].text;
 }
 
-// postcss is only needed to adapt CSS during replay, so recording must not
-// pull it into a consumer's bundle.
 describe('tree-shaking of the built package', () => {
   it('does not bundle postcss for record-only imports', async () => {
     expect(await bundle('record')).not.toContain('CssSyntaxError');
