@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { JSDOM } from 'jsdom';
-import { describe, it, beforeEach, expect, vi } from 'vitest';
+import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest';
 import {
   absoluteToStylesheet,
   serializeNodeWithId,
@@ -1084,5 +1084,66 @@ describe('input value masking', () => {
         maskAllInputs: false,
       }),
     ).toMatchObject({ attributes: { type: 'hidden', value: 'secret' } });
+  });
+});
+
+describe('tainted canvas', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  const securityError = () =>
+    new DOMException(
+      'The canvas has been tainted by cross-origin data.',
+      'SecurityError',
+    );
+
+  const snapshotTaintedCanvas = (context: '2d' | undefined) => {
+    document.write('<!DOCTYPE html><p>Hello world</p><canvas></canvas>');
+    const canvas = document.querySelector('canvas')!;
+    canvas.width = 100;
+    canvas.height = 100;
+    if (context) {
+      (canvas as HTMLCanvasElement & { __context: string }).__context = context;
+    }
+    canvas.getContext = vi.fn().mockReturnValue({
+      getImageData: () => {
+        throw securityError();
+      },
+    });
+    canvas.toDataURL = vi.fn(() => {
+      throw securityError();
+    });
+    vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+
+    const mirror = new Mirror();
+    const sn = snapshot(document, { mirror, recordCanvas: true });
+    return { sn, canvasMeta: mirror.getMeta(canvas) };
+  };
+
+  it('still snapshots the document when a 2d canvas is tainted', () => {
+    const { sn, canvasMeta } = snapshotTaintedCanvas('2d');
+    expect(sn).toMatchObject({ type: NodeType.Document });
+    expect(canvasMeta).toMatchObject({
+      type: NodeType.Element,
+      tagName: 'canvas',
+    });
+    expect(canvasMeta).not.toHaveProperty('attributes.rr_dataURL');
+  });
+
+  it('still snapshots the document when a canvas of unknown context is tainted', () => {
+    const { sn, canvasMeta } = snapshotTaintedCanvas(undefined);
+    expect(sn).toMatchObject({ type: NodeType.Document });
+    expect(canvasMeta).toMatchObject({
+      type: NodeType.Element,
+      tagName: 'canvas',
+    });
+    expect(canvasMeta).not.toHaveProperty('attributes.rr_dataURL');
+  });
+
+  it('warns once per tainted canvas across snapshots', () => {
+    snapshotTaintedCanvas('2d');
+    snapshot(document, { mirror: new Mirror(), recordCanvas: true });
+    expect(console.warn).toHaveBeenCalledTimes(1);
   });
 });
