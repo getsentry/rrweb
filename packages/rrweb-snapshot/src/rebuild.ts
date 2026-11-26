@@ -1,4 +1,5 @@
-import { parse, type AtRule, type Comment, type Rule } from './css';
+import postcss from 'postcss';
+import { mediaSelectorPlugin, pseudoClassPlugin } from './css';
 import type {
   serializedNodeWithId,
   elementNode,
@@ -61,99 +62,47 @@ function getTagName(n: elementNode): string {
   return tagName;
 }
 
-// based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
+/**
+ * Stylesheets larger than this are not adapted, so that a very large
+ * stylesheet cannot block the main thread during replay.
+ */
+const MAX_ADAPT_CSS_LENGTH = 1_000_000;
 
-const HOVER_SELECTOR = /([^\\]):hover/;
-const HOVER_SELECTOR_GLOBAL = new RegExp(HOVER_SELECTOR.source, 'g');
-export function addHoverClass(cssText: string, cache: BuildCache): string {
+/**
+ * Adapts recorded CSS so it renders correctly in the replay iframe:
+ * - each selector that contains `:hover` gets a copy with `.\:hover`, which
+ *   matches the `:hover` class that the replayer puts on hovered elements
+ * - `min|max-device-width|height` media queries become `min|max-width|height`
+ *
+ * CSS that postcss cannot parse is returned unchanged.
+ */
+export function adaptCssForReplay(cssText: string, cache: BuildCache): string {
   const cachedStyle = cache?.stylesWithHoverClass.get(cssText);
   if (cachedStyle) return cachedStyle;
 
-  if (cssText.length >= 1_000_000) {
-    // Skip adding hover class for large stylesheets, otherwise we will run
-    // into perf issues that will block main thread
+  if (cssText.length >= MAX_ADAPT_CSS_LENGTH) {
     return cssText;
   }
 
-  const ast = parse(cssText, {
-    silent: true,
-  });
-
-  if (!ast.stylesheet) {
-    return cssText;
+  let result = cssText;
+  try {
+    const ast: { css: string } = postcss([
+      mediaSelectorPlugin,
+      pseudoClassPlugin,
+    ]).process(cssText);
+    result = ast.css;
+  } catch (error) {
+    console.warn('Failed to adapt css for replay', error);
   }
 
-  // Character offset of the first character of each line, used to turn the
-  // parser's line/column positions into offsets in `cssText`.
-  const lineStarts = [0];
-  for (let i = 0; i < cssText.length; i++) {
-    if (cssText[i] === '\n') lineStarts.push(i + 1);
-  }
-
-  // Rewrite each rule's own selector text, so that a short selector from one
-  // rule can never match inside the selector of another rule. Rules nested in
-  // at-rules such as `@media` and `@supports` are included.
-  const edits: Array<[start: number, end: number, text: string]> = [];
-  const visit = (rules: Array<Rule | Comment | AtRule>) => {
-    for (const rule of rules) {
-      if ('rules' in rule && rule.rules) {
-        visit(rule.rules);
-        continue;
-      }
-      if (!('selectors' in rule) || !rule.selectors) continue;
-      const hoverSelectors = rule.selectors.filter((selector) =>
-        HOVER_SELECTOR.test(selector),
-      );
-      const loc = rule.position?.start;
-      if (hoverSelectors.length === 0 || !loc?.line || !loc.column) continue;
-
-      const start = lineStarts[loc.line - 1] + loc.column - 1;
-      const end = cssText.indexOf('{', start);
-      if (end === -1) continue;
-
-      const selectorMatcher = new RegExp(
-        hoverSelectors
-          .filter(
-            (selector, index) => hoverSelectors.indexOf(selector) === index,
-          )
-          .sort((a, b) => b.length - a.length)
-          .map((selector) => {
-            return escapeRegExp(selector);
-          })
-          .join('|'),
-        'g',
-      );
-      const text = cssText
-        .slice(start, end)
-        .replace(selectorMatcher, (selector) => {
-          const newSelector = selector.replace(
-            HOVER_SELECTOR_GLOBAL,
-            '$1.\\:hover',
-          );
-          return `${selector}, ${newSelector}`;
-        });
-      edits.push([start, end, text]);
-    }
-  };
-  visit(ast.stylesheet.rules);
-
-  if (edits.length === 0) {
-    return cssText;
-  }
-
-  let result = '';
-  let last = 0;
-  for (const [start, end, text] of edits) {
-    result += cssText.slice(last, start) + text;
-    last = end;
-  }
-  result += cssText.slice(last);
   cache?.stylesWithHoverClass.set(cssText, result);
   return result;
 }
+
+/**
+ * @deprecated Use `adaptCssForReplay`.
+ */
+export const addHoverClass = adaptCssForReplay;
 
 export function createCache(): BuildCache {
   const stylesWithHoverClass: Map<string, string> = new Map();
@@ -249,7 +198,7 @@ function buildNode(
         const isTextarea = tagName === 'textarea' && name === 'value';
         const isRemoteOrDynamicCss = tagName === 'style' && name === '_cssText';
         if (isRemoteOrDynamicCss && hackCss && typeof value === 'string') {
-          value = addHoverClass(value, cache);
+          value = adaptCssForReplay(value, cache);
         }
         if ((isTextarea || isRemoteOrDynamicCss) && typeof value === 'string') {
           const child = doc.createTextNode(value);
@@ -398,7 +347,7 @@ function buildNode(
     case NodeType.Text:
       return doc.createTextNode(
         n.isStyle && hackCss
-          ? addHoverClass(n.textContent, cache)
+          ? adaptCssForReplay(n.textContent, cache)
           : n.textContent,
       );
     case NodeType.CDATA:

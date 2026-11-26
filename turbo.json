@@ -4,7 +4,7 @@
   "globalDependencies": [
     ".oxlintrc.json",
     ".oxfmtrc.json",
-    "vite.config.defaults.ts",
+    "vite.config.default.ts",
     "tsconfig.json"
   ],
   "tasks": {

@@ -11,6 +11,13 @@ import { umdWrapper } from 'esbuild-plugin-umd-wrapper';
 const emptyOutDir = process.env.CLEAR_DIST_DIR !== 'false';
 
 /**
+ * postcss and its dependencies, from `node_modules` or from the `postcss`
+ * chunk of an already built workspace package such as rrweb-snapshot.
+ */
+const POSTCSS_MODULE =
+  /[\\/]node_modules[\\/](postcss|nanoid|picocolors|source-map-js)[\\/]|[\\/]dist[\\/]postcss-[\w-]+\.c?js$/;
+
+/**
  * The JS-based TypeScript that `vite-plugin-dts` depends on (see `.pnpmfile.cjs`).
  * Its type rollup would otherwise use the workspace's native TypeScript 7,
  * which doesn't ship the `lib.*.d.ts` files.
@@ -80,6 +87,32 @@ function minifyAndUMDPlugin({
               platform,
             });
           }
+        }
+      }
+    },
+  };
+}
+
+/**
+ * Removes chunks that tree-shaking left empty, such as the `postcss` chunk of
+ * a package that only records.
+ */
+function dropEmptyChunksPlugin(): Plugin {
+  return {
+    name: 'drop-empty-chunks',
+    generateBundle(_, bundle) {
+      const files = Object.values(bundle);
+      for (const file of files) {
+        if (
+          file.type === 'chunk' &&
+          !file.isEntry &&
+          Object.values(file.modules).every((m) => m.renderedLength === 0) &&
+          !files.some(
+            (f) => f.type === 'chunk' && f.imports.includes(file.fileName),
+          )
+        ) {
+          delete bundle[file.fileName];
+          delete bundle[`${file.fileName}.map`];
         }
       }
     },
@@ -172,11 +205,16 @@ export default function (
 
       sourcemap: true,
 
-      // rollupOptions: {
-      //   output: {
-      //     manualChunks: {},
-      //   },
-      // },
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            // Keep replay-only postcss in its own chunk. Inlined into the
+            // entry file, its top-level CommonJS wrapper call would stop
+            // bundlers from tree-shaking it out of record-only imports.
+            if (POSTCSS_MODULE.test(id)) return 'postcss';
+          },
+        },
+      },
     },
     plugins: [
       dts({
@@ -195,6 +233,7 @@ export default function (
           });
         },
       }),
+      dropEmptyChunksPlugin(),
       minifyAndUMDPlugin({
         name,
         outDir,
