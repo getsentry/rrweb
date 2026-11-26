@@ -18,6 +18,14 @@ describe('css plugins', () => {
       expect(process(mediaSelectorPlugin, cssText)).toEqual(cssText);
     });
 
+    it('only rewrites media queries', () => {
+      const cssText = [
+        '@import url("https://cdn.example.com/min-device-width.css");',
+        '@layer max-device-height { .a { width: 10px; } }',
+      ].join('\n');
+      expect(process(mediaSelectorPlugin, cssText)).toEqual(cssText);
+    });
+
     it('can adapt media rules to replay context', () => {
       [
         ['min', 'width'],
@@ -38,6 +46,19 @@ describe('css plugins', () => {
   });
 
   describe('pseudoClassPlugin', () => {
+    it('leaves an escaped :hover in a class name alone', () => {
+      const cssText = '.md\\:hover\\:bg-red:hover { color: red; }';
+      expect(process(pseudoClassPlugin, cssText)).toEqual(
+        `.md\\:hover\\:bg-red:hover,
+.md\\:hover\\:bg-red.\\:hover { color: red; }`,
+      );
+    });
+
+    it('adds no copy when :hover only appears escaped in a class name', () => {
+      const cssText = '.md\\:hover\\:bg-red { color: red; }';
+      expect(process(pseudoClassPlugin, cssText)).toEqual(cssText);
+    });
+
     it('parses nested commas in selectors correctly', () => {
       const cssText =
         'body > ul :is(li:not(:first-of-type) a.current, li:not(:first-of-type).active a) {background: red;}';
