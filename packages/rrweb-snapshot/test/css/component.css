@@ -1,0 +1,19 @@
+@media (min-width: 640px) {
+.u-0 { color: rgb(0 0 0); padding: 0px; }
+.hover\:u-0:hover { color: rgb(0 0 0); }
+.group:hover .group-hover\:u-0, .peer:hover ~ .peer-hover\:u-0 { opacity: 0.0; }
+}
+.u-1 { color: rgb(1 0 0); padding: 1px; }
+.hover\:u-1:hover { color: rgb(0 1 0); }
+.group:hover .group-hover\:u-1, .peer:hover ~ .peer-hover\:u-1 { opacity: 0.1; }
+.u-2 { color: rgb(2 0 0); padding: 2px; }
+.hover\:u-2:hover { color: rgb(0 2 0); }
+.group:hover .group-hover\:u-2, .peer:hover ~ .peer-hover\:u-2 { opacity: 0.2; }
+.u-3 { color: rgb(3 0 0); padding: 3px; }
+.hover\:u-3:hover { color: rgb(0 3 0); }
+.group:hover .group-hover\:u-3, .peer:hover ~ .peer-hover\:u-3 { opacity: 0.3; }
+@media (min-width: 640px) {
+.u-4 { color: rgb(4 0 0); padding: 4px; }
+.hover\:u-4:hover { color: rgb(0 4 0); }
+.group:hover .group-hover\:u-4, .peer:hover ~ .peer-hover\:u-4 { opacity: 0.4; }
+}
