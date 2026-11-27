@@ -1,4 +1,5 @@
-import { parse } from './css';
+import postcss from 'postcss';
+import { mediaSelectorPlugin, pseudoClassPlugin } from './css';
 import type {
   serializedNodeWithId,
   elementNode,
@@ -61,64 +62,47 @@ function getTagName(n: elementNode): string {
   return tagName;
 }
 
-// based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
+/**
+ * Stylesheets larger than this are not adapted, so that a very large
+ * stylesheet cannot block the main thread during replay.
+ */
+const MAX_ADAPT_CSS_LENGTH = 1_000_000;
 
-const HOVER_SELECTOR = /([^\\]):hover/;
-const HOVER_SELECTOR_GLOBAL = new RegExp(HOVER_SELECTOR.source, 'g');
-export function addHoverClass(cssText: string, cache: BuildCache): string {
+/**
+ * Adapts recorded CSS so it renders correctly in the replay iframe:
+ * - each selector that contains `:hover` gets a copy with `.\:hover`, which
+ *   matches the `:hover` class that the replayer puts on hovered elements
+ * - `min|max-device-width|height` media queries become `min|max-width|height`
+ *
+ * CSS that postcss cannot parse is returned unchanged.
+ */
+export function adaptCssForReplay(cssText: string, cache: BuildCache): string {
   const cachedStyle = cache?.stylesWithHoverClass.get(cssText);
   if (cachedStyle) return cachedStyle;
 
-  if (cssText.length >= 1_000_000) {
-    // Skip adding hover class for large stylesheets, otherwise we will run
-    // into perf issues that will block main thread
+  if (cssText.length >= MAX_ADAPT_CSS_LENGTH) {
     return cssText;
   }
 
-  const ast = parse(cssText, {
-    silent: true,
-  });
-
-  if (!ast.stylesheet) {
-    return cssText;
+  let result = cssText;
+  try {
+    const ast: { css: string } = postcss([
+      mediaSelectorPlugin,
+      pseudoClassPlugin,
+    ]).process(cssText);
+    result = ast.css;
+  } catch (error) {
+    console.warn('Failed to adapt css for replay', error);
   }
 
-  const selectors: string[] = [];
-  ast.stylesheet.rules.forEach((rule) => {
-    if ('selectors' in rule) {
-      (rule.selectors || []).forEach((selector: string) => {
-        if (HOVER_SELECTOR.test(selector)) {
-          selectors.push(selector);
-        }
-      });
-    }
-  });
-
-  if (selectors.length === 0) {
-    return cssText;
-  }
-
-  const selectorMatcher = new RegExp(
-    selectors
-      .filter((selector, index) => selectors.indexOf(selector) === index)
-      .sort((a, b) => b.length - a.length)
-      .map((selector) => {
-        return escapeRegExp(selector);
-      })
-      .join('|'),
-    'g',
-  );
-
-  const result = cssText.replace(selectorMatcher, (selector) => {
-    const newSelector = selector.replace(HOVER_SELECTOR_GLOBAL, '$1.\\:hover');
-    return `${selector}, ${newSelector}`;
-  });
   cache?.stylesWithHoverClass.set(cssText, result);
   return result;
 }
+
+/**
+ * @deprecated Use `adaptCssForReplay`.
+ */
+export const addHoverClass = adaptCssForReplay;
 
 export function createCache(): BuildCache {
   const stylesWithHoverClass: Map<string, string> = new Map();
@@ -214,7 +198,7 @@ function buildNode(
         const isTextarea = tagName === 'textarea' && name === 'value';
         const isRemoteOrDynamicCss = tagName === 'style' && name === '_cssText';
         if (isRemoteOrDynamicCss && hackCss && typeof value === 'string') {
-          value = addHoverClass(value, cache);
+          value = adaptCssForReplay(value, cache);
         }
         if ((isTextarea || isRemoteOrDynamicCss) && typeof value === 'string') {
           const child = doc.createTextNode(value);
@@ -363,7 +347,7 @@ function buildNode(
     case NodeType.Text:
       return doc.createTextNode(
         n.isStyle && hackCss
-          ? addHoverClass(n.textContent, cache)
+          ? adaptCssForReplay(n.textContent, cache)
           : n.textContent,
       );
     case NodeType.CDATA:

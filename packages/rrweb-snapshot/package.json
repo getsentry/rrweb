@@ -51,6 +51,7 @@
     "dist",
     "package.json"
   ],
+  "sideEffects": false,
   "author": "yanzhen@smartx.com",
   "license": "MIT",
   "bugs": {
@@ -59,6 +60,9 @@
   "homepage": "https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-snapshot#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "postcss": "^8.5.32"
   },
   "devDependencies": {
     "@types/jsdom": "^20.0.0",
