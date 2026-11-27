@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.48.0
+
+### Bug Fixes 🐛
+
+- (snapshot) Switch to `postcss` for replayer CSS hover class trick by @gggritso with @sentry-junior in [#366](https://github.com/getsentry/rrweb/pull/366)
+
+### Internal Changes 🔧
+
+- (rrweb) Fix flaky canvas shadow DOM and hover tests by @msonnb and @claude in [#368](https://github.com/getsentry/rrweb/pull/368)
+- (snapshot) Add benchmarks for the replay CSS rewrite by @gggritso with @sentry-junior in [#369](https://github.com/getsentry/rrweb/pull/369)
+
 ## 2.47.0
 
 ### New Features ✨
