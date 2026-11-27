@@ -1,9 +1,9 @@
 {
   "name": "@sentry/rrweb-player",
-  "version": "2.47.0",
+  "version": "2.48.0",
   "devDependencies": {
-    "@sentry/rrweb-snapshot": "2.47.0",
-    "@sentry/rrweb-types": "2.47.0",
+    "@sentry/rrweb-snapshot": "2.48.0",
+    "@sentry/rrweb-types": "2.48.0",
     "@sveltejs/package": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^6.0.0",
     "fast-glob": "^3.2.9",
@@ -14,8 +14,8 @@
     "vite": "^6.4.4"
   },
   "dependencies": {
-    "@sentry/rrweb": "2.47.0",
-    "@sentry/rrweb-packer": "2.47.0",
+    "@sentry/rrweb": "2.48.0",
+    "@sentry/rrweb-packer": "2.48.0",
     "@tsconfig/svelte": "^1.0.0"
   },
   "scripts": {
