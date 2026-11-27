@@ -36,6 +36,7 @@ import adoptedStyleSheetRemovedHost, {
 import documentReplacementEvents from './events/document-replacement';
 import hoverInIframeShadowDom from './events/iframe-shadowdom-hover';
 import customElementDefineClass from './events/custom-element-define-class';
+import removeNodeEvents from './events/remove-node';
 import { ReplayerEvents } from '@sentry/rrweb-types';
 
 interface ISuite {
@@ -1765,5 +1766,48 @@ describe('replayer', function () {
       expect((result as any).skipStartEmitted).toBe(false);
       expect((result as any).speedServiceState).toBe('normal');
     });
+  });
+
+  it('does not drop removals from mutation events whose node is not in the mirror', async () => {
+    await page.evaluate(`events = ${JSON.stringify(removeNodeEvents)}`);
+
+    const result = (await page.evaluate(`
+      const { Replayer } = rrweb;
+      const [meta, fullSnapshot, addEvent, removeEvent] = events;
+      const removesBefore = JSON.stringify(removeEvent.data.removes);
+
+      // apply the removal while its node is not in the mirror
+      const first = new Replayer([meta, fullSnapshot, removeEvent]);
+      first.pause(1000);
+      const removesAfterMiss = JSON.stringify(removeEvent.data.removes);
+      first.destroy();
+
+      // replay the same event objects again, now with the node present,
+      // seeking forward, back and forward again
+      const second = new Replayer(events);
+      second.pause(150);
+      const presentMidway = !!second.iframe.contentDocument.querySelector('#modal');
+      second.pause(1000);
+      second.pause(50);
+      second.pause(1000);
+      ({
+        removesBefore,
+        removesAfterMiss,
+        removesAfterSeeks: JSON.stringify(removeEvent.data.removes),
+        presentMidway,
+        presentAtEnd: !!second.iframe.contentDocument.querySelector('#modal'),
+      });
+    `)) as {
+      removesBefore: string;
+      removesAfterMiss: string;
+      removesAfterSeeks: string;
+      presentMidway: boolean;
+      presentAtEnd: boolean;
+    };
+
+    expect(result.removesAfterMiss).toEqual(result.removesBefore);
+    expect(result.removesAfterSeeks).toEqual(result.removesBefore);
+    expect(result.presentMidway).toBe(true);
+    expect(result.presentAtEnd).toBe(false);
   });
 });
